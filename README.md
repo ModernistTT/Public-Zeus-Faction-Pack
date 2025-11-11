@@ -149,6 +149,7 @@ Added Vehicles:
 * Caesar BTT Armed
 
 Repurposed/reskinned Vehicles:
+* AH-99 Blackfoot (USA, BAF)
 * Strider/Gorgon (BAF)
 * AH-9 Pawnee/MH-9 Hummingbird (AAF)
 * PO-38 Orca (AAF)
