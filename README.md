@@ -98,12 +98,17 @@ INDEP
     - Infantry
 * Livonian Looters
     - Infantry
+* Other/Ambigious
+    - Bank robbers (gang, professionals)
+    - Presidential guard
+    - 
 
 CIV
 * Randomized Civilians
     - Civilians
 * National Emergency Health Service
     - Paramedics
+    - Search and Rescue
     - Pilots
 * International Development Assistance Program
     - Aid Workers
@@ -134,23 +139,47 @@ CIV
     - Racers
     - Pilots
 
+Added Vehicles:
+* Marshall MG
+* BTR-K Kamysh AA
+* Marid Autocannon
+* Strider AA/AT
+* Smuggler/Fishing Boat
+* Dropper drones, Kamikaze drones, FPV drones
+* Caesar BTT Armed
+
+Repurposed/reskinned Vehicles:
+* Strider/Gorgon (BAF)
+* AH-9 Pawnee/MH-9 Hummingbird (AAF)
+* PO-38 Orca (AAF)
+* CRV-6 Bobcat (AAF) ?????
+* PO-38 Orca (AAFRG)
+* Sandstorm MLRS (LDF)
+* Technicals (LDF, Straz Lesna Livonia)
+* Zamak MLRS (CSAT)
+* MLRS Offroad (FIA, LAPP, Syndikat)
+* Armored Offroad (FIA, Syndikat)
+* AH-9 Pawnee/MH-9 Hummingbird (ION)
+
 **Faction Tree (WS)**
 
 BLUFOR:
-* Tura
+* Tura (BLU, RED, INDEP)
     - Infantry
 
-OPFOR:
-* Sefrawi Armed Forces Army
+REDFOR:
+* Sefrawi Armed Forces Army (BLU, RED, INDEP)
     - Infantry
     - Special Operations
-* Sefrawi National Police
+* Sefrawi National Police (BLU, RED, INDEP)
     - Infantry
 
 INDEP:
-* United Assistance Peacekeepers (France)
+* United Assistance Peacekeepers (France) (BLU, INDEP)
     - Infantry
 
 Ideas:
 FPV Drones with VR goggles (boost button with impulse)
 Can the submarine be driveable (how did EZM make offroad slower? Just mass?)
+Seismic Sensor
+Offroad AAF
