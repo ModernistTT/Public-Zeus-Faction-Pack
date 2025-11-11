@@ -1,4 +1,4 @@
-**Faction Tree**
+**Faction Tree (Vanilla)**
 
 BLUFOR:
 * United States Air Force
@@ -133,6 +133,23 @@ CIV
 * Vrana Racing
     - Racers
     - Pilots
+
+**Faction Tree (WS)**
+
+BLUFOR:
+* Tura
+    - Infantry
+
+OPFOR:
+* Sefrawi Armed Forces Army
+    - Infantry
+    - Special Operations
+* Sefrawi National Police
+    - Infantry
+
+INDEP:
+* United Assistance Peacekeepers (France)
+    - Infantry
 
 Ideas:
 FPV Drones with VR goggles (boost button with impulse)
