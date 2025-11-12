@@ -169,10 +169,10 @@ BLUFOR:
     - Infantry
 
 REDFOR:
-* Sefrawi Armed Forces Army (BLU, RED, INDEP)
+* Argana Armed Forces Army (BLU, RED, INDEP)
     - Infantry
     - Special Operations
-* Sefrawi National Police (BLU, RED, INDEP)
+* Sefrawi Provincial Police (BLU, RED, INDEP)
     - Infantry
 
 INDEP:
