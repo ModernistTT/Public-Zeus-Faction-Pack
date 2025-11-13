@@ -1451,7 +1451,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutMG = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutMachineGunner = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
@@ -1484,7 +1484,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutTL = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutTeamLeader = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
@@ -1527,7 +1527,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutSL = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutSquadLeader = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
@@ -1692,7 +1692,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutPSG = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutSergeant = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
@@ -1732,7 +1732,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutPLTCO = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutOfficer = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
@@ -2124,7 +2124,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_USA_Men_CreateMG = {
+ PZFP_fnc_blufor_USA_Men_CreateMachineGunner = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -2136,14 +2136,14 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutMG;
+   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutMachineGunner;
    [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
  };
 
- PZFP_fnc_blufor_USA_Men_CreateTL = {
+ PZFP_fnc_blufor_USA_Men_CreateTeamLeader = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -2155,14 +2155,14 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutTL;
+   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutTeamLeader;
    [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
   };
 
- PZFP_fnc_blufor_USA_Men_CreateSL = {
+ PZFP_fnc_blufor_USA_Men_CreateSquadLeader = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -2174,7 +2174,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutSL;
+   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutSquadLeader;
    [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -2238,7 +2238,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_USA_Men_CreatePSG = {
+ PZFP_fnc_blufor_USA_Men_CreateSergeant = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -2251,14 +2251,14 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutPSG;
+   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutSergeant;
    [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
  };
 
- PZFP_fnc_blufor_USA_Men_CreatePLTCO = {
+ PZFP_fnc_blufor_USA_Men_CreateOfficer = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -2270,7 +2270,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutPLTCO;
+   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutOfficer;
    [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -3086,7 +3086,7 @@ PZFP_fnc_initialize = {
 
  };
 
- PZFP_fnc_blufor_USA_MenSF_AddLoadoutPSG = {
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutSergeant = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -3131,7 +3131,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_MenSF_AddLoadoutPlatoonCommander = {
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutOfficer = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -3462,7 +3462,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_USA_MenSF_CreatePSG = {
+ PZFP_fnc_blufor_USA_MenSF_CreateSergeant = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -3473,14 +3473,14 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutPSG;
+   [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutSergeant;
    [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
  };
 
- PZFP_fnc_blufor_USA_MenSF_CreatePlatoonCommander = {
+ PZFP_fnc_blufor_USA_MenSF_CreateOfficer = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -3490,14 +3490,14 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutPlatoonCommander;
+   [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutOfficer;
    [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
  };
 
- PZFP_fnc_blufor_USA_Tanks_CreateSlammer = {
+ PZFP_fnc_blufor_USA_Tanks_CreateSquadLeaderammer = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   _vehicle = createVehicle ["B_MBT_01_Cannon_F",_position,[],0,"NONE"];
@@ -3521,7 +3521,7 @@ PZFP_fnc_initialize = {
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
  };
 
- PZFP_fnc_blufor_USA_Tanks_CreateSlammerUP = {
+ PZFP_fnc_blufor_USA_Tanks_CreateSquadLeaderammerUP = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   _vehicle = createVehicle ["B_MBT_01_TUSK_F",_position,[],0,"NONE"];
@@ -5745,7 +5745,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_BA_Men_AddLoadoutMG = {
+ PZFP_fnc_blufor_BA_Men_AddLoadoutMachineGunner = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -5784,7 +5784,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_BA_Men_AddLoadoutTL = {
+ PZFP_fnc_blufor_BA_Men_AddLoadoutTeamLeader = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -5833,7 +5833,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_BA_Men_AddLoadoutSL = {
+ PZFP_fnc_blufor_BA_Men_AddLoadoutSquadLeader = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -6017,7 +6017,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_BA_Men_AddLoadoutPSG = {
+ PZFP_fnc_blufor_BA_Men_AddLoadoutSergeant = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -6063,7 +6063,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_BA_Men_AddLoadoutPLTCO = {
+ PZFP_fnc_blufor_BA_Men_AddLoadoutOfficer = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -6512,7 +6512,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_BA_Men_CreateMG = {
+ PZFP_fnc_blufor_BA_Men_CreateMachineGunner = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -6524,7 +6524,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutMG;
+   [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutMachineGunner;
    [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
@@ -6532,7 +6532,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_BA_Men_CreateTL = {
+ PZFP_fnc_blufor_BA_Men_CreateTeamLeader = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -6544,7 +6544,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutTL;
+   [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutTeamLeader;
    [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
@@ -6552,7 +6552,7 @@ PZFP_fnc_initialize = {
   _unit
   };
 
- PZFP_fnc_blufor_BA_Men_CreateSL = {
+ PZFP_fnc_blufor_BA_Men_CreateSquadLeader = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -6564,7 +6564,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutSL;
+   [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutSquadLeader;
    [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
@@ -6632,7 +6632,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_BA_Men_CreatePSG = {
+ PZFP_fnc_blufor_BA_Men_CreateSergeant = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -6645,7 +6645,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutPSG;
+   [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutSergeant;
    [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
@@ -6653,7 +6653,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_BA_Men_CreatePLTCO = {
+ PZFP_fnc_blufor_BA_Men_CreateOfficer = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -6665,7 +6665,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutPLTCO;
+   [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutOfficer;
    [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
@@ -6832,7 +6832,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_BA_Tanks_CreateSlammer = {
+ PZFP_fnc_blufor_BA_Tanks_CreateSquadLeaderammer = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   _vehicle = createVehicle ["B_MBT_01_Cannon_F",_position,[],0,"NONE"];
@@ -6854,7 +6854,7 @@ PZFP_fnc_initialize = {
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
  };
 
- PZFP_fnc_blufor_BA_Tanks_CreateSlammerUP = {
+ PZFP_fnc_blufor_BA_Tanks_CreateSquadLeaderammerUP = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   _vehicle = createVehicle ["B_MBT_01_TUSK_F",_position,[],0,"NONE"];
@@ -7040,6 +7040,92 @@ PZFP_fnc_initialize = {
 
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_blufor_AAFAF_Men_AddLoadoutPilot = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "hgun_PDW2000_F";
+  _unit addPrimaryWeaponItem "optic_Holosight_smg_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_9x21_Yellow_Mag";
+
+  _unit forceAddUniform "U_I_pilotCoveralls";
+
+  _unit addItemToUniform "FirstAidKit";
+  for "_i" from 1 to 2 do {_unit addItemToUniform "30Rnd_9x21_Mag";};
+  _unit addItemToUniform "I_IR_Grenade";
+  _unit addItemToUniform "SmokeShellBlue";
+  _unit addItemToUniform "SmokeShellOrange";
+  _unit addItemToUniform "SmokeShellPurple";
+  _unit addItemToUniform "SmokeShell";
+  for "_i" from 1 to 2 do {_unit addItemToUniform "Chemlight_yellow";};
+  _unit addHeadgear "H_PilotHelmetFighter_I";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_blufor_AAFAF_Men_CreatePilot = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  _group setBehaviour "SAFE";
+  private _unit = _group createUnit ["B_Pilot_F", _position, [], 0, "CAN_COLLIDE"];
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_AAFAF_Men_AddLoadoutPilot;
+    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+  };
+  
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+  
+ PZFP_fnc_blufor_AAFAF_Planes_CreateBuzzard = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["I_Plane_Fighter_03_dynamicLoadout_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Green",1], 
+   true
+  ] call BIS_fnc_initVehicle;
+
+  private _pilot = [] call PZFP_fnc_blufor_AAFAF_Men_CreatePilot;
+  _pilot moveInDriver _vehicle;
+  crew _vehicle join createGroup [west, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  };
+ 
+ PZFP_fnc_blufor_AAFAF_Planes_CreateGryphon = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["I_Plane_Fighter_04_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Green",1], 
+   true
+  ] call BIS_fnc_initVehicle;
+
+  private _pilot = [] call PZFP_fnc_blufor_AAFAF_Men_CreatePilot;
+  _pilot moveInDriver _vehicle;
+  crew _vehicle join createGroup [west, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
  };
@@ -7732,7 +7818,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles_INDEP";
  };
 
- PZFP_fnc_blufor_AAFA_Men_AddLoadoutTL = {
+ PZFP_fnc_blufor_AAFA_Men_AddLoadoutTeamLeader = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -7779,7 +7865,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles_INDEP";
  };
 
- PZFP_fnc_blufor_AAFA_Men_AddLoadoutSL = {
+ PZFP_fnc_blufor_AAFA_Men_AddLoadoutSquadLeader = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -7946,7 +8032,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles_INDEP";
  };
 
- PZFP_fnc_blufor_AAFA_Men_AddLoadoutPSG = {
+ PZFP_fnc_blufor_AAFA_Men_AddLoadoutSergeant = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -7990,7 +8076,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles_INDEP";
  };
 
- PZFP_fnc_blufor_AAFA_Men_AddLoadoutPLTCO = {
+ PZFP_fnc_blufor_AAFA_Men_AddLoadoutOfficer = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -8438,7 +8524,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_AAFA_Men_CreateTL = {
+ PZFP_fnc_blufor_AAFA_Men_CreateTeamLeader = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -8448,14 +8534,14 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutTL;
+   [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutTeamLeader;
    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
  };
 
- PZFP_fnc_blufor_AAFA_Men_CreateSL = {
+ PZFP_fnc_blufor_AAFA_Men_CreateSquadLeader = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -8465,7 +8551,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutSL;
+   [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutSquadLeader;
    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -8523,7 +8609,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_AAFA_Men_CreatePSG = {
+ PZFP_fnc_blufor_AAFA_Men_CreateSergeant = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -8534,14 +8620,14 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutPSG;
+   [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutSergeant;
    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
  };
 
- PZFP_fnc_blufor_AAFA_Men_CreatePLTCO = {
+ PZFP_fnc_blufor_AAFA_Men_CreateOfficer = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -8551,7 +8637,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutPLTCO;
+   [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutOfficer;
    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -9406,7 +9492,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles_INDEP";
  };
 
- PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutPSG = {
+ PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutSergeant = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -9451,7 +9537,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles_INDEP";
  };
 
- PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutPlatoonCommander = {
+ PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutOfficer = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -9768,7 +9854,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_AAFA_MenSOF_CreatePSG = {
+ PZFP_fnc_blufor_AAFA_MenSOF_CreateSergeant = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -9779,14 +9865,14 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
     params ["_unit"];
     sleep 0.1;
-    [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutPSG;
+    [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutSergeant;
     [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
  };
 
- PZFP_fnc_blufor_AAFA_MenSOF_CreatePlatoonCommander = {
+ PZFP_fnc_blufor_AAFA_MenSOF_CreateOfficer = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -9796,7 +9882,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
     params ["_unit"];
     sleep 0.1;
-    [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutPlatoonCommander;
+    [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutOfficer;
     [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -9925,7 +10011,7 @@ PZFP_fnc_initialize = {
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
  };
 
- PZFP_fnc_blufor_AAFAF_Men_AddLoadoutPilot = {
+ PZFP_fnc_blufor_LDFAF_AddLoadoutPilot = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -9959,7 +10045,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemGPS";
  };
 
- PZFP_fnc_blufor_AAFAF_Men_CreatePilot = {
+ PZFP_fnc_blufor_LDFAF_Men_CreatePilot = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -9969,43 +10055,49 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
     params ["_unit"];
     sleep 0.1;
-    [_unit] call PZFP_fnc_blufor_AAFAF_Men_AddLoadoutPilot;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_blufor_LDFAF_AddLoadoutPilot;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
   };
-  
+
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
  };
-  
- PZFP_fnc_blufor_AAFAF_Planes_CreateBuzzard = {
-  private _cursorPos = getMousePosition;
-  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_Plane_Fighter_03_dynamicLoadout_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Green",1], 
-   true
-  ] call BIS_fnc_initVehicle;
-
-  private _pilot = [] call PZFP_fnc_blufor_AAFAF_Men_CreatePilot;
-  _pilot moveInDriver _vehicle;
-  crew _vehicle join createGroup [west, true];
-
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
-  };
  
- PZFP_fnc_blufor_AAFAF_Planes_CreateGryphon = {
+ PZFP_fnc_blufor_LDFAF_Planes_CreateGryphon = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   _vehicle = createVehicle ["I_Plane_Fighter_04_F",_position,[],0,"NONE"];
   [
    _vehicle,
-   ["Green",1], 
+   ["CamoGrey",1], 
    true
   ] call BIS_fnc_initVehicle;
+  [_vehicle, [0, "#(argb,8,8,3)color(0.1,0.1,0.1,1)"]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle, ["clan", "\a3\UI_F_Enoch\Data\CfgMarkers\Livonia_CA.paa"]] remoteExec ['setObjectTexture',0,true];
 
-  private _pilot = [] call PZFP_fnc_blufor_AAFAF_Men_CreatePilot;
+  private _pilot = [] call PZFP_fnc_blufor_LDFAF_Men_CreatePilot;
   _pilot moveInDriver _vehicle;
+  crew _vehicle join createGroup [west, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_blufor_LDF_APCs_CreateOdyniec = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["I_E_APC_tracked_03_cannon_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["EAF",1], 
+   ["HideTurret",selectRandom[0,1],"HideHull",selectRandom[0,1],"showCamonetHull",0,"showCamonetTurret",0]
+  ] call BIS_fnc_initVehicle;
+
+  private _driver = [] call PZFP_fnc_blufor_LDF_Men_CreateCrewman;
+  _driver moveInDriver _vehicle;
+  private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateCrewman;
+  _gunner moveInGunner _vehicle;
+  private _commander = [] call PZFP_fnc_blufor_LDF_Men_CreateCrewman;
+  _commander moveInCommander _vehicle;
   crew _vehicle join createGroup [west, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -10043,6 +10135,8 @@ PZFP_fnc_initialize = {
 
   private _driver = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
+  private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
   crew _vehicle join createGroup [west, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -10077,6 +10171,8 @@ PZFP_fnc_initialize = {
 
   private _driver = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
+  private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
   crew _vehicle join createGroup [west, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -10094,6 +10190,8 @@ PZFP_fnc_initialize = {
 
   private _driver = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
+  private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
   crew _vehicle join createGroup [west, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -10344,9 +10442,9 @@ PZFP_fnc_initialize = {
    true
   ] call BIS_fnc_initVehicle;
 
-  private _pilot = [] call PZFP_fnc_blufor_LDF_CreateHelicopterPilot;
+  private _pilot = [] call PZFP_fnc_blufor_LDF_Men_CreateHeliPilot;
   _pilot moveInDriver _vehicle;
-  private _copilot = [] call PZFP_fnc_blufor_LDF_CreateHelicopterPilot;
+  private _copilot = [] call PZFP_fnc_blufor_LDF_Men_CreateHeliPilot;
   _copilot moveInGunner _vehicle;
   crew _vehicle join createGroup [west, true];
 
@@ -10363,9 +10461,9 @@ PZFP_fnc_initialize = {
    true
   ] call BIS_fnc_initVehicle;
 
-  private _pilot = [] call PZFP_fnc_blufor_LDF_CreateHelicopterPilot;
+  private _pilot = [] call PZFP_fnc_blufor_LDF_Men_CreateHeliPilot;
   _pilot moveInDriver _vehicle;
-  private _copilot = [] call PZFP_fnc_blufor_LDF_CreateHelicopterPilot;
+  private _copilot = [] call PZFP_fnc_blufor_LDF_Men_CreateHeliPilot;
   _copilot moveInGunner _vehicle;
   crew _vehicle join createGroup [west, true];
 
@@ -11206,7 +11304,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_LDF_Men_CreateTL = {
+ PZFP_fnc_blufor_LDF_Men_CreateTeamLeader = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -11223,7 +11321,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_LDF_Men_CreateSL = {
+ PZFP_fnc_blufor_LDF_Men_CreateSquadLeader = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -11291,7 +11389,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_LDF_Men_CreatePSG = {
+ PZFP_fnc_blufor_LDF_Men_CreateSergeant = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -11309,7 +11407,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_LDF_Men_CreatePLTCO = {
+ PZFP_fnc_blufor_LDF_Men_CreateOfficer = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -11445,7 +11543,1232 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRifleman
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRifleman = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MSBS65_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_blk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_msbs_mag";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_msbs_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "I_E_IR_Grenade";  
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRiflemanLAT = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MSBS65_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_blk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_msbs_mag";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+  _unit addWeapon "launch_MRAWS_green_rail_F";
+  _unit addMagazine "MRAWS_HEAT_F";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+  _unit addBackpack "B_Carryall_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_msbs_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "I_E_IR_Grenade";  
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "MRAWS_HEAT_F";};
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRiflemanAT = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MSBS65_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_blk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_msbs_mag";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+  _unit addWeapon "launch_NLAW_F";
+  _unit addMagazine "NLAW_F";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+  _unit addBackpack "B_Carryall_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_msbs_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "I_E_IR_Grenade";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "NLAW_F";};
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutAutorifleman = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "LMG_Mk200_black_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_blk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "200Rnd_65x39_cased_Box";
+  _unit addPrimaryWeaponItem "item_bipod_01_F_blk";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 2 do {_unit addItemToVest "200Rnd_65x39_cased_Box";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  _unit addItemToVest "HandGrenade";
+  _unit addItemToVest "SmokeShell";
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutMarksman = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "srifle_DMR_03_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_B";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_DMS";
+  _unit addPrimaryWeaponItem "20Rnd_762x51_Mag";
+  _unit addPrimaryWeaponItem "bipod_01_F_blk";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 6 do {_unit addItemToVest "20Rnd_762x51_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "I_E_IR_Grenade";  
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_LDF_MenSOF_AddLoadoutTeamLeader = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MSBS65_GL_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_blk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_msbs_mag";
+  _unit addPrimaryWeaponItem "1Rnd_HE_Grenade_shell";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 4 do {_unit addItemToVest "30Rnd_65x39_caseless_msbs_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  for "_i" from 1 to 5 do {_unit addItemToVest "1Rnd_HE_Grenade_shell";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "UGL_FlareWhite_F";
+  _unit addItemToVest "1Rnd_Smoke_Grenade_shell";
+  _unit addItemToVest "1Rnd_SmokeRed_Grenade_shell";
+  _unit addItemToVest "UGL_FlareWhite_Illumination_F";
+  _unit addItemToVest "UGL_FlareCIR_F";
+  _unit addItemToVest "I_E_IR_Grenade";
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutSquadLeader = {
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MSBS65_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_blk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_msbs_mag";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+  _unit addBackpack "B_AssaultPack_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_msbs_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "I_E_IR_Grenade";  
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutJTAC = {
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MSBS65_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_blk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_msbs_mag";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Laserbatteries";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_msbs_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "I_E_IR_Grenade";  
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit addWeapon "Laserdesignator_03";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutMedic = {
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MSBS65_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_blk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_msbs_mag";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+  _unit addBackpack "B_AssaultPack_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_msbs_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "I_E_IR_Grenade";
+  for "_i" from 1 to 5 do {_unit addItemToBackpack "FirstAidKit";};
+  _unit addItemToBackpack "Medikit";
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRTO = {
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MSBS65_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_blk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_msbs_mag";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+  _unit addBackpack "B_RadioBag_01_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_msbs_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "I_E_IR_Grenade";
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutAmmoBearer = {
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MSBS65_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_blk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_msbs_mag";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+  _unit addBackpack "B_Carryall_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_msbs_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "I_E_IR_Grenade";
+  for "_i" from 1 to 10 do {_unit addItemToBackpack "30Rnd_65x39_caseless_msbs_mag";};
+  for "_i" from 1 to 3 do {_unit addItemToBackpack "200Rnd_65x39_cased_Box";};
+  for "_i" from 1 to 10 do {_unit addItemToBackpack "1Rnd_HE_Grenade_shell";};
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutDemoSpecialist = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MSBS65_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_blk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_msbs_mag";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+  _unit addBackpack "B_AssaultPack_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_msbs_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "I_E_IR_Grenade";
+  for "_i" from 1 to 3 do {_unit addItemToBackpack "DemoCharge_Remote_Mag";};
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutEngineer = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MSBS65_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_blk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_msbs_mag";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+  _unit addBackpack "B_AssaultPack_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_msbs_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "I_E_IR_Grenade";
+  _unit addItemToBackpack "ToolKit";
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutSergeant = {
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MSBS65_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_blk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Holosight_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_msbs_mag";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_msbs_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutOfficer = {
+  params ["unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MSBS65_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_blk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Holosight_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_msbs_mag";
+  _unit addWeapon "hgun_Pistol_heavy_01_green_F";
+  _unit addHandgunItem "11Rnd_45ACP_Mag";
+  _unit addHandgunItem "muzzle_snds_LP_pistol";
+  _unit addHandgunItem "optic_MRD_black";
+
+  _unit forceAddUniform "U_I_CombatUniform";
+  [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_CarrierRigKBT_01_light_EAF_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_msbs_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "11Rnd_45ACP_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addHeadgear "H_HelmetHBK_ear_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGogglesB_grn_F";
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateRifleman = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_Soldier_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+   params ["_unit"];
+   sleep 0.1;
+   [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRifleman;
+   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateRiflemanLAT = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_Soldier_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+   params ["_unit"];
+   sleep 0.1;
+   [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRiflemanLAT;
+   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateRiflemanAT = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_Soldier_LAT_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+   params ["_unit"];
+   sleep 0.1;
+   [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRiflemanAT;
+   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateAutorifleman = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_soldier_AR_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+   params ["_unit"];
+   sleep 0.1;
+   [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutAutorifleman;
+   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateMarksman = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_soldier_M_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutMarksman;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateTeamLeader = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_soldier_TL_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutTeamLeader;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateSquadLeader = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_soldier_SL_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutSquadLeader;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateJTAC = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_CTRG_Soldier_JTAC_tna_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutJTAC;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateAmmoBearer = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_Soldier_A_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutAmmoBearer;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateMedic = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_medic_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutMedic;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateRTO = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_W_RadioOperator_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRTO;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateDemoSpecialist = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_CTRG_Soldier_Exp_tna_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutDemoSpecialist;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateEngineer = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_engineer_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutEngineer;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateSergeant = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["C_Marshal_F", _position, [], 0, "CAN_COLLIDE"];
+  [_unit] joinSilent _group;
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutSergeant;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_MenSOF_CreateOfficer = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_officer_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutOfficer;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_Turrets_CreateHMG = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["I_E_HMG_02_F",_position,[],0,"NONE"];
+
+  private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_blufor_LDF_Turrets_CreateHMGTripod = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["I_E_HMG_02_high_F",_position,[],0,"NONE"];
+
+  private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_blufor_LDF_Turrets_CreateAA = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["I_E_Static_AA_F",_position,[],0,"NONE"];
+
+  private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_blufor_LDF_Turrets_CreateAT = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["I_E_Static_AT_F",_position,[],0,"NONE"];
+
+  private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroad = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["I_E_Offroad_01_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["ParkRanger",1], 
+   ["HideDoor1",0,"HideDoor2",0,"HideDoor3",0,"HideBackpacks",selectRandom[0,1],"HideBumper1",1,"HideBumper2",0,"HideConstruction",selectRandom[0,1],"hidePolice",0,"HideServices",1,"BeaconsStart",0,"BeaconsServicesStart",0]
+  ] call BIS_fnc_initVehicle;
+  
+  private _driver = [] call PZFP_fnc_blufor_StrazLesna_Men_CreateOfficer;
+  _driver moveInDriver _vehicle;
+  crew _vehicle joinSilent createGroup [west, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroadHMG = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["I_G_Offroad_01_armed_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["ParkRanger",1], 
+   ["Hide_Shield",selectRandom[0,1],"Hide_Rail",1,"HideDoor1",0,"HideDoor2",0,"HideDoor3",0,"HideBackpacks",selectRandom[0,1],"HideBumper1",1,"HideBumper2",0,"HideConstruction",selectRandom[0,1],"hidePolice",0,"HideServices",1,"BeaconsStart",0,"BeaconsServicesStart",0]
+  ] call BIS_fnc_initVehicle;
+  
+  private _driver = [] call PZFP_fnc_blufor_StrazLesna_Men_CreateOfficer;
+  _driver moveInDriver _vehicle;
+  private _gunner = [] call PZFP_fnc_blufor_StrazLesna_Men_CreateOfficer;
+  _gunner moveInGunner _vehicle;
+  crew _vehicle joinSilent createGroup [west, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroadCovered = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["I_E_Offroad_01_covered_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["ParkRanger",1], 
+   ["hidePolice",0,"HideServices",1,"HideCover",0,"StartBeaconLight",0,"HideRoofRack",1,"HideLoudSpeakers",1,"HideAntennas",1,"HideBeacon",1,"HideSpotlight",1,"HideDoor3",0,"OpenDoor3",0,"HideDoor1",0,"HideDoor2",0,"HideBackpacks",1,"HideBumper1",1,"HideBumper2",0,"HideConstruction",0,"BeaconsStart",0]
+  ] call BIS_fnc_initVehicle;
+  
+  private _driver = [] call PZFP_fnc_blufor_StrazLesna_Men_CreateOfficer;
+  _driver moveInDriver _vehicle;
+  crew _vehicle joinSilent createGroup [west, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroadComms = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["I_E_Offroad_01_comms_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["ParkRanger",1], 
+   ["hidePolice",1,"HideServices",1,"HideCover",0,"StartBeaconLight",0,"HideRoofRack",0,"HideLoudSpeakers",1,"HideAntennas",0,"HideBeacon",0,"HideSpotlight",0,"HideDoor3",0,"OpenDoor3",0,"HideDoor1",0,"HideDoor2",0,"HideBackpacks",selectRandom[0,1],"HideBumper1",1,"HideBumper2",0,"HideConstruction",0,"BeaconsStart",0]
+  ] call BIS_fnc_initVehicle;
+  
+  private _driver = [] call PZFP_fnc_blufor_StrazLesna_Men_CreateOfficer;
+  _driver moveInDriver _vehicle;
+  crew _vehicle joinSilent createGroup [west, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_blufor_StrazLesna_Men_AddLoadoutOfficer = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "hgun_Pistol_heavy_02_F";
+  _unit addHandgunItem "6Rnd_45ACP_Cylinder";
+  _unit addHandgunItem "acc_flashlight_pistol";
+
+  _unit forceAddUniform selectRandom ["U_BG_Guerrilla_6_1","U_BG_Guerilla2_3","U_I_L_Uniform_01_deserter_F"];
+  _unit addVest "V_TacVest_blk_POLICE";
+
+  _unit addWeapon "Binocular";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform selectRandom ["MobilePhone", "SmartPhone"];
+  for "_i" from 1 to 6 do {_unit addItemToVest "6Rnd_45ACP_Cylinder";};
+  _unit addHeadgear selectRandom ["H_Cap_Police", "H_BoonieHat_mgrn", "", "H_Cap_blk", "H_Cap_grn", "H_BoonieHat_oli", "H_BoonieHat"];
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_blufor_StrazLesna_Men_AddLoadoutOfficerShotgun = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "sgun_HunterShotgun_01_F";
+  _unit addPrimaryWeaponItem "2Rnd_12Gauge_Pellets";
+
+  _unit forceAddUniform selectRandom ["U_BG_Guerrilla_6_1","U_BG_Guerilla2_3","U_I_L_Uniform_01_deserter_F"];
+  _unit addVest "V_TacVest_blk_POLICE";
+
+  _unit addWeapon "Binocular";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform selectRandom ["MobilePhone", "SmartPhone"];
+  for "_i" from 1 to 5 do {_unit addItemToVest "2Rnd_12Gauge_Slug";};
+  for "_i" from 1 to 5 do {_unit addItemToVest "2Rnd_12Gauge_Pellets";};
+  _unit addHeadgear selectRandom ["H_Cap_Police", "H_BoonieHat_mgrn", "", "H_Cap_blk", "H_Cap_grn", "H_BoonieHat_oli", "H_BoonieHat"];
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_blufor_StrazLesna_Men_AddLoadoutOfficerRifle = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "srifle_DMR_06_hunter_F";
+  _unit addPrimaryWeaponItem "optic_KHS_old";
+  _unit addPrimaryWeaponItem "10Rnd_Mk14_762x51_Mag";
+
+  _unit forceAddUniform selectRandom ["U_BG_Guerrilla_6_1","U_BG_Guerilla2_3","U_I_L_Uniform_01_deserter_F"];
+  _unit addVest "V_TacVest_blk_POLICE";
+
+  _unit addWeapon "Binocular";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform selectRandom ["MobilePhone", "SmartPhone"];
+  for "_i" from 1 to 4 do {_unit addItemToVest "10Rnd_Mk14_762x51_Mag";};
+  _unit addHeadgear selectRandom ["H_Cap_Police", "H_BoonieHat_mgrn", "", "H_Cap_blk", "H_Cap_grn", "H_BoonieHat_oli", "H_BoonieHat"];
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_blufor_StrazLesna_Men_CreateOfficer = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_officer_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_StrazLesna_Men_AddLoadoutOfficer;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_StrazLesna_Men_CreateOfficerShotgun = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_officer_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_StrazLesna_Men_AddLoadoutOfficerShotgun;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_blufor_StrazLesna_Men_CreateOfficerRifle = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_officer_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_StrazLesna_Men_AddLoadoutOfficerRifle;
+    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
 
  PZFP_fnc_rebuildZeusTree = {
   disableSerialization;
@@ -11545,14 +12868,14 @@ PZFP_fnc_initialize = {
   PZFP_blufor_USA_Men_AT = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Rifleman (AT)", "PZFP_fnc_blufor_USA_Men_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_Autorifleman = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Autorifleman", "PZFP_fnc_blufor_USA_Men_CreateAutorifleman", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_Marksman = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Marksman", "PZFP_fnc_blufor_USA_Men_CreateMarksman", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_USA_Men_MachineGunner = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Machine Gunner", "PZFP_fnc_blufor_USA_Men_CreateMG", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_USA_Men_TeamLeader = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Team Leader", "PZFP_fnc_blufor_USA_Men_CreateTL", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_USA_Men_SquadLeader = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Squad Leader", "PZFP_fnc_blufor_USA_Men_CreateSL", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USA_Men_MachineGunner = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Machine Gunner", "PZFP_fnc_blufor_USA_Men_CreateMachineGunner", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USA_Men_TeamLeader = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Team Leader", "PZFP_fnc_blufor_USA_Men_CreateTeamLeader", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USA_Men_SquadLeader = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Squad Leader", "PZFP_fnc_blufor_USA_Men_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_AmmoBearer = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Ammo Bearer", "PZFP_fnc_blufor_USA_Men_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_Medic = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Medic", "PZFP_fnc_blufor_USA_Men_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_RTO = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Radio-Telephone Operator", "PZFP_fnc_blufor_USA_Men_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_USA_Men_PSG = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Sergeant", "PZFP_fnc_blufor_USA_Men_CreatePSG", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_USA_Men_PLTCO = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Officer", "PZFP_fnc_blufor_USA_Men_CreatePLTCO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USA_Men_Sergeant = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Sergeant", "PZFP_fnc_blufor_USA_Men_CreateSergeant", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USA_Men_Officer = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Officer", "PZFP_fnc_blufor_USA_Men_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_Crewman = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Crewman", "PZFP_fnc_blufor_USA_Men_CreateCrewman", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_ExplosiveSpecialist = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Explosive Specialist", "PZFP_fnc_blufor_USA_Men_CreateExplosiveSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_Survivor = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Survivor", "PZFP_fnc_blufor_USA_Men_CreateSurvivor", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -11577,14 +12900,14 @@ PZFP_fnc_initialize = {
   PZFP_blufor_USA_MenSF_Engineer = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Engineer", "PZFP_fnc_blufor_USA_MenSF_CreateEngineer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_MenSF_Sniper = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Sniper", "PZFP_fnc_blufor_USA_MenSF_CreateSniper", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_MenSF_Spotter = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Spotter", "PZFP_fnc_blufor_USA_MenSF_CreateSpotter", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_USA_MenSF_PSG = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Platoon Sergeant", "PZFP_fnc_blufor_USA_MenSF_CreatePSG", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_USA_MenSF_PlatoonCommander = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Platoon Commander", "PZFP_fnc_blufor_USA_MenSF_CreatePlatoonCommander", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USA_MenSF_Sergeant = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Sergeant", "PZFP_fnc_blufor_USA_MenSF_CreateSergeant", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USA_MenSF_Officer = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Officer", "PZFP_fnc_blufor_USA_MenSF_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
   
   PZFP_blufor_USA_MenSFAB = [_blufor, PZFP_blufor_USA, "Men (Airborne)", [1,1,1,1]] call PZFP_fnc_addSubCategory;
 
   PZFP_blufor_USA_Tanks = [_blufor, PZFP_blufor_USA, "Tanks", [1,1,1,1]] call PZFP_fnc_addSubCategory;
-  PZFP_blufor_USA_Tanks_Slammer = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Tanks, "M2A1 Slammer", "PZFP_fnc_blufor_USA_Tanks_CreateSlammer", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_USA_Tanks_SlammerUp = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Tanks, "M2A4 Slammer (Urban Kit)", "PZFP_fnc_blufor_USA_Tanks_CreateSlammerUp", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USA_Tanks_Slammer = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Tanks, "M2A1 Slammer", "PZFP_fnc_blufor_USA_Tanks_CreateSquadLeaderammer", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USA_Tanks_SlammerUp = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Tanks, "M2A4 Slammer (Urban Kit)", "PZFP_fnc_blufor_USA_Tanks_CreateSquadLeaderammerUp", [1,1,1,1]] call PZFP_fnc_addModule;
 
   PZFP_blufor_USA_TankDestroyers = [_blufor, PZFP_blufor_USA, "Tank Destroyers", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_USA_TanksDestroyers_Rhino = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_TankDestroyers, "Rhino MGS", "PZFP_fnc_blufor_USA_TankDestroyers_CreateRhino", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -11708,14 +13031,14 @@ PZFP_fnc_initialize = {
   PZFP_blufor_BA_Men_AT = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Rifleman (AT)", "PZFP_fnc_blufor_BA_Men_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Men_Autorifleman = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Autorifleman", "PZFP_fnc_blufor_BA_Men_CreateAutorifleman", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Men_Marksman = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Marksman", "PZFP_fnc_blufor_BA_Men_CreateMarksman", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_BA_Men_MachineGunner = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Machine Gunner", "PZFP_fnc_blufor_BA_Men_CreateMG", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_BA_Men_TeamLeader = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Team Leader", "PZFP_fnc_blufor_BA_Men_CreateTL", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_BA_Men_SquadLeader = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Squad Leader", "PZFP_fnc_blufor_BA_Men_CreateSL", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_BA_Men_MachineGunner = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Machine Gunner", "PZFP_fnc_blufor_BA_Men_CreateMachineGunner", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_BA_Men_TeamLeader = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Team Leader", "PZFP_fnc_blufor_BA_Men_CreateTeamLeader", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_BA_Men_SquadLeader = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Squad Leader", "PZFP_fnc_blufor_BA_Men_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Men_AmmoBearer = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Ammo Bearer", "PZFP_fnc_blufor_BA_Men_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Men_Medic = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Medic", "PZFP_fnc_blufor_BA_Men_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Men_RTO = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Radio-Telephone Operator", "PZFP_fnc_blufor_BA_Men_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_BA_Men_PSG = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Sergeant", "PZFP_fnc_blufor_BA_Men_CreatePSG", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_BA_Men_PLTCO = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Officer", "PZFP_fnc_blufor_BA_Men_CreatePLTCO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_BA_Men_Sergeant = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Sergeant", "PZFP_fnc_blufor_BA_Men_CreateSergeant", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_BA_Men_Officer = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Officer", "PZFP_fnc_blufor_BA_Men_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Men_Crewman = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Crewman", "PZFP_fnc_blufor_BA_Men_CreateCrewman", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Men_ExplosiveSpecialist = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Explosive Specialist", "PZFP_fnc_blufor_BA_Men_CreateExplosiveSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Men_Survivor = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Survivor", "PZFP_fnc_blufor_BA_Men_CreateSurvivor", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -11738,6 +13061,16 @@ PZFP_fnc_initialize = {
   PZFP_blufor_BA_Turrets_Designator = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Turrets, "Remote Designator", "PZFP_fnc_blufor_BA_Turrets_CreateDesignator", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Turrets_AA = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Turrets, "Static Launcher (AA)", "PZFP_fnc_blufor_BA_Turrets_CreateAA", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Turrets_AT = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Turrets, "Static Launcher (AT)", "PZFP_fnc_blufor_BA_Turrets_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  
+  PZFP_blufor_AAFAF = [_blufor, "Altis Armed Forces Air Force", [1,1,1,1]] call PZFP_fnc_addCategory;
+
+  PZFP_blufor_AAFAF_Men = [_blufor, PZFP_blufor_AAFAF, "Men", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_AAFAF_Men_Pilot = [_blufor, PZFP_blufor_AAFAF, PZFP_blufor_AAFAF_Men, "Pilot", "PZFP_fnc_blufor_AAFAF_Men_CreatePilot", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_blufor_AAFAF_Planes = [_blufor, PZFP_blufor_AAFAF, "Planes", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_AAFAF_Planes_Buzzard = [_blufor, PZFP_blufor_AAFAF, PZFP_blufor_AAFAF_Planes, "A-143 Buzzard", "PZFP_fnc_blufor_AAFAF_Planes_CreateBuzzard", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_AAFAF_Planes_Gryphon = [_blufor, PZFP_blufor_AAFAF, PZFP_blufor_AAFAF_Planes, "A-149 Gryphon", "PZFP_fnc_blufor_AAFAF_Planes_CreateGryphon", [1,1,1,1]] call PZFP_fnc_addModule;
 
 
   PZFP_blufor_AAFA = [_blufor, "Altis Armed Forces Land Forces", [1,1,1,1]] call PZFP_fnc_addCategory;
@@ -11788,13 +13121,13 @@ PZFP_fnc_initialize = {
   PZFP_blufor_AAFA_Men_AT = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Rifleman (AT)", "PZFP_fnc_blufor_AAFA_Men_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_Men_Autorifleman = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Autorifleman", "PZFP_fnc_blufor_AAFA_Men_CreateAutorifleman", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_Men_Marksman = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Marksman", "PZFP_fnc_blufor_AAFA_Men_CreateMarksman", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_AAFA_Men_TeamLeader = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Team Leader", "PZFP_fnc_blufor_AAFA_Men_CreateTL", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_AAFA_Men_SquadLeader = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Squad Leader", "PZFP_fnc_blufor_AAFA_Men_CreateSL", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_AAFA_Men_TeamLeader = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Team Leader", "PZFP_fnc_blufor_AAFA_Men_CreateTeamLeader", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_AAFA_Men_SquadLeader = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Squad Leader", "PZFP_fnc_blufor_AAFA_Men_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_Men_AmmoBearer = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Ammo Bearer", "PZFP_fnc_blufor_AAFA_Men_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_Men_Medic = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Medic", "PZFP_fnc_blufor_AAFA_Men_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_Men_RTO = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Radio-Telephone Operator", "PZFP_fnc_blufor_AAFA_Men_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_AAFA_Men_PSG = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Sergeant", "PZFP_fnc_blufor_AAFA_Men_CreatePSG", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_AAFA_Men_PLTCO = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Officer", "PZFP_fnc_blufor_AAFA_Men_CreatePLTCO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_AAFA_Men_Sergeant = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Sergeant", "PZFP_fnc_blufor_AAFA_Men_CreateSergeant", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_AAFA_Men_Officer = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Officer", "PZFP_fnc_blufor_AAFA_Men_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_Men_Crewman = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Crewman", "PZFP_fnc_blufor_AAFA_Men_CreateCrewman", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_Men_ExplosiveSpecialist = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Explosive Specialist", "PZFP_fnc_blufor_AAFA_Men_CreateExplosiveSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_Men_Survivor = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Survivor", "PZFP_fnc_blufor_AAFA_Men_CreateSurvivor", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -11819,9 +13152,9 @@ PZFP_fnc_initialize = {
   PZFP_blufor_AAFA_MenSOF_Engineer = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "Engineer", "PZFP_fnc_blufor_AAFA_MenSOF_CreateEngineer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_MenSOF_Sniper = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "Sniper", "PZFP_fnc_blufor_AAFA_MenSOF_CreateSniper", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_MenSOF_Spotter = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "Spotter", "PZFP_fnc_blufor_AAFA_MenSOF_CreateSpotter", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_AAFA_MenSOF_PSG = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "Platoon Sergeant", "PZFP_fnc_blufor_AAFA_MenSOF_CreatePSG", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_AAFA_MenSOF_PlatoonCommander = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "Platoon Commander", "PZFP_fnc_blufor_AAFA_MenSOF_CreatePlatoonCommander", [1,1,1,1]] call PZFP_fnc_addModule;
- 
+  PZFP_blufor_AAFA_MenSOF_Sergeant = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "Sergeant", "PZFP_fnc_blufor_AAFA_MenSOF_CreateSergeant", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_AAFA_MenSOF_Officer = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "Officer", "PZFP_fnc_blufor_AAFA_MenSOF_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
+
   PZFP_blufor_AAFA_Tanks = [_blufor, PZFP_blufor_AAFA, "Tanks", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_AAFA_Tanks_Kuma = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Tanks, "MBT-52 Kuma", "PZFP_fnc_blufor_AAFA_Tanks_CreateKuma", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_Tanks_NyxRecon = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Tanks, "AWC 302 Nyx (Recon)", "PZFP_fnc_blufor_AAFA_Tanks_CreateNyxRecon", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -11835,17 +13168,16 @@ PZFP_fnc_initialize = {
   PZFP_blufor_AAFA_Turrets_AT = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Turrets, "Static Launcher (AT)", "PZFP_fnc_blufor_AAFA_Turrets_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
  
 
-  PZFP_blufor_AAFAF = [_blufor, "Altis Armed Forces Air Force", [1,1,1,1]] call PZFP_fnc_addCategory;
+  PZFP_blufor_LDFAF = [_blufor, "Livonian Defense Force Air Force", [1,1,1,1]] call PZFP_fnc_addCategory;
 
-  PZFP_blufor_AAFAF_Men = [_blufor, PZFP_blufor_AAFAF, "Men", [1,1,1,1]] call PZFP_fnc_addSubCategory;
-  PZFP_blufor_AAFAF_Men_Pilot = [_blufor, PZFP_blufor_AAFAF, PZFP_blufor_AAFAF_Men, "Pilot", "PZFP_fnc_blufor_AAFAF_Men_CreatePilot", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDFAF_Men = [_blufor, PZFP_blufor_LDFAF, "Men", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_LDFAF_Men_Pilot = [_blufor, PZFP_blufor_LDFAF, PZFP_blufor_LDFAF_Men, "Pilot", "PZFP_fnc_blufor_LDFAF_Men_CreatePilot", [1,1,1,1]] call PZFP_fnc_addModule;
+  
+  PZFP_blufor_LDFAF_Planes = [_blufor, PZFP_blufor_LDFAF, "Planes", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_LDFAF_Planes_Gryphon = [_blufor, PZFP_blufor_LDFAF, PZFP_blufor_LDFAF_Planes, "A-149 Gryphon", "PZFP_fnc_blufor_LDFAF_Planes_CreateGryphon", [1,1,1,1]] call PZFP_fnc_addModule;
 
-  PZFP_blufor_AAFAF_Planes = [_blufor, PZFP_blufor_AAFAF, "Planes", [1,1,1,1]] call PZFP_fnc_addSubCategory;
-  PZFP_blufor_AAFAF_Planes_Buzzard = [_blufor, PZFP_blufor_AAFAF, PZFP_blufor_AAFAF_Planes, "A-143 Buzzard", "PZFP_fnc_blufor_AAFAF_Planes_CreateBuzzard", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_AAFAF_Planes_Gryphon = [_blufor, PZFP_blufor_AAFAF, PZFP_blufor_AAFAF_Planes, "A-149 Gryphon", "PZFP_fnc_blufor_AAFAF_Planes_CreateGryphon", [1,1,1,1]] call PZFP_fnc_addModule;
 
-
-  PZFP_blufor_LDF = [_blufor, "Livonian Defense Force", [1,1,1,1]] call PZFP_fnc_addCategory;
+  PZFP_blufor_LDF = [_blufor, "Livonian Defense Force Army", [1,1,1,1]] call PZFP_fnc_addCategory;
 
   PZFP_blufor_LDF_Artillery = [_blufor, PZFP_blufor_LDF, "Artillery", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_LDF_Artillery_Sandstorm = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Artillery, "M5 Sandstorm MLRS", "PZFP_fnc_blufor_LDF_Artillery_CreateSandstorm", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -11883,13 +13215,13 @@ PZFP_fnc_initialize = {
   PZFP_blufor_LDF_Men_AT = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Rifleman (AT)", "PZFP_fnc_blufor_LDF_Men_CreateRiflemanAT", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_Autorifleman = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Autorifleman", "PZFP_fnc_blufor_LDF_Men_CreateAutorifleman", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_Marksman = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Marksman", "PZFP_fnc_blufor_LDF_Men_CreateMarksman", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_LDF_Men_TeamLeader = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Team Leader", "PZFP_fnc_blufor_LDF_Men_CreateTL", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_LDF_Men_SquadLeader = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Squad Leader", "PZFP_fnc_blufor_LDF_Men_CreateSL", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_Men_TeamLeader = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Team Leader", "PZFP_fnc_blufor_LDF_Men_CreateTeamLeader", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_Men_SquadLeader = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Squad Leader", "PZFP_fnc_blufor_LDF_Men_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_AmmoBearer = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Ammo Bearer", "PZFP_fnc_blufor_LDF_Men_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_Medic = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Medic", "PZFP_fnc_blufor_LDF_Men_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_RTO = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Radio-Telephone Operator", "PZFP_fnc_blufor_LDF_Men_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_LDF_Men_PSG = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Sergeant", "PZFP_fnc_blufor_LDF_Men_CreatePSG", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_LDF_Men_PLTCO = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Officer", "PZFP_fnc_blufor_LDF_Men_CreatePLTCO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_Men_Sergeant = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Sergeant", "PZFP_fnc_blufor_LDF_Men_CreateSergeant", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_Men_Officer = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Officer", "PZFP_fnc_blufor_LDF_Men_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_Crewman = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Crewman", "PZFP_fnc_blufor_LDF_Men_CreateCrewman", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_ExplosiveSpecialist = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Explosive Specialist", "PZFP_fnc_blufor_LDF_Men_CreateExplosiveSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_Survivor = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Survivor", "PZFP_fnc_blufor_LDF_Men_CreateSurvivor", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -11897,6 +13229,43 @@ PZFP_fnc_initialize = {
   PZFP_blufor_LDF_Men_HeliCrew = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Helicopter Crew", "PZFP_fnc_blufor_LDF_Men_CreateHeliCrew", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_MineSpecialist = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Mine Specialist", "PZFP_fnc_blufor_LDF_Men_CreateMineSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_UAVOperator = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "UAV Operator", "PZFP_fnc_blufor_LDF_Men_CreateUAVOperator", [1,1,1,1]] call PZFP_fnc_addModule;
+  
+  PZFP_blufor_LDF_MenSOF = [_blufor, PZFP_blufor_LDF, "Men (SOF)", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_LDF_MenSOF_Rifleman = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Rifleman", "PZFP_fnc_blufor_LDF_MenSOF_CreateRifleman", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_RiflemanLAT = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Rifleman (LAT)", "PZFP_fnc_blufor_LDF_MenSOF_CreateRiflemanLAT", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_RiflemanAT = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Rifleman (AT)", "PZFP_fnc_blufor_LDF_MenSOF_CreateRiflemanAT", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_Autorifleman = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Autorifleman", "PZFP_fnc_blufor_LDF_MenSOF_CreateAutorifleman", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_Marksman = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Marksman", "PZFP_fnc_blufor_LDF_MenSOF_CreateMarksman", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_TeamLeader = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Team Leader", "PZFP_fnc_blufor_LDF_MenSOF_CreateTeamLeader", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_SquadLeader = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Squad Leader", "PZFP_fnc_blufor_LDF_MenSOF_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_JTAC = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "JTAC", "PZFP_fnc_blufor_LDF_MenSOF_CreateJTAC", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_Medic = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Medic", "PZFP_fnc_blufor_LDF_MenSOF_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_RTO = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Radio-Telephone Operator", "PZFP_fnc_blufor_LDF_MenSOF_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_AmmoBearer = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Ammo Bearer", "PZFP_fnc_blufor_LDF_MenSOF_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_DemoSpecialist = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Demolitions Specialist", "PZFP_fnc_blufor_LDF_MenSOF_CreateDemoSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_Engineer = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Engineer", "PZFP_fnc_blufor_LDF_MenSOF_CreateEngineer", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_Sergeant = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Sergeant", "PZFP_fnc_blufor_LDF_MenSOF_CreateSergeant", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_Officer = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Officer", "PZFP_fnc_blufor_LDF_MenSOF_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_blufor_LDF_Turrets = [_blufor, PZFP_blufor_LDF, "Turrets", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_LDF_Turrets_HMG = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Turrets, "M2 HMG", "PZFP_fnc_blufor_LDF_Turrets_CreateHMG", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_Turrets_HMGTripod = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Turrets, "M2 HMG (Raised)", "PZFP_fnc_blufor_LDF_Turrets_CreateHMGTripod", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_Turrets_AA = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Turrets, "Static Launcher (AA)", "PZFP_fnc_blufor_LDF_Turrets_CreateAA", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_Turrets_AT = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Turrets, "Static Launcher (AT)", "PZFP_fnc_blufor_LDF_Turrets_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
+  
+  PZFP_blufor_StrazLesna = [_blufor, "Straż Leśną Livonia", [1,1,1,1]] call PZFP_fnc_addCategory;
+
+  PZFP_blufor_StrazLesna_Cars = [_blufor, PZFP_blufor_StrazLesna, "Cars", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_StrazLesna_Cars_Offroad = [_blufor, PZFP_blufor_StrazLesna, PZFP_blufor_StrazLesna_Cars, "Offroad", "PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroad", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_StrazLesna_Cars_OffroadHMG = [_blufor, PZFP_blufor_StrazLesna, PZFP_blufor_StrazLesna_Cars, "Offroad (HMG)", "PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroadHMG", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_StrazLesna_Cars_OffroadCovered = [_blufor, PZFP_blufor_StrazLesna, PZFP_blufor_StrazLesna_Cars, "Offroad (Covered)", "PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroadCovered", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_StrazLesna_Cars_OffroadComms = [_blufor, PZFP_blufor_StrazLesna, PZFP_blufor_StrazLesna_Cars, "Offroad (Comms)", "PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroadComms", [1,1,1,1]] call PZFP_fnc_addModule;
+  
+  PZFP_blufor_StrazLesna_Men = [_blufor, PZFP_blufor_StrazLesna, "Officers", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_StrazLesna_Men_Officer = [_blufor, PZFP_blufor_StrazLesna, PZFP_blufor_StrazLesna_Men, "Officer", "PZFP_fnc_blufor_StrazLesna_Men_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_StrazLesna_Men_OfficerShotgun = [_blufor, PZFP_blufor_StrazLesna, PZFP_blufor_StrazLesna_Men, "Officer (Shotgun)", "PZFP_fnc_blufor_StrazLesna_Men_CreateOfficerShotgun", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_StrazLesna_Men_OfficerRifle = [_blufor, PZFP_blufor_StrazLesna, PZFP_blufor_StrazLesna_Men, "Officer (Rifle)", "PZFP_fnc_blufor_StrazLesna_Men_CreateOfficerRifle", [1,1,1,1]] call PZFP_fnc_addModule;
+  
   
  };
 

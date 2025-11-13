@@ -36,6 +36,7 @@ BLUFOR:
     - Maintenance Crew
 * Livonian Army (BLU, RED, IND)
     - Infantry
+    - Military Police
     - 5th Regiment
     - Special Operations
 * Straz Lesna Livonia (BLU, RED, IND)
