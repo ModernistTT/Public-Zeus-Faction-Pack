@@ -4,8 +4,7 @@ comment "To run, Ctrl+C the code into the init box of an 'Invisible Helipad' in 
          single spaces)";
 
 PZFP_fnc_initialize = {
- if (isNull findDisplay 312) exitWith
- {
+ if (isNull findDisplay 312) exitWith {
   systemChat "[PZFP] - For PZFP to function properly, you must place it from the Zeus interface!";
  };
 
@@ -18,10 +17,10 @@ PZFP_fnc_initialize = {
  private _curator = getAssignedCuratorLogic player;
  private _maindisplay = findDisplay 312;
  private _control = _maindisplay displayCtrl 280;
- private _blufor = _maindisplay displayCtrl 270;
- private _opfor = _maindisplay displayCtrl 271;
- private _indep = _maindisplay displayCtrl 272;
- private _civ = _maindisplay displayCtrl 273;
+ private _blufor  = _maindisplay displayCtrl 270;
+ private _opfor   = _maindisplay displayCtrl 271;
+ private _indep   = _maindisplay displayCtrl 272;
+ private _civ     = _maindisplay displayCtrl 273;
 
  missionNamespace setVariable ["PZFP_AIStopEnabled", false];
 
@@ -109,7 +108,7 @@ PZFP_fnc_initialize = {
    case "O_Soldier_VR_F": { _disp displayCtrl 271 };
    case "I_Soldier_VR_F": { _disp displayCtrl 272 };
    case "C_Soldier_VR_F": { _disp displayCtrl 273 };
-   default                 { _disp displayCtrl 280 };
+   default                { _disp displayCtrl 280 };
   };
 
   private _tip = _tree tvTooltip _path;
