@@ -60,7 +60,14 @@ PZFP_fnc_initialize = {
   params ["_parentMenu", "_parentCategory", "_parentSubCategory", "_moduleText", "_moduleScript", "_textColor"];
   private _cindex = _parentMenu tvAdd [[_parentCategory, _parentSubCategory], _moduleText];
   private _path = [_parentCategory, _parentSubCategory, _cindex];
-  _parentMenu tvSetData [_path, 'B_Soldier_VR_F'];
+  private _vrType = switch _parentMenu do {
+   case _blufor: {"B_Soldier_VR_F"};
+   case _opfor: {"O_Soldier_VR_F"};
+   case _indep: {"I_Soldier_VR_F"};
+   case _civ: {"C_Soldier_VR_F"};
+   default {"B_Soldier_VR_F"};
+  };
+  _parentMenu tvSetData [_path, _vrType];
   _parentMenu ctrlCommit 0;
 
   private _functionArray = missionNamespace getVariable ["PZFP_moduleScripts", []];
@@ -230,7 +237,7 @@ PZFP_fnc_initialize = {
   _unit setSpeaker (selectRandom _voices);
   _unit setFace (selectRandom _faces);
  };
-
+ 
  PZFP_fnc_blufor_PL_AddIdentity = {
   params ["_unit"];
   private _voices = ["Male01POL","Male02POL","Male03POL"];
@@ -242,6 +249,24 @@ PZFP_fnc_initialize = {
   _unit setSpeaker (selectRandom _voices);
   _unit setFace (selectRandom _faces);
  };
+
+ PZFP_fnc_opfor_IR_AddIdentity = {
+  params ["_unit"];
+  private _voices = ["Male01PER","Male02PER","Male03PER"];
+  private _faces = ["PersianHead_A3_01", "PersianHead_A3_02", "PersianHead_A3_03"];
+
+  _unit setSpeaker (selectRandom _voices);
+  _unit setFace (selectRandom _faces);
+ };
+
+
+
+
+ comment "------------------------------------------BLUFOR-----------------------------------------------";
+
+
+
+
 
  PZFP_fnc_blufor_USAF_Drones_CreateGreyhawk = {
   private _cursorPos = getMousePosition;
@@ -258,7 +283,7 @@ PZFP_fnc_initialize = {
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
  };
 
- PZFP_fnc_blufor_USAF_Men_AddLoadoutFighterPilot = {
+ PZFP_fnc_blufor_USAF_Pilots_AddLoadoutFighterPilot = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -290,7 +315,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemGPS";
  };
 
- PZFP_fnc_blufor_USAF_Men_AddLoadoutTransportPilot = {
+ PZFP_fnc_blufor_USAF_Pilots_AddLoadoutTransportPilot = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
@@ -327,7 +352,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USAF_Men_CreateFighterPilot = {
+ PZFP_fnc_blufor_USAF_Pilots_CreateFighterPilot = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -339,7 +364,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USAF_Men_AddLoadoutFighterPilot;
+   [_unit] call PZFP_fnc_blufor_USAF_Pilots_AddLoadoutFighterPilot;
    [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
@@ -352,7 +377,7 @@ PZFP_fnc_initialize = {
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   _vehicle = createVehicle ["B_Plane_CAS_01_dynamicLoadout_F",_position,[],0,"NONE"];
 
-  private _pilot = [] call PZFP_fnc_blufor_USAF_Men_CreateFighterPilot;
+  private _pilot = [] call PZFP_fnc_blufor_USAF_Pilots_CreateFighterPilot;
   _pilot moveInDriver _vehicle;
 
   private _group = createGroup [west, true];
@@ -370,13 +395,13 @@ PZFP_fnc_initialize = {
    true
   ] call BIS_fnc_initVehicle;
 
-  private _pilot = [] call PZFP_fnc_blufor_USAF_Men_CreateTransportPilot;
+  private _pilot = [] call PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot;
   _pilot moveInDriver _vehicle;
-  private _copilot1 = [] call PZFP_fnc_blufor_USAF_Men_CreateTransportPilot;
+  private _copilot1 = [] call PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot;
   _copilot1 moveInTurret [_vehicle, [0]];
-  private _copilot2 = [] call PZFP_fnc_blufor_USAF_Men_CreateTransportPilot;
+  private _copilot2 = [] call PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot;
   _copilot2 moveInTurret [_vehicle, [1]];
-  private _copilot3 = [] call PZFP_fnc_blufor_USAF_Men_CreateTransportPilot;
+  private _copilot3 = [] call PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot;
   _copilot3 moveInTurret [_vehicle, [2]];
 
   private _group = createGroup [west, true];
@@ -394,13 +419,13 @@ PZFP_fnc_initialize = {
    true
   ] call BIS_fnc_initVehicle;
 
-  private _pilot = [] call PZFP_fnc_blufor_USAF_Men_CreateTransportPilot;
+  private _pilot = [] call PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot;
   _pilot moveInDriver _vehicle;
-  private _copilot1 = [] call PZFP_fnc_blufor_USAF_Men_CreateTransportPilot;
+  private _copilot1 = [] call PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot;
   _copilot1 moveInTurret [_vehicle, [0]];
-  private _copilot2 = [] call PZFP_fnc_blufor_USAF_Men_CreateTransportPilot;
+  private _copilot2 = [] call PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot;
   _copilot2 moveInTurret [_vehicle, [1]];
-  private _copilot3 = [] call PZFP_fnc_blufor_USAF_Men_CreateTransportPilot;
+  private _copilot3 = [] call PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot;
   _copilot3 moveInTurret [_vehicle, [2]];
 
   private _group = createGroup [west, true];
@@ -418,13 +443,13 @@ PZFP_fnc_initialize = {
    true
   ] call BIS_fnc_initVehicle;
 
-  private _pilot = [] call PZFP_fnc_blufor_USAF_Men_CreateTransportPilot;
+  private _pilot = [] call PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot;
   _pilot moveInDriver _vehicle;
-  private _copilot1 = [] call PZFP_fnc_blufor_USAF_Men_CreateTransportPilot;
+  private _copilot1 = [] call PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot;
   _copilot1 moveInTurret [_vehicle, [0]];
-  private _copilot2 = [] call PZFP_fnc_blufor_USAF_Men_CreateTransportPilot;
+  private _copilot2 = [] call PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot;
   _copilot2 moveInTurret [_vehicle, [1]];
-  private _copilot3 = [] call PZFP_fnc_blufor_USAF_Men_CreateTransportPilot;
+  private _copilot3 = [] call PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot;
   _copilot3 moveInTurret [_vehicle, [2]];
 
   private _group = createGroup [west, true];
@@ -434,7 +459,7 @@ PZFP_fnc_initialize = {
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
  };
 
- PZFP_fnc_blufor_USAF_Men_CreateTransportPilot = {
+ PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -446,7 +471,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USAF_Men_AddLoadoutTransportPilot;
+   [_unit] call PZFP_fnc_blufor_USAF_Pilots_AddLoadoutTransportPilot;
    [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
@@ -1161,6 +1186,52 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   private _copilot = [] call PZFP_fnc_blufor_USA_Men_CreateHeliPilot;
   _copilot moveInTurret [_vehicle, [0]];
+  _vehicle lockCargo true;
+  _vehicle setVariable ["doorsClosed", true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L_source", 1]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R_source", 1]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_rear_source", 1]] remoteExec ['animateDoor',0,true];
+    _target lockCargo false;
+    _target setVariable ["doorsClosed", false];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', true] == true",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L_source", 0]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R_source", 0]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_rear_source", 0]] remoteExec ['animateDoor',0,true];
+    _target lockCargo true;
+    _target setVariable ["doorsClosed", true];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', false] == false",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
 
   private _group = createGroup [west, true];
   [_pilot, _copilot] joinSilent _group;
@@ -1187,6 +1258,52 @@ PZFP_fnc_initialize = {
   _crew1 moveInTurret [_vehicle, [1]];
   private _crew2 = [] call PZFP_fnc_blufor_USA_Men_CreateHeliCrew;
   _crew2 moveInTurret [_vehicle, [2]];
+  _vehicle lockCargo true;
+  _vehicle setVariable ["doorsClosed", true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L_source", 1]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R_source", 1]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_rear_source", 1]] remoteExec ['animateDoor',0,true];
+    _target lockCargo false;
+    _target setVariable ["doorsClosed", false];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', true] == true",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L_source", 0]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R_source", 0]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_rear_source", 0]] remoteExec ['animateDoor',0,true];
+    _target lockCargo true;
+    _target setVariable ["doorsClosed", true];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', false] == false",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
 
   private _group = createGroup [west, true];
   [_pilot, _copilot, _crew1, _crew2] joinSilent _group;
@@ -1235,6 +1352,50 @@ PZFP_fnc_initialize = {
   _crew1 moveInTurret [_vehicle, [1]];
   private _crew2 = [] call PZFP_fnc_blufor_USA_Men_CreateHeliCrew;
   _crew2 moveInTurret [_vehicle, [2]];
+  _vehicle lockCargo true;
+  _vehicle setVariable ["doorsClosed", true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L", 1]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R", 1]] remoteExec ['animateDoor',0,true];
+    _target lockCargo false;
+    _target setVariable ["doorsClosed", false];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', true] == true",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L", 0]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R", 0]] remoteExec ['animateDoor',0,true];
+    _target lockCargo true;
+    _target setVariable ["doorsClosed", true];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', false] == false",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
 
   private _group = createGroup [west, true];
   [_pilot, _copilot, _crew1, _crew2] joinSilent _group;
@@ -1257,6 +1418,50 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   private _copilot = [] call PZFP_fnc_blufor_USA_Men_CreateHeliPilot;
   _copilot moveInTurret [_vehicle, [0]];
+  _vehicle lockCargo true;
+  _vehicle setVariable ["doorsClosed", true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L", 1]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R", 1]] remoteExec ['animateDoor',0,true];
+    _target lockCargo false;
+    _target setVariable ["doorsClosed", false];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', true] == true",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L", 0]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R", 0]] remoteExec ['animateDoor',0,true];
+    _target lockCargo true;
+    _target setVariable ["doorsClosed", true];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', false] == false",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
 
   private _group = createGroup [west, true];
   [_pilot, _copilot] joinSilent _group;
@@ -5410,34 +5615,6 @@ PZFP_fnc_initialize = {
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
  };
 
-
-
- PZFP_fnc_blufor_BA_Helicopters_CreateGhosthawk = {
-  private _cursorPos = getMousePosition;
-  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Transport_01_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Black",1],
-   true
-  ] call BIS_fnc_initVehicle;
-
-  private _pilot = [] call PZFP_fnc_blufor_BA_Men_CreateHeliPilot;
-  _pilot moveInDriver _vehicle;
-  private _copilot = [] call PZFP_fnc_blufor_BA_Men_CreateHeliPilot;
-  _copilot moveInTurret [_vehicle, [0]];
-  private _crew1 = [] call PZFP_fnc_blufor_BA_Men_CreateHeliCrew;
-  _crew1 moveInTurret [_vehicle, [1]];
-  private _crew2 = [] call PZFP_fnc_blufor_BA_Men_CreateHeliCrew;
-  _crew2 moveInTurret [_vehicle, [2]];
-
-  private _group = createGroup [west, true];
-  [_pilot, _copilot, _crew1, _crew2] joinSilent _group;
-  _group setBehaviour "SAFE";
-
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
- };
-
  PZFP_fnc_blufor_BA_Helicopters_CreateBlackfoot = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
@@ -5461,6 +5638,77 @@ PZFP_fnc_initialize = {
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
  };
 
+ PZFP_fnc_blufor_BA_Helicopters_CreateGhosthawk = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["B_Heli_Transport_01_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Black",1],
+   true
+  ] call BIS_fnc_initVehicle;
+
+  private _pilot = [] call PZFP_fnc_blufor_BA_Men_CreateHeliPilot;
+  _pilot moveInDriver _vehicle;
+  private _copilot = [] call PZFP_fnc_blufor_BA_Men_CreateHeliPilot;
+  _copilot moveInTurret [_vehicle, [0]];
+  private _crew1 = [] call PZFP_fnc_blufor_BA_Men_CreateHeliCrew;
+  _crew1 moveInTurret [_vehicle, [1]];
+  private _crew2 = [] call PZFP_fnc_blufor_BA_Men_CreateHeliCrew;
+  _crew2 moveInTurret [_vehicle, [2]];
+  _vehicle lockCargo true;
+  _vehicle setVariable ["doorsClosed", true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L", 1]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R", 1]] remoteExec ['animateDoor',0,true];
+    _target lockCargo false;
+    _target setVariable ["doorsClosed", false];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', true] == true",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L", 0]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R", 0]] remoteExec ['animateDoor',0,true];
+    _target lockCargo true;
+    _target setVariable ["doorsClosed", true];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', false] == false",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
+  
+
+  private _group = createGroup [west, true];
+  [_pilot, _copilot, _crew1, _crew2] joinSilent _group;
+  _group setBehaviour "SAFE";
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
  PZFP_fnc_blufor_BA_Helicopters_CreateGhosthawkStub = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
@@ -5475,6 +5723,51 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   private _copilot = [] call PZFP_fnc_blufor_BA_Men_CreateHeliPilot;
   _copilot moveInTurret [_vehicle, [0]];
+  _vehicle lockCargo true;
+  _vehicle setVariable ["doorsClosed", true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L", 1]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R", 1]] remoteExec ['animateDoor',0,true];
+    _target lockCargo false;
+    _target setVariable ["doorsClosed", false];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', true] == true",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L", 0]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R", 0]] remoteExec ['animateDoor',0,true];
+    _target lockCargo true;
+    _target setVariable ["doorsClosed", true];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', false] == false",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
+  
 
   private _group = createGroup [west, true];
   [_pilot, _copilot] joinSilent _group;
@@ -5497,6 +5790,52 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   private _copilot = [] call PZFP_fnc_blufor_BA_Men_CreateHeliPilot;
   _copilot moveInTurret [_vehicle, [0]];
+  _vehicle lockCargo true;
+  _vehicle setVariable ["doorsClosed", true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L_source", 1]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R_source", 1]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_rear_source", 1]] remoteExec ['animateDoor',0,true];
+    _target lockCargo false;
+    _target setVariable ["doorsClosed", false];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', true] == true",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L_source", 0]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R_source", 0]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_rear_source", 0]] remoteExec ['animateDoor',0,true];
+    _target lockCargo true;
+    _target setVariable ["doorsClosed", true];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', false] == false",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
 
   private _group = createGroup [west, true];
   [_pilot, _copilot] joinSilent _group;
@@ -5523,6 +5862,52 @@ PZFP_fnc_initialize = {
   _crew1 moveInTurret [_vehicle, [1]];
   private _crew2 = [] call PZFP_fnc_blufor_BA_Men_CreateHeliCrew;
   _crew2 moveInTurret [_vehicle, [2]];
+  _vehicle lockCargo true;
+  _vehicle setVariable ["doorsClosed", true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L_source", 1]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R_source", 1]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_rear_source", 1]] remoteExec ['animateDoor',0,true];
+    _target lockCargo false;
+    _target setVariable ["doorsClosed", false];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', true] == true",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_L_source", 0]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_R_source", 0]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_rear_source", 0]] remoteExec ['animateDoor',0,true];
+    _target lockCargo true;
+    _target setVariable ["doorsClosed", true];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', false] == false",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
 
   private _group = createGroup [west, true];
   [_pilot, _copilot, _crew1, _crew2] joinSilent _group;
@@ -7044,7 +7429,7 @@ PZFP_fnc_initialize = {
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
  };
 
- PZFP_fnc_blufor_AAFAF_Men_AddLoadoutPilot = {
+ PZFP_fnc_blufor_AAFAF_Pilots_AddLoadoutFighterPilot = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -7078,17 +7463,17 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemGPS";
  };
 
- PZFP_fnc_blufor_AAFAF_Men_CreatePilot = {
+ PZFP_fnc_blufor_AAFAF_Pilots_CreateFighterPilot = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
   _group setBehaviour "SAFE";
-  private _unit = _group createUnit ["B_Pilot_F", _position, [], 0, "CAN_COLLIDE"];
+  private _unit = _group createUnit ["B_Fighter_Pilot_F", _position, [], 0, "CAN_COLLIDE"];
   if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
   [_unit] spawn {
     params ["_unit"];
     sleep 0.1;
-    [_unit] call PZFP_fnc_blufor_AAFAF_Men_AddLoadoutPilot;
+    [_unit] call PZFP_fnc_blufor_AAFAF_Pilots_AddLoadoutFighterPilot;
     [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
   };
   
@@ -7106,7 +7491,7 @@ PZFP_fnc_initialize = {
    true
   ] call BIS_fnc_initVehicle;
 
-  private _pilot = [] call PZFP_fnc_blufor_AAFAF_Men_CreatePilot;
+  private _pilot = [] call PZFP_fnc_blufor_AAFAF_Pilots_CreateFighterPilot;
   _pilot moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
@@ -7123,7 +7508,7 @@ PZFP_fnc_initialize = {
    true
   ] call BIS_fnc_initVehicle;
 
-  private _pilot = [] call PZFP_fnc_blufor_AAFAF_Men_CreatePilot;
+  private _pilot = [] call PZFP_fnc_blufor_AAFAF_Pilots_CreateFighterPilot;
   _pilot moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
@@ -7535,6 +7920,52 @@ PZFP_fnc_initialize = {
   private _copilot = [] call PZFP_fnc_blufor_AAFA_Men_CreateHeliPilot;
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [west, true];
+  _vehicle lockCargo true;
+  _vehicle setVariable ["doorsClosed", true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_Back_L", 1]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_Back_R", 1]] remoteExec ['animateDoor',0,true];
+    [_target, ["CargoRamp_Open", 1]] remoteExec ['animateDoor',0,true];
+    _target lockCargo false;
+    _target setVariable ["doorsClosed", false];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', true] == true",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
+
+  [_vehicle,
+  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
+   {
+    params ["_target"];
+    [_target, ["Door_Back_L", 0]] remoteExec ['animateDoor',0,true];
+    [_target, ["Door_Back_R", 0]] remoteExec ['animateDoor',0,true];
+    [_target, ["CargoRamp_Open", 0]] remoteExec ['animateDoor',0,true];
+    _target lockCargo true;
+    _target setVariable ["doorsClosed", true];
+   },
+   nil,
+   2,
+   true,
+   false,
+   "",
+   "_target getVariable ['doorsClosed', false] == false",
+   7,
+   false,
+   "",
+   ""
+  ]] remoteExec ['addAction',0,true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
  };
@@ -10011,7 +10442,7 @@ PZFP_fnc_initialize = {
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
  };
 
- PZFP_fnc_blufor_LDFAF_AddLoadoutPilot = {
+ PZFP_fnc_blufor_LDFAF_AddLoadoutFighterPilot = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -10045,17 +10476,17 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemGPS";
  };
 
- PZFP_fnc_blufor_LDFAF_Men_CreatePilot = {
+ PZFP_fnc_blufor_LDFAF_Pilots_CreateFighterPilot = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
   _group setBehaviour "SAFE";
-  private _unit = _group createUnit ["B_Pilot_F", _position, [], 0, "CAN_COLLIDE"];
+  private _unit = _group createUnit ["B_Fighter_Pilot_F", _position, [], 0, "CAN_COLLIDE"];
   if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
   [_unit] spawn {
     params ["_unit"];
     sleep 0.1;
-    [_unit] call PZFP_fnc_blufor_LDFAF_AddLoadoutPilot;
+    [_unit] call PZFP_fnc_blufor_LDFAF_AddLoadoutFighterPilot;
     [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
   };
 
@@ -10075,7 +10506,7 @@ PZFP_fnc_initialize = {
   [_vehicle, [0, "#(argb,8,8,3)color(0.1,0.1,0.1,1)"]] remoteExec ['setObjectTexture',0,true];
   [_vehicle, ["clan", "\a3\UI_F_Enoch\Data\CfgMarkers\Livonia_CA.paa"]] remoteExec ['setObjectTexture',0,true];
 
-  private _pilot = [] call PZFP_fnc_blufor_LDFAF_Men_CreatePilot;
+  private _pilot = [] call PZFP_fnc_blufor_LDFAF_Pilots_CreateFighterPilot;
   _pilot moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
@@ -10400,6 +10831,162 @@ PZFP_fnc_initialize = {
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
  };
 
+ PZFP_fnc_blufor_LDF_Drones_CreatePelicanDropper = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["I_E_UAV_06_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["EAF",1], 
+   true
+  ] call BIS_fnc_initVehicle;
+  [_vehicle] call PZFP_fnc_vehicleCleanup;
+
+  private _grenade1 = createSimpleObject ["GrenadeHand", position _vehicle];
+  _grenade1 attachTo [_vehicle, [0.085, 0.085, -0.21]];
+  private _grenade2 = createSimpleObject ["GrenadeHand", position _vehicle];
+  _grenade2 attachTo [_vehicle, [0.085, -0.085, -0.21]];
+  private _grenade3 = createSimpleObject ["GrenadeHand", position _vehicle];
+  _grenade3 attachTo [_vehicle, [-0.085, 0.085, -0.21]];
+  private _grenade4 = createSimpleObject ["GrenadeHand", position _vehicle];
+  _grenade4 attachTo [_vehicle, [-0.085, -0.085, -0.21]];
+  _vehicle addWeaponTurret ["BombDemine_01_F", [-1]];
+  _vehicle addMagazineTurret ["PylonRack_4Rnd_BombDemine_01_F", [-1]];
+  _vehicle setVariable ["grenadeObjects", [_grenade1, _grenade2, _grenade3, _grenade4]];
+  
+  _vehicle addEventHandler ["Fired", {
+	  params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
+    deleteVehicle _projectile;
+    private _drone = vehicle _gunner;
+
+    private _grenadeammo = magazinesAmmo _drone select 0 select 1;
+    if (count magazinesAmmo _unit == 0) then {
+     _grenadeammo = 0;
+    };
+
+    private _grenades = _drone getVariable ["grenadeObjects", []];
+    private _grenade = _grenades select (_grenadeammo);
+    [_grenade, true] remoteExec ['hideObjectGlobal',0,true];
+
+    private _payload = "GrenadeHand" createVehicle position _grenade;
+    _payload setVelocity velocity _drone vectorMultiply 1.2;
+  }];
+
+  createVehicleCrew _vehicle;
+  crew _vehicle join createGroup [west, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_blufor_LDF_Drones_CreatePelicanDropperMortar = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["I_E_UAV_06_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["EAF",1], 
+   true
+  ] call BIS_fnc_initVehicle;
+  [_vehicle] call PZFP_fnc_vehicleCleanup;
+
+  private _grenade1 = createSimpleObject ["Sh_82mm_AMOS", position _vehicle];
+  _grenade1 attachTo [_vehicle, [0.085, 0.085, -0.18]];
+  _grenade1 setVectorDirAndUp [[0,0,1],[0,1,0]];
+  private _grenade2 = createSimpleObject ["Sh_82mm_AMOS", position _vehicle];
+  _grenade2 attachTo [_vehicle, [0.085, -0.085, -0.18]];
+  _grenade2 setVectorDirAndUp [[0,0,1],[0,1,0]];
+  private _grenade3 = createSimpleObject ["Sh_82mm_AMOS", position _vehicle];
+  _grenade3 attachTo [_vehicle, [-0.085, 0.085, -0.18]];
+  _grenade3 setVectorDirAndUp [[0,0,1],[0,1,0]];
+  private _grenade4 = createSimpleObject ["Sh_82mm_AMOS", position _vehicle];
+  _grenade4 attachTo [_vehicle, [-0.085, -0.085, -0.18]];
+  _grenade4 setVectorDirAndUp [[0,0,1],[0,1,0]];
+  _vehicle addWeaponTurret ["BombDemine_01_F", [-1]];
+  _vehicle addMagazineTurret ["PylonRack_4Rnd_BombDemine_01_F", [-1]];
+  _vehicle setVariable ["grenadeObjects", [_grenade1, _grenade2, _grenade3, _grenade4]];
+  
+  _vehicle addEventHandler ["Fired", {
+	  params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
+    deleteVehicle _projectile;
+    private _drone = vehicle _gunner;
+
+    private _grenadeammo = magazinesAmmo _drone select 0 select 1;
+    if (count magazinesAmmo _unit == 0) then {
+     _grenadeammo = 0;
+    };
+
+    private _grenades = _drone getVariable ["grenadeObjects", []];
+    private _grenade = _grenades select (_grenadeammo);
+    [_grenade, true] remoteExec ['hideObjectGlobal',0,true];
+
+    private _payload = "Sh_82mm_AMOS" createVehicle ((position _grenade) vectorAdd [0,0,-1]);
+    _payload setVectorDirAndUp [vectorDir _grenade, vectorUp _grenade];
+    _payload setVelocity velocity _drone vectorMultiply 1.2;
+  }];
+
+  createVehicleCrew _vehicle;
+  crew _vehicle join createGroup [west, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_blufor_LDF_Drones_CreatePelicanCharge = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["I_E_UAV_06_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["EAF",1], 
+   true
+  ] call BIS_fnc_initVehicle;
+  [_vehicle] call PZFP_fnc_vehicleCleanup;
+
+  private _bomb = createSimpleObject ["ATMine_Range_Ammo", position _vehicle];
+  _bomb attachTo [_vehicle, [0, 0.0, -0.21]];
+  _bomb setVectorDirAndUp [vectorDir _bomb, vectorUp _bomb vectorMultiply -1];
+  _vehicle setVariable ["bomb", _bomb];
+
+  _vehicle addWeaponTurret ["BombDemine_01_F", [-1]];
+  _vehicle addMagazineTurret ["PylonRack_4Rnd_BombDemine_01_F", [-1]];
+  _drone setVariable ["fired", 0];
+
+  _vehicle addEventHandler ["Fired", {
+	  params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
+    deleteVehicle _projectile;
+    private _drone = vehicle _gunner;
+    private _bomb = _drone getVariable ["bomb", objNull];
+    detach _bomb;
+    deleteVehicle _bomb;
+    private _charge = createVehicle ["ATMine_Range_Ammo", position _drone, [], 0, "NONE"];
+    _charge setDamage 1;
+    _drone setVariable ["fired", 1];
+  }];
+
+  _vehicle addEventHandler ["Killed", {
+    params ["_unit", "_killer", "_instigator"];
+    if (_unit getVariable ["fired", 0] != 1) then {
+      private _bomb = _unit getVariable ["bomb", objNull];
+      detach _bomb;
+      deleteVehicle _bomb;
+      private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _unit, [], 0, "NONE"];
+      _charge setDamage 1;
+      _unit setVariable ["fired", 1];
+    };
+  }];
+
+  _vehicle addEventhandler ["Deleted", {
+   params ["_vehicle"];
+   {
+    deleteVehicle _x;
+   } forEach (attachedObjects _vehicle);
+  }];
+
+  createVehicleCrew _vehicle;
+  crew _vehicle join createGroup [west, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
  PZFP_fnc_blufor_LDF_Drones_CreatePelicanMedical = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
@@ -10445,7 +11032,7 @@ PZFP_fnc_initialize = {
   private _pilot = [] call PZFP_fnc_blufor_LDF_Men_CreateHeliPilot;
   _pilot moveInDriver _vehicle;
   private _copilot = [] call PZFP_fnc_blufor_LDF_Men_CreateHeliPilot;
-  _copilot moveInGunner _vehicle;
+  _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [west, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -10464,7 +11051,7 @@ PZFP_fnc_initialize = {
   private _pilot = [] call PZFP_fnc_blufor_LDF_Men_CreateHeliPilot;
   _pilot moveInDriver _vehicle;
   private _copilot = [] call PZFP_fnc_blufor_LDF_Men_CreateHeliPilot;
-  _copilot moveInGunner _vehicle;
+  _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [west, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -11610,7 +12197,7 @@ PZFP_fnc_initialize = {
   _unit addHandgunItem "muzzle_snds_LP_pistol";
   _unit addHandgunItem "optic_MRD_black";
   _unit addWeapon "launch_MRAWS_green_rail_F";
-  _unit addMagazine "MRAWS_HEAT_F";
+  _unit addSecondaryWeaponItem "MRAWS_HEAT_F";
 
   _unit forceAddUniform "U_I_CombatUniform";
   [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
@@ -12770,6 +13357,259 @@ PZFP_fnc_initialize = {
   _unit
  };
 
+
+
+
+  comment "------------------------------------------OPFOR-----------------------------------------------";
+
+
+  
+ PZFP_fnc_opfor_IRAF_Drones_CreateFenghuang = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["O_T_UAV_04_CAS_F",_position,[],0,"NONE"];
+
+  createVehicleCrew _vehicle;
+  crew _vehicle joinSilent createGroup [east, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_IRAF_MaintenanceCrew_AddLoadoutRepairSpecialist = {
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit forceAddUniform "U_O_officer_noInsignia_hex_F";
+  _unit addVest "V_Safety_yellow_F";
+  _unit addHeadgear "H_Cap_marshal";
+
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_opfor_IRAF_MaintenanceCrew_CreateRepairSpecialist = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [east, true];
+  private _unit = _group createUnit ["O_Soldier_repair_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_opfor_IRAF_MaintenanceCrew_AddLoadoutRepairSpecialist;
+    [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_opfor_IRAF_Pilots_AddLoadoutFighterPilot = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "hgun_Pistol_01_F";
+  _unit addHandgunItem "10Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_PilotCoveralls";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_green";
+  _unit addItemToUniform "O_IR_Grenade";
+  _unit addItemToUniform "SmokeShellGreen";
+  _unit addItemToUniform "SmokeShellRed";
+  _unit addItemToUniform "SmokeShell";
+  for "_i" from 1 to 2 do {_unit addItemToUniform "MiniGrenade";};
+  _unit addHeadgear "H_PilotHelmetFighter_O";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS"; 
+ };
+
+ PZFP_fnc_opfor_IRAF_Pilots_AddLoadoutTransportPilot = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "hgun_Pistol_01_F";
+  _unit addHandgunItem "10Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_PilotCoveralls";
+  _unit addBackpack "B_Parachute";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_green";
+  _unit addItemToUniform "O_IR_Grenade";
+  _unit addItemToUniform "SmokeShellGreen";
+  _unit addItemToUniform "SmokeShellRed";
+  _unit addItemToUniform "SmokeShell";
+  for "_i" from 1 to 2 do {_unit addItemToUniform "MiniGrenade";};
+  _unit addHeadgear "H_PilotHelmetFighter_O";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS"; 
+ };
+
+ PZFP_fnc_opfor_IRAF_Pilots_CreateFighterPilot = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [east, true];
+  private _unit = _group createUnit ["O_Fighter_Pilot_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_opfor_IRAF_Pilots_AddLoadoutFighterPilot;
+    [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_opfor_IRAF_Pilots_CreateTransportPilot = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [east, true];
+  private _unit = _group createUnit ["O_Pilot_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_opfor_IRAF_Pilots_AddLoadoutTransportPilot;
+    [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+  };
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+
+ PZFP_fnc_opfor_IRAF_Planes_CreateNeophron = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["O_Plane_CAS_02_dynamicLoadout_F",_position,[],0,"NONE"];
+  
+  _pilot = [] call PZFP_fnc_opfor_IRAF_Pilots_CreateFighterPilot;
+  _pilot moveInDriver _vehicle;
+  crew _vehicle joinSilent createGroup [east, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_IRAF_Planes_CreateShikra = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["O_Plane_Fighter_02_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["CamoAridHex",1], 
+   true
+  ] call BIS_fnc_initVehicle;
+
+  _pilot = [] call PZFP_fnc_opfor_IRAF_Pilots_CreateFighterPilot;
+  _pilot moveInDriver _vehicle;
+  crew _vehicle joinSilent createGroup [east, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_IRGF_AntiAir_CreateTigris = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["O_APC_Tracked_02_AA_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Hex",1], 
+   ["showTracks",selectRandom[0,1],"showCamonetHull",0,"showCamonetTurret",0,"showSLATHull",0]
+  ] call BIS_fnc_initVehicle;
+
+  _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
+  _driver moveInDriver _vehicle;
+  _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
+  _gunner moveInGunner _vehicle;
+  _commander = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
+  _commander moveInCommander _vehicle;
+  crew _vehicle joinSilent createGroup [east, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_IRGF_AntiAir_CreateKamysh = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+
+  private _vehicle = createVehicle ["O_APC_Tracked_02_cannon_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Hex",1], 
+   [["showTracks",selectRandom[0,1],"showCamonetHull",0,"showBags",0,"showSLATHull",1]]
+  ] call BIS_fnc_initVehicle;
+  [_vehicle, ["HideTurret",1]] remoteExec ['animate',0,true];
+  _vehicle lockTurret [[0,0],true];
+  _vehicle lockTurret [[0],true];
+  [_vehicle] call PZFP_fnc_vehicleCleanup;
+
+  private _vehicle2 = createVehicle ["O_SAM_System_04_F",_position,[],0,"NONE"];
+  [
+   _vehicle2,
+   ["Hex",1],
+   true
+  ] call BIS_fnc_initVehicle;
+  [_vehicle2, [0, ""]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle2, [2, ""]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle2, [3, ""]] remoteExec ['setObjectTexture',0,true];
+  _vehicle2 attachTo [_vehicle, [0,0,-0.2133]];
+
+  comment "make it ammo-dependent";
+  {_x addEventHandler ["Killed", {
+    params ["_unit", "_killer", "_instigator"];
+      private _explosion = createVehicle ["ammo_Missile_Cruise_01", position _unit, [], 0, "NONE"];
+      private _explosion2 = createVehicle ['ammo_Bomb_SDB', position _unit, [], 0, 'CAN_COLLIDE']; 
+      private _explosion3 = createVehicle ['Bo_GBU12_LGB', position _unit, [], 0, 'CAN_COLLIDE']; 
+      _explosion setDamage 1;
+      _explosion2 setDamage 1;
+      _explosion3 setDamage 1;
+      {
+        if ((_x isKindOf 'Man') or (_x isKindOf 'Air') or (_x isKindOf 'Ship') or (_x isKindOf 'Car') or (_x isKindOf 'Tank') or (_x isKindOf 'Static') or (_x isKindOf 'Turret') or (_x isKindOf 'Motorcycle')) then {
+          _x setDamage 1;
+        }; 
+      } forEach nearestObjects [_unit, [], 10]; 
+  }];} forEach [_vehicle, _vehicle2];
+
+  _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
+  createVehicleCrew _vehicle2;
+
+  [crew _vehicle, crew _vehicle2] joinSilent createGroup [east, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle, _vehicle2], true];
+ };
+
  PZFP_fnc_rebuildZeusTree = {
   disableSerialization;
   private _display = findDisplay 312;
@@ -12798,8 +13638,8 @@ PZFP_fnc_initialize = {
   PZFP_blufor_USAF_Drones_Greyhawk = [_blufor, PZFP_blufor_USAF, PZFP_blufor_USAF_Drones, "MQ-4A Greyhawk", "PZFP_fnc_blufor_USAF_Drones_CreateGreyhawk", [1,1,1,1]] call PZFP_fnc_addModule;
 
   PZFP_blufor_USAF_Pilots = [_blufor, PZFP_blufor_USAF, "Pilots", [1,1,1,1]] call PZFP_fnc_addSubCategory;
-  PZFP_blufor_USAF_Pilots_FighterPilot = [_blufor, PZFP_blufor_USAF, PZFP_blufor_USAF_Pilots, "Fighter Pilot", "PZFP_fnc_blufor_USAF_Men_CreateFighterPilot", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_USAF_Pilots_TransportPilot = [_blufor, PZFP_blufor_USAF, PZFP_blufor_USAF_Pilots, "Transport Pilot", "PZFP_fnc_blufor_USAF_Men_CreateTransportPilot", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USAF_Pilots_FighterPilot = [_blufor, PZFP_blufor_USAF, PZFP_blufor_USAF_Pilots, "Fighter Pilot", "PZFP_fnc_blufor_USAF_Pilots_CreateFighterPilot", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USAF_Pilots_TransportPilot = [_blufor, PZFP_blufor_USAF, PZFP_blufor_USAF_Pilots, "Transport Pilot", "PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot", [1,1,1,1]] call PZFP_fnc_addModule;
 
   PZFP_blufor_USAF_Planes = [_blufor, PZFP_blufor_USAF, "Planes", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_USAF_Planes_Wipeout = [_blufor, PZFP_blufor_USAF, PZFP_blufor_USAF_Planes, "A-164 Wipeout", "PZFP_fnc_blufor_USAF_Planes_CreateWipeout", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -12957,7 +13797,7 @@ PZFP_fnc_initialize = {
   PZFP_blufor_USN_MenSOFRaiders_Medic = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_MenSOFRaiders, "Medic", "PZFP_fnc_blufor_USN_MenSOFRaiders_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USN_MenSOFRaiders_RTO = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_MenSOFRaiders, "Radio-Telephone Operator", "PZFP_fnc_blufor_USN_MenSOFRaiders_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
 
-  PZFP_blufor_USN_Pilots = [_blufor, PZFP_blufor_USN, "Men (Pilots)", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_USN_Pilots = [_blufor, PZFP_blufor_USN, "Pilots", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_USN_Pilots_FighterPilot = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_Pilots, "Fighter Pilot", "PZFP_fnc_blufor_USN_Pilots_CreateFighterPilot", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USN_Pilots_TransportPilot = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_Pilots, "Transport Pilot", "PZFP_fnc_blufor_USN_Pilots_CreateTransportPilot", [1,1,1,1]] call PZFP_fnc_addModule;
 
@@ -13065,8 +13905,8 @@ PZFP_fnc_initialize = {
   
   PZFP_blufor_AAFAF = [_blufor, "Altis Armed Forces Air Force", [1,1,1,1]] call PZFP_fnc_addCategory;
 
-  PZFP_blufor_AAFAF_Men = [_blufor, PZFP_blufor_AAFAF, "Men", [1,1,1,1]] call PZFP_fnc_addSubCategory;
-  PZFP_blufor_AAFAF_Men_Pilot = [_blufor, PZFP_blufor_AAFAF, PZFP_blufor_AAFAF_Men, "Pilot", "PZFP_fnc_blufor_AAFAF_Men_CreatePilot", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_AAFAF_Pilots = [_blufor, PZFP_blufor_AAFAF, "Pilots", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_AAFAF_Pilots_FighterPilot = [_blufor, PZFP_blufor_AAFAF, PZFP_blufor_AAFAF_Pilots, "Fighter Pilot", "PZFP_fnc_blufor_AAFAF_Pilots_CreateFighterPilot", [1,1,1,1]] call PZFP_fnc_addModule;
 
   PZFP_blufor_AAFAF_Planes = [_blufor, PZFP_blufor_AAFAF, "Planes", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_AAFAF_Planes_Buzzard = [_blufor, PZFP_blufor_AAFAF, PZFP_blufor_AAFAF_Planes, "A-143 Buzzard", "PZFP_fnc_blufor_AAFAF_Planes_CreateBuzzard", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -13170,8 +14010,8 @@ PZFP_fnc_initialize = {
 
   PZFP_blufor_LDFAF = [_blufor, "Livonian Defense Force Air Force", [1,1,1,1]] call PZFP_fnc_addCategory;
 
-  PZFP_blufor_LDFAF_Men = [_blufor, PZFP_blufor_LDFAF, "Men", [1,1,1,1]] call PZFP_fnc_addSubCategory;
-  PZFP_blufor_LDFAF_Men_Pilot = [_blufor, PZFP_blufor_LDFAF, PZFP_blufor_LDFAF_Men, "Pilot", "PZFP_fnc_blufor_LDFAF_Men_CreatePilot", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDFAF_Pilots = [_blufor, PZFP_blufor_LDFAF, "Pilots", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_LDFAF_Pilots_FighterPilot = [_blufor, PZFP_blufor_LDFAF, PZFP_blufor_LDFAF_Pilots, "Fighter Pilot", "PZFP_fnc_blufor_LDFAF_Pilots_CreateFighterPilot", [1,1,1,1]] call PZFP_fnc_addModule;
   
   PZFP_blufor_LDFAF_Planes = [_blufor, PZFP_blufor_LDFAF, "Planes", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_LDFAF_Planes_Gryphon = [_blufor, PZFP_blufor_LDFAF, PZFP_blufor_LDFAF_Planes, "A-149 Gryphon", "PZFP_fnc_blufor_LDFAF_Planes_CreateGryphon", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -13201,6 +14041,9 @@ PZFP_fnc_initialize = {
 
   PZFP_blufor_LDF_Drones = [_blufor, PZFP_blufor_LDF, "Drones", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_LDF_Drones_Pelican = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Drones, "AL-6 Pelican", "PZFP_fnc_blufor_LDF_Drones_CreatePelican", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_Drones_PelicanDropper = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Drones, "AL-6 Pelican (Grenade Dropper)", "PZFP_fnc_blufor_LDF_Drones_CreatePelicanDropper", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_Drones_PelicanDropperMortar = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Drones, "AL-6 Pelican (Mortar Dropper)", "PZFP_fnc_blufor_LDF_Drones_CreatePelicanDropperMortar", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_Drones_PelicanCharge = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Drones, "AL-6 Pelican (Charge)", "PZFP_fnc_blufor_LDF_Drones_CreatePelicanCharge", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Drones_PelicanMedical = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Drones, "AL-6 Pelican (Medical)", "PZFP_fnc_blufor_LDF_Drones_CreatePelicanMedical", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Drones_Darter = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Drones, "AR-2 Darter", "PZFP_fnc_blufor_LDF_Drones_CreateDarter", [1,1,1,1]] call PZFP_fnc_addModule;
   comment "they should have a lot more drones theyre basically ukranian";
@@ -13267,6 +14110,30 @@ PZFP_fnc_initialize = {
   PZFP_blufor_StrazLesna_Men_OfficerRifle = [_blufor, PZFP_blufor_StrazLesna, PZFP_blufor_StrazLesna_Men, "Officer (Rifle)", "PZFP_fnc_blufor_StrazLesna_Men_CreateOfficerRifle", [1,1,1,1]] call PZFP_fnc_addModule;
   
   
+  PZFP_opforDividerSpace = [_opfor, "", [1,1,1,0]] call PZFP_fnc_addCategory;
+  PZFP_opforTitle = [_opfor, "PZFP Factions", [0.7,0.3,0,1]] call PZFP_fnc_addCategory;
+  PZFP_opforDivider = [_opfor, "--------------------------------------------", [0.7,0.3,0,1]] call PZFP_fnc_addCategory;
+
+  PZFP_opfor_IRAF = [_opfor, "Islamic Republic of Iran Air Force", [1,1,1,1]] call PZFP_fnc_addCategory;
+
+  PZFP_opfor_IRAF_Drones = [_opfor, PZFP_opfor_IRAF, "Drones", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_opfor_IRAF_Drones_Fenghuang = [_opfor, PZFP_opfor_IRAF, PZFP_opfor_IRAF_Drones, "KH-3A Fenghuang", "PZFP_fnc_opfor_IRAF_Drones_CreateFenghuang", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_opfor_IRAF_MaintenanceCrew = [_opfor, PZFP_opfor_IRAF, "Maintenance Crew", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_opfor_IRAF_MaintenanceCrew_RepairSpecialist = [_opfor, PZFP_opfor_IRAF, PZFP_opfor_IRAF_MaintenanceCrew, "Repair Specialist", "PZFP_fnc_opfor_IRAF_MaintenanceCrew_CreateRepairSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_opfor_IRAF_Pilots = [_opfor, PZFP_opfor_IRAF, "Pilots", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_opfor_IRAF_Pilots_FighterPilot = [_opfor, PZFP_opfor_IRAF, PZFP_opfor_IRAF_Pilots, "Fighter Pilot", "PZFP_fnc_opfor_IRAF_Pilots_CreateFighterPilot", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRAF_Pilots_TransportPilot = [_opfor, PZFP_opfor_IRAF, PZFP_opfor_IRAF_Pilots, "Transport Pilot", "PZFP_fnc_opfor_IRAF_Pilots_CreateTransportPilot", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_opfor_IRAF_Planes = [_opfor, PZFP_opfor_IRAF, "Planes", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_opfor_IRAF_Planes_Neophron = [_opfor, PZFP_opfor_IRAF, PZFP_opfor_IRAF_Planes, "To-199 Neophron", "PZFP_fnc_opfor_IRAF_Planes_CreateNeophron", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRAF_Planes_Shikra = [_opfor, PZFP_opfor_IRAF, PZFP_opfor_IRAF_Planes, "To-201 Shikra", "PZFP_fnc_opfor_IRAF_Planes_CreateShikra", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_opfor_IRGF = [_opfor, "Islamic Republic of Iran Ground Forces", [1,1,1,1]] call PZFP_fnc_addCategory;
+  PZFP_opfor_IRGF_AntiAir = [_opfor, PZFP_opfor_IRGF, "Anti-Air", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_opfor_IRGF_AntiAir_Tigris = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_AntiAir, "ZSU-39 Tigiris", "PZFP_fnc_opfor_IRGF_AntiAir_CreateTigris", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRGF_AntiAir_Kamysh = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_AntiAir, "BTR-K Kamysh (AA)", "PZFP_fnc_opfor_IRGF_AntiAir_CreateKamysh", [1,1,1,1]] call PZFP_fnc_addModule;
  };
 
  PZFP_fnc_mainLoop = {

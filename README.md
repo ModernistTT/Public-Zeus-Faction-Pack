@@ -39,6 +39,9 @@ BLUFOR:
     - Military Police
     - 5th Regiment
     - Special Operations
+* Livonian Territorial Militia
+    - Infantry
+    - International Legion
 * Straz Lesna Livonia (BLU, RED, IND)
     - Infantry
 * Horizon Islands Defence Forces Army (BLU, RED, IND)
