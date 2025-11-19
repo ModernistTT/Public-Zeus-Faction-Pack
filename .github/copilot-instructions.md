@@ -1,45 +1,85 @@
-This repository is a single-file Arma 3 addon script (SQF) named `PZFP.sqf` which provides curator (Zeus) modules for spawning vehicles, units, and loadouts.
+# PZFP Copilot Instructions
 
-Guiding principles for attending to this codebase
-- Keep edits localized and minimal: the codebase is one long SQF script with many function literals. Prefer small, incremental changes (add or refactor individual functions) rather than wholesale reorganizations.
-- Preserve function naming conventions: top-level functions use the `PZFP_fnc_` prefix and descriptive names (e.g. `PZFP_fnc_blufor_USAF_Men_AddLoadoutFighterPilot`). Follow the same prefix when adding new functions so runtime lookups (by string name) remain predictable.
-- Do not change public IDs or hard-coded tooltip "Function ID:XXXX" lines unless you update the registration flow (`PZFP_fnc_registerModuleFunction`) consistently — modules are registered at runtime by adding entries to `missionNamespace` arrays.
+This is a single-file Arma 3 addon script (`PZFP.sqf`) providing Zeus (curator) modules for spawning factions, vehicles, units, and loadouts in Arma 3 missions.
 
-Key files and patterns to reference
-- `PZFP.sqf` — the single source of truth. It contains:
-  - Initialization and curator event handlers (`PZFP_fnc_initialize`, `PZFP_fnc_executeModule`)
-  - Tree menu helpers (tvAdd/tvSetData/tvSetTooltip usage)
-  - Module registration mechanism (`PZFP_fnc_registerModuleFunction`, `PZFP_moduleScripts` in `missionNamespace`)
-  - Many factory functions for creating vehicles/units and setting loadouts
-  - Utility helpers like `PZFP_fnc_findCursorPosition`, `PZFP_fnc_vehicleCleanup`
+## Architecture & Big Picture
 
-Project-specific workflows and developer notes
-- Runtime testing: This script runs inside Arma 3 as a Zeus module. There is no local build/test harness. To test changes:
-  1. Place the updated `PZFP.sqf` into your mission folder (or mod) where the mission runtime will load it.
-  2. Launch Arma 3, open the mission in editor, enter Zeus, and initialize the script (use existing in-mission init hooks or call `[] execVM "PZFP.sqf"` depending on how it's loaded).
-- Debugging tips: the script uses `systemChat` for runtime logs. Add `systemChat format ["[PZFP DEBUG] %1", _var];` at strategic points. Avoid flooding with frequent logs inside loops.
-- Data passing conventions: functions are registered and invoked via `missionNamespace` by string name, and some modules expect parameters from the cursor context (e.g., `curatorMouseOver`, `getMousePosition`) — preserve parameter order and usage when changing function signatures.
+**Single-File Script Model**: The entire project is one 14,800+ line SQF file with nested function literals. All functions are defined in the global `missionNamespace` with a `PZFP_fnc_` prefix.
 
-Common code conventions and gotchas
-- Use `params [...]` at the top of function literals to declare expected args. Many factory functions assume a `params` array with either `_unit`, `_vehicle`, or none.
-- Side effects are common: functions often create groups, call `getAssignedCuratorLogic player addCuratorEditableObjects`, attach event handlers, or use `remoteExec`. Ensure side-effects remain intentional and documented when modifying.
-- Avoid renaming functions used via string lookups: the code stores function names in missionNamespace arrays and retrieves them by string at runtime. Renaming without updating registration will break module execution.
-- When creating new modules, register them by calling `PZFP_fnc_registerModuleFunction` and ensure you call `tvSetTooltip` including `Function ID:` so `PZFP_fnc_runModuleFromTree` can parse it.
+**Zeus Integration**: The script integrates with Arma 3's Zeus interface (display 312). Four tree controls (displayCtrl 270–273) represent four factions (BLUFOR, OPFOR, INDEP, CIVILIAN). Placing virtual units via Zeus cursor triggers module execution via an event handler.
 
-Small examples from the codebase
-- Registering a module (pattern):
-  - call `PZFP_fnc_addModule` which ends up calling `PZFP_fnc_registerModuleFunction` and sets a tooltip that includes `Function ID:<number>`.
-- Parsing function IDs (pattern):
-  - `PZFP_fnc_runModuleFromTree` reads `tvTooltip`, splits lines, and parses the last line `Function ID:NNNN` to look up the function name in `missionNamespace`.
-- Cursor-to-world conversion:
-  - `PZFP_fnc_findCursorPosition` chooses `ctrlMapScreenToWorld` when the map is visible, otherwise `screenToWorld`.
+**Module Registration & Invocation**:
+1. Modules are registered via `PZFP_fnc_addModule`, which stores function names in `missionNamespace` array `PZFP_moduleScripts` with numeric IDs (9000+).
+2. Tree tooltips include `Function ID:NNNN` lines parsed by `PZFP_fnc_runModuleFromTree`.
+3. When a Zeus user selects a module from the tree, `PZFP_fnc_executeModule` (hooked to `CuratorObjectPlaced` event) reads the tooltip, looks up the function name, and executes it with cursor position and object context.
 
-What to avoid
-- Avoid reorganizing the file into multiple files unless you also adjust the mission loading and registration order — this repo relies on the single-file layout and runtime execution ordering.
-- Avoid changing `displayCtrl` indices (e.g., 270–280) or tree structure semantics unless you update every tree helper; these are tied to the Zeus UI internals.
+## Critical Naming & Registration
 
-If you add features
-- Add a brief comment above new function literals describing: purpose, expected params, side-effects, and whether they must be registered for Zeus.
-- Register new modules with `PZFP_fnc_registerModuleFunction` and add a tooltip with `Function ID` so the menu system can call them.
+- **Function Prefix**: Always use `PZFP_fnc_` for top-level functions (e.g., `PZFP_fnc_blufor_USA_Men_AddLoadoutRifleman`).
+- **Function ID Immutability**: Function IDs (9000+) in tooltips are hard-coded links to module execution. Never change them without updating the registration flow.
+- **String-Based Lookup**: Functions are retrieved from `missionNamespace` by string name at runtime. Renaming a function breaks its module unless you update the registration.
 
-If anything here is unclear or you'd like me to expand examples or add a short checklist for reviewers, tell me which areas to expand.
+## Code Style Constraints
+
+- **Comments**: Only use `comment "";` syntax. Do NOT use `//` or `/* */` comments—they break the SQF init box parser.
+- **Indentation**: Use single spaces only, never tabs.
+- **Large Changes**: Avoid large refactors or reorganizations except when:
+  - Explicitly asked to by the user
+  - Creating a new faction/faction system (e.g., new country's units, vehicles, identity functions)
+  - Adding substantial features like new vehicle categories or utility systems
+
+## Key Patterns to Follow
+
+**Vehicle Creation Pattern** (e.g., `PZFP_fnc_blufor_USA_APC_CreateMarshall`):
+```sqf
+PZFP_fnc_blufor_USA_APC_CreateMarshall = {
+  private _position = [getMousePosition] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["B_APC_Wheeled_01_cannon_F", _position, [], 0, "NONE"];
+  [_vehicle, ["Sand", 1], [...options...]] call BIS_fnc_initVehicle;
+  
+  private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateCrewman;
+  _driver moveInDriver _vehicle;
+  
+  private _group = createGroup [west, true];
+  [_driver] joinSilent _group;
+  
+  [_vehicle] call PZFP_fnc_vehicleCleanup;
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+};
+```
+
+**Cursor Position Resolution**: `PZFP_fnc_findCursorPosition` chooses `ctrlMapScreenToWorld` when map is visible, else `screenToWorld`. Always use this utility to resolve cursor clicks to world coordinates.
+
+**Identity Assignment** (voices & faces): Faction-specific functions (e.g., `PZFP_fnc_blufor_USA_AddIdentity`) randomize speaker and face from faction-specific arrays. Replicate this pattern for new factions.
+
+## Testing & Debugging
+
+**No Local Test Harness**: Script runs only inside Arma 3 at runtime.
+1. Copy updated `PZFP.sqf` to mission folder.
+2. Launch Arma 3, open mission in editor, enter Zeus.
+3. Execute script via in-mission init or `[] execVM "PZFP.sqf"`.
+
+**Logging**: Use `systemChat format ["[PZFP DEBUG] %1", _var];` for debug output. Avoid logs in tight loops.
+
+## Common Gotchas
+
+- **`params` Declarations**: Every function literal should declare `params [...]` at the start to validate arguments.
+- **Side Effects Are Pervasive**: Functions create groups, call `addCuratorEditableObjects`, set event handlers, and use `remoteExec`. Document these when modifying.
+- **displayCtrl Indices**: Tree controls are hardcoded (270–273 for factions, 50 for map). Changing these breaks Zeus UI integration.
+- **Closure Over Outer Scope**: Functions can access `_maindisplay`, `_curator`, etc. from the initialization scope.
+
+## Adding New Features
+
+**Principle: Keep changes localized and minimal.**
+
+1. **New Module Function**: Write function with `PZFP_fnc_` prefix. Use `params` to declare args. Document side-effects.
+2. **Register**: Call `PZFP_fnc_addModule [_tree, _category, _subcategory, "Label", "PZFP_fnc_yourFunction", _color];`
+3. **Tree Tooltip**: Tooltip with `Function ID:NNNN` is auto-added by `PZFP_fnc_addModule`.
+
+**Exception**: New factions and large feature additions (vehicles, categories, systems) may require edits across multiple sections. Always validate no duplicate code or registration conflicts arise.
+
+## Supporting Files
+
+- `Loadouts.txt`: Vehicle initialization examples (reference only).
+- `utils/ObjectFinder.sqf`: Helper script to export nearby objects' relative positions and rotations.
+- `README.md`: Faction tree structure and vehicle inventory (useful reference).

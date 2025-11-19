@@ -1,0 +1,59 @@
+PZFP_fnc_initMaridAuto = {      
+  params ['_marid'];      
+  if (isNull _marid) exitWith {};      
+ private _position = getPos _marid;      
+       
+ private _gorgon = "I_APC_Wheeled_03_cannon_F" createVehicle _position;      
+ [_gorgon, [0, ""]] remoteExec ['setObjectTexture',0,true];      
+ [_gorgon, [1, ""]] remoteExec ['setObjectTexture',0,true];      
+ [_gorgon, [2, "a3\armor_f_beta\apc_tracked_02\data\rcws30_opfor_co.paa"]] remoteExec ['setObjectTexture',0,true];      
+ [_gorgon, [3, ""]] remoteExec ['setObjectTexture',0,true];      
+ [_gorgon, [4, ""]] remoteExec ['setObjectTexture',0,true];      
+ _gorgon attachTo [_marid, [-0.1261,-0.5185,0.02]];      
+ [ _gorgon, true]  remoteExec ['lockDriver',0,true];      
+ [ _gorgon, 0]  remoteExec ['setFuel',0,true];      
+ [ _gorgon, true]  remoteExec ['lockCargo',0,true];      
+     
+ private _group = createGroup [east, true];     
+    
+ private _commander = _group createUnit ["O_crew_F", _position, [],0, "FORM"];     
+ _commander moveInCommander _gorgon;     
+ _group selectLeader _commander;    
+    
+ private _driver = _group createUnit ["O_crew_F", _position, [],0, "FORM"];     
+ _driver moveInDriver _marid;     
+     
+ private _gunner = _group createUnit ["O_crew_F", _position, [],0, "FORM"];     
+ _gunner moveInGunner _gorgon;     
+   
+  _group addVehicle _gorgon;   
+ [ _gunner, _driver] join _group;  
+  
+ _curator = getAssignedCuratorLogic player;  
+ _curator addCuratorEditableObjects [[_gorgon], true];   
+  
+ _curator = getAssignedCuratorLogic player;  
+ _curator addCuratorEditableObjects [[_marid], true];   
+ _group addVehicle _marid; 
+  
+ waitUntil {isNull _marid || !alive _marid || isNull _gorgon}; 
+  
+ if (isNull _marid || !alive _marid) then { 
+  { 
+  deleteVehicle _x; 
+  } forEach (crew _gorgon); 
+  
+  deleteVehicle _gorgon; 
+ } else {  
+  { 
+  deleteVehicle _x; 
+  } forEach (crew _marid); 
+  
+  deleteVehicle _marid; 
+ }; 
+ 
+};      
+            
+[this] spawn PZFP_fnc_initMaridAuto;           
+[this, [2, ""]] remoteExec ['setObjectTexture',0,true];        
+[this, [[0],true]] remoteExec ['lockTurret',0,true]; 
