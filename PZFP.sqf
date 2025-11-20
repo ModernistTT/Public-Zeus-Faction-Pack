@@ -13837,6 +13837,8 @@ PZFP_fnc_initialize = {
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
+  private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -15154,7 +15156,8 @@ PZFP_fnc_initialize = {
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [east, true];
   _group setBehaviour "SAFE";
-  private _unit = _group createUnit ["O_W_RadioOperator_F", _position, [], 0, "CAN_COLLIDE"];
+  private _unit = _group createUnit ["B_W_RadioOperator_F", _position, [], 0, "CAN_COLLIDE"];
+  [_unit] joinSilent _group;
   if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then {
    doStop _unit;
   };
@@ -15340,6 +15343,187 @@ PZFP_fnc_initialize = {
   _unit
  };
 
+ PZFP_fnc_opfor_IRGF_Tanks_CreateVarsuk = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["O_MBT_02_cannon_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Hex",1], 
+   ["showCamonetHull",0,"showCamonetTurret",0,"showLog",1]
+  ] call BIS_fnc_initVehicle;
+
+  _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
+  _driver moveInDriver _vehicle;
+  _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
+  _gunner moveInGunner _vehicle;
+  _commander = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
+  _commander moveInCommander _vehicle;
+  crew _vehicle joinSilent createGroup [east, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  _unit
+ };
+
+ PZFP_fnc_opfor_IRGF_Tanks_CreateAngara = {
+  private _cursorPos = getMousePosition;
+  _vehicle = createVehicle ["O_MBT_04_cannon_F",_position,[],0,"NONE"];
+  [
+	 _vehicle,
+   ["Hex",1], 
+   ["showCamonetHull",0,"showCamonetTurret",0]
+  ] call BIS_fnc_initVehicle;
+
+  _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
+  _driver moveInDriver _vehicle;
+  _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
+  _gunner moveInGunner _vehicle;
+  _commander = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
+  _commander moveInCommander _vehicle;
+  crew _vehicle joinSilent createGroup [east, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  _unit
+ };
+
+ PZFP_fnc_opfor_IRGF_Tanks_CreateAngaraUP = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["O_MBT_04_command_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Hex",1], 
+   ["showCamonetHull",0,"showCamonetTurret",0]
+  ] call BIS_fnc_initVehicle;
+
+  _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
+  _driver moveInDriver _vehicle;
+  _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
+  _gunner moveInGunner _vehicle;
+  _commander = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
+  _commander moveInCommander _vehicle;
+  crew _vehicle joinSilent createGroup [east, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  _unit
+ };
+
+ PZFP_fnc_opfor_IRGF_Turrets_CreateHMG = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["O_HMG_01_F",_position,[],0,"NONE"];
+  
+  _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+  
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_IRGF_Turrets_CreateHMGTripod = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["O_HMG_01_high_F",_position,[],0,"NONE"];
+  
+  _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_IRGF_Turrets_CreateGMG = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["O_GMG_01_F",_position,[],0,"NONE"];
+  
+  _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_IRGF_Turrets_CreateGMGTripod = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["O_GMG_01_high_F",_position,[],0,"NONE"];
+  
+  _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_IRGF_Turrets_CreateMortar = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["O_Mortar_01_F",_position,[],0,"NONE"];
+  
+  _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_IRGF_Turrets_CreateRadar = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["O_Radar_System_02_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["AridHex",1], 
+   true
+  ] call BIS_fnc_initVehicle;
+  
+  createVehicleCrew _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_IRGF_Turrets_CreateDesignator = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["O_Static_Designator_02_F",_position,[],0,"NONE"];
+
+  createVehicleCrew _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_IRGF_Turrets_CreateSAM = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["O_SAM_System_04_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["AridHex",1],
+   true
+  ] call BIS_fnc_initVehicle;
+
+  createVehicleCrew _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_IRGF_Turrets_CreateAA = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["O_Static_AA_F",_position,[],0,"NONE"];
+
+  _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_IRGF_Turrets_CreateAT = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["O_Static_AT_F",_position,[],0,"NONE"];
+
+  _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
 
 
  PZFP_fnc_rebuildZeusTree = {
@@ -15931,6 +16115,22 @@ PZFP_fnc_initialize = {
   PZFP_opfor_IRGF_Men_MineSpecialist = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Men, "Mine Specialist", "PZFP_fnc_opfor_IRGF_Men_CreateMineSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_IRGF_Men_UAVOperator = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Men, "UAV Operator", "PZFP_fnc_opfor_IRGF_Men_CreateUAVOperator", [1,1,1,1]] call PZFP_fnc_addModule;
   
+  PZFP_opfor_IRGF_Tanks = [_opfor, PZFP_opfor_IRGF, "Tanks", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_opfor_IRGF_Tanks_Varsuk = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Tanks, "T-100 Varsuk", "PZFP_fnc_opfor_IRGF_Tanks_CreateVarsuk", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRGF_Tanks_Angara = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Tanks, "T-140 Angara", "PZFP_fnc_opfor_IRGF_Tanks_CreateAngara", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRGF_Tanks_AngaraUP = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Tanks, "T-140K Angara", "PZFP_fnc_opfor_IRGF_Tanks_CreateAngaraUP", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_opfor_IRGF_Turrets = [_opfor, PZFP_opfor_IRGF, "Turrets", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_opfor_IRGF_Turrets_HMG = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "Mk30 HMG", "PZFP_fnc_opfor_IRGF_Turrets_CreateHMG", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRGF_Turrets_HMGTripod = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "Mk30 HMG (Raised Tripod)", "PZFP_fnc_opfor_IRGF_Turrets_CreateHMG", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRGF_Turrets_GMG = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "Mk32 GMG", "PZFP_fnc_opfor_IRGF_Turrets_CreateGMG", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRGF_Turrets_GMGTripod = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "Mk32 GMG (Raised Tripod)", "PZFP_fnc_opfor_IRGF_Turrets_CreateGMGTripod", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRGF_Turrets_Mortar = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "Mk6 Mortar", "PZFP_fnc_opfor_IRGF_Turrets_CreateMortar", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRGF_Turrets_Radar = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "R-750 Cronus Radar", "PZFP_fnc_opfor_IRGF_Turrets_CreateRadar", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRGF_Turrets_Designator = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "Remote Designator", "PZFP_fnc_opfor_IRGF_Turrets_CreateDesignator", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRGF_Turrets_SAM = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "S-750 Rhea", "PZFP_fnc_opfor_IRGF_Turrets_CreateSAM", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRGF_Turrets_AA = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "Static Titan Launcher (AA)", "PZFP_fnc_opfor_IRGF_Turrets_CreateAA", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRGF_Turrets_AT = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "Static Titan Launcher (AT)", "PZFP_fnc_opfor_IRGF_Turrets_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
   
 
  };
