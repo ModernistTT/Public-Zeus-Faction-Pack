@@ -193,3 +193,4 @@ FPV Drones with VR goggles (boost button with impulse)
 Can the submarine be driveable (how did EZM make offroad slower? Just mass?)
 Seismic Sensor
 Offroad AAF
+Drone Detector
