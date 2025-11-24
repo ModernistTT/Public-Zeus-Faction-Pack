@@ -53,6 +53,9 @@ BLUFOR:
     - Maintenance Crew
 * Horizon Islands Defence Forces Coast Guard ????????????????????? (BLU, RED, IND)
     - Infantry
+* Gendarmerie de Tanoa (BLU, RED, IND)
+    - Infantry
+    - Special Operations
 * Combat Research & Technologies Command
     - Group 13
     - Group 14
@@ -98,6 +101,8 @@ INDEP
 * Malden Defense Force (BLU, RED, IND)
     - Infantry
     - Militia
+* Police Nationale de Malden (BLU, RED, IND)
+    - Infantry
 * Freedom and Independence Army (BLU, RED, IND)
     - Infantry
 * Livonian Looters
