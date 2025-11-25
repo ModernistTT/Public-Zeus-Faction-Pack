@@ -1,0 +1,2200 @@
+[] spawn { 
+ sleep 0.1; 
+ [ 
+  "Turn on advanced combat drones?", 
+  "Advanced Combat Drones", 
+  "Enable", "Disable" 
+ ] call BIS_fnc_guiMessage  
+  params ["_result"];  
+ 
+ if (_result) then { 
+ 
+  if (missionNamespace getVariable ["AdvancedUCAVs_ScriptRunning", false]) exitWith { 
+   systemChat "Advanced UCAVs is already running."; 
+  }; 
+ 
+  AdvancedUCAVs_ScriptRunning = true; 
+  publicVariable "AdvancedUCAVs_ScriptRunning"; 
+ 
+  private _msg =  
+  "   
+  Advanced Combat Drones has been enabled.\n\n 
+   
+  Note: Only new placed drones get the options, not already existing ones.\n\n 
+   
+  For more info, open your map and click on 'Advanced UCAVs' in the menu on the left side.  
+  ";  
+   
+  [_msg] remoteExec ["hint", 0]; 
+ 
+  { 
+       
+   player createDiarySubject ["Advanced_UCAVs", "Advanced UCAVs"]; 
+    
+    
+   private _diaryRecord3 = player createDiaryRecord ["Advanced_UCAVs",  
+   [ 
+    ".rtp file tutorial", 
+    "<br/>" + 
+    "Tutorial on how to find names of player in the log, in case he is trolling with the drones<br/>" + 
+    "(For windows. idk about linux/macOS)<br/><br/>" + 
+     
+    "1. Tab out of Arma and press 'WindowsKey + R'.<br/>" + 
+    "2. In the text field write: <font color='#db8727'>%localappdata%\Arma 3</font> and press enter.<br/>" + 
+    "3. In the folder that just opened, right click -> sort by newest files first.<br/>" + 
+    "4. Click on the newest file with the ending '.rtp'.<br/>" + 
+    "5. Open this file in editor.<br/>" + 
+    "6. In the editor, press 'CTRL + F' and search for 'UCAV_LOG'.<br/>" + 
+    "7. All messages that start with '[UCAV_LOG]' are from the sript.<br/>" 
+      
+   ]];    
+          
+   private _diaryRecord2 = player createDiaryRecord ["Advanced_UCAVs",  
+   [ 
+    "Changelog", 
+    "<br/>" + 
+    "------------------<br/>" + 
+    "  Changelog<br/>" + 
+    "------------------<br/><br/><br/>" + 
+ 
+    "-> ver 3.0.6<br/>" +  
+    "- Added yet another log message wich says who connected to a drone to avoid trolling.<br/><br/>" + 
+ 
+    "-> ver 3.0.5<br/>" +  
+    "- Its now easier to jamm a drone using the spectrum device. The crosshair doesn't have to be exactly on the drone anymore.<br/>" + 
+    "- Added more log messages for when a drone gets crashed, to avoid trolling.<br/>" + 
+    "- Changed it so that only drones assembled by players get autonomous disabled after placed.<br/><br/>" + 
+ 
+    "-> ver 3.0.4<br/>" +  
+    "- If a drone is jammed, playername of who did it is sent into .rtp file in case someone is trolling.<br/>" + 
+    "- If a player arms an UAV, its now also being saved in the .rtp file also to avoid trolling.<br/>" + 
+    "- If an AL-6 UAV is armed, it can no longer slingload ED-1 UGVs<br/>" +    
+    "- Fixed a bug where multiple AL-6 drones were able to slingload one UGV.<br/>" + 
+    "- Fixed a bug that caused UGVs to not be slingloadable after the AL-6 wich got it slingloaded died.<br/>" + 
+    "- Fixed a bug where if one player would slingload an ED-1, other players werent able to detach it.<br/>" +  
+    "- Fixed a bug that caused the jamming keybinds to not work properly sometimes.<br/><br/>" +  
+ 
+    "-> ver 3.0.3<br/>" +  
+    "- Bugfix: Pelter smoke cooldown was 5 instead of 60 seconds<br/><br/>" + 
+ 
+    "-> ver 3.0.2<br/>" +  
+    "- All AL-6 drones can now slingload ED-1 UGVs if one is in a 5m radius around the AL-6.<br/>" + 
+    "- All ED-1 UGVs can now deploy smokes. Infinite uses but 1min cooldown.<br/><br/>" + 
+  
+    "-> ver 3.0.1<br/>" +  
+    "- Added Jamming: Small drones can now also get jammed by aiming a spectrum device with a jammer antenna at a drone and pressing left click.<br/><br/>" + 
+  
+    "-> ver 3.0.0<br/>" +  
+    "- Added Jamming: All small UAVs and UGVs (AR-2, AL-6, ED-1) can now be jammed if the player presses 'J' while wearing a Radio Backack.<br/><br/>" +     
+         
+    "-> ver 2.1.9<br/>" +  
+    "- If a drone is placed, 'Autonomous' is disabled. Can be manually re-enabled by the player in the UAV terminal.<br/><br/>" + 
+     
+    "-> ver 2.1.8<br/>" +  
+    "- Fixed a bug where the repair icon was not shown on pelters.<br/><br/>" + 
+ 
+    "-> ver 2.1.7<br/>" +  
+    "- Added repair icon to all 'Repair Drone' options so they look better.<br/>" + 
+    "- Also added inventory icon to all 'Check Cargo' options.<br/>" +  
+    "- All options are no longer visible when looking at the drone while in a vehicle.<br/>" + 
+    "- All options are no longer visible when looking at the drone with another drone.<br/>" +  
+    "- Fixed a bug with check cargo option where facewear was displayed with the class name.<br/><br/>" +  
+     
+    "-> ver 2.1.6<br/>" +  
+    "- Added repair option to all Pelter and Roller UGVs.(all factions)<br/>" + 
+    "- Added rearm option to all Pelter UGVs for both slug and pellet rounds.(all factions)<br/><br/>" +      
+         
+    "-> ver 2.1.5<br/>" +   
+    "- Changed how the actions behave when looked at and interacted with.<br/>" + 
+    "- Changed hint message when script is ran.<br/><br/>" + 
+     
+    "-> ver 2.1.4<br/>" +  
+    "- Changed the texts that are being shown (e.g. 'You need a RGO Grenade') from 'hint' to 'titleText' message to make them look better visually.<br/>" + 
+    "- Changed the options so they need to be held for arming a drone. Doesnt affect rearm or repair options.<br/><br/>" + 
+ 
+    "-> ver 2.1.3<br/>" +  
+    "- Fixed a bug wich caused an option to not be removed properly when AL-6 gets armed.<br/><br/>" +     
+     
+    "-> ver 2.1.2<br/>" +  
+    "- All AL-6 drones get a 'Check Cargo' option to check cargo mid flight.<br/>" +  
+    "- AL-6 storage gets not only locked but also cleared when armed.<br/>" +      
+    "- Added repair option all AL-6 drones (civ, medic) wich didnt had them before.<br/><br/>" +  
+ 
+    "-> ver 2.1.1<br/>" +     
+    "- Changed range from wich the arming options can be seen from 2m to 2.5m<br/><br/>" +  
+ 
+    "-> ver 2.1<br/>" + 
+    "- (Finally) fixed the bug wich caused the script to turn off if zeus left his slot.<br/>" + 
+    "- Added 'Anti-Personnel FPV' so players can use them with just their respawn loadout(wich was not possible until now since you cant carry a AR-2 backpack and items to make larger FPVs in the same loadout) <br/>" + 
+    "- Added a few animations. Depending on if the player is standing, crouched or prone, diffrent animations play.<br/>" + 
+    "- Instead of just locking the turrets of drones when they are armed, the gunner gets completely removed.<br/>" + 
+    "- Changed the order in wich the options are listed.<br/><br/>" + 
+     
+    "-> ver 2.0<br/>" + 
+    "- Improved both 'Bomb Drop Drone' and 'Bomb Carrier Drone' by adding visual grenades.<br/>" + 
+    "- The grenades will visually apear under the drone when rearming, disapear when they are dropped.<br/>" + 
+    "- The storage space of AL-6 drones now gets locked when players arm them.<br/><br/>" + 
+        
+    "-> ver 1.9<br/>" + 
+    "- Renamed the versions tab to changelog and added all the changes from previous version.<br/>" + 
+    "- Improved all repair and rearm animtions, so depending on wich weapon type the player is using, diffrent animations play.<br/><br/>" +     
+     
+    "-> ver 1.8<br/>" + 
+    "- Added rearm and repair options to the civlian demining drone.<br/>" +  
+    "- Fixed a small bug where options would duplicate for new joining players.<br/><br/>" +    
+     
+    "-> ver 1.7<br/>" + 
+    "- All AL-6 and AR-2 drones from all nations now have the special options, exept the medic AL-6.<br/>" +  
+    "- Added a small version tab with changes shown there.<br/>" +  
+    "- Edited the features list.<br/><br/>" +     
+     
+    "-> ver 1.6<br/>" + 
+    "- The script no longer bugs out when its placed multiple times by zeus.<br/>" +  
+    "- The enable / disable option now works without any bugs.<br/>" + 
+    "- 'Toggle Options' button now works without any issues.<br/><br/>" +     
+     
+    "-> ver 1.5<br/>" + 
+    "- Fixed a bug with the toggle option.<br/>" +     
+    "- When drone is placed, only toggle option is visible, only after clicking it all options will apear.<br/><br/>" + 
+ 
+    "-> ver 1.4<br/>" + 
+    "- Added the option so script can be disabled.<br/>" + 
+    "- Added the 'Toggle Options' option to the drones.<br/><br/>" + 
+    
+    "-> ver 1.3<br/>" + 
+    "- First release of the script."  
+      
+   ]]; 
+ 
+   private _diaryRecord = player createDiaryRecord ["Advanced_UCAVs",  
+   [ 
+    "Features and Description", 
+    "<br/>" + 
+    "Advanced UCAVs<br/>" + 
+    "Current version: 3.0.6<br/><br/><br/>" + 
+     
+     
+    "-> Gives all AR-2 and AL-6 (Exept medic and civ) drones the option to arm them, making them usable in combat.<br/><br/>" + 
+     
+    "-> Destroyed drones auto despawn after 5 minutes.<br/><br/>" + 
+     
+    "-> Adds 'Check Cargo' option to AL-6 to check their cargo mid flight.<br/><br/>" + 
+     
+    "-> Adds repair option to all AR-2s and AL-6s, to 100% repair them, unlike the default repair wich doesnt.<br/><br/>" + 
+     
+    "-> Adds jamming small drones with a radio backpack or a spectrum device.<br/><br/>" + 
+     
+    "-> AR-2 Variants:<br/>" + 
+    "- Bomb Drop version<br/>" + 
+    "- RPG-7 version<br/>" + 
+    "- Anti-Personnel FPV<br/>" +  
+    "- Kamikaze FPV<br/>" + 
+    "- Anti-Structure FPV<br/><br/>" + 
+     
+    "-> AL-6 Variants:<br/>" + 
+    "- Bomb Carrier version<br/>" + 
+    "- RPG-7 version<br/>" + 
+    "- RPG-42 version (AT and HE)<br/><br/>" + 
+     
+    "-> How to use the drones:<br/>" + 
+    "1. Grab one of the named drones from the arsenal and assemble it.<br/>" + 
+    "2. Make sure you have the required items in your inventory.<br/>" + 
+    "3. Then stand right next to the drone and click/hold one of the options.<br/>" + 
+    "4. Hold the button until an animation plays, even if the scroll menu fades out.<br/>" + 
+    "5. The drone is then armed after the animation finished.<br/>" + 
+    "-> All versions exept the FPV drones can be rearmed by the player.<br/><br/>" + 
+     
+    "-> How to use jamming (backpack):<br/>" + 
+    "1. Grab any Radio Backpack from an arsenal.<br/>" + 
+    "2. Press 'J' to toggle jamming on and off.<br/>" +    
+    "The Backpack will jamm small UAVs like AR-2 and AL-6 in a 200m radius.<br/>" + 
+    "Small UGVs like the ED-1D and ED-1E will be jammed in a 100m radius.<br/><br/>" + 
+         
+    "-> How to use jamming (spectrum device):<br/>" + 
+    "1. Grab a Spectrum Device from an arsenal.<br/>" + 
+    "2. Make sure you have the 'SD Jammer Antenna' attachment.<br/>" +     
+    "3. Aim at a drone and press 'left click'<br/>" + 
+    "The maximum range is 1000m, though its hard to spot drones at 300m already.<br/><br/>" + 
+            
+    "! Keep in mind that it will also jamm friendly drones, not only enemy drones<br/><br/><br/><br/>" +     
+       
+     
+    "- script by julius" 
+   ]]; 
+ 
+  } remoteExec ["call", 0, true]; 
+ 
+ 
+  AdvancedUCAVs_PlayerAnimations = { 
+    
+   private _currentStance = stance _caller; 
+    
+   if (_currentStance == "STAND") then { 
+    private _weapon = currentWeapon _caller; 
+    private _weaponType = ([_weapon] call BIS_fnc_itemType) select 1; 
+     
+    if (_weaponType == "Rifle" || _weaponType == "AssaultRifle" || _weaponType == "SniperRifle" || _weaponType == "SubmachineGun" || _weaponType == "Shotgun" || _weaponType == "MachineGun" || _weaponType == "GrenadeLauncher") then { 
+     _caller playMove "AinvPercMstpSrasWrflDnon_Putdown_AmovPercMstpSrasWrflDnon"; 
+    }; 
+    if (_weaponType == "Handgun") then { 
+     _caller playMove "AinvPercMstpSrasWpstDnon_Putdown_AmovPercMstpSrasWpstDnon"; 
+    }; 
+    if (_weaponType == "Launcher" || _weaponType == "MissileLauncher" || _weaponType == "RocketLauncher") then { 
+     _caller playMove "AinvPercMstpSrasWlnrDnon_Putdown_AmovPercMstpSrasWlnrDnon"; 
+    }; 
+    if (_weaponType == "") then { 
+     _caller playMove "AinvPercMstpSnonWnonDnon_Putdown_AmovPercMstpSnonWnonDnon"; 
+    }; 
+    if (_weaponType == "Binocular" || _weaponType == "LaserDesignator") then { 
+     _caller playMove "AinvPercMstpSoptWbinDnon_Putdown_AmovPercMstpSoptWbinDnon"; 
+    };        
+   }; 
+    
+   if (_currentStance == "CROUCH") then { 
+ 
+    private _weapon = currentWeapon _caller; 
+    private _weaponType = ([_weapon] call BIS_fnc_itemType) select 1;         
+    if (_weaponType == "Rifle" || _weaponType == "AssaultRifle" || _weaponType == "SniperRifle" || _weaponType == "SubmachineGun" || _weaponType == "Shotgun" || _weaponType == "MachineGun" || _weaponType == "GrenadeLauncher") then { 
+     _caller playMove "AinvPknlMstpSrasWrflDnon_Putdown_AmovPknlMstpSrasWrflDnon"; 
+    }; 
+    if (_weaponType == "Handgun") then { 
+     _caller playMove "AinvPknlMstpSrasWpstDnon_Putdown_AmovPknlMstpSrasWpstDnon"; 
+    }; 
+    if (_weaponType == "Launcher" || _weaponType == "MissileLauncher" || _weaponType == "RocketLauncher") then { 
+     _caller playMove "AinvPknlMstpSrasWlnrDnon_Putdown_AmovPknlMstpSrasWlnrDnon"; 
+    }; 
+    if (_weaponType == "") then { 
+     _caller playMove "AinvPknlMstpSnonWnonDnon_Putdown_AmovPknlMstpSnonWnonDnon"; 
+    }; 
+ 
+    if (_weaponType == "Binocular" || _weaponType == "LaserDesignator") then { 
+     _caller playMove "AinvPknlMstpSoptWbinDnon_Putdown_AmovPknlMstpSoptWbinDnon"; 
+    };        
+   }; 
+    
+   if (_currentStance == "PRONE") then { 
+ 
+    private _weapon = currentWeapon _caller; 
+    private _weaponType = ([_weapon] call BIS_fnc_itemType) select 1; 
+     
+    if (_weaponType == "Rifle" || _weaponType == "AssaultRifle" || _weaponType == "SniperRifle" || _weaponType == "SubmachineGun" || _weaponType == "Shotgun" || _weaponType == "MachineGun" || _weaponType == "GrenadeLauncher") then { 
+     _caller playMove "AinvPpneMstpSrasWrflDnon_Putdown_AmovPpneMstpSrasWrflDnon"; 
+    }; 
+ 
+    if (_weaponType == "Handgun") then { 
+     _caller playMove "AinvPpneMstpSrasWpstDnon_Putdown_AmovPpneMstpSrasWpstDnon"; 
+    }; 
+ 
+    if (_weaponType == "") then { 
+     _caller playMove "AinvPpneMstpSnonWnonDnon_Putdown_AmovPpneMstpSnonWnonDnon"; 
+    }; 
+ 
+    if (_weaponType == "Binocular" || _weaponType == "LaserDesignator") then { 
+     _caller playMove "AinvPpneMstpSoptWbinDnon_Putdown_AmovPpneMstpSoptWbinDnon"; 
+    };        
+   }; 
+  }; 
+  publicVariable "AdvancedUCAVs_PlayerAnimations"; 
+ 
+ 
+  AdvancedUCAVs_AntiTrollLog = { 
+   params ["_droneType"];    
+   _AntiTroll_LogMsg = format ["[UCAV_LOG] Player <%1> made an <%2>", name _caller, _droneType]; 
+    
+   [_AntiTroll_LogMsg] remoteExec ["diag_log", 0]; 
+      
+  }; 
+  publicVariable "AdvancedUCAVs_AntiTrollLog"; 
+ 
+   
+  AdvancedUCAVs_DestroyRope_fnc = { 
+   private _rope_front_left = _target getVariable "slingload_attached_front_left"; 
+   private _rope_front_right = _target getVariable "slingload_attached_front_right"; 
+   private _rope_back_left = _target getVariable "slingload_attached_back_left"; 
+   private _rope_back_right = _target getVariable "slingload_attached_back_right"; 
+    
+   private _UGV = _target getVariable "slingload_attached"; 
+    
+   if (!isNil "_rope_front_left") then { ropeDestroy _rope_front_left }; 
+   if (!isNil "_rope_front_right") then { ropeDestroy _rope_front_right }; 
+   if (!isNil "_rope_back_left") then { ropeDestroy _rope_back_left }; 
+   if (!isNil "_rope_back_right") then { ropeDestroy _rope_back_right }; 
+    
+   _target setVariable ["slingload_attached_front_left", nil, true]; 
+   _target setVariable ["slingload_attached_front_right", nil, true]; 
+   _target setVariable ["slingload_attached_back_left", nil, true]; 
+   _target setVariable ["slingload_attached_back_right", nil, true]; 
+    
+    
+   _target setVariable ["UGV_slingloaded", false, true]; 
+   _target setVariable ["slingload_attached", nil, true]; 
+   _UGV setVariable ["UGV_isSlingloaded", false, true]; 
+  };   
+  publicVariable "AdvancedUCAVs_DestroyRope_fnc"; 
+   
+ 
+   
+   
+  { 
+   
+   AdvancedUCAVs_UAVCreatedbyPlayerCheck_ID = addMissionEventHandler ["UAVCrewCreated", { 
+    params ["_uav", "_driver", "_gunner"]; 
+    _uav setVariable ["assembeldByPlayer", true, true]; 
+   }]; 
+   AdvancedUCAVs_EntityHandlerID = addMissionEventHandler ["EntityCreated", {  
+    params ["_entity"]; 
+     
+    comment "Disable autonomus on spawn of all drones"; 
+    If (_entity isKindOf "UAV_01_base_F" || _entity isKindOf "UAV_06_base_F" || _entity isKindOf "UGV_02_Base_F") then {  
+     [_entity] spawn { 
+      _entity = _this select 0; 
+      sleep 0.1;                   
+      if (_entity getVariable ["assembeldByPlayer", false]) then { 
+       _entity setAutonomous false;  
+      }; 
+     }; 
+    }; 
+        
+    If (_entity isKindOf "UAV_01_base_F" || _entity isKindOf "UAV_06_base_F") then {  
+     
+     _AntiTrollKilledEH = _entity getVariable ["AntiTrollKilledEH", -1]; 
+     if (_AntiTrollKilledEH >= 0) then { 
+      _AntiTrollKilledEH = _entity getVariable "AntiTrollKilledEH"; 
+      _entity removeEventHandler ["Killed", _AntiTrollKilledEH]; 
+      _entity setVariable ["AntiTrollKilledEH", nil, true]; 
+     }; 
+ 
+     _AntiTrollKilledEH = _entity addEventHandler ["Killed", { 
+      params ["_unit", "_killer", "_instigator", "_useEffects"]; 
+ 
+       
+      if (str _unit == str _killer && isNull _instigator) then { 
+       if (!isNil {_unit getVariable "playerWhoHitDrone"}) then { 
+        comment "drone was hit by a player before it crashed"; 
+        _lastRegisterdSlot1User = _unit getVariable ["lastRegisterdSlot1User", objNull]; 
+        _playerWhoHitDrone = _unit getVariable ["playerWhoHitDrone", objNull];            
+        _displayName = getText (configFile >> "CfgVehicles" >> (typeOf _unit) >> "displayName");    
+            
+        _antiKamikaze_logMsg = format ["[UCAV_LOG] < %1 > was killed by itself, assuming it got crashed. Last registered driver: < %2 >. Though it was hit before by: < %3 >", _displayName, _lastRegisterdSlot1User, _playerWhoHitDrone]; 
+         
+        [_antiKamikaze_logMsg] remoteExec ["diag_log"];  
+         
+       } else { 
+        comment "drone crashed without being hit by a player before";       
+        _lastRegisterdSlot1User = _unit getVariable ["lastRegisterdSlot1User", objNull];            
+        _displayName = getText (configFile >> "CfgVehicles" >> (typeOf _unit) >> "displayName");    
+            
+        _antiKamikaze_logMsg = format ["[UCAV_LOG] < %1 > was killed by itself, assuming it got crashed. Last registered driver: < %2 >", _displayName, _lastRegisterdSlot1User]; 
+         
+        [_antiKamikaze_logMsg] remoteExec ["diag_log"];  
+         
+       }; 
+      }; 
+     }];  
+     _entity setVariable ["AntiTrollKilledEH", _AntiTrollKilledEH, true]; 
+      
+     _AntiTrollHitEH = _entity getVariable ["AntiTrollHitEH", -1]; 
+     if (_AntiTrollHitEH >= 0) then { 
+      _AntiTrollHitEH = _entity getVariable "AntiTrollHitEH"; 
+      _entity removeEventHandler ["Hit", _AntiTrollHitEH]; 
+      _entity setVariable ["AntiTrollHitEH", nil, true]; 
+     };           
+     _AntiTrollHitEH = _entity addEventHandler ["Hit", { 
+      params ["_unit", "_source", "_damage", "_instigator"];     
+      if (isPlayer _instigator) then { 
+       _instigatorName = name _instigator; 
+       _unit setVariable ["playerWhoHitDrone", _instigatorName, true]; 
+      }; 
+     }];   
+     _entity setVariable ["AntiTrollHitEH", _AntiTrollHitEH, true]; 
+     
+    };     
+     
+     
+     
+    comment "Check Cargo and Slingload Pelter Options for all AL-6 bases exept demine UAV"; 
+    If (_entity isKindOf "UAV_06_base_F" && (typeOf _entity) != "C_IDAP_UAV_06_antimine_F") then { 
+     [_entity] spawn { 
+      sleep 0.1; 
+      _AL6 = _this select 0;      
+      _CheckCargo_actionID = _AL6 addAction ["-> Check Cargo", { 
+       params ["_target", "_caller", "_actionId", "_arguments"]; 
+        
+       private _weapons = getWeaponCargo _target; 
+       private _magazines = getMagazineCargo _target; 
+       private _items = getItemCargo _target; 
+       private _backpacks = getBackpackCargo _target; 
+ 
+       private _hintText = "Cargo:\n\n"; 
+ 
+       { 
+        private _class = _x; 
+        private _amount = (_weapons select 1) select _forEachIndex; 
+        private _name = getText (configFile >> "CfgWeapons" >> _class >> "displayName"); 
+        if (_name == "") then { _name = _class }; 
+        _hintText = _hintText + format ["%1  x%2\n", _name, _amount]; 
+       } forEach (_weapons select 0); 
+ 
+       { 
+        private _class = _x; 
+        private _amount = (_magazines select 1) select _forEachIndex; 
+        private _name = getText (configFile >> "CfgMagazines" >> _class >> "displayName"); 
+        if (_name == "") then { _name = _class }; 
+        _hintText = _hintText + format ["%1  x%2\n", _name, _amount]; 
+       } forEach (_magazines select 0); 
+ 
+       { 
+        private _class = _x; 
+        private _amount = (_items select 1) select _forEachIndex; 
+        private _name = getText (configFile >> "CfgWeapons" >> _class >> "displayName"); 
+        if (_name == "") then { 
+         _name = getText (configFile >> "CfgGlasses" >> _class >> "displayName"); 
+         if (_name == "") then { 
+          _name = getText (configFile >> "CfgItems" >> _class >> "displayName"); 
+          if (_name == "") then { _name = _class }; 
+         }; 
+        }; 
+        _hintText = _hintText + format ["%1  x%2\n", _name, _amount]; 
+       } forEach (_items select 0); 
+ 
+       { 
+        private _class = _x; 
+        private _amount = (_backpacks select 1) select _forEachIndex; 
+        private _name = getText (configFile >> "CfgVehicles" >> _class >> "displayName"); 
+        if (_name == "") then { _name = _class }; 
+        _hintText = _hintText + format ["%1  x%2\n", _name, _amount]; 
+       } forEach (_backpacks select 0); 
+ 
+       [_hintText] remoteExec ["hint", _caller]; 
+      }, nil, 1.5, false, true, "", "(_this distance _target) < 0.2 && alive _target && (count (getWeaponCargo _target select 0) > 0 || count (getMagazineCargo _target select 0) > 0 || count (getItemCargo _target select 0) > 0 || count (getBackpackCargo _target select 0) > 0)"]; 
+ 
+      _AL6 setUserActionText [_CheckCargo_actionID, "-> Check Cargo", "<img size='2.6' image='a3\ui_f\data\igui\cfg\actions\gear_ca.paa'/><br/>Check Cargo"]; 
+       
+       
+      
+      
+      
+      _AL6 setVariable ["UGV_slingloaded", false, true]; 
+       
+      _Slingload_actionID = _AL6 addAction ["Slingload nearest UGV", { 
+       params ["_target", "_caller", "_actionId", "_arguments"]; 
+        
+     
+          
+       private _nearUGVs = nearestObjects [_target, ["UGV_02_Base_F"], 5]; 
+       if (count _nearUGVs > 0) then { 
+        private _UGV = _nearUGVs select 0; 
+         
+        if (!isNull (_target getVariable ["slingload_attached_front_left", objNull])) exitWith {}; 
+        if (!isNull (_target getVariable ["slingload_attached_front_right", objNull])) exitWith {}; 
+        if (!isNull (_target getVariable ["slingload_attached_back_left", objNull])) exitWith {}; 
+        if (!isNull (_target getVariable ["slingload_attached_back_right", objNull])) exitWith {}; 
+        if (!alive _UGV) exitWith {}; 
+        if (_UGV getVariable ["UGV_isSlingloaded", false]) exitWith {}; 
+         
+         
+        private _rope_front_left = ropeCreate [_target, [-0.277,0.235,-0.23], _UGV, [-0.18, 0.1, -0.08], 5]; 
+        private _rope_front_right = ropeCreate [_target, [0.273,0.235,-0.23], _UGV, [0.18, 0.1, -0.08], 5]; 
+        private _rope_back_left = ropeCreate [_target, [-0.277,-0.22,-0.23], _UGV, [-0.18, -0.4, -0.08], 5]; 
+        private _rope_back_right = ropeCreate [_target, [0.273,-0.22,-0.23], _UGV, [0.18, -0.4, -0.08], 5]; 
+         
+        _target setVariable ["slingload_attached_front_left", _rope_front_left, true]; 
+        _target setVariable ["slingload_attached_front_right", _rope_front_right, true]; 
+        _target setVariable ["slingload_attached_back_left", _rope_back_left, true]; 
+        _target setVariable ["slingload_attached_back_right", _rope_back_right, true];    
+           
+        _target disableCollisionWith _rope_front_left;   
+        _target disableCollisionWith _rope_front_right;  
+        _target disableCollisionWith _rope_back_left;  
+        _target disableCollisionWith _rope_back_right;  
+           
+        _target setVariable ["slingload_attached", _UGV, true]; 
+        _target setVariable ["UGV_slingloaded", true, true]; 
+        _UGV setVariable ["UGV_isSlingloaded", true, true]; 
+        }; 
+      }, nil, 1.5, true, true, "", "(_this distance _target) < 0.01 && alive _target && !(_target getVariable ['UGV_slingloaded', false]) && {count nearestObjects [_target, ['UGV_02_Base_F'], 5] > 0} && (speed _target) < 10"]; 
+       
+            
+      _Unsling_actionID = _AL6 addAction ["Drop Slingloaded UGV", { 
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+ 
+        [] call AdvancedUCAVs_DestroyRope_fnc; 
+      }, nil, 1.5, true, true, "", "(_this distance _target) < 0.01 && alive _target && !isNull (_target getVariable ['slingload_attached', objNull]) && (speed _target) < 10 && ((getPos _target) select 2) < 10"]; 
+       
+       
+      _AL6 setVariable ["CheckCargo_actionID", _CheckCargo_actionID, true]; 
+      _AL6 setVariable ["Slingload_actionID", _Slingload_actionID, true]; 
+      _AL6 setVariable ["Slingload_actionID", _Slingload_actionID, true]; 
+      
+      
+      [_AL6, ["Killed", { 
+       params ["_unit"]; 
+        
+        
+       private _UGV = _unit getVariable "slingload_attached"; 
+       _UGV setVariable ["UGV_isSlingloaded", false, true]; 
+        
+        
+       [_unit, (_unit getVariable "CheckCargo_actionID")] remoteExec ["removeAction", 0, true]; 
+       [_unit, (_unit getVariable "Slingload_actionID")] remoteExec ["removeAction", 0, true]; 
+       [_unit, (_unit getVariable "Unsling_actionID")] remoteExec ["removeAction", 0, true]; 
+        
+       _allRopes = attachedObjects _unit; 
+       { [_x, 1] remoteExec ["setDamage", 0] } forEach _allRopes;         
+      }]] remoteExec ["addEventHandler", 0, true]; 
+      
+      
+     }; 
+    }; 
+     
+     
+     
+    if ((typeOf _entity) == "B_UAV_01_F" || (typeOf _entity) == "O_UAV_01_F" || (typeOf _entity) == "I_UAV_01_F" || (typeOf _entity) == "I_E_UAV_01_F") then { 
+     [_entity] spawn { 
+      sleep 0.1; 
+      _AR2 = _this select 0; 
+ 
+ 
+      _AR2 setVariable ["message_missing_RGO_grenade", ["<t color='#FF0000' size='1.7'>You need a RGO Grenade", "PLAIN DOWN", 0.5, true, true]]; 
+      _AR2 setVariable ["message_missing_RPG7_launcher", ["<t color='#FF0000' size='1.7'>You need a RPG-7 rocket launcher", "PLAIN DOWN", 0.5, true, true]]; 
+      _AR2 setVariable ["message_missing_APERS_mine", ["<t color='#FF0000' size='1.7'>You need an APERS Mine", "PLAIN DOWN", 0.5, true, true]]; 
+      _AR2 setVariable ["message_missing_RPG7_ammo", ["<t color='#FF0000' size='1.7'>You need a RPG-7 rocket", "PLAIN DOWN", 0.5, true, true]]; 
+      _AR2 setVariable ["message_missing_MAAWS_ammo", ["<t color='#FF0000' size='1.7'>You need a MAAWS Heat 75 rocket", "PLAIN DOWN", 0.5, true, true]]; 
+ 
+      
+      _AR2 setVariable ["AR2OptionsVisible", false, true]; 
+ 
+      _AR2 addAction ["<t color='#0094FF'>Toggle Options", { 
+       params ["_target", "_caller", "_actionId", "_arguments"]; 
+        
+       _visible = !(_target getVariable ["AR2OptionsVisible", false]); 
+       _target setVariable ["AR2OptionsVisible", _visible, true]; 
+ 
+      }, nil, 1.5, false, false, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (unitIsUAV _this == false) && (vehicle _this == _this)"]; 
+      
+      
+      _action_ID = _AR2 addAction ["-> Repair Drone", { 
+       params ["_target", "_caller", "_actionId", "_arguments"]; 
+       _hasToolkit = [_caller, "ToolKit"] call BIS_fnc_hasItem; 
+       if (_hasToolkit) then { 
+         
+        [_caller] call AdvancedUCAVs_PlayerAnimations; 
+         
+        sleep 1; 
+        _target setDamage 0; 
+       } else { 
+        [["<t color='#FF0000' size='1.7'>You need a Toolkit", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+        }; 
+      }, nil, 1.5, false, true, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (_target getVariable ['AR2OptionsVisible', false]) && (unitIsUAV _this == false) && (vehicle _this == _this)"]; 
+ 
+       
+      _AR2 setUserActionText [_action_ID, "-> Repair Drone", "<img size='1.9' image='a3\ui_f\data\igui\cfg\actions\repair_ca.paa'/><br/>Repair Drone"]; 
+       
+       
+ 
+      [_AR2, "-> Make Bomb Drop Drone (Hold 10sec)",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa", 
+       "(_this distance _target) >= 0.1 && (_this distance _target) < 2.5 && (_target getVariable ['AR2OptionsVisible', false]) && (unitIsUAV _this == false) && (vehicle _this == _this)",  
+       "if (_caller distance _target < 2.5) then { if ([_caller, 'HandGrenade'] call BIS_fnc_hasItem) then {true} else { _message_missing_RGO_grenade = _target getVariable 'message_missing_RGO_grenade'; [_message_missing_RGO_grenade] remoteExec ['titleText', _caller]; false } } else {false}", 
+       {},  
+       { 
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+        [["<t color='#00FF0C' size='1.7'>Arming in progress, keep holding...", "PLAIN DOWN", 0.1, true, true]] remoteExec ["titleText", _caller];         
+       },                 
+       {  
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+         
+        _droneType = "AR-2: Bomb Drop Drone"; 
+        [_droneType] call AdvancedUCAVs_AntiTrollLog; 
+         
+        _hasBuildRGO = [_caller, "HandGrenade"] call BIS_fnc_hasItem; 
+        if (_hasBuildRGO) then { 
+         [["", "PLAIN DOWN", 0.01, true, true]] remoteExec ["titleText", _caller]; 
+         [_target, _actionId] remoteExec ["removeAction", 0, true]; 
+         [_target, 0] remoteExec ["removeAction", 0, true]; 
+         [_target, 3] remoteExec ["removeAction", 0, true]; 
+         [_target, 4] remoteExec ["removeAction", 0, true]; 
+         [_target, 5] remoteExec ["removeAction", 0, true]; 
+         [_target, 6] remoteExec ["removeAction", 0, true]; 
+          
+         _caller playMove "AinvPknlMstpSlayWrflDnon_medicOther"; 
+         ["Tip: If you press 'CTRL + right click', you can freelook in the drones camera.\n  
+         Also, make sure to be at 50 meters or higher when dropping"] remoteExec ["hint", _caller]; 
+          
+         _caller removeItem "HandGrenade"; 
+          
+         sleep 6; 
+          
+         [_target, ["BombDemine_01_F", [-1]]] remoteExec ["addWeaponTurret", _target]; 
+         [_target, ["PylonRack_4Rnd_BombDemine_01_F", [-1], (1)]] remoteExec ["addMagazineTurret", _target]; 
+         [_target, ["Laserdesignator_mounted", [0]]] remoteExec ["removeWeaponTurret", _target]; 
+         [_target,  [[0],true]] remoteExec ["lockTurret", _target]; 
+         _target deleteVehicleCrew gunner _target; 
+          
+         private _VisRGOAR2 = createSimpleObject ["a3\weapons_f\ammo\handgrenade.p3d", position _target];   
+         _VisRGOAR2 attachTo [_target, [0, 0.02, -0.15]];  
+         [_VisRGOAR2, 90] remoteExec ["setDir", 0, true]; 
+         [_VisRGOAR2, 1.5] remoteExec ["setObjectScale", 0, true];  
+          
+         _target setVariable ["VisRGOAR2", _VisRGOAR2, true];   
+          
+          
+         [_target, ["-> Rearm Grenade", { 
+          params ["_target", "_caller", "_actionId", "_arguments"]; 
+          _hasRGO = [_caller, "HandGrenade"] call BIS_fnc_hasItem; 
+          if (_hasRGO) then { 
+           _ammo = _target magazinesTurret [-1]; 
+           if (count _ammo == 0) then { 
+            _caller removeItem "HandGrenade"; 
+            [_target, ["PylonRack_4Rnd_BombDemine_01_F", [-1], (1)]] remoteExec ["addMagazineTurret", _target]; 
+             
+            [_caller] call AdvancedUCAVs_PlayerAnimations; 
+             
+            sleep 1; 
+             
+            private _VisRGOAR2 = _target getVariable ["VisRGOAR2", objNull];   
+            [_VisRGOAR2, false] remoteExec ["hideObjectGlobal", 0, true]; 
+            
+           } else { 
+            [["<t color='#FF0000' size='1.7'>Drone is already armed", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+            }; 
+          } else { 
+           [["<t color='#FF0000' size='1.7'>You need a RGO Grenade", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+           }; 
+         }, nil, 1.5, false, true, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (unitIsUAV _this == false) && (vehicle _this == _this)"]] remoteExec ["addAction", 0, true]; 
+         
+         [_target, ["Fired", { 
+          params ["_unit"]; 
+           
+          private _VisRGOAR2 = _unit getVariable ["VisRGOAR2", objNull];   
+          [_VisRGOAR2, true] remoteExec ["hideObjectGlobal", 0, true]; 
+         }]] remoteExec ["addEventHandler", 0, true]; 
+         
+         [_target, ["Killed", {   
+          params ["_unit"];  
+          { 
+           deleteVehicle _x 
+          } forEach (attachedObjects _unit);  
+         }]] remoteExec ["addEventHandler", 0, true];  
+          
+ 
+         [_target, ["Deleted", {       
+          params ["_entity"];       
+          { 
+           deleteVehicle _x 
+          } forEach (attachedObjects _entity);          
+            
+         }]] remoteExec ["addEventHandler", 0, true];        
+         
+         
+         
+        } else {          
+         [["<t color='#FF0000' size='1.7'>You need a RGO Grenade", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+        }; 
+         
+        
+       }, {}, [], 10, 1.5, true, false, false 
+      ] call BIS_fnc_holdActionAdd; 
+ 
+ 
+         
+ 
+ 
+   
+      [_AR2, "-> Make RPG-7 Drone (Hold 15sec)",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa", 
+       "(_this distance _target) >= 0.1 && (_this distance _target) < 2.5 && (_target getVariable ['AR2OptionsVisible', false]) && (unitIsUAV _this == false) && (vehicle _this == _this)",  
+       "if (_caller distance _target < 2.5) then { if ([_caller, 'launch_RPG7_F'] call BIS_fnc_hasItem) then {true} else { _message_RPG7_Launcher = _target getVariable 'message_missing_RPG7_launcher'; [_message_RPG7_Launcher] remoteExec ['titleText', _caller]; false } } else {false}", 
+       {},  
+       { 
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+        [["<t color='#00FF0C' size='1.7'>Arming in progress, keep holding...", "PLAIN DOWN", 0.1, true, true]] remoteExec ["titleText", _caller];  
+       },                 
+       {  
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+         
+        _droneType = "AR-2: RPG-7 Drone"; 
+        [_droneType] call AdvancedUCAVs_AntiTrollLog; 
+         
+        _hasBuildLauncher = [_caller, "launch_RPG7_F"] call BIS_fnc_hasItem; 
+        if (_hasBuildLauncher) then {  
+         [["", "PLAIN DOWN", 0.01, true, true]] remoteExec ["titleText", _caller]; 
+         [_target, _actionId] remoteExec ["removeAction", 0, true]; 
+         [_target, 0] remoteExec ["removeAction", 0, true]; 
+         [_target, 2] remoteExec ["removeAction", 0, true]; 
+         [_target, 4] remoteExec ["removeAction", 0, true]; 
+         [_target, 5] remoteExec ["removeAction", 0, true]; 
+         [_target, 6] remoteExec ["removeAction", 0, true]; 
+ 
+         _caller playMove "AinvPknlMstpSlayWrflDnon_medicOther"; 
+         _caller removeWeapon "launch_RPG7_F"; 
+         sleep 6; 
+         [_target] call { 
+          params ["_target"]; 
+          [_target, ["launch_RPG7_F", [-1]]] remoteExec ["addWeaponTurret", _target]; 
+          [_target, ["RPG7_F", [-1], (1)]] remoteExec ["addMagazineTurret", _target]; 
+          [_target, ["Laserdesignator_mounted", [0]]] remoteExec ["removeWeaponTurret", _target]; 
+          [_target,  [[0],true]] remoteExec ["lockTurret", _target]; 
+          _target deleteVehicleCrew gunner _target; 
+           
+          private _rocket7 = createSimpleObject ["\A3\Weapons_F_Exp\Launchers\RPG7\rocket_rpg7_item.p3d", position _target];   
+          _rocket7 attachTo [_target, [0, 0.29, 0.165]];   
+          [_rocket7, 90] remoteExec ["setDir", 0, true];  
+          _rocket7 enableSimulation false;   
+            
+          private _rpg7launch = createSimpleObject ["a3\weapons_f_exp\launchers\rpg7\rpg7_f.p3d", position _target];   
+          _rpg7launch attachTo [_target, [0, 0, 0.21]];   
+          [_rpg7launch, 90] remoteExec ["setDir", 0, true];   
+          _rpg7launch enableSimulation false;   
+            
+          _target setVariable ["rocket7", _rocket7, true];   
+          _target setVariable ["rpg7launch", _rpg7launch, true];   
+            
+          [_target, ["-> Rearm Rocket", {   
+           params ["_target", "_caller", "_actionId", "_arguments"]; 
+            
+           _hasRPG = [_caller, "RPG7_F"] call BIS_fnc_hasItem;   
+           if (_hasRPG) then {   
+            
+            private _rocket7 = _target getVariable ["rocket7", objNull];   
+            _ammo = _target magazinesTurret [-1];   
+            
+            if (count _ammo == 0) then {   
+              
+             [_caller] call AdvancedUCAVs_PlayerAnimations; 
+ 
+             [_target, 1] remoteExec ["setVehicleAmmo", _target];   
+             _caller removeItem "RPG7_F";  
+             sleep 1;      
+             [_rocket7, false] remoteExec ["hideObjectGlobal", 0, true];   
+            } else {   
+             [["<t color='#FF0000' size='1.7'>Drone is already armed", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+            };   
+           } else {    
+            [["<t color='#FF0000' size='1.7'>You need a RPG-7 rocket", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+           };   
+          }, nil, 1.5, false, true, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (unitIsUAV _this == false) && (vehicle _this == _this)"]] remoteExec ["addAction", 0, true];   
+          
+             
+          [_target, ["Fired", {   
+           params ["_unit"];   
+           private _rocket7 = _unit getVariable ["rocket7", objNull];   
+           _rocket7 hideObjectGlobal true;   
+          }]] remoteExec ["addEventHandler", 0, true];         
+               
+          [_target, ["Killed", {   
+           params ["_unit"];   
+           { 
+            deleteVehicle _x 
+           } forEach (attachedObjects _unit);  
+          }]] remoteExec ["addEventHandler", 0, true];           
+ 
+          [_target, ["Deleted", { 
+           params ["_entity"]; 
+           { 
+            deleteVehicle _x 
+           } forEach (attachedObjects _entity);  
+          }]] remoteExec ["addEventHandler", 0, true]; 
+           
+         }; 
+        } else { 
+         [["<t color='#FF0000' size='1.7'>You need a RPG-7 rocket launcher", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+        }; 
+       },  
+       {}, [], 15, 1.5, true, false, false 
+      ] call BIS_fnc_holdActionAdd;          
+ 
+ 
+ 
+ 
+ 
+      [_AR2, "-> Make Anti-Personnel FPV (Hold 10sec)",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa", 
+       "(_this distance _target) >= 0.1 && (_this distance _target) < 2.5 && (_target getVariable ['AR2OptionsVisible', false]) && (unitIsUAV _this == false) && (vehicle _this == _this)",  
+       "if (_caller distance _target < 2.5) then { if ([_caller, 'APERSMine_Range_Mag'] call BIS_fnc_hasItem) then {true} else { _message_missing_APERS_mine = _target getVariable 'message_missing_APERS_mine'; [_message_missing_APERS_mine] remoteExec ['titleText', _caller]; false } } else {false}", 
+       {},  
+       { 
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+        [["<t color='#00FF0C' size='1.7'>Arming in progress, keep holding...", "PLAIN DOWN", 0.1, true, true]] remoteExec ["titleText", _caller];                 
+       },                 
+       {  
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+         
+        _droneType = "AR-2: Anti-Personnel FPV"; 
+        [_droneType] call AdvancedUCAVs_AntiTrollLog; 
+         
+        _hasBuildAPmine = [_caller, "APERSMine_Range_Mag"] call BIS_fnc_hasItem; 
+        if (_hasBuildAPmine) then { 
+         [["", "PLAIN DOWN", 0.01, true, true]] remoteExec ["titleText", _caller]; 
+         [_target, _actionId] remoteExec ["removeAction", 0, true]; 
+         [_target, 0] remoteExec ["removeAction", 0, true]; 
+         [_target, 2] remoteExec ["removeAction", 0, true]; 
+         [_target, 3] remoteExec ["removeAction", 0, true]; 
+         [_target, 5] remoteExec ["removeAction", 0, true]; 
+         [_target, 6] remoteExec ["removeAction", 0, true]; 
+ 
+         _caller playMove "AinvPknlMstpSlayWrflDnon_medicOther"; 
+         _caller removeItem "APERSMine_Range_Mag"; 
+         sleep 6; 
+         
+ 
+ 
+         [_target] call { 
+          params ["_target"]; 
+          [_target,  [[0],true]] remoteExec ["lockTurret", _target, true]; 
+          _target deleteVehicleCrew gunner _target; 
+          [_target, ["Laserdesignator_mounted", [0]]] remoteExec ["removeWeaponTurret", _target, true]; 
+ 
+          _UXO = createSimpleObject ["a3\weapons_f_orange\explosives\bombcluster_01_uxo1_f.p3d", position _target]; 
+ 
+          _UXO attachTo [_target, [0, 0.04, -0.12]]; 
+          [_UXO, 0] remoteExec ["setDir", 0, true]; 
+          [_UXO, 1.4] remoteExec ["setObjectScale", 0, true]; 
+ 
+ 
+          [_target, ["Hit", { 
+           params ["_unit"]; 
+ 
+           _chargeUXO = createVehicle ["APERSMine_Range_Ammo", _unit, [], 0, "CAN_COLLIDE"];          
+           _chargeUXO setPosWorld getPosWorld _unit;          
+           _chargeUXO setDamage 1; 
+            
+           [_unit] spawn { 
+            params ["_unit"]; 
+            sleep 0.1; 
+            _chargeUXO2 = createVehicle ["APERSMine_Range_Ammo", _unit, [], 0, "CAN_COLLIDE"]; 
+            _chargeUXO2 setPosWorld getPosWorld _unit; 
+            _chargeUXO2 setDamage 1; 
+            sleep 0.1; 
+            deleteVehicle _unit;           
+           }; 
+ 
+           { 
+            deleteVehicle _x; 
+           } forEach (attachedObjects _unit);   
+          }]] remoteExec ["addEventHandler", 0, true]; 
+           
+           
+          [_target, ["Deleted", { 
+           params ["_entity"]; 
+           { 
+            deleteVehicle _x 
+           } forEach (attachedObjects _entity);   
+          }]] remoteExec ["addEventHandler", 0, true]; 
+         }; 
+          
+        } else { 
+         [["<t color='#FF0000' size='1.7'>You need an APERS Mine", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+        }; 
+ 
+         
+       }, {}, [], 10, 1.5, true, false, false 
+      ] call BIS_fnc_holdActionAdd; 
+ 
+ 
+ 
+ 
+ 
+ 
+      [_AR2, "-> Make Kamikaze FPV (Hold 20sec)",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa", 
+       "(_this distance _target) >= 0.1 && (_this distance _target) < 2.5 && (_target getVariable ['AR2OptionsVisible', false]) && (unitIsUAV _this == false) && (vehicle _this == _this)",  
+       "if (_caller distance _target < 2.5) then { if ([_caller, 'RPG7_F'] call BIS_fnc_hasItem) then {true} else { _message_missing_RPG7_ammo = _target getVariable 'message_missing_RPG7_ammo'; [_message_missing_RPG7_ammo] remoteExec ['titleText', _caller]; false } } else {false}", 
+       {},  
+       { 
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+        [["<t color='#00FF0C' size='1.7'>Arming in progress, keep holding...", "PLAIN DOWN", 0.1, true, true]] remoteExec ["titleText", _caller];               
+       },                 
+       {  
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+         
+        _droneType = "AR-2: Kamikaze FPV"; 
+        [_droneType] call AdvancedUCAVs_AntiTrollLog;         
+         
+        _hasBuildRPG = [_caller, "RPG7_F"] call BIS_fnc_hasItem; 
+        if (_hasBuildRPG) then { 
+         [["", "PLAIN DOWN", 0.01, true, true]] remoteExec ["titleText", _caller];  
+         [_target, _actionId] remoteExec ["removeAction", 0, true]; 
+         [_target, 0] remoteExec ["removeAction", 0, true]; 
+         [_target, 2] remoteExec ["removeAction", 0, true]; 
+         [_target, 3] remoteExec ["removeAction", 0, true]; 
+         [_target, 4] remoteExec ["removeAction", 0, true]; 
+         [_target, 6] remoteExec ["removeAction", 0, true]; 
+         _caller playMove "AinvPknlMstpSlayWrflDnon_medicOther"; 
+         _caller removeItem "RPG7_F"; 
+         sleep 6; 
+         
+ 
+         [_target] call { 
+          params ["_target"]; 
+          [_target,  [[0],true]] remoteExec ["lockTurret", _target, true]; 
+          _target deleteVehicleCrew gunner _target; 
+          [_target, ["Laserdesignator_mounted", [0]]] remoteExec ["removeWeaponTurret", _target, true]; 
+ 
+          _rpg7 = createSimpleObject ["\A3\Weapons_F_Exp\Launchers\RPG7\rocket_rpg7_item.p3d", position _target]; 
+ 
+          _rpg7 attachTo [_target, [0, 0.085, -0.12]]; 
+          [_rpg7, 90] remoteExec ["setDir", 0, true]; 
+ 
+ 
+          [_target, ["Hit", { 
+           params ["_unit"]; 
+ 
+           _charge = createVehicle ["DemoCharge_Remote_Ammo", _unit, [], 0, "CAN_COLLIDE"]; 
+           _charge setPosWorld getPosWorld _unit; 
+           _charge setDamage 1; 
+           [_unit] spawn { 
+            params ["_unit"]; 
+            sleep 0.1; 
+            deleteVehicle _unit; 
+           }; 
+           { 
+            deleteVehicle _x; 
+           } forEach (attachedObjects _unit);  
+          }]] remoteExec ["addEventHandler", 0, true]; 
+           
+          [_target, ["Deleted", { 
+           params ["_entity"]; 
+           { 
+            deleteVehicle _x; 
+           } forEach (attachedObjects _entity); 
+          }]] remoteExec ["addEventHandler", 0, true]; 
+         }; 
+          
+        } else { 
+         [["<t color='#FF0000' size='1.7'>You need a RPG-7 rocket", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+        }; 
+ 
+         
+       }, {}, [], 20, 1.5, true, false, false 
+      ] call BIS_fnc_holdActionAdd; 
+ 
+ 
+ 
+ 
+ 
+ 
+      [_AR2, "-> Make Anti-Structure FPV (Hold 30sec)",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa", 
+       "(_this distance _target) >= 0.1 && (_this distance _target) < 2.5 && (_target getVariable ['AR2OptionsVisible', false]) && (unitIsUAV _this == false) && (vehicle _this == _this)",  
+       "if (_caller distance _target < 2.5) then { if ([_caller, 'MRAWS_HEAT_F'] call BIS_fnc_hasItem) then {true} else { _message_missing_MAAWS_ammo = _target getVariable 'message_missing_MAAWS_ammo'; [_message_missing_MAAWS_ammo] remoteExec ['titleText', _caller]; false } } else {false}", 
+       {},  
+       {       
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+        [["<t color='#00FF0C' size='1.7'>Arming in progress, keep holding...", "PLAIN DOWN", 0.1, true, true]] remoteExec ["titleText", _caller];          
+       },                 
+       {  
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+         
+        _droneType = "AR-2: Anti-Structure FPV"; 
+        [_droneType] call AdvancedUCAVs_AntiTrollLog;         
+                 
+        _hasBuildRPGb = [_caller, "MRAWS_HEAT_F"] call BIS_fnc_hasItem; 
+        if (_hasBuildRPGb) then { 
+         [["", "PLAIN DOWN", 0.01, true, true]] remoteExec ["titleText", _caller]; 
+         [_target, _actionId] remoteExec ["removeAction", 0, true]; 
+         [_target, 0] remoteExec ["removeAction", 0, true]; 
+         [_target, 2] remoteExec ["removeAction", 0, true]; 
+         [_target, 3] remoteExec ["removeAction", 0, true]; 
+         [_target, 4] remoteExec ["removeAction", 0, true]; 
+         [_target, 5] remoteExec ["removeAction", 0, true]; 
+ 
+         _caller playMove "AinvPknlMstpSlayWrflDnon_medicOther"; 
+         _caller removeItem "MRAWS_HEAT_F"; 
+         sleep 6; 
+         
+ 
+         [_target] call { 
+          params ["_target"]; 
+          [_target,  [[0],true]] remoteExec ["lockTurret", _target, true]; 
+          _target deleteVehicleCrew gunner _target; 
+          [_target, ["Laserdesignator_mounted", [0]]] remoteExec ["removeWeaponTurret", _target, true]; 
+ 
+          _maaws = createSimpleObject ["a3\weapons_f_tank\launchers\mraws\rocket_mraws_heat55_f_item.p3d", [0, 0, 0]]; 
+          _maaws attachTo [_target, [0, 0.3, -0.14]]; 
+          [_maaws, 90] remoteExec ["setDir", 0, true]; 
+           
+         
+ 
+          _maaws2 = createSimpleObject ["a3\weapons_f_tank\launchers\mraws\rocket_mraws_heat55_f_item.p3d", [0, 0, 0]]; 
+          _maaws2 attachTo [_target, [0, -0.05, -0.14]]; 
+          [_maaws2, 90] remoteExec ["setDir", 0, true]; 
+ 
+ 
+          [_target, ["Hit", { 
+           params ["_unit"]; 
+ 
+           _chargeb = createVehicle ["SatchelCharge_Remote_Ammo", _unit, [], 0, "CAN_COLLIDE"]; 
+           _chargeb setPosWorld getPosWorld _unit; 
+           _chargeb setDamage 1; 
+           [_unit] spawn { 
+            params ["_unit"]; 
+            sleep 0.1; 
+            deleteVehicle _unit; 
+            
+           };           
+           { 
+            deleteVehicle _x; 
+           } forEach (attachedObjects _unit); 
+            
+          }]] remoteExec ["addEventHandler", 0, true]; 
+           
+          [_target, ["Deleted", { 
+           params ["_entity"]; 
+           { 
+            deleteVehicle _x; 
+           } forEach (attachedObjects _entity); 
+          }]] remoteExec ["addEventHandler", 0, true]; 
+         }; 
+          
+        } else { 
+         [["<t color='#FF0000' size='1.7'>You need a MAAWS Heat 75 rocket", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+        }; 
+         
+       }, {}, [], 30, 1.5, true, false, false 
+      ] call BIS_fnc_holdActionAdd; 
+ 
+ 
+ 
+       
+      [_AR2, ["Killed", { 
+       params ["_unit"]; 
+       [_unit, 0] remoteExec ["removeAction", 0, true]; 
+       [_unit, 1] remoteExec ["removeAction", 0, true]; 
+       [_unit, 2] remoteExec ["removeAction", 0, true]; 
+       [_unit, 3] remoteExec ["removeAction", 0, true]; 
+       [_unit, 4] remoteExec ["removeAction", 0, true]; 
+       [_unit, 5] remoteExec ["removeAction", 0, true]; 
+       [_unit, 6] remoteExec ["removeAction", 0, true]; 
+       [_unit, 7] remoteExec ["removeAction", 0, true]; 
+       [_unit, 8] remoteExec ["removeAction", 0, true]; 
+       [_unit, 9] remoteExec ["removeAction", 0, true]; 
+       [_unit, 10] remoteExec ["removeAction", 0, true]; 
+       [_unit] spawn { 
+        params ["_unit"]; 
+        sleep 300; 
+        deleteVehicle _unit; 
+       }; 
+       
+      }]] remoteExec ["addEventHandler", 0, true];    
+     };   
+    }; 
+ 
+ 
+ 
+ 
+ 
+ 
+    comment "For all AL-6 drones"; 
+     
+    if ((typeOf _entity) == "B_UAV_06_F" || (typeOf _entity) == "O_UAV_06_F" || (typeOf _entity) == "I_UAV_06_F" || (typeOf _entity) == "I_E_UAV_06_F") then { 
+     [_entity] spawn { 
+      sleep 0.1; 
+      _AL6 = _this select 0; 
+       
+       
+      _AL6 setVariable ["AL6_message_missing_RGO_grenades", ["<t color='#FF0000' size='1.7'>You need 4 RGO Grenades", "PLAIN DOWN", 0.5, true, true]];  
+      _AL6 setVariable ["AL6_message_missing_RPG7_launcher", ["<t color='#FF0000' size='1.7'>You need a RPG-7 rocket launcher", "PLAIN DOWN", 0.5, true, true]]; 
+      _AL6 setVariable ["AL6_message_missing_RPG42_launcher", ["<t color='#FF0000' size='1.7'>You need a RPG-42 rocket launcher", "PLAIN DOWN", 0.5, true, true]]; 
+       
+       
+       
+      _AL6 setVariable ["AL6OptionsVisible", false, true]; 
+ 
+ 
+      _AL6 addAction ["<t color='#0094FF'>Toggle Options", { 
+       params ["_target", "_caller", "_actionId", "_arguments"]; 
+        
+       _visible6 = !(_target getVariable ["AL6OptionsVisible", false]); 
+       _target setVariable ["AL6OptionsVisible", _visible6, true]; 
+ 
+      }, nil, 1.5, false, false, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (unitIsUAV _this == false) && (vehicle _this == _this)"]; 
+       
+       
+                  
+       
+      _action_ID = _AL6 addAction ["-> Repair Drone", { 
+       params ["_target", "_caller", "_actionId", "_arguments"]; 
+       _hasToolkit6 = [_caller, "ToolKit"] call BIS_fnc_hasItem; 
+       if (_hasToolkit6) then { 
+         
+        [_caller] call AdvancedUCAVs_PlayerAnimations;       
+     
+        sleep 1; 
+        _target setDamage 0; 
+       } else { 
+        [["<t color='#FF0000' size='1.7'>You need a Toolkit", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+       }; 
+      }, nil, 1.5, false, true, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (_target getVariable ['AL6OptionsVisible', false]) && (unitIsUAV _this == false) && (vehicle _this == _this)"]; 
+       
+      _AL6 setUserActionText [_action_ID, "-> Repair Drone", "<img size='1.9' image='a3\ui_f\data\igui\cfg\actions\repair_ca.paa'/><br/>Repair Drone"]; 
+       
+       
+       
+        
+      [_AL6, "-> Make Bomb Carrier Drone (Hold 20sec)",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa", 
+       "(_this distance _target) >= 0.1 && (_this distance _target) < 2.5 && (_target getVariable ['AL6OptionsVisible', false]) && (unitIsUAV _this == false) && (vehicle _this == _this)",  
+       "if (_caller distance _target < 2.5) then { if ({_x == 'HandGrenade'} count (magazines _caller) >= 4) then {true} else { _AL6_message_missing_RGO_grenades = _target getVariable 'AL6_message_missing_RGO_grenades'; [_AL6_message_missing_RGO_grenades] remoteExec ['titleText', _caller]; false } } else {false}", 
+       {},        
+       { 
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+        [["<t color='#00FF0C' size='1.7'>Arming in progress, keep holding...", "PLAIN DOWN", 0.1, true, true]] remoteExec ["titleText", _caller];          
+       },                 
+       {  
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+         
+        _droneType = "AL-6: Bomb Carrier Drone"; 
+        [_droneType] call AdvancedUCAVs_AntiTrollLog;         
+            
+        { [] call AdvancedUCAVs_DestroyRope_fnc } remoteExec ["call"]; 
+          
+        _hasBuildRGO6 = {_x == "HandGrenade"} count (magazines _caller); 
+        if (_hasBuildRGO6 >= 4) then { 
+         [["", "PLAIN DOWN", 0.01, true, true]] remoteExec ["titleText", _caller]; 
+         [_target, 0] remoteExec ["removeAction", 0, true]; 
+         [_target, 2] remoteExec ["removeAction", 0, true]; 
+         [_target, 3] remoteExec ["removeAction", 0, true]; 
+         [_target, 4] remoteExec ["removeAction", 0, true]; 
+         [_target, 5] remoteExec ["removeAction", 0, true]; 
+          
+         [_target, (_target getVariable "Slingload_actionID")] remoteExec ["removeAction", 0, true]; 
+         [_target, (_target getVariable "Unsling_actionID")] remoteExec ["removeAction", 0, true]; 
+ 
+          
+         _caller playMove "AinvPknlMstpSlayWrflDnon_medicOther"; 
+         ["Tip: If you press 'CTRL + right click', you can freelook in the drones camera. 
+         Also, make sure to be at 30 meters or higher when dropping"] remoteExec ["hint", _caller]; 
+          
+         _caller removeItem "HandGrenade"; 
+         _caller removeItem "HandGrenade"; 
+         _caller removeItem "HandGrenade"; 
+         _caller removeItem "HandGrenade"; 
+         [_target, true] remoteExec ["lockInventory", 0, true]; 
+         [_target] remoteExec ["clearBackpackCargoGlobal", 0, true]; 
+         [_target] remoteExec ["clearItemCargoGlobal", 0, true]; 
+         [_target] remoteExec ["clearMagazineCargoGlobal", 0, true]; 
+         [_target] remoteExec ["clearWeaponCargoGlobal", 0, true];         
+         sleep 6; 
+          
+         [_target, ["BombDemine_01_F", [-1]]] remoteExec ["addWeaponTurret", _target]; 
+         [_target, ["PylonRack_4Rnd_BombDemine_01_F", [-1], (1)]] remoteExec ["addMagazineTurret", _target]; 
+         [_target, ["PylonRack_4Rnd_BombDemine_01_F", [-1], (1)]] remoteExec ["addMagazineTurret", _target]; 
+         [_target, ["PylonRack_4Rnd_BombDemine_01_F", [-1], (1)]] remoteExec ["addMagazineTurret", _target]; 
+         [_target, ["PylonRack_4Rnd_BombDemine_01_F", [-1], (1)]] remoteExec ["addMagazineTurret", _target]; 
+          
+                 
+         private _VisRGOAL6_1 = createSimpleObject ["a3\weapons_f\ammo\handgrenade.p3d", position _target];   
+         _VisRGOAL6_1 attachTo [_target, [0.1, 0.14, -0.23]];  
+         [_VisRGOAL6_1, 90] remoteExec ["setDir", 0, true]; 
+         [_VisRGOAL6_1, 1.5] remoteExec ["setObjectScale", 0, true];  
+ 
+         private _VisRGOAL6_2 = createSimpleObject ["a3\weapons_f\ammo\handgrenade.p3d", position _target];   
+         _VisRGOAL6_2 attachTo [_target, [-0.1, 0.14, -0.23]];  
+         [_VisRGOAL6_2, 90] remoteExec ["setDir", 0, true]; 
+         [_VisRGOAL6_2, 1.5] remoteExec ["setObjectScale", 0, true];        
+ 
+         private _VisRGOAL6_3 = createSimpleObject ["a3\weapons_f\ammo\handgrenade.p3d", position _target];   
+         _VisRGOAL6_3 attachTo [_target, [0.1, -0.1, -0.23]]; 
+         [_VisRGOAL6_3, 90] remoteExec ["setDir", 0, true];  
+         [_VisRGOAL6_3, 1.5] remoteExec ["setObjectScale", 0, true]; 
+ 
+         private _VisRGOAL6_4 = createSimpleObject ["a3\weapons_f\ammo\handgrenade.p3d", position _target];   
+         _VisRGOAL6_4 attachTo [_target, [-0.1, -0.1, -0.23]];  
+         [_VisRGOAL6_4, 90] remoteExec ["setDir", 0, true]; 
+         [_VisRGOAL6_4, 1.5] remoteExec ["setObjectScale", 0, true];        
+          
+          
+         _target setVariable ["VisRGOAL6_1", _VisRGOAL6_1, true];   
+         _target setVariable ["VisRGOAL6_2", _VisRGOAL6_2, true];   
+         _target setVariable ["VisRGOAL6_3", _VisRGOAL6_3, true];   
+         _target setVariable ["VisRGOAL6_4", _VisRGOAL6_4, true];   
+                              
+                  
+         [_target, ["-> Rearm Grenade", { 
+          params ["_target", "_caller", "_actionId", "_arguments"]; 
+          _hasRGO6 = [_caller, "HandGrenade"] call BIS_fnc_hasItem; 
+          if (_hasRGO6) then { 
+           _ammo6 = _target magazinesTurret [-1]; 
+           if (count _ammo6 < 4) then { 
+            _caller removeItem "HandGrenade"; 
+            [_target, ["PylonRack_4Rnd_BombDemine_01_F", [-1], (1)]] remoteExec ["addMagazineTurret", _target]; 
+             
+            [_caller] call AdvancedUCAVs_PlayerAnimations; 
+             
+            sleep 1; 
+             
+            private _VisRGOAL6_1 = _target getVariable ["VisRGOAL6_1", objNull]; 
+            private _VisRGOAL6_2 = _target getVariable ["VisRGOAL6_2", objNull]; 
+            private _VisRGOAL6_3 = _target getVariable ["VisRGOAL6_3", objNull]; 
+            private _VisRGOAL6_4 = _target getVariable ["VisRGOAL6_4", objNull]; 
+            _ammo6forRGO2 = magazinesAmmo _target; 
+            if (count _ammo6forRGO2 == 1) then { 
+             [_VisRGOAL6_1, false] remoteExec ["hideObjectGlobal", 0, true]; 
+            };         
+             
+            if (count _ammo6forRGO2 == 2) then { 
+             [_VisRGOAL6_2, false] remoteExec ["hideObjectGlobal", 0, true]; 
+            };         
+             
+            if (count _ammo6forRGO2 == 3) then { 
+             [_VisRGOAL6_3, false] remoteExec ["hideObjectGlobal", 0, true]; 
+            };       
+             
+            if (count _ammo6forRGO2 == 4) then { 
+             [_VisRGOAL6_4, false] remoteExec ["hideObjectGlobal", 0, true]; 
+            };           
+              
+           } else { 
+            [["<t color='#FF0000' size='1.7'>Drone already has 4 RGOs", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+           }; 
+          } else { 
+           [["<t color='#FF0000' size='1.7'>You need a RGO Grenade", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+          }; 
+         }, nil, 1.5, false, false, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (unitIsUAV _this == false) && (vehicle _this == _this)"]] remoteExec ["addAction", 0, true]; 
+         
+         
+         [_target, ["Fired", { 
+          params ["_unit"]; 
+           
+          private _VisRGOAL6_1 = _unit getVariable ["VisRGOAL6_1", objNull]; 
+          private _VisRGOAL6_2 = _unit getVariable ["VisRGOAL6_2", objNull]; 
+          private _VisRGOAL6_3 = _unit getVariable ["VisRGOAL6_3", objNull]; 
+          private _VisRGOAL6_4 = _unit getVariable ["VisRGOAL6_4", objNull];  
+           
+          _ammo6forRGO = magazinesAmmo _unit;          
+          if (count _ammo6forRGO == 3) then { 
+           [_VisRGOAL6_1, true] remoteExec ["hideObjectGlobal", 0, true]; 
+          };                
+          if (count _ammo6forRGO == 2) then { 
+           [_VisRGOAL6_2, true] remoteExec ["hideObjectGlobal", 0, true]; 
+          };                
+          if (count _ammo6forRGO == 1) then { 
+           [_VisRGOAL6_3, true] remoteExec ["hideObjectGlobal", 0, true]; 
+          };               
+          if (count _ammo6forRGO == 0) then { 
+           [_VisRGOAL6_4, true] remoteExec ["hideObjectGlobal", 0, true]; 
+          };        
+         }]] remoteExec ["addEventHandler", 0, true]; 
+         
+ 
+         [_target, ["Killed", {   
+          params ["_unit"];   
+           
+          { 
+           deleteVehicle _x 
+          } forEach (attachedObjects _unit);         
+         }]] remoteExec ["addEventHandler", 0, true];  
+          
+                
+         [_target, ["Deleted", {       
+          params ["_entity"];       
+          { 
+           deleteVehicle _x 
+          } forEach (attachedObjects _entity);          
+         }]] remoteExec ["addEventHandler", 0, true];       
+         
+         
+        } else { 
+         [["<t color='#FF0000' size='1.7'>You need 4 RGO Grenades", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+        }; 
+         
+       }, {}, [], 20, 1.5, true, false, false 
+      ] call BIS_fnc_holdActionAdd; 
+       
+       
+ 
+ 
+ 
+       
+      [_AL6, "-> Make RPG-7 Drone (Hold 15sec)",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa", 
+       "(_this distance _target) >= 0.1 && (_this distance _target) < 2.5 && (_target getVariable ['AL6OptionsVisible', false]) && (unitIsUAV _this == false) && (vehicle _this == _this)",  
+       "if (_caller distance _target < 2.5) then { if ([_caller, 'launch_RPG7_F'] call BIS_fnc_hasItem) then {true} else { _AL6_message_missing_RPG7_launcher = _target getVariable 'AL6_message_missing_RPG7_launcher'; [_AL6_message_missing_RPG7_launcher] remoteExec ['titleText', _caller]; false } } else {false}", 
+       {},  
+       { 
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+        [["<t color='#00FF0C' size='1.7'>Arming in progress, keep holding...", "PLAIN DOWN", 0.1, true, true]] remoteExec ["titleText", _caller];        
+       },                 
+       {  
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+                
+        _droneType = "AL-6: RPG-7 Drone"; 
+        [_droneType] call AdvancedUCAVs_AntiTrollLog;         
+          
+        { [] call AdvancedUCAVs_DestroyRope_fnc } remoteExec ["call"]; 
+          
+        _hasBuildLauncher6 = [_caller, "launch_RPG7_F"] call BIS_fnc_hasItem; 
+        if (_hasBuildLauncher6) then { 
+         [["", "PLAIN DOWN", 0.01, true, true]] remoteExec ["titleText", _caller]; 
+          
+         [_target, 0] remoteExec ["removeAction", 0, true]; 
+         [_target, 2] remoteExec ["removeAction", 0, true]; 
+         [_target, 3] remoteExec ["removeAction", 0, true]; 
+         [_target, 4] remoteExec ["removeAction", 0, true]; 
+         [_target, 5] remoteExec ["removeAction", 0, true]; 
+          
+         [_target, (_target getVariable "Slingload_actionID")] remoteExec ["removeAction", 0, true]; 
+         [_target, (_target getVariable "Unsling_actionID")] remoteExec ["removeAction", 0, true];          
+ 
+         _caller playMove "AinvPknlMstpSlayWrflDnon_medicOther"; 
+         _caller removeWeapon "launch_RPG7_F"; 
+         [_target, true] remoteExec ["lockInventory", 0, true]; 
+         [_target] remoteExec ["clearBackpackCargoGlobal", 0, true]; 
+         [_target] remoteExec ["clearItemCargoGlobal", 0, true]; 
+         [_target] remoteExec ["clearMagazineCargoGlobal", 0, true]; 
+         [_target] remoteExec ["clearWeaponCargoGlobal", 0, true]; 
+          
+          
+         sleep 6; 
+                
+         [_target] call { 
+          params ["_target"]; 
+          [_target, ["launch_RPG7_F", [-1]]] remoteExec ["addWeaponTurret", _target]; 
+          [_target, ["RPG7_F", [-1], (1)]] remoteExec ["addMagazineTurret", _target]; 
+ 
+           
+          private _rocket76 = createSimpleObject ["\A3\Weapons_F_Exp\Launchers\RPG7\rocket_rpg7_item.p3d", position _target];   
+          _rocket76 attachTo [_target, [0, 0.35, -0.04]];   
+          [_rocket76, 90] remoteExec ["setDir", 0, true];     
+          _rocket76 enableSimulation false;   
+            
+          private _rpg7launch6 = createSimpleObject ["a3\weapons_f_exp\launchers\rpg7\rpg7_f.p3d", position _target];   
+          _rpg7launch6 attachTo [_target, [0, 0.06, 0.005]];   
+          [_rpg7launch6, 90] remoteExec ["setDir", 0, true];   
+          _rpg7launch6 enableSimulation false;   
+            
+          _target setVariable ["rocket76", _rocket76, true];   
+          _target setVariable ["rpg7launch6", _rpg7launch6, true];   
+            
+          [_target, ["-> Rearm Rocket", {   
+           params ["_target", "_caller", "_actionId", "_arguments"]; 
+            
+           _hasRPG6 = [_caller, "RPG7_F"] call BIS_fnc_hasItem;   
+           if (_hasRPG6) then {    
+            
+            private _rocket76 = _target getVariable ["rocket76", objNull];   
+            _ammo6 = _target magazinesTurret [-1];   
+            
+            if (count _ammo6 == 0) then {   
+              
+             [_caller] call AdvancedUCAVs_PlayerAnimations; 
+              
+             [_target, 1] remoteExec ["setVehicleAmmo", _target];   
+             _caller removeItem "RPG7_F";  
+             sleep 1;      
+             [_rocket76, false] remoteExec ["hideObjectGlobal", 0, true];   
+            } else {   
+             [["<t color='#FF0000' size='1.7'>Drone is already armed", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+            };   
+           } else {    
+            [["<t color='#FF0000' size='1.7'>You need a RPG-7 rocket", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+           };   
+          }, nil, 1.5, false, true, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (unitIsUAV _this == false) && (vehicle _this == _this)"]] remoteExec ["addAction", 0, true];   
+             
+          [_target, ["Fired", {   
+           params ["_unit"];   
+           private _rocket76 = _unit getVariable ["rocket76", objNull];   
+           _rocket76 hideObjectGlobal true;   
+          }]] remoteExec ["addEventHandler", 0, true]; 
+           
+          [_target, ["Killed", {   
+           params ["_unit"];   
+           { 
+            deleteVehicle _x 
+           } forEach (attachedObjects _unit); 
+          }]] remoteExec ["addEventHandler", 0, true];   
+            
+          [_target, ["Deleted", { 
+           params ["_entity"]; 
+           { 
+            deleteVehicle _x 
+           } forEach (attachedObjects _entity); 
+          }]] remoteExec ["addEventHandler", 0, true]; 
+           
+         }; 
+        } else { 
+         [["<t color='#FF0000' size='1.7'>You need a RPG-7 rocket launcher", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+        }; 
+         
+       }, {}, [], 10, 1.5, true, false, false 
+      ] call BIS_fnc_holdActionAdd; 
+ 
+       
+ 
+      [_AL6, "-> Make RPG-42 Drone (Hold 20sec)",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa",  
+       "a3\ui_f\data\igui\cfg\actions\obsolete\ui_action_takeweapon_ca.paa", 
+       "(_this distance _target) >= 0.1 && (_this distance _target) < 2.5 && (_target getVariable ['AL6OptionsVisible', false]) && (unitIsUAV _this == false) && (vehicle _this == _this)",  
+       "if (_caller distance _target < 2.5) then { if ([_caller, 'launch_RPG32_F'] call BIS_fnc_hasItem) then {true} else { _AL6_message_missing_RPG42_launcher = _target getVariable 'AL6_message_missing_RPG42_launcher'; [_AL6_message_missing_RPG42_launcher] remoteExec ['titleText', _caller]; false } } else {false}", 
+       {},  
+       { 
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+        [["<t color='#00FF0C' size='1.7'>Arming in progress, keep holding...", "PLAIN DOWN", 0.1, true, true]] remoteExec ["titleText", _caller];        
+       },                 
+       {  
+        params ["_target", "_caller", "_actionId", "_arguments"]; 
+                
+        _droneType = "AL-6: RPG-42 Drone"; 
+        [_droneType] call AdvancedUCAVs_AntiTrollLog;         
+         
+        { [] call AdvancedUCAVs_DestroyRope_fnc } remoteExec ["call"]; 
+         
+        _hasBuildLauncher42 = [_caller, "launch_RPG32_F"] call BIS_fnc_hasItem; 
+        if (_hasBuildLauncher42) then { 
+         [["", "PLAIN DOWN", 0.01, true, true]] remoteExec ["titleText", _caller];  
+          
+         [_target, 0] remoteExec ["removeAction", 0, true]; 
+         [_target, 2] remoteExec ["removeAction", 0, true]; 
+         [_target, 3] remoteExec ["removeAction", 0, true]; 
+         [_target, 4] remoteExec ["removeAction", 0, true]; 
+         [_target, 5] remoteExec ["removeAction", 0, true]; 
+ 
+         [_target, (_target getVariable "Slingload_actionID")] remoteExec ["removeAction", 0, true]; 
+         [_target, (_target getVariable "Unsling_actionID")] remoteExec ["removeAction", 0, true]; 
+ 
+         _caller playMove "AinvPknlMstpSlayWrflDnon_medicOther"; 
+         _caller removeWeapon "launch_RPG32_F"; 
+         [_target, true] remoteExec ["lockInventory", 0, true]; 
+         [_target] remoteExec ["clearBackpackCargoGlobal", 0, true]; 
+         [_target] remoteExec ["clearItemCargoGlobal", 0, true]; 
+         [_target] remoteExec ["clearMagazineCargoGlobal", 0, true]; 
+         [_target] remoteExec ["clearWeaponCargoGlobal", 0, true];         
+         sleep 6; 
+ 
+          
+         [_target] call { 
+          params ["_target"]; 
+          [_target, ["launch_RPG32_F", [-1]]] remoteExec ["addWeaponTurret", _target]; 
+          [_target, ["RPG32_F", [-1], (1)]] remoteExec ["addMagazineTurret", _target]; 
+           
+          private _rpg42 = createSimpleObject ["a3\weapons_f\launchers\rpg32\rpg32_loaded_f.p3d", position _target];  
+          _rpg42 attachTo [_target, [0.01, 0.2, -0.06]];  
+          [_rpg42, 90] remoteExec ["setDir", 0, true];  
+          _rpg42 enableSimulation false;  
+ 
+            
+ 
+          [_target, ["-> Rearm Rocket (AT)", {   
+           params ["_target", "_caller", "_actionId", "_arguments"]; 
+            
+           _hasRPGAT = [_caller, "RPG32_F"] call BIS_fnc_hasItem;   
+           if (_hasRPGAT) then {   
+            
+ 
+            _ammo6 = _target magazinesTurret [-1];   
+            
+            if (count _ammo6 == 0) then {   
+              
+             [_caller] call AdvancedUCAVs_PlayerAnimations; 
+              
+             [_target, ["RPG32_F", [-1], (1)]] remoteExec ["addMagazineTurret", _target];   
+             _caller removeItem "RPG32_F";         
+            } else {   
+             [["<t color='#FF0000' size='1.7'>Drone is already armed", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller];  
+            };   
+           } else {     
+            [["<t color='#FF0000' size='1.7'>You need a RPG-42 AT rocket", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+           };   
+          }, nil, 1.5, false, true, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (unitIsUAV _this == false) && (vehicle _this == _this)"]] remoteExec ["addAction", 0, true];  
+             
+ 
+ 
+          [_target, ["-> Rearm Rocket (HE)", {   
+           params ["_target", "_caller", "_actionId", "_arguments"];   
+            
+           _hasRPGHE = [_caller, "RPG32_HE_F"] call BIS_fnc_hasItem;   
+           if (_hasRPGHE) then {   
+            
+ 
+            _ammo6 = _target magazinesTurret [-1];   
+            
+            if (count _ammo6 == 0) then {   
+              
+             [_caller] call AdvancedUCAVs_PlayerAnimations; 
+              
+             [_target, ["RPG32_HE_F", [-1], (1)]] remoteExec ["addMagazineTurret", _target];   
+             _caller removeItem "RPG32_HE_F";         
+            } else {   
+             [["<t color='#FF0000' size='1.7'>Drone is already armed", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller];  
+            };   
+           } else {    
+            [["<t color='#FF0000' size='1.7'>You need a RPG-42 HE rocket", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller];  
+           };   
+          }, nil, 1.5, false, true, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (unitIsUAV _this == false) && (vehicle _this == _this)"]] remoteExec ["addAction", 0, true]; 
+           
+           
+          [_target, ["Killed", {  
+           params ["_unit"];  
+           { 
+            deleteVehicle _x 
+           } forEach (attachedObjects _unit); 
+          }]] remoteExec ["addEventHandler", 0, true];  
+           
+          [_target, ["Deleted", { 
+           params ["_entity"]; 
+           { 
+            deleteVehicle _x 
+           } forEach (attachedObjects _entity); 
+          }]] remoteExec ["addEventHandler", 0, true];  
+ 
+         }; 
+        } else { 
+         [["<t color='#FF0000' size='1.7'>You need a RPG-42 rocket launcher", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+        }; 
+         
+       }, {}, [], 15, 1.5, true, false, false 
+      ] call BIS_fnc_holdActionAdd; 
+       
+ 
+      [_AL6, ["Killed", { 
+       params ["_unit", "_killer", "_instigator", "_useEffects"]; 
+       [_unit, 0] remoteExec ["removeAction", 0, true]; 
+       [_unit, 1] remoteExec ["removeAction", 0, true]; 
+       [_unit, 2] remoteExec ["removeAction", 0, true]; 
+       [_unit, 3] remoteExec ["removeAction", 0, true]; 
+       [_unit, 4] remoteExec ["removeAction", 0, true]; 
+       [_unit, 5] remoteExec ["removeAction", 0, true]; 
+       [_unit, 6] remoteExec ["removeAction", 0, true]; 
+       [_unit, 7] remoteExec ["removeAction", 0, true]; 
+       [_unit, 8] remoteExec ["removeAction", 0, true]; 
+       [_unit, 9] remoteExec ["removeAction", 0, true]; 
+       [_unit] spawn { 
+        params ["_unit"]; 
+        sleep 300; 
+        deleteVehicle _unit; 
+       }; 
+      }]] remoteExec ["addEventHandler", 0, true]; 
+ 
+     }; 
+    }; 
+     
+    if ((typeOf _entity) == "C_IDAP_UAV_06_antimine_F" ) then { 
+     [_entity] spawn { 
+      sleep 0.1; 
+      _DeminingDrone = _this select 0; 
+       
+       
+      [_DeminingDrone, ["PylonRack_4Rnd_BombDemine_01_F", [-1]]] remoteExec ["removeMagazineTurret", _DeminingDrone]; 
+      [_DeminingDrone, ["PylonRack_4Rnd_BombDemine_01_F", [-1], (1)]] remoteExec ["addMagazineTurret", _DeminingDrone]; 
+      [_DeminingDrone, ["PylonRack_4Rnd_BombDemine_01_F", [-1], (1)]] remoteExec ["addMagazineTurret", _DeminingDrone]; 
+      [_DeminingDrone, ["PylonRack_4Rnd_BombDemine_01_F", [-1], (1)]] remoteExec ["addMagazineTurret", _DeminingDrone]; 
+      [_DeminingDrone, ["PylonRack_4Rnd_BombDemine_01_F", [-1], (1)]] remoteExec ["addMagazineTurret", _DeminingDrone]; 
+       
+       
+      _action_ID = _DeminingDrone addAction ["-> Repair Drone", { 
+       params ["_target", "_caller", "_actionId", "_arguments"]; 
+       _hasToolkitC = [_caller, "ToolKit"] call BIS_fnc_hasItem; 
+       if (_hasToolkitC) then { 
+         
+        [_caller] call AdvancedUCAVs_PlayerAnimations; 
+         
+        sleep 1; 
+        _target setDamage 0; 
+       } else { 
+        [["<t color='#FF0000' size='1.7'>You need a Toolkit", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+        }; 
+      }, nil, 1.5, false, true, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (unitIsUAV _this == false) && (vehicle _this == _this)"]; 
+       
+      _DeminingDrone setUserActionText [_action_ID, "-> Repair Drone", "<img size='1.9' image='a3\ui_f\data\igui\cfg\actions\repair_ca.paa'/><br/>Repair Drone"]; 
+       
+      _DeminingDrone addAction ["-> Rearm Grenade", { 
+       params ["_target", "_caller", "_actionId", "_arguments"]; 
+       _hasRGOC = [_caller, "HandGrenade"] call BIS_fnc_hasItem; 
+       if (_hasRGOC) then { 
+        _ammoC = _target magazinesTurret [-1]; 
+        if (count _ammoC < 4) then { 
+         _caller removeItem "HandGrenade"; 
+         [_target, ["PylonRack_4Rnd_BombDemine_01_F", [-1], (1)]] remoteExec ["addMagazineTurret", _target]; 
+          
+         [_caller] call AdvancedUCAVs_PlayerAnimations; 
+          
+        } else { 
+         [["<t color='#FF0000' size='1.7'>Drone already has 4 Demining Charges", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+        }; 
+       } else { 
+        [["<t color='#FF0000' size='1.7'>You need a RGO Grenade", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+       }; 
+      }, nil, 1.5, false, false, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (unitIsUAV _this == false) && (vehicle _this == _this)"]; 
+       
+       
+      [_DeminingDrone, ["Killed", { 
+       params ["_unit"]; 
+       [_unit, 0] remoteExec ["removeAction", 0, true]; 
+       [_unit, 1] remoteExec ["removeAction", 0, true]; 
+       [_unit] spawn { 
+        params ["_unit"]; 
+        sleep 300; 
+        deleteVehicle _unit; 
+       }; 
+      }]] remoteExec ["addEventHandler", 0, true]; 
+      
+     }; 
+    };    
+       
+    comment "repair action for all other drones"; 
+    if ( 
+     _entity isKindOf "UAV_06_medical_base_F" || 
+     (typeOf _entity) == "C_UAV_06_F" ||      
+     (typeOf _entity) == "C_IDAP_UAV_06_F" || 
+     (typeOf _entity) == "C_IDAP_UAV_01_F" 
+    ) then { 
+     [_entity] spawn { 
+      sleep 0.1; 
+      _NonCombatDrone = _this select 0; 
+ 
+       
+      _action_ID = _NonCombatDrone addAction ["-> Repair Drone", { 
+       params ["_target", "_caller", "_actionId", "_arguments"]; 
+       _hasToolkitC = [_caller, "ToolKit"] call BIS_fnc_hasItem; 
+       if (_hasToolkitC) then { 
+         
+        [_caller] call AdvancedUCAVs_PlayerAnimations; 
+         
+        sleep 1; 
+        _target setDamage 0; 
+       } else { 
+        [["<t color='#FF0000' size='1.7'>You need a Toolkit", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+       }; 
+      }, nil, 1.5, false, true, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (alive _target) && (unitIsUAV _this == false) && (vehicle _this == _this)"]; 
+       
+      _NonCombatDrone setUserActionText [_action_ID, "-> Repair Drone", "<img size='1.9' image='a3\ui_f\data\igui\cfg\actions\repair_ca.paa'/><br/>Repair Drone"]; 
+       
+      [_NonCombatDrone, ["Killed", { 
+       params ["_unit"]; 
+       [_unit, 0] remoteExec ["removeAction", 0, true]; 
+       [_unit, 1] remoteExec ["removeAction", 0, true]; 
+       [_unit] spawn { 
+        params ["_unit"]; 
+        sleep 300; 
+        deleteVehicle _unit; 
+       }; 
+      }]] remoteExec ["addEventHandler", 0, true];  
+      
+     }; 
+    }; 
+     
+     
+    if (_entity isKindOf "UGV_02_Base_F") then { 
+     [_entity] spawn { 
+      sleep 0.1; 
+      _UGV = _this select 0; 
+ 
+   
+      _action_ID = _UGV addAction ["-> Repair UGV", { 
+       params ["_target", "_caller", "_actionId", "_arguments"]; 
+       private _hasToolkit = [_caller, "ToolKit"] call BIS_fnc_hasItem; 
+       if (_hasToolkit) then { 
+         
+        [_caller] call AdvancedUCAVs_PlayerAnimations; 
+         
+        sleep 1; 
+        _target setDamage 0; 
+       } else { 
+        [["<t color='#FF0000' size='1.7'>You need a Toolkit", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+       }; 
+      }, nil, 1.5, false, true, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (alive _target) && (unitIsUAV _this == false) && (vehicle _this == _this)"]; 
+       
+      _UGV setUserActionText [_action_ID, "-> Repair UGV", "<img size='1.9' image='a3\ui_f\data\igui\cfg\actions\repair_ca.paa'/><br/>Repair UGV"]; 
+       
+           
+      _UGV setVariable ["SmokeOnCooldown", false, true]; 
+           
+      _action_ID = _UGV addAction ["-> Deploy Smoke", { 
+       params ["_target", "_caller", "_actionId", "_arguments"]; 
+       if (_target getVariable ["SmokeOnCooldown", false]) exitWith { 
+        [["<t color='#FF0000' size='1.7'>Smoke on cooldown (1min)", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+       }; 
+  
+       _spawnPos = _target modelToWorld [0,-0.7,0]; 
+       _PelterHightATL = (getPosATL _target) select 2; 
+       _spawnPos set [2, _PelterHightATL + 0.2];  
+        
+       _pelterSmoke = createVehicle ["SmokeShell", _spawnPos, [], 0, "CAN_COLLIDE"]; 
+       _pelterSmoke setPosATL _spawnPos;   
+       _pelterSmoke setDir (getDir _target); 
+       _pelterSmoke setVelocityModelSpace [0,-1,3]; 
+        
+       _target setVariable ["SmokeOnCooldown", true, true]; 
+        
+       [_target] spawn { 
+        params ["_target"]; 
+        sleep 60; 
+        _target setVariable ["SmokeOnCooldown", false, true]; 
+       }; 
+  
+      }, nil, 1.5, false, true, "", "(_this distance _target) < 0.01 && (alive _target) && ((getPos _target) select 2) < 3"]; 
+       
+      _UGV setUserActionText [_action_ID, "-> Deploy Smoke", "<img size='1.9' image='a3\ui_f\data\igui\cfg\actions\ico_cpt_start_on_ca.paa'/><br/>Deploy Smoke"];    
+       
+       
+      [_UGV, ["Killed", { 
+       params ["_unit"]; 
+       [_unit, 0] remoteExec ["removeAction", 0, true]; 
+       [_unit, 1] remoteExec ["removeAction", 0, true]; 
+       [_unit, 2] remoteExec ["removeAction", 0, true]; 
+       [_unit, 3] remoteExec ["removeAction", 0, true]; 
+       [_unit, 4] remoteExec ["removeAction", 0, true]; 
+       [_unit] spawn { 
+        params ["_unit"]; 
+        sleep 300; 
+        deleteVehicle _unit; 
+       }; 
+      }]] remoteExec ["addEventHandler", 0, true];  
+      
+     }; 
+    }; 
+ 
+    if (_entity isKindOf "UGV_02_Demining_Base_F") then { 
+     [_entity] spawn { 
+      sleep 0.1; 
+      _ArmedUGV = _this select 0; 
+       
+       
+      _ArmedUGV addAction ["-> Rearm Slug", { 
+       params ["_target", "_caller", "_actionId", "_arguments"]; 
+        
+       private _SlugAmmo = magazinesAmmo _target; 
+       private _SlugAmmoCount = 0;        
+       { 
+        if ((_x select 0) == "15Rnd_12Gauge_Slug") then { 
+         _SlugAmmoCount = _x select 1; 
+        }; 
+       } forEach _SlugAmmo;        
+       
+       if (_SlugAmmoCount >= 15) exitWith { 
+        [["<t color='#FF0000' size='1.7'>UGV already has 15 Slug", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller] 
+       };       
+               
+       _hasSlug = [_caller, "6Rnd_12Gauge_Slug"] call BIS_fnc_hasItem; 
+       if (_hasSlug) then { 
+        _caller removeItem "6Rnd_12Gauge_Slug"; 
+        [_target, ["15Rnd_12Gauge_Slug", 15, [0]]] remoteExec ["setMagazineTurretAmmo", 0]; 
+         
+        [_caller] call AdvancedUCAVs_PlayerAnimations; 
+         
+       } else { 
+        [["<t color='#FF0000' size='1.7'>You need a 12 Gauge 6rnd Slug Magazine", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+       }; 
+      }, nil, 1.4, false, false, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (unitIsUAV _this == false) && (vehicle _this == _this)"]; 
+   
+ 
+   
+      _ArmedUGV addAction ["-> Rearm Pellets", { 
+       params ["_target", "_caller", "_actionId", "_arguments"]; 
+        
+       private _PelletsAmmo = magazinesAmmo _target; 
+       private _PelletsAmmoCount = 0;        
+       { 
+        if ((_x select 0) == "15Rnd_12Gauge_Pellets") then { 
+         _PelletsAmmoCount = _x select 1; 
+        }; 
+       } forEach _PelletsAmmo;        
+       
+        
+       if (_PelletsAmmoCount >= 15) exitWith { 
+        [["<t color='#FF0000' size='1.7'>UGV already has 15 Pellets", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller] 
+       };       
+               
+       _hasPellets = [_caller, "6Rnd_12Gauge_Pellets"] call BIS_fnc_hasItem; 
+       if (_hasPellets) then { 
+        _caller removeItem "6Rnd_12Gauge_Pellets"; 
+        [_target, ["15Rnd_12Gauge_Pellets", 15, [0]]] remoteExec ["setMagazineTurretAmmo", 0]; 
+         
+        [_caller] call AdvancedUCAVs_PlayerAnimations; 
+          
+       } else { 
+        [["<t color='#FF0000' size='1.7'>You need a 12 Gauge 6rnd Pellets Magazine", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _caller]; 
+       }; 
+      }, nil, 1.4, false, false, "", "(_this distance _target) >= 0.1 && (_this distance _target) < 3 && (unitIsUAV _this == false) && (vehicle _this == _this)"];             
+     }; 
+    }; 
+   }]; 
+   
+    
+    
+    
+   if (!isNil "PlayerViewChangedMEH_ID") then { 
+    removeMissionEventHandler ["PlayerViewChanged", PlayerViewChangedMEH_ID]; 
+   }; 
+   AdvancedUCAVs_PlayerViewChangedMEH_ID = addMissionEventHandler ["PlayerViewChanged", { 
+    params ["_oldUnit", "_newUnit", "_vehicleIn", "_oldCameraOn", "_newCameraOn", "_uav"]; 
+ 
+    [_uav] spawn { 
+     _uav = _this select 0; 
+     if (!isNull _uav) then { 
+      _displayName = getText (configFile >> "CfgVehicles" >> (typeOf _uav) >> "displayName"); 
+      _peopleConnectedToUAV = UAVControl _uav; 
+      _uavSlot1Name = name (_peopleConnectedToUAV select 0); 
+      _uavSlot1Role = _peopleConnectedToUAV select 1; 
+       
+      
+      _antiTroll_ConnectLogMSG = format ["[UCAV_LOG] Player < %1 > connected to an < %2 > as < %3 >", _uavSlot1Name, _displayName, _uavSlot1Role]; 
+        
+      [_antiTroll_ConnectLogMSG] remoteExec ["diag_log", 0]; 
+             
+      
+      
+      if (_uavSlot1Role != "") then { 
+       _uav setVariable ["lastRegisterdSlot1User", _uavSlot1Name, true]; 
+      }; 
+     };  
+    }; 
+   }];    
+   
+   
+   
+   
+  } remoteExec ["call", 0, "AdvancedUCAVS_JIPid"]; 
+  publicVariable "AdvancedUCAVs_EntityHandlerID"; 
+  publicVariable "AdvancedUCAVs_PlayerViewChangedMEH_ID"; 
+  publicVariable "AdvancedUCAVs_UAVCreatedbyPlayerCheck_ID"; 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  { 
+   player setVariable ["JammingOn", false, false]; 
+   player setVariable ["JammingThreadActive", false, false]; 
+  } remoteExec ["call", 0, true]; 
+ 
+  AdvancedUCAVs_JammingScript = { 
+ 
+    
+   private _isJamming = player getVariable ["JammingOn", false]; 
+    
+   if (_isJamming) then { 
+     
+    player setVariable ["JammingOn", false, false]; 
+    player setVariable ["JammingThreadActive", false, false]; 
+    [["<t color='#FF0000' size='1.5'>Jamming: Off", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", player]; 
+   } else { 
+     
+     
+    player setVariable ["JammingOn", true, false]; 
+    player setVariable ["JammingThreadActive", true, false]; 
+     
+    private _jammingPlayer = player; 
+    _jammingPlayer setVariable ["JammingThread", _jammingPlayer spawn { 
+     while { _this getVariable ["JammingOn", false] && _this getVariable ["JammingThreadActive", false] } do { 
+ 
+      if (alive _this) then { 
+        
+       if (backpack _this in ['B_RadioBag_01_eaf_F','B_RadioBag_01_eaf_FAK_F','B_RadioBag_01_ghex_F','B_RadioBag_01_hex_F','B_RadioBag_01_mtp_F','B_RadioBag_01_oucamo_F','B_RadioBag_01_tropic_F','B_RadioBag_01_wdl_F','B_RadioBag_01_wdl_FAK_F','B_RadioBag_01_black_F','B_RadioBag_01_digi_F']) then { 
+         
+         
+        [["<t color='#00FF0C' size='1.5'>Jamming: On", "PLAIN DOWN", 0.01, true, true]] remoteExec ["titleText", _this]; 
+                                     
+             
+        private _nearbyUAVs_small = (getPos _this) nearEntities [["UAV_01_base_F", "UAV_06_base_F"], 200];       
+ 
+ 
+        private _nearbyUGVs_small = (getPos _this) nearEntities [["UGV_02_Base_F"], 100]; 
+       
+         
+         
+         
+        { 
+         if ((count crew _x) > 0) then { 
+          _x deleteVehicleCrew driver _x; 
+          _x deleteVehicleCrew gunner _x; 
+           
+          private _displayName = getText (configFile >> "CfgVehicles" >> (typeOf _x) >> "displayName"); 
+          private _side = "UNKNOWN";           
+ 
+          if ((faction _x) == "BLU_F") then { _side = "NATO" }; 
+          if ((faction _x) == "OPF_F") then { _side = "CSAT" }; 
+          if ((faction _x) == "IND_F") then { _side = "AAF" }; 
+          if ((faction _x) == "IND_E_F") then { _side = "LDF" }; 
+          if ((faction _x) == "CIV_F") then { _side = "CIV" }; 
+          if ((faction _x) == "CIV_IDAP_F") then { _side = "IDAP" }; 
+           
+          private _distanceToDrone = player distance _x; 
+          private _displayDistance = round _distanceToDrone; 
+          systemChat format ["[Jammer] Jammed UAV: %1 [%2] - (distance %3m)", _displayName, _side, _displayDistance];  
+           
+          _jammingPlayerBP = name player; 
+ 
+       
+          _antiTroll_LogMSG = format ["[UCAV_LOG] Player <%1> jammed a drone: <%2 [%3] - distance (%4m)> using the radio backpack", _jammingPlayerBP, _displayName, _side, _displayDistance]; 
+          [_antiTroll_LogMSG] remoteExec ["diag_log", 0]; 
+           
+         }; 
+        } forEach _nearbyUAVs_small; 
+         
+              
+        { 
+         if ((count crew _x) > 0) then { 
+          _x deleteVehicleCrew driver _x; 
+          _x deleteVehicleCrew gunner _x; 
+           
+          private _displayName = getText (configFile >> "CfgVehicles" >> (typeOf _x) >> "displayName"); 
+          private _side = "UNKNOWN";           
+ 
+          if ((faction _x) == "BLU_F") then { _side = "NATO" }; 
+          if ((faction _x) == "OPF_F") then { _side = "CSAT" }; 
+          if ((faction _x) == "IND_F") then { _side = "AAF" }; 
+          if ((faction _x) == "IND_E_F") then { _side = "LDF" }; 
+          if ((faction _x) == "CIV_F") then { _side = "CIV" }; 
+          if ((faction _x) == "CIV_IDAP_F") then { _side = "IDAP" }; 
+           
+          private _distanceToDrone = player distance _x; 
+          private _displayDistance = round _distanceToDrone; 
+          systemChat format ["[Jammer] Jammed UGV: %1 [%2] - (distance %3m)", _displayName, _side, _displayDistance];  
+          _jammingPlayerBP = name player; 
+ 
+ 
+          _antiTroll_LogMSG = format ["[UCAV_LOG] Player <%1> jammed a drone: <%2 [%3] - distance (%4m)> using the spectrum device", _jammingPlayerBP, _displayName, _side, _displayDistance]; 
+          [_antiTroll_LogMSG] remoteExec ["diag_log", 0]; 
+           
+         }; 
+        } forEach _nearbyUGVs_small;       
+        
+        
+       } else { 
+        [["<t color='#FF0000' size='1.5'>Backpack dropped. Jamming: Off", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _this]; 
+        _this setVariable ["JammingOn", false, true]; 
+        _this setVariable ["JammingThreadActive", false, true];                           
+       }; 
+        
+      } else { 
+       [["<t color='#FF0000' size='1.5'>You died. Jamming: Off", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", _this]; 
+       _this setVariable ["JammingOn", false, true]; 
+       _this setVariable ["JammingThreadActive", false, true];       
+      }; 
+      sleep 0.1; 
+     }; 
+    }]; 
+   };  
+    
+  }; 
+  publicVariable "AdvancedUCAVs_JammingScript"; 
+ 
+ 
+ 
+  AdvancedUCAVs_AddKeybindLocal = { 
+   waitUntil {  
+    uisleep 0.1; 
+    !isNull (findDisplay 46) && alive player; 
+   }; 
+   sleep 0.1; 
+      
+    
+    
+   if(!isNil "AdvancedUCAVs_BackpackJamming_DEH_Keydown") then { 
+    (findDisplay 46) displayRemoveEventHandler ["KeyDown", AdvancedUCAVs_BackpackJamming_DEH_Keydown]; 
+   };    
+   _keyHandler = { 
+    params ["_display","_key","_shift","_ctrl","_alt"]; 
+    _j = 36; 
+    if (_key == _j) then { 
+     if (isNull player) exitWith {}; 
+     if (!alive player) exitWith {};    
+     _jammingBackpacks = ['B_RadioBag_01_eaf_F','B_RadioBag_01_eaf_FAK_F','B_RadioBag_01_ghex_F','B_RadioBag_01_hex_F','B_RadioBag_01_mtp_F','B_RadioBag_01_oucamo_F', 
+     'B_RadioBag_01_tropic_F','B_RadioBag_01_wdl_F','B_RadioBag_01_wdl_FAK_F','B_RadioBag_01_black_F','B_RadioBag_01_digi_F'];      
+     if !(backpack player in _jammingBackpacks) exitWith {}; 
+ 
+     [player] call AdvancedUCAVs_JammingScript; 
+    }; 
+   };    
+   AdvancedUCAVs_BackpackJamming_DEH_Keydown = (findDisplay 46) displayAddEventHandler ["KeyDown", _keyHandler]; 
+    
+    
+    
+    
+    
+   if(!isNil "AdvancedUCAVs_SpectrumJamming_DEH_Mousedown") then { 
+    (findDisplay 46) displayRemoveEventHandler ["MouseButtonDown", AdvancedUCAVs_SpectrumJamming_DEH_Mousedown]; 
+   };   
+   _mouseHandler = { 
+    params ["_display", "_button", "_xPos", "_yPos", "_shift", "_ctrl", "_alt"]; 
+    if (_button == 0) then { 
+ 
+     if (visibleMap) exitWith {}; 
+     if (currentMuzzle player != "hgun_esd_01_F") exitWith {}; 
+     if !("muzzle_antenna_03_f" in handgunItems player) exitWith {}; 
+     if (!alive player) exitWith {}; 
+     if (weaponLowered player) exitWith {}; 
+ 
+     private _maxScreenRadius = 0.05;  
+     private _searchRange = 1000;  
+ 
+     private _nearDrones = (position player) nearEntities [["UAV_01_base_F","UAV_06_base_F","UGV_02_Base_F"], _searchRange]; 
+     private _selectedDrone = objNull; 
+     private _SelectedDroneDistance = 1e3; 
+ 
+     { 
+      if (alive _x) then { 
+       if ((_x isKindOf "UAV_01_base_F" || _x isKindOf "UAV_06_base_F" || _x isKindOf "UGV_02_Base_F") && ((count crew _x) > 0)) then { 
+        private _pos = position _x; 
+        private _screen = worldToScreen _pos; 
+        if (count _screen > 0) then { 
+         private _dx = (_screen select 0) - 0.5; 
+         private _dy = (_screen select 1) - 0.5; 
+         private _screenDist = sqrt (_dx*_dx + _dy*_dy); 
+         if (_screenDist < _maxScreenRadius) then { 
+          if (_screenDist < _SelectedDroneDistance) then { 
+           _SelectedDroneDistance = _screenDist; 
+           _selectedDrone = _x; 
+          }; 
+         }; 
+        }; 
+       }; 
+      }; 
+     } forEach _nearDrones; 
+ 
+     if (isNull _selectedDrone) then { 
+      private _curObj = cursorObject; 
+      if (!isNull _curObj) then { 
+       if (_curObj isKindOf "UAV_01_base_F" || _curObj isKindOf "UAV_06_base_F" || _curObj isKindOf "UGV_02_Base_F") then { 
+        _selectedDrone = _curObj; 
+       }; 
+      }; 
+     }; 
+ 
+ 
+     if (isNull _selectedDrone) exitWith { 
+      [["<t color='#FF0000' size='1.5'>Drone not found", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", player]; 
+     }; 
+ 
+     private _distanceToDrone = player distance _selectedDrone; 
+     if (!alive _selectedDrone) exitWith { [["<t color='#FF0000' size='1.5'>Drone not found", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", player]; }; 
+     if (_distanceToDrone > _searchRange) exitWith { [["<t color='#FF0000' size='1.5'>Drone is out of range (1km)", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", player]; }; 
+     if ((count crew _selectedDrone) <= 0) exitWith { [["<t color='#FF0000' size='1.5'>Drone is already jammed", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", player] };        
+      
+      
+     _selectedDrone deleteVehicleCrew driver _selectedDrone; 
+     _selectedDrone deleteVehicleCrew gunner _selectedDrone; 
+ 
+     private _displayName = getText (configFile >> "CfgVehicles" >> (typeOf _selectedDrone) >> "displayName"); 
+     private _side = "UNKNOWN"; 
+     if ((faction _selectedDrone) == "BLU_F") then { _side = "NATO" }; 
+     if ((faction _selectedDrone) == "OPF_F") then { _side = "CSAT" }; 
+     if ((faction _selectedDrone) == "IND_F") then { _side = "AAF" }; 
+     if ((faction _selectedDrone) == "IND_E_F") then { _side = "LDF" }; 
+     if ((faction _selectedDrone) == "CIV_F") then { _side = "CIV" }; 
+     if ((faction _selectedDrone) == "CIV_IDAP_F") then { _side = "IDAP" }; 
+ 
+     private _displayDistance = round _distanceToDrone; 
+     systemChat format ["[Jammer] Jammed Drone: %1 [%2] - (distance %3m)", _displayName, _side, _displayDistance]; 
+     _jammingPlayerSD = name player; 
+     [["<t color='#00FF0C' size='1.5'>Jammed Drone", "PLAIN DOWN", 0.5, true, true]] remoteExec ["titleText", player]; 
+     _antiTroll_LogMSG = format ["[UCAV_LOG] Player <%1> jammed a drone: <%2 [%3] - distance (%4m)> using the spectrum device", _jammingPlayerSD, _displayName, _side, _displayDistance]; 
+           
+      
+     [_antiTroll_LogMSG] remoteExec ["diag_log", 0]; 
+      
+ 
+    }; 
+    false 
+   }; 
+   AdvancedUCAVs_SpectrumJamming_DEH_Mousedown = (findDisplay 46) displayAddEventHandler ["MouseButtonDown", _mouseHandler]; 
+   
+   
+  }; 
+  publicVariable "AdvancedUCAVs_AddKeybindLocal"; 
+ 
+ 
+  AdvancedUCAVs_Call_addKeybindLocal = { [] spawn AdvancedUCAVs_AddKeybindLocal };  
+  publicVariable "AdvancedUCAVs_Call_addKeybindLocal"; 
+ 
+  [AdvancedUCAVs_Call_addKeybindLocal] remoteExec ["call", 0, "AdvancedUCAVs_Call_addKeybindLocal_JIPid"]; 
+ 
+ 
+ 
+  AdvancedUCAVs_RemoveKeybindLocal = { 
+   waitUntil {  
+    uisleep 0.1; 
+    !isNull (findDisplay 46) && alive player; 
+   }; 
+   sleep 0.1; 
+    
+   if(!isNil "AdvancedUCAVs_BackpackJamming_DEH_Keydown") then { 
+    (findDisplay 46) displayRemoveEventHandler ["KeyDown", AdvancedUCAVs_BackpackJamming_DEH_Keydown]; 
+   };  
+   if(!isNil "AdvancedUCAVs_SpectrumJamming_DEH_Mousedown") then { 
+    (findDisplay 46) displayRemoveEventHandler ["MouseButtonDown", AdvancedUCAVs_SpectrumJamming_DEH_Mousedown]; 
+   };     
+    
+  }; 
+  publicVariable "AdvancedUCAVs_RemoveKeybindLocal"; 
+ 
+ 
+  AdvancedUCAVs_Call_removeKeybindLocal = { [] spawn AdvancedUCAVs_RemoveKeybindLocal };  
+  publicVariable "AdvancedUCAVs_Call_removeKeybindLocal"; 
+ 
+ 
+  AdvancedUCAVs_RespawnEH = { 
+   private _UCAVs_ehID = player getVariable ["UCAVsRespawnEH", -1]; 
+ 
+   if (_UCAVs_ehID >= 0) then { 
+    player removeEventHandler ["Respawn", _UCAVs_ehID]; 
+   }; 
+ 
+   _UCAVs_ehID = player addEventHandler ["Respawn", { 
+    params ["_unit", "_corpse"]; 
+    [AdvancedUCAVs_Call_removeKeybindLocal] remoteExec ["call", _unit]; 
+ 
+    if (missionNamespace getVariable ["AdvancedUCAVs_ScriptRunning", false]) then { 
+     [AdvancedUCAVs_Call_addKeybindLocal] remoteExec ["call", _unit]; 
+    }; 
+ 
+    _unit setVariable ["JammingOn", false, false]; 
+    _unit setVariable ["JammingThreadActive", false, false]; 
+   }]; 
+ 
+   player setVariable ["UCAVsRespawnEH", _UCAVs_ehID]; 
+  }; 
+  [AdvancedUCAVs_RespawnEH] remoteExec ["call", 0, "AdvancedUCAVs_RespawnEH_JIPid"]; 
+  publicVariable "AdvancedUCAVs_RespawnEH"; 
+ 
+ 
+    
+ } else { 
+  ["Advanced Combat Drones has been disabled."] remoteExec ["hint", 0]; 
+    
+  { 
+   player removeDiarySubject "Advanced_UCAVs"; 
+   player removeDiaryRecord ["Advanced UCAVs", _diaryRecord]; 
+   player removeDiaryRecord ["Advanced UCAVs", _diaryRecord2];   
+   player removeDiaryRecord ["Advanced UCAVs", _diaryRecord3];  
+    
+   player setVariable ["JammingOn", false, false]; 
+   player setVariable ["JammingThreadActive", false, false];    
+  } remoteExec ["call", 0, true]; 
+   
+  AdvancedUCAVs_ScriptRunning = false; 
+  publicVariable "AdvancedUCAVs_ScriptRunning";   
+   
+  remoteExec ["", "AdvancedUCAVS_JIPid"];  
+  remoteExec ["", "AdvancedUCAVs_Call_addKeybindLocal_JIPid"];  
+   
+  { player call AdvancedUCAVs_Call_removeKeybindLocal } remoteExec ["call", 0]; 
+   
+      
+  if (!isNil "AdvancedUCAVs_EntityHandlerID") then { 
+   { removeMissionEventHandler ["EntityCreated", AdvancedUCAVs_EntityHandlerID] } remoteExec ["call", 0, true]; 
+  };    
+  if (!isNil "AdvancedUCAVs_PlayerViewChangedMEH_ID") then { 
+   { removeMissionEventHandler ["PlayerViewChanged", AdvancedUCAVs_PlayerViewChangedMEH_ID] } remoteExec ["call", 0, true]; 
+  };  
+  if (!isNil "AdvancedUCAVs_UAVCreatedbyPlayerCheck_ID") then { 
+   { removeMissionEventHandler ["UAVCrewCreated", AdvancedUCAVs_UAVCreatedbyPlayerCheck_ID] } remoteExec ["call", 0, true]; 
+  };  
+ 
+ 
+ 
+   
+ };  
+}; 
+deleteVehicle this;

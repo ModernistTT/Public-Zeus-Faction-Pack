@@ -1,2 +1,22 @@
-_veh = createVehicle ["O_SAM_System_04_F",position player,[],0,"NONE"];
-[
+PZFP_fnc_civilian_Trucks_CreateModularTruck = {
+ params ["_truck"];
+ private _cargo1 = ["CargoNet_01_barrels_F","CargoNet_01_box_F","Land_Bricks_V1_F","Land_CargoBox_V1_F","Land_FoodSacks_01_cargo_brown_F","Land_FoodSacks_01_cargo_brown_idap_F","Land_FoodSacks_01_cargo_white_idap_F","Land_Pallets_stack_F","Land_ToiletBox_F","Land_WoodenCrate_01_F"];
+ private _cargo2 = ["CargoNet_01_barrels_F","CargoNet_01_box_F","Land_Bricks_V1_F","Land_CargoBox_V1_F","Land_FoodSacks_01_cargo_brown_F","Land_FoodSacks_01_cargo_brown_idap_F","Land_FoodSacks_01_cargo_white_idap_F","Land_Pallets_stack_F","Land_ToiletBox_F","Land_WoodenCrate_01_F"];
+ 
+ private _selectedCargo1 = selectRandom _cargo1;
+
+ if (_selectedCargo1 == "Land_WoodenPlanks_01_pine_F") then {
+  _selectedCargo2 = null;
+ } else {
+  _selectedCargo2 = selectRandom _cargo2;
+ };
+
+ switch (_selectedCargo1)do {
+  case 
+ }
+  case
+ switch _cargo:
+  case "CargoNet_01_barrels_F":
+   
+
+};

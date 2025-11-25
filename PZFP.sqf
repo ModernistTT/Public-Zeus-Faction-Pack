@@ -10964,7 +10964,7 @@ PZFP_fnc_initialize = {
     private _bomb = _drone getVariable ["bomb", objNull];
     detach _bomb;
     deleteVehicle _bomb;
-    private _charge = createVehicle ["ATMine_Range_Ammo", position _drone, [], 0, "NONE"];
+    private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _drone, [], 0, "NONE"];
     _charge setDamage 1;
     _drone setVariable ["fired", 1];
   }];
@@ -13856,8 +13856,6 @@ PZFP_fnc_initialize = {
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
-  private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
-  _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -14011,7 +14009,7 @@ PZFP_fnc_initialize = {
   _copilot = [] call PZFP_fnc_opfor_IRGF_Men_CreateHelicopterPilot;
   _copilot moveInTurret [_vehicle, [0]];
   _loadmaster = [] call PZFP_fnc_opfor_IRGF_Men_CreateHelicopterCrew;
-  _loadmaster moveInGunner [_vehicle,1];
+  _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -14032,7 +14030,7 @@ PZFP_fnc_initialize = {
   _copilot = [] call PZFP_fnc_opfor_IRGF_Men_CreateHelicopterPilot;
   _copilot moveInTurret [_vehicle, [0]];
   _loadmaster = [] call PZFP_fnc_opfor_IRGF_Men_CreateHelicopterCrew;
-  _loadmaster moveInGunner [_vehicle,1];
+  _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -14053,7 +14051,7 @@ PZFP_fnc_initialize = {
   _copilot = [] call PZFP_fnc_opfor_IRGF_Men_CreateHelicopterPilot;
   _copilot moveInTurret [_vehicle, [0]];
   _loadmaster = [] call PZFP_fnc_opfor_IRGF_Men_CreateHelicopterCrew;
-  _loadmaster moveInGunner [_vehicle,1];
+  _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -14074,7 +14072,7 @@ PZFP_fnc_initialize = {
   _copilot = [] call PZFP_fnc_opfor_IRGF_Men_CreateHelicopterPilot;
   _copilot moveInTurret [_vehicle, [0]];
   _loadmaster = [] call PZFP_fnc_opfor_IRGF_Men_CreateHelicopterCrew;
-  _loadmaster moveInGunner [_vehicle,1];
+  _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -14095,7 +14093,7 @@ PZFP_fnc_initialize = {
   _copilot = [] call PZFP_fnc_opfor_IRGF_Men_CreateHelicopterPilot;
   _copilot moveInTurret [_vehicle, [0]];
   _loadmaster = [] call PZFP_fnc_opfor_IRGF_Men_CreateHelicopterCrew;
-  _loadmaster moveInGunner [_vehicle,1];
+  _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -14116,7 +14114,7 @@ PZFP_fnc_initialize = {
   _copilot = [] call PZFP_fnc_opfor_IRGF_Men_CreateHelicopterPilot;
   _copilot moveInTurret [_vehicle, [0]];
   _loadmaster = [] call PZFP_fnc_opfor_IRGF_Men_CreateHelicopterCrew;
-  _loadmaster moveInGunner [_vehicle,1];
+  _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -14137,7 +14135,7 @@ PZFP_fnc_initialize = {
   _copilot = [] call PZFP_fnc_opfor_IRGF_Men_CreateHelicopterPilot;
   _copilot moveInTurret [_vehicle, [0]];
   _loadmaster = [] call PZFP_fnc_opfor_IRGF_Men_CreateHelicopterCrew;
-  _loadmaster moveInGunner [_vehicle,1];
+  _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -14996,7 +14994,6 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
   };
-  private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
  };
@@ -15004,7 +15001,8 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Men_CreateLAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _group = createGroup [east, true];  _group setBehaviour "SAFE";
+  private _group = createGroup [east, true];  
+  _group setBehaviour "SAFE";
   private _unit = _group createUnit ["O_Soldier_LAT_F", _position, [], 0, "CAN_COLLIDE"];
   if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then {
    doStop _unit;
@@ -15022,7 +15020,8 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Men_CreateAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _group = createGroup [east, true]; _group setBehaviour "SAFE";
+  private _group = createGroup [east, true]; 
+  _group setBehaviour "SAFE";
   private _unit = _group createUnit ["O_Soldier_AT_F", _position, [], 0, "CAN_COLLIDE"];
   if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then {
    doStop _unit;
@@ -16133,6 +16132,11 @@ PZFP_fnc_initialize = {
   PZFP_opfor_IRGF_Turrets_AT = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "Static Titan Launcher (AT)", "PZFP_fnc_opfor_IRGF_Turrets_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
   
 
+  PZFP_opfor_IRN = [_opfor, "Iranian Navy", [1,1,1,1]] call PZFP_fnc_addCategory;
+  PZFP_opfor_IRN_Frogmen = [_opfor, PZFP_opfor_IRN, "Frogmen", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_opfor_IRN_Frogmen_Rifleman = [_opfor, PZFP_opfor_IRN, PZFP_IRN_Frogmen, "Rifleman", "PZFP_fnc_opfor_IRN_Frogmen_CreateRifleman", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  
  };
 
  PZFP_fnc_mainLoop = {
