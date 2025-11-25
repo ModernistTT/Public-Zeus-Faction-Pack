@@ -1,22 +1,53 @@
-PZFP_fnc_civilian_Trucks_CreateModularTruck = {
- params ["_truck"];
- private _cargo1 = ["CargoNet_01_barrels_F","CargoNet_01_box_F","Land_Bricks_V1_F","Land_CargoBox_V1_F","Land_FoodSacks_01_cargo_brown_F","Land_FoodSacks_01_cargo_brown_idap_F","Land_FoodSacks_01_cargo_white_idap_F","Land_Pallets_stack_F","Land_ToiletBox_F","Land_WoodenCrate_01_F"];
- private _cargo2 = ["CargoNet_01_barrels_F","CargoNet_01_box_F","Land_Bricks_V1_F","Land_CargoBox_V1_F","Land_FoodSacks_01_cargo_brown_F","Land_FoodSacks_01_cargo_brown_idap_F","Land_FoodSacks_01_cargo_white_idap_F","Land_Pallets_stack_F","Land_ToiletBox_F","Land_WoodenCrate_01_F"];
- 
- private _selectedCargo1 = selectRandom _cargo1;
 
- if (_selectedCargo1 == "Land_WoodenPlanks_01_pine_F") then {
-  _selectedCargo2 = null;
- } else {
-  _selectedCargo2 = selectRandom _cargo2;
- };
+comment "Exported from Arsenal by iamnochinkissr";
 
- switch (_selectedCargo1)do {
-  case 
- }
-  case
- switch _cargo:
-  case "CargoNet_01_barrels_F":
-   
+comment "[!] UNIT MUST BE LOCAL [!]";
+if (!local this) exitWith {};
 
-};
+comment "Remove existing items";
+removeAllWeapons this;
+removeAllItems this;
+removeAllAssignedItems this;
+removeUniform this;
+removeVest this;
+removeBackpack this;
+removeHeadgear this;
+removeGoggles this;
+
+comment "Add weapons";
+this addWeapon "arifle_CTAR_GL_hex_F";
+this addPrimaryWeaponItem "acc_pointer_IR";
+this addPrimaryWeaponItem "optic_Arco_blk_F";
+this addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+this addPrimaryWeaponItem "1Rnd_HE_Grenade_shell";
+this addWeapon "hgun_Rook40_F";
+this addHandgunItem "16Rnd_9x21_Mag";
+
+comment "Add containers";
+this forceAddUniform "U_O_officer_noInsignia_hex_F";
+this addVest "V_HarnessO_brn";
+
+comment "Add items to containers";
+this addItemToUniform "FirstAidKit";
+this addItemToUniform "Chemlight_yellow";
+for "_i" from 1 to 3 do {this addItemToUniform "30Rnd_580x42_Mag_F";};
+this addItemToUniform "1Rnd_HE_Grenade_shell";
+for "_i" from 1 to 2 do {this addItemToVest "16Rnd_9x21_Mag";};
+for "_i" from 1 to 2 do {this addItemToVest "HandGrenade";};
+this addItemToVest "SmokeShell";
+this addItemToVest "SmokeShellRed";
+this addItemToVest "SmokeShellGreen";
+for "_i" from 1 to 2 do {this addItemToVest "1Rnd_HE_Grenade_shell";};
+for "_i" from 1 to 3 do {this addItemToVest "30Rnd_580x42_Mag_F";};
+this addHeadgear "H_HelmetO_ocamo";
+this addGoggles "G_Combat";
+
+comment "Add items";
+this linkItem "ItemMap";
+this linkItem "ItemCompass";
+this linkItem "ItemWatch";
+this linkItem "ItemRadio";
+this linkItem "O_NVGoggles_hex_F";
+
+comment "Set identity";
+[this,"AsianHead_A3_06","male01chi"] call BIS_fnc_setIdentity;
