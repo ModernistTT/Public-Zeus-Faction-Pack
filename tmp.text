@@ -1,51 +1,32 @@
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
 
-comment "Exported from Arsenal by iamnochinkissr";
+  _unit addWeapon "arifle_AK12_F";
+  _unit addPrimaryWeaponItem "optic_ACO_grn";
+  _unit addPrimaryWeaponItem "30Rnd_762x39_AK12_Mag_F";
+  _unit addWeapon "hgun_Rook40_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
 
-comment "[!] UNIT MUST BE LOCAL [!]";
-if (!local this) exitWith {};
+  _unit forceAddUniform selectRandom ["U_O_R_Gorka_01_F","U_O_R_Gorka_01_brown_F"];
+  _unit addVest selectRandom ["V_TacVestIR_blk","V_TacVest_oli","V_I_G_ResistanceLeader_F"];
 
-comment "Remove existing items";
-removeAllWeapons this;
-removeAllItems this;
-removeAllAssignedItems this;
-removeUniform this;
-removeVest this;
-removeBackpack this;
-removeHeadgear this;
-removeGoggles this;
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_762x39_AK12_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  _unit addItemToVest "HandGrenade";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellPurple";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "MiniGrenade";
+  _unit addGoggles selectRandom ["G_Bandanna_beast","G_Bandanna_blk","G_Bandanna_oli","G_Bandanna_skull1","",""];
+  _unit addHeadgear selectRandom ["H_Watchcap_camo","H_Watchcap_khk","H_Cap_oli","H_Headset_black_F"];
 
-comment "Add weapons";
-this addWeapon "arifle_CTARS_hex_F";
-this addPrimaryWeaponItem "acc_pointer_IR";
-this addPrimaryWeaponItem "optic_Arco_blk_F";
-this addPrimaryWeaponItem "100Rnd_580x42_hex_Mag_F";
-this addWeapon "hgun_Rook40_F";
-this addHandgunItem "16Rnd_9x21_Mag";
-
-comment "Add containers";
-this forceAddUniform "U_O_officer_noInsignia_hex_F";
-this addVest "V_HarnessO_brn";
-
-comment "Add items to containers";
-this addItemToUniform "FirstAidKit";
-this addItemToUniform "Chemlight_yellow";
-this addItemToUniform "100Rnd_580x42_hex_Mag_F";
-for "_i" from 1 to 2 do {this addItemToVest "16Rnd_9x21_Mag";};
-for "_i" from 1 to 2 do {this addItemToVest "HandGrenade";};
-this addItemToVest "SmokeShell";
-this addItemToVest "SmokeShellRed";
-this addItemToVest "SmokeShellGreen";
-for "_i" from 1 to 3 do {this addItemToVest "100Rnd_580x42_hex_Mag_F";};
-this addItemToVest "100Rnd_580x42_hex_Mag_Tracer_F";
-this addHeadgear "H_HelmetO_ocamo";
-this addGoggles "G_Combat";
-
-comment "Add items";
-this linkItem "ItemMap";
-this linkItem "ItemCompass";
-this linkItem "ItemWatch";
-this linkItem "ItemRadio";
-this linkItem "O_NVGoggles_hex_F";
-
-comment "Set identity";
-[this,"AsianHead_A3_06","male01chi"] call BIS_fnc_setIdentity;
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";

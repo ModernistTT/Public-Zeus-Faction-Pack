@@ -84,7 +84,10 @@ REDFOR
     - Scimitar Regiment
 * Raven Security (RED, IND)
     - Infantry
-* Spetznaz GRU
+* Russian Air Force
+    - Maintenance Crew
+    - Pilots
+* Russian Spetznaz GRU
     - Infantry
 * Syndikat (BLU, RED, IND)
     - Infantry

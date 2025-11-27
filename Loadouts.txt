@@ -1,0 +1,43 @@
+
+comment "Exported from Arsenal by iamnochinkissr";
+
+comment "[!] UNIT MUST BE LOCAL [!]";
+if (!local this) exitWith {};
+
+comment "Remove existing items";
+removeAllWeapons this;
+removeAllItems this;
+removeAllAssignedItems this;
+removeUniform this;
+removeVest this;
+removeBackpack this;
+removeHeadgear this;
+removeGoggles this;
+
+comment "Add weapons";
+this addWeapon "arifle_AK12U_lush_F";
+this addPrimaryWeaponItem "optic_Holosight_lush_F";
+this addPrimaryWeaponItem "30rnd_762x39_AK12_Lush_Mag_F";
+
+comment "Add containers";
+this forceAddUniform "U_O_R_Gorka_01_camo_F";
+this addVest "V_TacVestIR_blk";
+
+comment "Add binoculars";
+this addMagazine "Laserbatteries";
+this addWeapon "Laserdesignator_01_khk_F";
+
+comment "Add items to containers";
+this addItemToUniform "FirstAidKit";
+this addItemToUniform "Chemlight_yellow";
+this addItemToUniform "Laserbatteries";
+for "_i" from 1 to 4 do {this addItemToVest "30rnd_762x39_AK12_Lush_Mag_F";};
+for "_i" from 1 to 2 do {this addItemToVest "HandGrenade";};
+this addItemToVest "SmokeShellBlue";
+this addItemToVest "SmokeShell";
+this addItemToVest "SmokeShellRed";
+this addItemToVest "O_R_IR_Grenade";
+this addHeadgear "H_Cap_headphones";
+
+comment "Set identity";
+[this,"PersianHead_A3_02","male02per"] call BIS_fnc_setIdentity;
