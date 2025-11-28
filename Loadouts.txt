@@ -1,43 +1,43 @@
+PZFP_fnc_initSoldier_LPR_Rifleman = {        
+ params ["_unit"];  
+  
+ private _uniforms = ["U_I_L_Uniform_01_tshirt_olive_F", "U_C_E_LooterJacket_01_F", "U_O_R_Gorka_01_F", "U_O_R_Gorka_01_brown_F", "U_I_L_Uniform_01_tshirt_skull_F", "U_I_L_Uniform_01_deserter_F", "U_I_L_Uniform_01_camo_F", "U_O_R_Gorka_01_black_F"]; 
+ private _uniformtextaures = ["a3\characters_f_enoch\Uniforms\Data\Gorka_01_Camo_CO.paa", "a3\characters_f_enoch\Uniforms\Data\Gorka_01_khaki_CO.paa"]; 
+ _unit forceAddUniform selectRandom _uniforms; 
+ if (uniform _unit == "U_O_R_Gorka_01_F") then { 
+  [_unit,[0, selectRandom _uniformtextures]] remoteExec ['setObjectTexture',0,true]; 
+ }; 
+   
+ private _vests = ["V_TacChestrig_oli_F", "V_TacChestrig_grn_F", "V_BandollierB_rgr", "V_BandollierB_oli", "V_I_G_resistanceLeader_F", "V_Pocketed_olive_F", "U_I_L_Uniform_01_deserter_F"]; 
+ private _jacketedvests = ["V_LegStrapBag_black_F", "V_LegStrapBag_coyote_F"]; 
+ if (uniform _unit == "U_C_E_LooterJacket_01_F") then { 
+  _unit addVest selectRandom _jacketedvests; 
+ } else {  
+  _unit addVest selectRandom _vests; 
+ }; 
+  
+ private _goggles = ["G_Balaclava_Tropentarn", "G_Balaclava_Flecktarn", "G_Balaclava_oli", "G_Balaclava_blk", "G_Bandanna_shades", "G_Bandanna_oli", "G_Bandanna_sport", "", "", "", "", "", "", "", ""]; 
+ private _headgear = [""];  
+ _unit addGoggles selectRandom _goggles; 
+ if (goggles _unit == "") then { 
+  _unit addHeadgear selectRandom _headgear; 
+ }; 
+  
+ _unit addWeapon "arifle_AKM_FL_F";   
+ _unit addPrimaryWeaponItem "30Rnd_762x39_Mag_F";     
+ _unit  addItemToUniform "FirstAidKit";    
+ _unit addItemToUniform "MobilePhone";    
+ _unit addItemToUniform "Wallet_ID";      
+ _unit addItemToUniform "Chemlight_green";    
+ _unit  addItemToUniform "SmokeShell";    
+ for "_i" from 1 to 9 do {_unit addItemToVest "30Rnd_762x39_Mag_F"};    
+ _unit addItemToVest "SmokeShellGreen";    
+ _unit addItemToVest "SmokeShellBlue";    
+ _unit addItemToVest "HandGrenade";    
+ _unit linkItem "ItemMap";    
+ _unit linkItem "ItemWatch";  
+}; 
+  
+[this] call PZFP_fnc_initSoldier_LPR_Rifleman;  
 
-comment "Exported from Arsenal by iamnochinkissr";
 
-comment "[!] UNIT MUST BE LOCAL [!]";
-if (!local this) exitWith {};
-
-comment "Remove existing items";
-removeAllWeapons this;
-removeAllItems this;
-removeAllAssignedItems this;
-removeUniform this;
-removeVest this;
-removeBackpack this;
-removeHeadgear this;
-removeGoggles this;
-
-comment "Add weapons";
-this addWeapon "arifle_AK12U_lush_F";
-this addPrimaryWeaponItem "optic_Holosight_lush_F";
-this addPrimaryWeaponItem "30rnd_762x39_AK12_Lush_Mag_F";
-
-comment "Add containers";
-this forceAddUniform "U_O_R_Gorka_01_camo_F";
-this addVest "V_TacVestIR_blk";
-
-comment "Add binoculars";
-this addMagazine "Laserbatteries";
-this addWeapon "Laserdesignator_01_khk_F";
-
-comment "Add items to containers";
-this addItemToUniform "FirstAidKit";
-this addItemToUniform "Chemlight_yellow";
-this addItemToUniform "Laserbatteries";
-for "_i" from 1 to 4 do {this addItemToVest "30rnd_762x39_AK12_Lush_Mag_F";};
-for "_i" from 1 to 2 do {this addItemToVest "HandGrenade";};
-this addItemToVest "SmokeShellBlue";
-this addItemToVest "SmokeShell";
-this addItemToVest "SmokeShellRed";
-this addItemToVest "O_R_IR_Grenade";
-this addHeadgear "H_Cap_headphones";
-
-comment "Set identity";
-[this,"PersianHead_A3_02","male02per"] call BIS_fnc_setIdentity;

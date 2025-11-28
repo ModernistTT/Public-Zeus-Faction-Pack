@@ -84,7 +84,7 @@ REDFOR
     - Scimitar Regiment
 * Raven Security (RED, IND)
     - Infantry
-* Russian Air Force
+* Russian Air Force 
     - Maintenance Crew
     - Pilots
 * Russian Spetznaz GRU
@@ -92,8 +92,32 @@ REDFOR
 * Syndikat (BLU, RED, IND)
     - Infantry
 * Livonian Armed People's Party (RED, IND)
+    - Artillery
+        - Offroad MLRS
+        - Zamak MLRS
+    - Cars
+        - Offroad
+        - Offroad HMG
+        - Offroad AT
+        - Van Transport
+        - Van Cargo
+        - Zamak Transport
+        - Zamak Transport (Covered)
+        - Zamak Ammo
+        - Zamak Repair
+        - Zamak Fuel
+    - Drones
+        - AL-6 Pelican
+        - AL-6 Pelican (Grenade Dropper)
+        - AL-6 Pelican (Mortar Dropper)
+        - AL-6 Pelican (Charge)
+        - AR-2 Darter
     - Infantry
-* Viper Group
+    - Turrets
+        - M2 HMG
+        - M2 HMG (Tripod)
+        - Mk6 Mortar
+* Viper Group (TBA)
     - Viper Team Red
     - Viper Team Blue
     - Viper Team Yellow ??????

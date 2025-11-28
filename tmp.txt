@@ -1,0 +1,193 @@
+Make sure to change this to fit the format outlined for the script (i.e. _veh should be _vehicle, change position player to _position, etc.):
+
+_veh = createVehicle ["I_E_Offroad_01_covered_F",position player,[],0,"NONE"];
+[
+	_veh,
+	["Green",1], 
+	["hidePolice",1,"HideServices",1,"HideCover",0,"StartBeaconLight",0,"HideRoofRack",1,"HideLoudSpeakers",1,"HideAntennas",1,"HideBeacon",1,"HideSpotlight",1,"HideDoor3",0,"OpenDoor3",0,"HideDoor1",0,"HideDoor2",0,"HideBackpacks",1,"HideBumper1",1,"HideBumper2",0,"HideConstruction",0,"BeaconsStart",0]
+] call BIS_fnc_initVehicle;
+_vehicle setObjectTexture [0, "a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_08_co.paa"];
+
+_veh = createVehicle ["I_E_Offroad_01_comms_F",position player,[],0,"NONE"]; <- Change the texture here to the same selectRandom as the others
+[
+	_veh,
+	["Green",1], 
+	["hidePolice",1,"HideServices",1,"HideCover",0,"StartBeaconLight",0,"HideRoofRack",0,"HideLoudSpeakers",1,"HideAntennas",0,"HideBeacon",1,"HideSpotlight",0,"HideDoor3",0,"OpenDoor3",0,"HideDoor1",0,"HideDoor2",0,"HideBackpacks",1,"HideBumper1",1,"HideBumper2",0,"HideConstruction",0,"BeaconsStart",0]
+] call BIS_fnc_initVehicle;
+_vehicle setObjectTexture [0, "a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_08_co.paa"];  <- Change the texture here to the same selectRandom as the others
+
+_veh = createVehicle ["O_G_Van_02_transport_F",position player,[],0,"NONE"];
+[
+	_veh,
+	["FIA3",1], 
+	["Door_1_source",0,"Door_2_source",0,"Door_3_source",0,"Door_4_source",0,"Hide_Door_1_source",0,"Hide_Door_2_source",0,"Hide_Door_3_source",0,"Hide_Door_4_source",0,"lights_em_hide",0,"ladder_hide",1,"spare_tyre_holder_hide",1,"spare_tyre_hide",1,"reflective_tape_hide",1,"roof_rack_hide",1,"LED_lights_hide",1,"sidesteps_hide",1,"rearsteps_hide",1,"side_protective_frame_hide",0,"front_protective_frame_hide",0,"beacon_front_hide",1,"beacon_rear_hide",1]
+] call BIS_fnc_initVehicle;
+
+_veh = createVehicle ["O_G_Van_02_vehicle_F",position player,[],0,"NONE"];
+[
+	_veh,
+	["FIA3",1], 
+	["Enable_Cargo",0,"Door_1_source",0,"Door_2_source",0,"Door_3_source",0,"Door_4_source",0,"Hide_Door_1_source",0,"Hide_Door_2_source",0,"Hide_Door_3_source",0,"Hide_Door_4_source",0,"lights_em_hide",0,"ladder_hide",1,"spare_tyre_holder_hide",1,"spare_tyre_hide",1,"reflective_tape_hide",1,"roof_rack_hide",0,"LED_lights_hide",1,"sidesteps_hide",1,"rearsteps_hide",0,"side_protective_frame_hide",1,"front_protective_frame_hide",0,"beacon_front_hide",1,"beacon_rear_hide",1]
+] call BIS_fnc_initVehicle;
+
+REMOVE VanAmbulance from CreateXXXX list and module registration
+
+_veh = createVehicle ["C_Truck_02_transport_F",position player,[],0,"NONE"];
+[
+	_veh,
+	["Orange",1], 
+	true
+] call BIS_fnc_initVehicle;
+[_veh, [0, "a3\props_f_enoch\military\decontamination\data\containmentarea_olive_co.paa"]] remoteExec ['setObjectTexture',0,true];
+
+_veh = createVehicle ["C_Truck_02_covered_F",position player,[],0,"NONE"];
+[
+	_veh,
+	["BlueOlive",1], 
+	true
+] call BIS_fnc_initVehicle;
+[_veh, [0, "a3\props_f_enoch\military\decontamination\data\containmentarea_olive_co.paa"]] remoteExec ['setObjectTexture',0,true];
+
+_veh = createVehicle ["O_Truck_02_Ammo_F",position player,[],0,"NONE"];
+[
+	_veh,
+	["Opfor",1], 
+	true
+] call BIS_fnc_initVehicle;
+[_veh, [0, "a3\props_f_enoch\military\decontamination\data\containmentarea_olive_co.paa"]] remoteExec ['setObjectTexture',0,true];
+[_veh, [1, "a3\soft_f_beta\truck_02\data\truck_02_repair_green_co.paa"]] remoteExec ['setObjectTexture',0,true];
+
+_veh = createVehicle ["C_Truck_02_fuel_F",position player,[],0,"NONE"];
+[
+	_veh,
+	["Blue",1], 
+	true
+] call BIS_fnc_initVehicle;
+[_veh, [0, "a3\props_f_enoch\military\decontamination\data\containmentarea_olive_co.paa"]] remoteExec ['setObjectTexture',0,true];
+
+_veh = createVehicle ["C_Truck_02_box_F",position player,[],0,"NONE"];
+[
+	_veh,
+	["BlueGreen",1], 
+	true
+] call BIS_fnc_initVehicle;
+[_veh, [0, "a3\props_f_enoch\military\decontamination\data\containmentarea_olive_co.paa"]] remoteExec ['setObjectTexture',0,true];
+
+Remove ZamakMedical from CreateXXXX list and module registration
+
+Copy exactly the drones from the Raven_CreateXXXX modules
+
+_veh = createVehicle ["I_G_HMG_02_F",position player,[],0,"NONE"];
+[
+	_veh,
+	nil,
+	["Hide_Shield",1,"Hide_Rail",1]
+] call BIS_fnc_initVehicle;
+
+_veh = createVehicle ["I_C_HMG_02_high_F",position player,[],0,"NONE"];
+[
+	_veh,
+	nil,
+	["Hide_Shield",1,"Hide_Rail",1]
+] call BIS_fnc_initVehicle;
+
+
+comment "Exported from Arsenal by iamnochinkissr";
+
+comment "[!] UNIT MUST BE LOCAL [!]";
+if (!local this) exitWith {};
+
+comment "Remove existing items";
+removeAllWeapons this;
+removeAllItems this;
+removeAllAssignedItems this;
+removeUniform this;
+removeVest this;
+removeBackpack this;
+removeHeadgear this;
+removeGoggles this;
+
+comment "Add weapons";
+this addWeapon "launch_RPG7_F";
+this addSecondaryWeaponItem "RPG7_F";
+
+comment "Add containers";
+this addBackpack "B_FieldPack_green_F";
+2 RPG's in the backpack
+
+
+comment "Exported from Arsenal by iamnochinkissr";
+
+comment "[!] UNIT MUST BE LOCAL [!]";
+if (!local this) exitWith {};
+
+comment "Remove existing items";
+removeAllWeapons this;
+removeAllItems this;
+removeAllAssignedItems this;
+removeUniform this;
+removeVest this;
+removeBackpack this;
+removeHeadgear this;
+removeGoggles this;
+
+comment "Add weapons";
+this addWeapon "launch_RPG32_green_F";
+this addSecondaryWeaponItem "RPG32_F";
+
+comment "Add containers";
+this addBackpack "B_FieldPack_green_F";
+
+comment "Add items to containers";
+for "_i" from 1 to 2 do {this addItemToBackpack "RPG32_F";};
+
+
+comment "Exported from Arsenal by iamnochinkissr";
+
+comment "[!] UNIT MUST BE LOCAL [!]";
+if (!local this) exitWith {};
+
+comment "Remove existing items";
+removeAllWeapons this;
+removeAllItems this;
+removeAllAssignedItems this;
+removeUniform this;
+removeVest this;
+removeBackpack this;
+removeHeadgear this;
+removeGoggles this;
+
+this addWeapon "LMG_03_F";
+this addPrimaryWeaponItem "200Rnd_556x45_Box_F";
+1 in the gun, 1 in the vest normal, 1 in the vest tracer
+
+
+
+comment "Exported from Arsenal by iamnochinkissr";
+
+comment "[!] UNIT MUST BE LOCAL [!]";
+if (!local this) exitWith {};
+
+comment "Remove existing items";
+removeAllWeapons this;
+removeAllItems this;
+removeAllAssignedItems this;
+removeUniform this;
+removeVest this;
+removeBackpack this;
+removeHeadgear this;
+removeGoggles this;
+
+comment "Add weapons";
+this addWeapon "srifle_DMR_06_hunter_F";
+this addPrimaryWeaponItem "10Rnd_Mk14_762x51_Mag";
+replace w/ 20rnd
+4 mags in the vest
+
+Same as rifleman but with backpack
+
+Same as rifleman but with radio
+
+
+
+

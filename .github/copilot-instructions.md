@@ -1,85 +1,119 @@
 # PZFP Copilot Instructions
 
-This is a single-file Arma 3 addon script (`PZFP.sqf`) providing Zeus (curator) modules for spawning factions, vehicles, units, and loadouts in Arma 3 missions.
+This is a single-file Arma 3 addon script (`PZFP.sqf`) providing Zeus (curator) modules for spawning factions, vehicles, units, and loadouts in Arma 3 missions.# PZFP Copilot Instructions
+s
 
-## Architecture & Big Picture
+The script is not run using traditional methods (adding to mission scripts folder as .sqf file, using execvm in editor, etc.). Instead, it is designed to be copied and pasted into the INIT BOX of an object, saved as a custom composition and placed down in the Zeus editor.
 
-**Single-File Script Model**: The entire project is one 14,800+ line SQF file with nested function literals. All functions are defined in the global `missionNamespace` with a `PZFP_fnc_` prefix.
+**Formatting Rules**
+1. Do not use the "//" method of creating comments. Use the 'comment "";' feature instead.
+2. Indent only using single spaces, not tab indents. For every place to use a regular tab, use a single space instead.
+3. Prefix all functions with the "PZFP_fnc" identifier, with the exception being the names of categories, subcategories, and modules.
 
-**Zeus Integration**: The script integrates with Arma 3's Zeus interface (display 312). Four tree controls (displayCtrl 270–273) represent four factions (BLUFOR, OPFOR, INDEP, CIVILIAN). Placing virtual units via Zeus cursor triggers module execution via an event handler.
+**Zeus Integration**
+The script uses displayCtrl and tooltips to create trees within Zeus interface, as well as their categories, subcategories, and modules. These are added to the existing displayCtrl's within the Zeus interface.
+
+Functions to be run upon module placement are ordered by ID, and the function ID's are stored in the tooltip for each module. These are then run by an eventHandler that runs each time a module is placed in the Zeus editor, if the tooltip matches a known PZFP script.
+
+**Faction Creation**
+
+The standard format for creating an infantry unit in the script consists of two scripts. An AddLoadoutXXXX function, and a CreateXXXX function.
+
+For the AddLoadoutXXXX functions:
+
+~~~
+ PZFP_fnc_blufor_FACTTIONABBREV_CATEGORY_AddLoadoutUNITNAME = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  comment "Add equipment here using addWeapon, addPrimaryWeaponItem, forceAddUniform, addBackpack, linkItem, etc.";
+ };
+~~~
+
+For the CreateXXXX functions:
+~~~
+ PZFP_fnc_blufor_FACTIONABBREV_CATEGORY_CreateUNITNAME = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then {
+   doStop _unit;
+  };
+  [_unit] spawn {
+   params ["_unit"];
+   sleep 0.1;
+   [_unit] call PZFP_fnc_blufor_FACTIONABBREV_CATEGORY_AddLoadoutUNITNAME;
+   [_unit] call PZFP_fnc_blufor_FACTIONIDENTITY_AddIdentity;
+  };
+  private _curator = getAssignedCuratorLogic player;
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  _unit
+ };
+~~~
+
+Where FACTIONABBREV is the name or abbreviation for the faction (USA for United States Army, LDFAF for Livonian Defense Force Air Force, RUS for Russian Spetznaz, etc.); CATEGORY is the category of the unit (Men, Pilots, MenSOF, MaintenanceCrew, for example); UNITNAME is the unit's name/type (Rifleman, PlatoonLeader, JTAC, for example); A3UNITCLASSNAME is the object's classname in ArmA 3's CfgVehicles directory ("B_Soldier_F", for example); and FACTIONIDENTITY is just the prefix for the nationality of the unit (US for US Army/Air Force units, POL for Polish-speaking Livonian troops, IR for Iranian CSAT troops, etc).
+
+The standard format for creating a vehicle in the script is:
+
+~~~
+ PZFP_fnc_blufor_FACTIONABBREV_CATEGORY_CreateVEHICLENAME = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["A3VEHICLECLASSNAME",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["A3VEHICLECOLOR",1],
+   [A3VEHICLEPARAMS]
+  ] call BIS_fnc_initVehicle;
+
+  private _driver = [] call PZFP_fnc_blufor_FACTIONABBREV_Men_CreateCREWUNIT;
+  _driver moveInDriver _vehicle;
+  private _gunnerIFAPPLICABLE = [] call PZFP_fnc_blufor_FACTIONABBREV_Men_CreateCREWUNIT;
+  _gunner moveInGunner _vehicle;
+  private _commanderIFAPPLICABLE = [] call PZFP_fnc_blufor_FACTIONABBREV_Men_CreateCREWUNIT;
+  _gunner moveInGunner _vehicle;
+
+  private _group = createGroup [west, true];
+  [_commander, _gunner, _driver] joinSilent _group;
+  _group setBehaviour "SAFE";
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+~~~
+
+Where FACTIONABBREV is the name or abbreviation for the faction (USA for United States Army, LDFAF for Livonian Defense Force Air Force, RUS for Russian Spetznaz, etc.); CATEGORY is the category of the unit (Cars, Drones, AntiAir, Turrets, for example); VEHICLENAME is the vehicle's nickname (Slammer instead of M2A4 Slammer, for example); A3VEHICLECLASSNAME is the object's classname in ArmA 3's CfgVehicles directory; A3VEHICLECOLOR is the camouflage/color of the vehicle, which can be randomized if need be; A3VEHICLEPARAMS are the vehicle's appearance settings; and CREWUNIT is simply Rifleman for light vehicles, Crewman for armored vehicles, HelicopterPilot/Crew for helicopters, FighterPilot/TransportPilot for aircraft, etc.
+
+Finally, each unit or vehicle is registered in the Zeus interface in the following format:
+~~~
+ PZFP_blufor/opfor/indep/civ_FACTIONABBREV = [_FACTIONSIDE, "Full faction name to display in the Zeus interface goes here", [1,1,1,1]] call PZFP_fnc_addCategory;
+
+ PZFP_blufor/opfor/indep/civ_FACTIONABBREV_CATEGORY = [_FACTIONSIDE, PZFP_blufor/opfor/indep/civ_FACTIONABBREV, "Full category name to display in the Zeus interface goes here", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+ PZFP_blufor/opfor/indep/civ_FACTIONABBREV_CATEGORY_VEHICLE/UNITNAME = [_FACTIONSIDE, PZFP_blufor/opfor/indep/civ_FACTIONABBREV, PZFP_blufor/opfor/indep/civ_FACTIONABBREV_CATEGORY, "Full unit or vehicle name to display in the Zeus interface goes here", "PZFP_fnc_blufor/opfor/indep/civ_FACTIONABBREV_CATEGORY_CreateUNIT/VEHICLENAME", [1,1,1,1]] call PZFP_fnc_addModule;
+~~~
+
+Where FACTIONABBREV and CATEGORY are the same as above; _FACTIONSIDE is either _blufor, _opfor, _indep, or _civ depending on the side of the faction; and UNIT/VEHICLENAME is the same name of the vehicle or unit from the CreateXXXX function.
+
+**Unit/Vehicle Creation Procedure:**
+1. Get the full name of the faction, and possibly the full names of the units/categories from the README.md file in the repo.
+2. Analyze the file for any existing code that involves creating the same type of unit/vehicle
+3. Gather the classnames of the specified unit/vehicles/equipment/objects from the ArmA 3 documentation
+4. Create the skeleton creation classes (AddLoadoutXXXX, CreateXXXX, addModules, etc.)
+5. Fill in the required object classnames, unit/vehicle configuration data (equipment, color/camo patterns, identity data, etc.), and faction abbreviations/names as specified
+  5a. For AddLoadout functions in particular, if provided one, use the example/base loadout given to build the rest of the loadouts from, adding/removing/replacing weapons and equipment as needed to fit the unit type (if the base is a rifleman, replace the rifle with a machine gun for an autorifleman, or add a backpack and first aid kits/medikit for a medic, etc.)
+6. Leave comments for unknown areas to be fixed later.
+
+NOTE: Some units (RadioOperator, or Marshal for example) have classnames in ArmA 3 for blufor but not opfor versions. In that case, use the classname for whatever side has the type of unit we need, and then use joinSilent to make it join the needed faction. If I wanted to make a radio operator for opfor, recognizing that unit type only has a classname for blufor (B_W_RadioOperator_F), I would put that as the unit's classname, and then use [_unit] joinSilent createGroup [east, etc....]; to get it on the opfor side.
 
 **Module Registration & Invocation**:
 1. Modules are registered via `PZFP_fnc_addModule`, which stores function names in `missionNamespace` array `PZFP_moduleScripts` with numeric IDs (9000+).
 2. Tree tooltips include `Function ID:NNNN` lines parsed by `PZFP_fnc_runModuleFromTree`.
 3. When a Zeus user selects a module from the tree, `PZFP_fnc_executeModule` (hooked to `CuratorObjectPlaced` event) reads the tooltip, looks up the function name, and executes it with cursor position and object context.
-
-## Critical Naming & Registration
-
-- **Function Prefix**: Always use `PZFP_fnc_` for top-level functions (e.g., `PZFP_fnc_blufor_USA_Men_AddLoadoutRifleman`).
-- **Function ID Immutability**: Function IDs (9000+) in tooltips are hard-coded links to module execution. Never change them without updating the registration flow.
-- **String-Based Lookup**: Functions are retrieved from `missionNamespace` by string name at runtime. Renaming a function breaks its module unless you update the registration.
-
-## Code Style Constraints
-
-- **Comments**: Only use `comment "";` syntax. Do NOT use `//` or `/* */` comments—they break the SQF init box parser.
-- **Indentation**: Use single spaces only, never tabs.
-- **Large Changes**: Avoid large refactors or reorganizations except when:
-  - Explicitly asked to by the user
-  - Creating a new faction/faction system (e.g., new country's units, vehicles, identity functions)
-  - Adding substantial features like new vehicle categories or utility systems
-
-## Key Patterns to Follow
-
-**Vehicle Creation Pattern** (e.g., `PZFP_fnc_blufor_USA_APC_CreateMarshall`):
-```sqf
-PZFP_fnc_blufor_USA_APC_CreateMarshall = {
-  private _position = [getMousePosition] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_APC_Wheeled_01_cannon_F", _position, [], 0, "NONE"];
-  [_vehicle, ["Sand", 1], [...options...]] call BIS_fnc_initVehicle;
-  
-  private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateCrewman;
-  _driver moveInDriver _vehicle;
-  
-  private _group = createGroup [west, true];
-  [_driver] joinSilent _group;
-  
-  [_vehicle] call PZFP_fnc_vehicleCleanup;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
-};
-```
-
-**Cursor Position Resolution**: `PZFP_fnc_findCursorPosition` chooses `ctrlMapScreenToWorld` when map is visible, else `screenToWorld`. Always use this utility to resolve cursor clicks to world coordinates.
-
-**Identity Assignment** (voices & faces): Faction-specific functions (e.g., `PZFP_fnc_blufor_USA_AddIdentity`) randomize speaker and face from faction-specific arrays. Replicate this pattern for new factions.
-
-## Testing & Debugging
-
-**No Local Test Harness**: Script runs only inside Arma 3 at runtime.
-1. Copy updated `PZFP.sqf` to mission folder.
-2. Launch Arma 3, open mission in editor, enter Zeus.
-3. Execute script via in-mission init or `[] execVM "PZFP.sqf"`.
-
-**Logging**: Use `systemChat format ["[PZFP DEBUG] %1", _var];` for debug output. Avoid logs in tight loops.
-
-## Common Gotchas
-
-- **`params` Declarations**: Every function literal should declare `params [...]` at the start to validate arguments.
-- **Side Effects Are Pervasive**: Functions create groups, call `addCuratorEditableObjects`, set event handlers, and use `remoteExec`. Document these when modifying.
-- **displayCtrl Indices**: Tree controls are hardcoded (270–273 for factions, 50 for map). Changing these breaks Zeus UI integration.
-- **Closure Over Outer Scope**: Functions can access `_maindisplay`, `_curator`, etc. from the initialization scope.
-
-## Adding New Features
-
-**Principle: Keep changes localized and minimal.**
-
-1. **New Module Function**: Write function with `PZFP_fnc_` prefix. Use `params` to declare args. Document side-effects.
-2. **Register**: Call `PZFP_fnc_addModule [_tree, _category, _subcategory, "Label", "PZFP_fnc_yourFunction", _color];`
-3. **Tree Tooltip**: Tooltip with `Function ID:NNNN` is auto-added by `PZFP_fnc_addModule`.
-
-**Exception**: New factions and large feature additions (vehicles, categories, systems) may require edits across multiple sections. Always validate no duplicate code or registration conflicts arise.
-
-## Supporting Files
-
-- `Loadouts.txt`: Vehicle initialization examples (reference only).
-- `utils/ObjectFinder.sqf`: Helper script to export nearby objects' relative positions and rotations.
-- `README.md`: Faction tree structure and vehicle inventory (useful reference).

@@ -315,7 +315,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USAF_Drones_CreateGreyhawk = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UAV_02_dynamicLoadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UAV_02_dynamicLoadout_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -419,7 +419,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USAF_Planes_CreateWipeout = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Plane_CAS_01_dynamicLoadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Plane_CAS_01_dynamicLoadout_F",_position,[],0,"NONE"];
 
   private _pilot = [] call PZFP_fnc_blufor_USAF_Pilots_CreateFighterPilot;
   _pilot moveInDriver _vehicle;
@@ -526,7 +526,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_AntiAir_CreateIFV6	= {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_APC_Tracked_01_AA_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_APC_Tracked_01_AA_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -550,7 +550,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_APC_CreateAMV7MarshallMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_APC_Wheeled_01_cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_APC_Wheeled_01_cannon_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -562,7 +562,7 @@ PZFP_fnc_initialize = {
   [_vehicle, [[0,0],true]] remoteExec ['lockTurret',0,true];
   [_vehicle] call PZFP_fnc_vehicleCleanup;
 
-  _vehicle2 = createVehicle ["O_MRAP_02_hmg_F",position _vehicle,[],0,"NONE"];
+  private _vehicle2 = createVehicle ["O_MRAP_02_hmg_F",position _vehicle,[],0,"NONE"];
   [
    _vehicle2,
    ["Hex",1],
@@ -591,7 +591,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_APC_CreateAMV7Marshall = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_APC_Wheeled_01_cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_APC_Wheeled_01_cannon_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -615,7 +615,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_APC_CreateCRV6Bobcat = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_APC_Tracked_01_CRV_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_APC_Tracked_01_CRV_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -639,7 +639,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_APC_CreateIFV6cPanther = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_APC_Tracked_01_rcws_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_APC_Tracked_01_rcws_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -663,7 +663,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Artillery_CreateScorcher = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_MBT_01_Arty_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_MBT_01_Arty_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -687,7 +687,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Artillery_CreateSandstorm = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_MBT_01_mlrs_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_MBT_01_mlrs_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -709,7 +709,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Boats_CreateAssaultBoat = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Boat_Transport_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Boat_Transport_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Black",1],
@@ -729,7 +729,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Boats_CreateRescueBoat = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Lifeboat",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Lifeboat",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Rescue",1],
@@ -749,7 +749,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Boats_CreateRHIB = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_C_Boat_Transport_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_C_Boat_Transport_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Black",1],
@@ -769,7 +769,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Cars_CreateHEMTT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_mover_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_mover_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -789,7 +789,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTAmmo = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_ammo_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_ammo_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -809,7 +809,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTBox = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_box_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_box_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -829,7 +829,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTCargo = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_cargo_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_cargo_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -849,7 +849,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTFlatbed = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_flatbed_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_flatbed_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -869,7 +869,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTFuel = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_fuel_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_fuel_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -889,7 +889,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTMedical = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_medical_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_medical_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -909,7 +909,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTRepair = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_repair_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_repair_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -929,7 +929,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTTransport = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_transport_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_transport_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -949,7 +949,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTCovered = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_covered_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_covered_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -969,7 +969,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Cars_CreateHunter = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_MRAP_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_MRAP_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -989,7 +989,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Cars_CreateHunterHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_MRAP_01_hmg_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_MRAP_01_hmg_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -1011,7 +1011,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Cars_CreateHunterGMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_MRAP_01_gmg_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_MRAP_01_gmg_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -1033,7 +1033,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Drones_CreatePelican = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UAV_06_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UAV_06_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -1049,7 +1049,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Drones_CreatePelicanMedical = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UAV_06_medical_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UAV_06_medical_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -1065,7 +1065,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Drones_CreateDarter = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UAV_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UAV_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -1081,7 +1081,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Drones_CreatePelter = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UGV_02_Demining_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UGV_02_Demining_F",_position,[],0,"NONE"];
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
@@ -1092,7 +1092,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Drones_CreateRoller = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UGV_02_Science_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UGV_02_Science_F",_position,[],0,"NONE"];
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
@@ -1103,7 +1103,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Drones_CreateStomper = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UGV_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UGV_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -1119,7 +1119,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Drones_CreateStomper = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UGV_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UGV_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -1135,7 +1135,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Drones_CreateStomperMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UGV_01_RCWS_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UGV_01_RCWS_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -1151,7 +1151,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Helicopters_CreatePawnee = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Light_01_dynamicloadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Light_01_dynamicloadout_F",_position,[],0,"NONE"];
   [
    _vehicle,
    nil,
@@ -1173,7 +1173,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Helicopters_CreateBlackfoot = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Attack_01_dynamicloadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Attack_01_dynamicloadout_F",_position,[],0,"NONE"];
   [
    _vehicle,
    nil,
@@ -1196,7 +1196,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Helicopters_CreateBlackfootStub = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Attack_01_pylons_dynamicloadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Attack_01_pylons_dynamicloadout_F",_position,[],0,"NONE"];
   [
    _vehicle,
    nil,
@@ -1219,7 +1219,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Helicopters_CreateHuron = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Transport_03_Unarmed_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Transport_03_Unarmed_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Green",1],
@@ -1287,7 +1287,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Helicopters_CreateHuronArmed = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Transport_03_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Transport_03_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Green",1],
@@ -1359,7 +1359,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Helicopters_CreateHummingbird = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Light_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Light_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    nil,
@@ -1381,7 +1381,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Helicopters_CreateGhosthawk = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Transport_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Transport_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Black",1],
@@ -1451,7 +1451,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Helicopters_CreateGhosthawkStub = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Transport_01_pylons_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Transport_01_pylons_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Black",1],
@@ -3732,7 +3732,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Tanks_CreateSquadLeaderammer = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_MBT_01_Cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_MBT_01_Cannon_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -3756,7 +3756,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Tanks_CreateSquadLeaderammerUP = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_MBT_01_TUSK_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_MBT_01_TUSK_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -3780,7 +3780,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_TankDestroyers_CreateRhino = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_AFV_Wheeled_01_Cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_AFV_Wheeled_01_Cannon_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -3804,7 +3804,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_TankDestroyers_CreateRhinoUP = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_AFV_Wheeled_01_Up_Cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_AFV_Wheeled_01_Up_Cannon_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -3828,7 +3828,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateRadar = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Radar_System_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Radar_System_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Desert",1],
@@ -3844,7 +3844,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateSAM = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_SAM_System_03_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_SAM_System_03_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Desert",1],
@@ -3860,7 +3860,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateHMGTripod = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_HMG_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_HMG_01_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -3871,7 +3871,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateHMGRaised = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_HMG_01_high_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_HMG_01_high_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -3882,7 +3882,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateHMGAuto = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_HMG_01_A_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_HMG_01_A_F",_position,[],0,"NONE"];
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
@@ -3893,7 +3893,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateGMGTripod = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_GMG_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_GMG_01_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -3904,7 +3904,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateGMGRaised = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_GMG_01_high_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_GMG_01_high_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -3915,7 +3915,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateGMGAuto = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_GMG_01_A_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_GMG_01_A_F",_position,[],0,"NONE"];
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
@@ -3926,7 +3926,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateMortar = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Mortar_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Mortar_01_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -3937,7 +3937,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreatePraetorian = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_AAA_System_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_AAA_System_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -3958,7 +3958,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateDesignator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Static_Designator_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Static_Designator_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Desert",1],
@@ -3974,7 +3974,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateAA = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Static_AA_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Static_AA_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -3985,7 +3985,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Static_AT_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Static_AT_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -3996,7 +3996,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USN_Boats_CreateAssaultBoat = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Boat_Transport_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Boat_Transport_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Black",1],
@@ -4016,7 +4016,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USN_Boats_CreateRescueBoat = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Lifeboat",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Lifeboat",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Rescue",1],
@@ -4036,7 +4036,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USN_Drones_CreateSentinel = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UAV_05_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UAV_05_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["DarkGrey",1],
@@ -4052,7 +4052,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USN_Boats_CreateRHIB = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_C_Boat_Transport_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_C_Boat_Transport_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Black",1],
@@ -4072,7 +4072,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USN_Boats_CreatePatrolBoat = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Boat_Armed_01_minigun_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Boat_Armed_01_minigun_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -4905,7 +4905,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USN_Planes_CreateBlackWasp = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Plane_Fighter_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Plane_Fighter_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["DarkGrey",1],
@@ -4925,7 +4925,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USN_Planes_CreateVTOL = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_T_VTOL_01_infantry_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_T_VTOL_01_infantry_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blue",1],
@@ -4952,7 +4952,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USN_Planes_CreateVTOLArmed = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_T_VTOL_01_Armed_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_T_VTOL_01_Armed_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blue",1],
@@ -4978,7 +4978,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USN_Planes_CreateVTOLVehicle = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_T_VTOL_01_Vehicle_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_T_VTOL_01_Vehicle_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blue",1],
@@ -5004,7 +5004,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USN_Turrets_CreateCenturion = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_SAM_System_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_SAM_System_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["LightGrey",1],
@@ -5020,7 +5020,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USN_Turrets_CreateVLS = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Ship_MRLS_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Ship_MRLS_01_F",_position,[],0,"NONE"];
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
@@ -5031,7 +5031,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USN_Turrets_CreateHammer= {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Ship_Gun_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Ship_Gun_01_F",_position,[],0,"NONE"];
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
@@ -5042,7 +5042,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USN_Turrets_CreateSpartan = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_SAM_System_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_SAM_System_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["LightGrey",1],
@@ -5058,7 +5058,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USN_Turrets_CreatePraetorian = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_AAA_System_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_AAA_System_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["LightGrey",1],
@@ -5079,7 +5079,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_AntiAir_CreateIFV6	= {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_APC_Tracked_01_AA_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_APC_Tracked_01_AA_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -5103,7 +5103,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_APC_CreateCRV6Bobcat = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_APC_Tracked_01_CRV_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_APC_Tracked_01_CRV_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -5127,7 +5127,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_APC_CreateGorgon = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_APC_Wheeled_03_cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_APC_Wheeled_03_cannon_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep",1],
@@ -5157,7 +5157,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_APC_CreateIFV6cPanther = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_APC_Tracked_01_rcws_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_APC_Tracked_01_rcws_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Sand",1],
@@ -5181,7 +5181,7 @@ PZFP_fnc_initialize = {
   PZFP_fnc_blufor_BA_Artillery_CreateScorcher = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_MBT_01_Arty_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_MBT_01_Arty_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Green",1],
@@ -5205,7 +5205,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Artillery_CreateSandstorm = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_MBT_01_mlrs_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_MBT_01_mlrs_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Green",1],
@@ -5227,7 +5227,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Boats_CreateAssaultBoat = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Boat_Transport_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Boat_Transport_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Black",1],
@@ -5247,7 +5247,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Boats_CreateRescueBoat = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Lifeboat",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Lifeboat",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Rescue",1],
@@ -5267,7 +5267,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Boats_CreateRHIB = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_C_Boat_Transport_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_C_Boat_Transport_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Black",1],
@@ -5287,7 +5287,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Cars_CreateHEMTT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_mover_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_mover_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5307,7 +5307,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTAmmo = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_ammo_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_ammo_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5327,7 +5327,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTBox = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_box_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_box_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5347,7 +5347,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTCargo = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_cargo_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_cargo_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5367,7 +5367,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTFlatbed = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_flatbed_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_flatbed_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5387,7 +5387,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTFuel = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_fuel_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_fuel_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5407,7 +5407,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTMedical = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_medical_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_medical_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5427,7 +5427,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTRepair = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_repair_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_repair_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5447,7 +5447,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTTransport = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_transport_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_transport_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5467,7 +5467,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTCovered = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Truck_01_covered_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Truck_01_covered_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5487,7 +5487,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Cars_CreateStrider = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_MRAP_03_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_MRAP_03_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5507,7 +5507,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Cars_CreateStriderHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_MRAP_03_hmg_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_MRAP_03_hmg_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5531,7 +5531,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Cars_CreateStriderGMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_MRAP_03_gmg_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_MRAP_03_gmg_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5555,7 +5555,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Drones_CreatePelican = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UAV_06_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UAV_06_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5571,7 +5571,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Drones_CreatePelicanMedical = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UAV_06_medical_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UAV_06_medical_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5587,7 +5587,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Drones_CreateDarter = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UAV_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UAV_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5603,7 +5603,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Drones_CreatePelter = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UGV_02_Demining_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UGV_02_Demining_F",_position,[],0,"NONE"];
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
@@ -5614,7 +5614,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Drones_CreateRoller = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UGV_02_Science_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UGV_02_Science_F",_position,[],0,"NONE"];
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
@@ -5625,7 +5625,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Cars_CreateStrider = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_MRAP_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_MRAP_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -5645,7 +5645,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Helicopters_CreateBlackfoot = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Attack_01_dynamicloadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Attack_01_dynamicloadout_F",_position,[],0,"NONE"];
   [
    _vehicle,
    nil,
@@ -5668,7 +5668,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Helicopters_CreateGhosthawk = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Transport_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Transport_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Black",1],
@@ -5739,7 +5739,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Helicopters_CreateGhosthawkStub = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Transport_01_pylons_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Transport_01_pylons_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Black",1],
@@ -5806,7 +5806,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Helicopters_CreateHuron = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Transport_03_Unarmed_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Transport_03_Unarmed_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Green",1],
@@ -5874,7 +5874,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Helicopters_CreateHuronArmed = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Transport_03_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Transport_03_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Green",1],
@@ -7247,7 +7247,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Tanks_CreateSquadLeaderammer = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_MBT_01_Cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_MBT_01_Cannon_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -7269,7 +7269,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Tanks_CreateSquadLeaderammerUP = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_MBT_01_TUSK_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_MBT_01_TUSK_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -7291,7 +7291,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Turrets_CreateRadar = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Radar_System_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Radar_System_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Olive",1],
@@ -7307,7 +7307,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Turrets_CreateSAM = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_SAM_System_03_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_SAM_System_03_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Olive",1],
@@ -7323,7 +7323,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Turrets_CreateHMGTripod = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_HMG_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_HMG_01_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -7334,7 +7334,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Turrets_CreateHMGRaised = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_HMG_01_high_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_HMG_01_high_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -7345,7 +7345,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Turrets_CreateHMGAuto = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_HMG_01_A_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_HMG_01_A_F",_position,[],0,"NONE"];
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
@@ -7356,7 +7356,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Turrets_CreateGMGTripod = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_GMG_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_GMG_01_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -7367,7 +7367,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Turrets_CreateGMGRaised = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_GMG_01_high_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_GMG_01_high_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -7378,7 +7378,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Turrets_CreateGMGAuto = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_GMG_01_A_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_GMG_01_A_F",_position,[],0,"NONE"];
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
@@ -7389,7 +7389,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Turrets_CreateMortar = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Mortar_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Mortar_01_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -7400,7 +7400,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Turrets_CreatePraetorian = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_AAA_System_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_AAA_System_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Green",1],
@@ -7421,7 +7421,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Turrets_CreateDesignator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Static_Designator_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Static_Designator_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Desert",1],
@@ -7437,7 +7437,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Turrets_CreateAA = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Static_AA_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Static_AA_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -7448,7 +7448,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_BA_Turrets_CreateAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Static_AT_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Static_AT_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -7511,7 +7511,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFAF_Planes_CreateBuzzard = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_Plane_Fighter_03_dynamicLoadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_Plane_Fighter_03_dynamicLoadout_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Green",1], 
@@ -7528,7 +7528,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFAF_Planes_CreateGryphon = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_Plane_Fighter_04_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_Plane_Fighter_04_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Green",1], 
@@ -7545,7 +7545,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_AntiAir_CreateNyx	= {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_LT_01_AA_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_LT_01_AA_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep_02",1],
@@ -7567,7 +7567,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Artillery_CreateZamak = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_Truck_02_MRL_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_Truck_02_MRL_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep",1],
@@ -7587,7 +7587,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_APC_CreateGorgon = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_APC_Wheeled_03_cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_APC_Wheeled_03_cannon_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep",1],
@@ -7611,7 +7611,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_APC_CreateMora = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_APC_tracked_03_cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_APC_tracked_03_cannon_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep",1],
@@ -7635,7 +7635,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Boats_CreateAssaultBoat = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_Boat_Transport_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_Boat_Transport_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Black",1],
@@ -7655,7 +7655,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Boats_CreateRescueBoat = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Lifeboat",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Lifeboat",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Rescue",1],
@@ -7675,7 +7675,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Boats_CreateRHIB = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_C_Boat_Transport_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_C_Boat_Transport_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Black",1],
@@ -7695,7 +7695,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Cars_CreateStrider = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_MRAP_03_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_MRAP_03_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep",1],
@@ -7715,7 +7715,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Cars_CreateStriderHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_MRAP_03_hmg_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_MRAP_03_hmg_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep",1],
@@ -7739,7 +7739,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Cars_CreateStriderGMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_MRAP_03_gmg_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_MRAP_03_gmg_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep",1],
@@ -7903,7 +7903,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Drones_CreatePelican = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UAV_06_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UAV_06_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -7919,7 +7919,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Drones_CreatePelicanMedical = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_UAV_06_medical_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_UAV_06_medical_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -7935,7 +7935,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Helicopters_CreateMohawk = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_Heli_Transport_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_Heli_Transport_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -8000,7 +8000,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Helicopters_CreateHellcat = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_Heli_Light_03_unarmed_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_Heli_Light_03_unarmed_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep",1],
@@ -8019,7 +8019,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Helicopters_CreateHellcatArmed = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_Heli_Light_03_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_Heli_Light_03_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep",1],
@@ -8038,7 +8038,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Helicopters_CreateHummingbird = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Light_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Light_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -8058,7 +8058,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Helicopters_CreatePawnee = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_Heli_Light_01_dynamicLoadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_Heli_Light_01_dynamicLoadout_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blufor",1],
@@ -10428,7 +10428,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Turrets_CreateHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_HMG_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_HMG_02_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_AAFA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -10439,7 +10439,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Turrets_CreateHMGTripod = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_HMG_02_high_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_HMG_02_high_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_AAFA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -10450,7 +10450,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Turrets_CreateAA = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_Static_AA_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_Static_AA_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_AAFA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -10461,7 +10461,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_AAFA_Turrets_CreateAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_Static_AT_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_Static_AT_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_AAFA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -10524,7 +10524,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDFAF_Planes_CreateGryphon = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_Plane_Fighter_04_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_Plane_Fighter_04_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["CamoGrey",1], 
@@ -10543,7 +10543,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_APCs_CreateOdyniec = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_APC_tracked_03_cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_APC_tracked_03_cannon_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["EAF",1], 
@@ -10564,7 +10564,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Artillery_CreateSandstorm = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_MBT_01_mlrs_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_MBT_01_mlrs_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Olive",1], 
@@ -10584,7 +10584,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Artillery_CreateZamak = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Truck_02_MRL_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Truck_02_MRL_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["EAF",1], 
@@ -10603,7 +10603,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Cars_CreateOffroad = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Offroad_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Offroad_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["EAF",1], 
@@ -10620,7 +10620,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Cars_CreateOffroadHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_G_Offroad_01_armed_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_G_Offroad_01_armed_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["EAF",1], 
@@ -10639,7 +10639,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Cars_CreateOffroadAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["B_G_Offroad_01_AT_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["B_G_Offroad_01_AT_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["EAF",1], 
@@ -10675,7 +10675,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Cars_CreateOffroadComms = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Offroad_01_comms_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Offroad_01_comms_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["EAF",1], 
@@ -10692,7 +10692,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Cars_CreateVanTransport = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Van_02_transport_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Van_02_transport_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["LDF",1], 
@@ -10709,7 +10709,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Cars_CreateVanCargo = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Van_02_vehicle_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Van_02_vehicle_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["LDF",1], 
@@ -10726,7 +10726,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Cars_CreateVanAmbulance = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Van_02_medevac_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Van_02_medevac_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["LDF",1], 
@@ -10743,7 +10743,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Cars_CreateZamakTransport = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Truck_02_transport_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Truck_02_transport_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["EAF",1], 
@@ -10760,7 +10760,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Cars_CreateZamakTransportCovered = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Truck_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Truck_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["EAF",1], 
@@ -10777,7 +10777,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Cars_CreateZamakAmmo = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Truck_02_ammo_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Truck_02_ammo_F",_position,[],0,"NONE"];
   [
     _vehicle,
     ["EAF",1], 
@@ -10794,7 +10794,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Cars_CreateZamakFuel = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Truck_02_fuel_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Truck_02_fuel_F",_position,[],0,"NONE"];
   [
     _vehicle,
     ["EAF",1], 
@@ -10811,7 +10811,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Cars_CreateZamakRepair = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Truck_02_box_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Truck_02_box_F",_position,[],0,"NONE"];
   [
     _vehicle,
     ["EAF",1], 
@@ -10828,7 +10828,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Cars_CreateZamakMedical = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Truck_02_medical_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Truck_02_medical_F",_position,[],0,"NONE"];
   [
     _vehicle,
     ["EAF",1], 
@@ -11049,7 +11049,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Helicopters_CreateCzapla = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Heli_light_03_unarmed_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Heli_light_03_unarmed_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["EAF",1], 
@@ -11068,7 +11068,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Helicopters_CreateCzaplaArmed = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Heli_light_03_dynamicLoadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Heli_light_03_dynamicLoadout_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["EAF",1], 
@@ -13123,7 +13123,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Turrets_CreateHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_HMG_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_HMG_02_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -13134,7 +13134,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Turrets_CreateHMGTripod = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_HMG_02_high_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_HMG_02_high_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -13145,7 +13145,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Turrets_CreateAA = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Static_AA_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Static_AA_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -13156,7 +13156,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_LDF_Turrets_CreateAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Static_AT_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Static_AT_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -13167,7 +13167,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroad = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Offroad_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Offroad_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["ParkRanger",1], 
@@ -13184,7 +13184,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroadHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_G_Offroad_01_armed_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_G_Offroad_01_armed_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["ParkRanger",1], 
@@ -13203,7 +13203,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroadCovered = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Offroad_01_covered_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Offroad_01_covered_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["ParkRanger",1], 
@@ -13220,7 +13220,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroadComms = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_E_Offroad_01_comms_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_E_Offroad_01_comms_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["ParkRanger",1], 
@@ -13540,7 +13540,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRAF_Planes_CreateNeophron = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Plane_CAS_02_dynamicLoadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Plane_CAS_02_dynamicLoadout_F",_position,[],0,"NONE"];
   
   _pilot = [] call PZFP_fnc_opfor_IRAF_Pilots_CreateFighterPilot;
   _pilot moveInDriver _vehicle;
@@ -13740,7 +13740,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Artillery_CreateZamak = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_Truck_02_MRL_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_Truck_02_MRL_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep",1],
@@ -13778,7 +13778,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Boats_CreateRescueBoat = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Lifeboat",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Lifeboat",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Rescue",1],
@@ -13795,7 +13795,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Boats_CreateRHIB = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_C_Boat_Transport_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_C_Boat_Transport_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Black",1],
@@ -13812,7 +13812,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Cars_CreateIfrit = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_MRAP_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MRAP_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1],
@@ -13829,7 +13829,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Cars_CreateIfritHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_MRAP_02_hmg_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MRAP_02_hmg_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1],
@@ -13848,7 +13848,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Cars_CreateIfritGMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_MRAP_02_gmg_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MRAP_02_gmg_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1],
@@ -13969,7 +13969,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Drones_CreateJinaah = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_UAV_06_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_UAV_06_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Opfor",1],
@@ -13985,7 +13985,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Drones_CreateJinaahMedical = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_UAV_06_medical_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_UAV_06_medical_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Opfor",1],
@@ -14001,7 +14001,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Drones_CreateTayran = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_UAV_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_UAV_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Opfor",1],
@@ -15372,7 +15372,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Tanks_CreateVarsuk = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_MBT_02_cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MBT_02_cannon_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1], 
@@ -15393,7 +15393,7 @@ PZFP_fnc_initialize = {
 
  PZFP_fnc_opfor_IRGF_Tanks_CreateAngara = {
   private _cursorPos = getMousePosition;
-  _vehicle = createVehicle ["O_MBT_04_cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MBT_04_cannon_F",_position,[],0,"NONE"];
   [
 	 _vehicle,
    ["Hex",1], 
@@ -15415,7 +15415,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Tanks_CreateAngaraUP = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_MBT_04_command_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MBT_04_command_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1], 
@@ -15437,7 +15437,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Turrets_CreateHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_HMG_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_HMG_01_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -15448,7 +15448,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Turrets_CreateHMGTripod = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_HMG_01_high_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_HMG_01_high_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -15459,7 +15459,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Turrets_CreateGMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_GMG_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_GMG_01_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -15470,7 +15470,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Turrets_CreateGMGTripod = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_GMG_01_high_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_GMG_01_high_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -15481,7 +15481,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Turrets_CreateMortar = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Mortar_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Mortar_01_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -15492,7 +15492,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Turrets_CreateRadar = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Radar_System_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Radar_System_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["AridHex",1], 
@@ -15507,7 +15507,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Turrets_CreateDesignator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Static_Designator_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Static_Designator_02_F",_position,[],0,"NONE"];
 
   createVehicleCrew _vehicle;
 
@@ -15517,7 +15517,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Turrets_CreateSAM = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_SAM_System_04_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_SAM_System_04_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["AridHex",1],
@@ -15532,7 +15532,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Turrets_CreateAA = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Static_AA_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Static_AA_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -15543,7 +15543,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Turrets_CreateAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Static_AT_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Static_AT_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -15653,7 +15653,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHAF_Planes_CreateNeophron = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Plane_CAS_02_dynamicLoadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Plane_CAS_02_dynamicLoadout_F",_position,[],0,"NONE"];
   
   _pilot = [] call PZFP_fnc_opfor_CHAF_Pilots_CreateFighterPilot;
   _pilot moveInDriver _vehicle;
@@ -15665,7 +15665,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHAF_Planes_CreateXian = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_T_VTOL_02_infantry_dynamicLoadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_T_VTOL_02_infantry_dynamicLoadout_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1], 
@@ -15682,7 +15682,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHAF_Planes_CreateXianVehicle = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_T_VTOL_02_vehicle_dynamicLoadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_T_VTOL_02_vehicle_dynamicLoadout_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1], 
@@ -15887,7 +15887,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Artillery_CreateZamak = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_Truck_02_MRL_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_Truck_02_MRL_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep",1],
@@ -15925,7 +15925,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Boats_CreateRescueBoat = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Lifeboat",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Lifeboat",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Rescue",1],
@@ -15942,7 +15942,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Boats_CreateRHIB = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_C_Boat_Transport_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_C_Boat_Transport_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Black",1],
@@ -15959,7 +15959,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Cars_CreateIfrit = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_MRAP_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MRAP_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1],
@@ -15976,7 +15976,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Cars_CreateIfritHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_MRAP_02_hmg_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MRAP_02_hmg_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1],
@@ -15995,7 +15995,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Cars_CreateIfritGMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_MRAP_02_gmg_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MRAP_02_gmg_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1],
@@ -16116,7 +16116,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Drones_CreateJinaah = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_UAV_06_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_UAV_06_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Opfor",1],
@@ -16132,7 +16132,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Drones_CreateJinaahMedical = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_UAV_06_medical_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_UAV_06_medical_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Opfor",1],
@@ -16148,7 +16148,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Drones_CreateTayran = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_UAV_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_UAV_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Opfor",1],
@@ -17516,7 +17516,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Tanks_CreateVarsuk = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_MBT_02_cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MBT_02_cannon_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1], 
@@ -17537,7 +17537,7 @@ PZFP_fnc_initialize = {
 
  PZFP_fnc_opfor_CHGF_Tanks_CreateAngara = {
   private _cursorPos = getMousePosition;
-  _vehicle = createVehicle ["O_MBT_04_cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MBT_04_cannon_F",_position,[],0,"NONE"];
   [
 	 _vehicle,
    ["Hex",1], 
@@ -17559,7 +17559,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Tanks_CreateAngaraUP = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_MBT_04_command_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MBT_04_command_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1], 
@@ -17581,7 +17581,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Turrets_CreateHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_HMG_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_HMG_01_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -17592,7 +17592,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Turrets_CreateHMGTripod = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_HMG_01_high_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_HMG_01_high_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -17603,7 +17603,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Turrets_CreateGMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_GMG_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_GMG_01_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -17614,7 +17614,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Turrets_CreateGMGTripod = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_GMG_01_high_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_GMG_01_high_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -17625,7 +17625,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Turrets_CreateMortar = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Mortar_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Mortar_01_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -17636,7 +17636,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Turrets_CreateRadar = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Radar_System_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Radar_System_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["AridHex",1], 
@@ -17651,7 +17651,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Turrets_CreateDesignator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Static_Designator_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Static_Designator_02_F",_position,[],0,"NONE"];
 
   createVehicleCrew _vehicle;
 
@@ -17661,7 +17661,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Turrets_CreateSAM = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_SAM_System_04_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_SAM_System_04_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["AridHex",1],
@@ -17676,7 +17676,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Turrets_CreateAA = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Static_AA_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Static_AA_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -17687,7 +17687,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Turrets_CreateAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Static_AT_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Static_AT_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -17746,7 +17746,7 @@ PZFP_fnc_initialize = {
 
  PZFP_fnc_opfor_TUAF_Planes_CreateBuzzard = {
   private _cursorPos = getMousePosition;
-  _vehicle = createVehicle ["I_Plane_Fighter_03_dynamicLoadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_Plane_Fighter_03_dynamicLoadout_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1], 
@@ -17914,7 +17914,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Artillery_CreateZamak = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_Truck_02_MRL_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_Truck_02_MRL_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep",1],
@@ -17935,7 +17935,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Cars_CreateIfrit = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_MRAP_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MRAP_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1],
@@ -17952,7 +17952,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Cars_CreateIfritHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_MRAP_02_hmg_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MRAP_02_hmg_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1],
@@ -17971,7 +17971,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Cars_CreateIfritGMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_MRAP_02_gmg_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MRAP_02_gmg_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1],
@@ -18092,7 +18092,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Drones_CreateJinaah = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_UAV_06_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_UAV_06_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Opfor",1],
@@ -18108,7 +18108,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Drones_CreateJinaahMedical = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_UAV_06_medical_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_UAV_06_medical_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Opfor",1],
@@ -18124,7 +18124,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Drones_CreateTayran = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_UAV_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_UAV_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Opfor",1],
@@ -19277,7 +19277,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Tanks_CreateVarsuk = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_MBT_02_cannon_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_MBT_02_cannon_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Hex",1], 
@@ -19299,7 +19299,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Turrets_CreateHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_HMG_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_HMG_01_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -19310,7 +19310,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Turrets_CreateHMGTripod = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_HMG_01_high_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_HMG_01_high_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -19321,7 +19321,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Turrets_CreateGMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_GMG_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_GMG_01_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -19332,7 +19332,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Turrets_CreateGMGTripod = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_GMG_01_high_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_GMG_01_high_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -19343,7 +19343,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Turrets_CreateMortar = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Mortar_01_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Mortar_01_F",_position,[],0,"NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -19354,7 +19354,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Turrets_CreateRadar = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Radar_System_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Radar_System_02_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["AridHex",1], 
@@ -19369,7 +19369,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Turrets_CreateDesignator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Static_Designator_02_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Static_Designator_02_F",_position,[],0,"NONE"];
 
   createVehicleCrew _vehicle;
 
@@ -19379,7 +19379,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Turrets_CreateSAM = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_SAM_System_04_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_SAM_System_04_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["AridHex",1],
@@ -19394,7 +19394,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Turrets_CreateAA = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Static_AA_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Static_AA_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -19405,7 +19405,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_TUA_Turrets_CreateAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Static_AT_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Static_AT_F",_position,[],0,"NONE"];
 
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -19416,7 +19416,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_Raven_Cars_CreateOffroad = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["C_Offroad_01_Covered_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["C_Offroad_01_Covered_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Green",1], 
@@ -19432,7 +19432,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_Raven_Cars_CreateOffroadHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_G_Offroad_01_armed_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_G_Offroad_01_armed_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Green",1], 
@@ -19450,7 +19450,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_Raven_Cars_CreateOffroadAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["I_G_Offroad_01_AT_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["I_G_Offroad_01_AT_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Green",1], 
@@ -19468,7 +19468,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_Raven_Cars_CreateOffroadComms = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["C_Offroad_01_Comms_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["C_Offroad_01_Comms_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Green",1], 
@@ -19484,7 +19484,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_Raven_Cars_CreateOffroadCovered = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["C_Offroad_01_Covered_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["C_Offroad_01_Covered_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Green",1], 
@@ -19704,7 +19704,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_Raven_Helicopters_CreateOrca = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Heli_Light_02_unarmed_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Heli_Light_02_unarmed_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blackcustom",1],
@@ -19723,7 +19723,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_Raven_Helicopters_CreateOrcaArmed = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_Heli_Light_02_dynamicloadout_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_Heli_Light_02_dynamicloadout_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Blackcustom",1],
@@ -20459,7 +20459,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_RUS_Cars_CreateQilin = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_LSV_02_unarmed_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_LSV_02_unarmed_F",_position,[],0,"NONE"];
   [
     _vehicle,
     ["Black",1], 
@@ -20476,7 +20476,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_RUS_Cars_CreateQilinMinigun = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_LSV_02_armed_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_LSV_02_armed_F",_position,[],0,"NONE"];
   [
     _vehicle,
     ["Black",1], 
@@ -20495,7 +20495,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_RUS_Cars_CreateQilinAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  _vehicle = createVehicle ["O_LSV_02_AT_F",_position,[],0,"NONE"];
+  private _vehicle = createVehicle ["O_LSV_02_AT_F",_position,[],0,"NONE"];
   [
     _vehicle,
     ["Black",1], 
@@ -21667,6 +21667,225 @@ PZFP_fnc_initialize = {
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
  };
+ 
+   /* Artillery */
+   PZFP_fnc_opfor_LPP_Artillery_CreateOffroad = {
+    private _cursorPos = getMousePosition;
+    private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+    private _vehicle = createVehicle ["A3VEHICLECLASSNAME",_position,[],0,"NONE"];
+    [
+     _vehicle,
+     ["A3VEHICLECOLOR",1],
+     [/* A3VEHICLEPARAMS */]
+    ] call BIS_fnc_initVehicle;
+
+    private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateCrewman;
+    _driver moveInDriver _vehicle;
+
+    getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+   };
+
+   PZFP_fnc_opfor_LPP_Artillery_CreateZamak = {
+    private _cursorPos = getMousePosition;
+    private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+    private _vehicle = createVehicle ["A3VEHICLECLASSNAME",_position,[],0,"NONE"];
+    [
+     _vehicle,
+     ["A3VEHICLECOLOR",1],
+     [/* A3VEHICLEPARAMS */]
+    ] call BIS_fnc_initVehicle;
+
+    private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateCrewman;
+    _driver moveInDriver _vehicle;
+
+    getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+   };
+
+   /* Cars - additional variants */
+   PZFP_fnc_opfor_LPP_Cars_CreateOffroad = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["I_G_Offroad_01_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   [selectRandom["Guerilla_09","Guerilla_08","Guerilla_04","Guerilla_05"],1], 
+   ["HideDoor1",1,"HideDoor2",1,"HideDoor3",1,"HideBackpacks",1,"HideBumper1",1,"HideBumper2",0,"HideConstruction",0,"hidePolice",1,"HideServices",1,"BeaconsStart",0,"BeaconsServicesStart",0]
+  ] call BIS_fnc_initVehicle;
+
+  private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
+  _driver moveInDriver _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_LPP_Cars_CreateOffroadHMG = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["I_G_Offroad_01_armed_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   [selectRandom["Guerilla_09","Guerilla_08","Guerilla_04","Guerilla_05"],1], 
+   ["Hide_Shield",1,"Hide_Rail",1,"HideDoor1",1,"HideDoor2",1,"HideDoor3",1,"HideBackpacks",1,"HideBumper1",1,"HideBumper2",0,"HideConstruction",0]
+  ] call BIS_fnc_initVehicle;
+
+  private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
+  _driver moveInDriver _vehicle;
+  private _gunner = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+ PZFP_fnc_opfor_LPP_Cars_CreateOffroadAT = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["I_G_Offroad_01_AT_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   [selectRandom["Guerilla_09","Guerilla_08","Guerilla_04","Guerilla_05"],1], 
+   ["HideDoor1",1,"HideDoor2",1,"HideDoor3",0,"HideBackpacks",1,"HideBumper1",1,"HideBumper2",0,"HideConstruction",0]
+  ] call BIS_fnc_initVehicle;
+
+  private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
+  _driver moveInDriver _vehicle;
+  private _gunner = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
+   PZFP_fnc_opfor_LPP_Cars_CreateOffroadCovered = {
+    private _cursorPos = getMousePosition;
+    private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+    private _vehicle = createVehicle ["A3VEHICLECLASSNAME",_position,[],0,"NONE"];
+    [ _vehicle, ["A3VEHICLECOLOR",1], [/* params */] ] call BIS_fnc_initVehicle;
+    private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
+    _driver moveInDriver _vehicle;
+    getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+   };
+
+   PZFP_fnc_opfor_LPP_Cars_CreateOffroadComms = {
+    private _cursorPos = getMousePosition;
+    private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+    private _vehicle = createVehicle ["A3VEHICLECLASSNAME",_position,[],0,"NONE"];
+    [ _vehicle, ["A3VEHICLECOLOR",1], [/* params */] ] call BIS_fnc_initVehicle;
+    private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
+    _driver moveInDriver _vehicle;
+    getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+   };
+
+   PZFP_fnc_opfor_LPP_Cars_CreateVanTransport = {
+    private _cursorPos = getMousePosition;
+    private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+    private _vehicle = createVehicle ["A3VEHICLECLASSNAME",_position,[],0,"NONE"];
+    [ _vehicle, ["A3VEHICLECOLOR",1], [/* params */] ] call BIS_fnc_initVehicle;
+    private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateCrewman;
+    _driver moveInDriver _vehicle;
+    getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+   };
+
+   PZFP_fnc_opfor_LPP_Cars_CreateVanCargo = {
+    private _cursorPos = getMousePosition;
+    private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+    private _vehicle = createVehicle ["A3VEHICLECLASSNAME",_position,[],0,"NONE"];
+    [ _vehicle, ["A3VEHICLECOLOR",1], [/* params */] ] call BIS_fnc_initVehicle;
+    private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateCrewman;
+    _driver moveInDriver _vehicle;
+    getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+   };
+
+   PZFP_fnc_opfor_LPP_Cars_CreateVanAmbulance = {
+    private _cursorPos = getMousePosition;
+    private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+    private _vehicle = createVehicle ["A3VEHICLECLASSNAME",_position,[],0,"NONE"];
+    [ _vehicle, ["A3VEHICLECOLOR",1], [/* params */] ] call BIS_fnc_initVehicle;
+    private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateCrewman;
+    _driver moveInDriver _vehicle;
+    getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+   };
+
+   PZFP_fnc_opfor_LPP_Cars_CreateZamakTransport = {0 call {sleep 0;}};
+   PZFP_fnc_opfor_LPP_Cars_CreateZamakTransportCovered = {0 call {sleep 0;}};
+   PZFP_fnc_opfor_LPP_Cars_CreateZamakAmmo = {0 call {sleep 0;}};
+   PZFP_fnc_opfor_LPP_Cars_CreateZamakFuel = {0 call {sleep 0;}};
+   PZFP_fnc_opfor_LPP_Cars_CreateZamakRepair = {0 call {sleep 0;}};
+   PZFP_fnc_opfor_LPP_Cars_CreateZamakMedical = {0 call {sleep 0;}};
+
+   /* Drones */
+   PZFP_fnc_opfor_LPP_Drones_CreatePelican = {0 call {sleep 0;}};
+   PZFP_fnc_opfor_LPP_Drones_CreatePelicanDropper = {0 call {sleep 0;}};
+   PZFP_fnc_opfor_LPP_Drones_CreatePelicanDropperMortar = {0 call {sleep 0;}};
+   PZFP_fnc_opfor_LPP_Drones_CreatePelicanCharge = {0 call {sleep 0;}};
+   PZFP_fnc_opfor_LPP_Drones_CreatePelicanMedical = {0 call {sleep 0;}};
+   PZFP_fnc_opfor_LPP_Drones_CreateDarter = {0 call {sleep 0;}};
+
+   /* Men - AddLoadout skeletons */
+   PZFP_fnc_opfor_LPP_Men_AddLoadoutRifleman = {
+    params ["_unit"];
+    removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+    removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit;
+    comment "Add equipment here using addWeapon, addPrimaryWeaponItem, forceAddUniform, addBackpack, linkItem, etc.";
+   };
+
+   PZFP_fnc_opfor_LPP_Men_AddLoadoutRiflemanLAT = { params ["_unit"]; removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit; comment "Add equipment here."; };
+   PZFP_fnc_opfor_LPP_Men_AddLoadoutRiflemanAT = { params ["_unit"]; removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit; comment "Add equipment here."; };
+   PZFP_fnc_opfor_LPP_Men_AddLoadoutAutorifleman = { params ["_unit"]; removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit; comment "Add equipment here."; };
+   PZFP_fnc_opfor_LPP_Men_AddLoadoutMarksman = { params ["_unit"]; removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit; comment "Add equipment here."; };
+   PZFP_fnc_opfor_LPP_Men_AddLoadoutTeamLeader = { params ["_unit"]; removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit; comment "Add equipment here."; };
+   PZFP_fnc_opfor_LPP_Men_AddLoadoutSquadLeader = { params ["_unit"]; removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit; comment "Add equipment here."; };
+   PZFP_fnc_opfor_LPP_Men_AddLoadoutAmmoBearer = { params ["_unit"]; removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit; comment "Add equipment here."; };
+   PZFP_fnc_opfor_LPP_Men_AddLoadoutMedic = { params ["_unit"]; removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit; comment "Add equipment here."; };
+   PZFP_fnc_opfor_LPP_Men_AddLoadoutSergeant = { params ["_unit"]; removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit; comment "Add equipment here."; };
+   PZFP_fnc_opfor_LPP_Men_AddLoadoutOfficer = { params ["_unit"]; removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit; comment "Add equipment here."; };
+   PZFP_fnc_opfor_LPP_Men_AddLoadoutCrewman = { params ["_unit"]; removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit; comment "Add equipment here."; };
+   PZFP_fnc_opfor_LPP_Men_AddLoadoutSurvivor = { params ["_unit"]; removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit; comment "Add equipment here."; };
+   PZFP_fnc_opfor_LPP_Men_AddLoadoutUAVOperator = { params ["_unit"]; removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit; comment "Add equipment here."; };
+
+   /* Men - Create skeletons */
+   PZFP_fnc_opfor_LPP_Men_CreateRifleman = {
+    private _cursorPos = getMousePosition;
+    private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+    private _group = createGroup [east, true];
+    private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"];
+    _group setBehaviour "SAFE";
+    if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+    [_unit] spawn { params ["_unit"]; sleep 0.1; [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutRifleman; [_unit] call PZFP_fnc_blufor_PL_AddIdentity; };
+    getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+    _unit
+   };
+
+   PZFP_fnc_opfor_LPP_Men_CreateRiflemanLAT = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _group = createGroup [east, true]; private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"]; _group setBehaviour "SAFE"; if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; }; [_unit] spawn { params ["_unit"]; sleep 0.1; [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutRiflemanLAT; [_unit] call PZFP_fnc_blufor_PL_AddIdentity; }; getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true]; _unit };
+
+   PZFP_fnc_opfor_LPP_Men_CreateRiflemanAT = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _group = createGroup [east, true]; private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"]; _group setBehaviour "SAFE"; if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; }; [_unit] spawn { params ["_unit"]; sleep 0.1; [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutRiflemanAT; [_unit] call PZFP_fnc_blufor_PL_AddIdentity; }; getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true]; _unit };
+
+   PZFP_fnc_opfor_LPP_Men_CreateAutorifleman = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _group = createGroup [east, true]; private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"]; _group setBehaviour "SAFE"; if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; }; [_unit] spawn { params ["_unit"]; sleep 0.1; [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutAutorifleman; [_unit] call PZFP_fnc_blufor_PL_AddIdentity; }; getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true]; _unit };
+
+   PZFP_fnc_opfor_LPP_Men_CreateMarksman = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _group = createGroup [east, true]; private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"]; _group setBehaviour "SAFE"; if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; }; [_unit] spawn { params ["_unit"]; sleep 0.1; [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutMarksman; [_unit] call PZFP_fnc_blufor_PL_AddIdentity; }; getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true]; _unit };
+
+   PZFP_fnc_opfor_LPP_Men_CreateTeamLeader = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _group = createGroup [east, true]; private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"]; _group setBehaviour "SAFE"; if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; }; [_unit] spawn { params ["_unit"]; sleep 0.1; [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutTeamLeader; [_unit] call PZFP_fnc_blufor_PL_AddIdentity; }; getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true]; _unit };
+
+   PZFP_fnc_opfor_LPP_Men_CreateSquadLeader = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _group = createGroup [east, true]; private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"]; _group setBehaviour "SAFE"; if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; }; [_unit] spawn { params ["_unit"]; sleep 0.1; [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutSquadLeader; [_unit] call PZFP_fnc_blufor_PL_AddIdentity; }; getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true]; _unit };
+
+   PZFP_fnc_opfor_LPP_Men_CreateAmmoBearer = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _group = createGroup [east, true]; private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"]; _group setBehaviour "SAFE"; if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; }; [_unit] spawn { params ["_unit"]; sleep 0.1; [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutAmmoBearer; [_unit] call PZFP_fnc_blufor_PL_AddIdentity; }; getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true]; _unit };
+
+   PZFP_fnc_opfor_LPP_Men_CreateMedic = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _group = createGroup [east, true]; private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"]; _group setBehaviour "SAFE"; if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; }; [_unit] spawn { params ["_unit"]; sleep 0.1; [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutMedic; [_unit] call PZFP_fnc_blufor_PL_AddIdentity; }; getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true]; _unit };
+
+   PZFP_fnc_opfor_LPP_Men_CreateSergeant = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _group = createGroup [east, true]; private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"]; _group setBehaviour "SAFE"; if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; }; [_unit] spawn { params ["_unit"]; sleep 0.1; [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutSergeant; [_unit] call PZFP_fnc_blufor_PL_AddIdentity; }; getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true]; _unit };
+
+   PZFP_fnc_opfor_LPP_Men_CreateOfficer = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _group = createGroup [east, true]; private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"]; _group setBehaviour "SAFE"; if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; }; [_unit] spawn { params ["_unit"]; sleep 0.1; [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutOfficer; [_unit] call PZFP_fnc_blufor_PL_AddIdentity; }; getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true]; _unit };
+
+   PZFP_fnc_opfor_LPP_Men_CreateCrewman = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _group = createGroup [east, true]; private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"]; _group setBehaviour "SAFE"; if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; }; [_unit] spawn { params ["_unit"]; sleep 0.1; [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutCrewman; [_unit] call PZFP_fnc_blufor_PL_AddIdentity; }; getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true]; _unit };
+
+   PZFP_fnc_opfor_LPP_Men_CreateSurvivor = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _group = createGroup [east, true]; private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"]; _group setBehaviour "SAFE"; if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; }; [_unit] spawn { params ["_unit"]; sleep 0.1; [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutSurvivor; [_unit] call PZFP_fnc_blufor_PL_AddIdentity; }; getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true]; _unit };
+
+   PZFP_fnc_opfor_LPP_Men_CreateUAVOperator = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _group = createGroup [east, true]; private _unit = _group createUnit ["A3UNITCLASSNAME", _position, [], 0, "CAN_COLLIDE"]; _group setBehaviour "SAFE"; if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; }; [_unit] spawn { params ["_unit"]; sleep 0.1; [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutUAVOperator; [_unit] call PZFP_fnc_blufor_PL_AddIdentity; }; getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true]; _unit };
+
+   /* Turrets */
+   PZFP_fnc_opfor_LPP_Turrets_CreateHMG = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _turret = createVehicle ["A3VEHICLECLASSNAME",_position,[],0,"NONE"]; getAssignedCuratorLogic player addCuratorEditableObjects [[_turret], true]; };
+
+   PZFP_fnc_opfor_LPP_Turrets_CreateHMGTripod = { private _cursorPos = getMousePosition; private _position = [_cursorPos] call PZFP_fnc_findCursorPosition; private _turret = createVehicle ["A3VEHICLECLASSNAME",_position,[],0,"NONE"]; getAssignedCuratorLogic player addCuratorEditableObjects [[_turret], true]; };
+
+   comment "PZFP - Livonian People's Party (LPP) skeletons - end";
 
  PZFP_fnc_rebuildZeusTree = {
   disableSerialization;
@@ -22629,7 +22848,7 @@ PZFP_fnc_initialize = {
 
 
 
-  
+
 
 
   
