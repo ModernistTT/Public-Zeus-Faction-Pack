@@ -27087,10 +27087,6 @@ PZFP_fnc_initialize = {
   PZFP_civ_RandomCivilians_Civilians_JournalistWar = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "War Journalist", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateJournalistWar", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_civ_RandomCivilians_Civilians_UtilityWorker = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "Utility Worker", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateUtilityWorker", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_civ_RandomCivilians_Civilians_ConstructionWorker = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "Construction Worker", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateConstructionWorker", [1,1,1,1]] call PZFP_fnc_addModule;
-
-
-
-  
  };
 
  PZFP_fnc_mainLoop = {
