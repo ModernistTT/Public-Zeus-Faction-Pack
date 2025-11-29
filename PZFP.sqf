@@ -26010,15 +26010,9 @@ PZFP_fnc_initialize = {
   [] call PZFP_fnc_declutterTrees;
 
 
-
-
-
   PZFP_bluforDividerSpace = [_blufor, "", [1,1,1,0]] call PZFP_fnc_addCategory;
   PZFP_bluforTitle = [_blufor, "PZFP Factions", [0,0.3,0.7,1]] call PZFP_fnc_addCategory;
   PZFP_bluforDivider = [_blufor, "--------------------------------------------", [0,0.3,0.7,1]] call PZFP_fnc_addCategory;
-
-
-
 
 
 
@@ -26506,12 +26500,10 @@ PZFP_fnc_initialize = {
   
 
 
-
   
   PZFP_opforDividerSpace = [_opfor, "", [1,1,1,0]] call PZFP_fnc_addCategory;
   PZFP_opforTitle = [_opfor, "PZFP Factions", [0.7,0.3,0,1]] call PZFP_fnc_addCategory;
   PZFP_opforDivider = [_opfor, "--------------------------------------------", [0.7,0.3,0,1]] call PZFP_fnc_addCategory;
-
 
 
 
@@ -26953,11 +26945,9 @@ PZFP_fnc_initialize = {
 
 
 
-
   PZFP_indepDividerSpace = [_indep, "", [1,1,1,0]] call PZFP_fnc_addCategory;
   PZFP_indepTitle = [_indep, "PZFP Factions", [0,0.7,0.3,1]] call PZFP_fnc_addCategory;
   PZFP_indepDivider = [_indep, "--------------------------------------------", [0,0.7,0.3,1]] call PZFP_fnc_addCategory;
-
 
 
 
@@ -27064,8 +27054,8 @@ PZFP_fnc_initialize = {
   PZFP_indep_MDF_Turrets_HMG = [_indep, PZFP_indep_MDF, PZFP_indep_MDF_Turrets, "M2 HMG", "PZFP_fnc_indep_MDF_Turrets_CreateHMG", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_indep_MDF_Turrets_HMGTripod = [_indep, PZFP_indep_MDF, PZFP_indep_MDF_Turrets, "M2 HMG (Raised)", "PZFP_fnc_indep_MDF_Turrets_CreateHMGTripod", [1,1,1,1]] call PZFP_fnc_addModule;
 
-
-
+  
+  
 
   PZFP_civDividerSpace = [_civ, "", [1,1,1,0]] call PZFP_fnc_addCategory;
   PZFP_civTitle = [_civ, "PZFP Factions", [0.749,0,1,1]] call PZFP_fnc_addCategory;
@@ -27074,12 +27064,9 @@ PZFP_fnc_initialize = {
 
 
 
-
   PZFP_civ_RandomCivilians = [_civ, "Randomized Civilians", [1,1,1,1]] call PZFP_fnc_addCategory;
 
- 
-
-  PZFP_civ_RandomCivilians_Civilians = [_civ, PZFP_civ_RandomCivilians, "Civilians", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+   PZFP_civ_RandomCivilians_Civilians = [_civ, PZFP_civ_RandomCivilians, "Civilians", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_civ_RandomCivilians_Civilians_Civilian = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "Civilian", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateCivilian", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_civ_RandomCivilians_Civilians_FormalCivilian = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "Civilian (Formal)", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateCivilianFormal", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_civ_RandomCivilians_Civilians_Farmer = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "Farmer", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateFarmer", [1,1,1,1]] call PZFP_fnc_addModule;
