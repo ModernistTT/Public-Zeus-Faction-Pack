@@ -1,4 +1,10 @@
-**Faction Tree (Vanilla)**
+# Public Zeus Faction Pack
+
+The Public Zeus Faction Pack (PZFP) is an addon (composition) that adds or revamps 17 factions for ArmA 3 using only vanilla equipment and vehicles. By repurposing vanilla items, re-texturing vehicles and equipment, and utilizing hidden textures, PZFP adds 14 new factions, multiple new vehicles to the game, and re-skins for existing vehicles. 
+
+## Faction Tree
+
+**Vanilla**
 
 BLUFOR:
 * United States Air Force
@@ -18,23 +24,21 @@ BLUFOR:
     - Special Operations
 * British Navy
     - Submariners
-* Altis Armed Forces Air Force (BLU, RED, IND)
+* Altis Armed Forces Air Force
     - Pilots
     - Maintenance Crew
-* Altis Armed Forces Coast Guard ??????????????????????? (BLU, RED, IND)
-    - Infantry
-* Altis Armed Forces Land Forces (BLU, RED, IND)
+* Altis Armed Forces Land Forces
     - Infantry
     - Special Operations
 * Altis National Police
     - Infantry
-* Altis Royal Guard (BLU, RED, IND)
+* Altis Royal Guard
     - Infantry
     - VIPs
-* Livonian Air Force (BLU, RED, IND)
+* Livonian Air Force
     - Pilots
     - Maintenance Crew
-* Livonian Army (BLU, RED, IND)
+* Livonian Army
     - Infantry
     - Military Police
     - 5th Regiment
@@ -42,18 +46,18 @@ BLUFOR:
 * Livonian Territorial Militia
     - Infantry
     - International Legion
-* Straz Lesna Livonia (BLU, RED, IND)
+* Straz Lesna Livonia
     - Infantry
-* Horizon Islands Defence Forces Army (BLU, RED, IND)
+* Horizon Islands Defence Forces Army
     - Infantry
     - Foreign Legion
     - Special Operations
-* Horizon Islands Defence Forces Air Force (BLU, RED, IND)
+* Horizon Islands Defence Forces Air Force
     - Pilots
     - Maintenance Crew
-* Horizon Islands Defence Forces Coast Guard ????????????????????? (BLU, RED, IND)
+* Horizon Islands Defence Forces Coast Guard
     - Infantry
-* Gendarmerie de Tanoa (BLU, RED, IND)
+* Gendarmerie de Tanoa
     - Infantry
     - Special Operations
 * Combat Research & Technologies Command
@@ -82,7 +86,7 @@ REDFOR
 * Tunisian Army
     - Infantry
     - Scimitar Regiment
-* Raven Security (RED, IND)
+* Raven Security
     - Infantry
 * Russian Air Force 
     - Maintenance Crew
@@ -92,52 +96,27 @@ REDFOR
 * Syndikat (BLU, RED, IND)
     - Infantry
 * Livonian Armed People's Party (RED, IND)
-    - Artillery
-        - Offroad MLRS
-        - Zamak MLRS
-    - Cars
-        - Offroad
-        - Offroad HMG
-        - Offroad AT
-        - Van Transport
-        - Van Cargo
-        - Zamak Transport
-        - Zamak Transport (Covered)
-        - Zamak Ammo
-        - Zamak Repair
-        - Zamak Fuel
-    - Drones
-        - AL-6 Pelican
-        - AL-6 Pelican (Grenade Dropper)
-        - AL-6 Pelican (Mortar Dropper)
-        - AL-6 Pelican (Charge)
-        - AR-2 Darter
     - Infantry
-    - Turrets
-        - M2 HMG
-        - M2 HMG (Tripod)
-        - Mk6 Mortar
 * Viper Group (TBA)
     - Viper Team Red
     - Viper Team Blue
-    - Viper Team Yellow ??????
+    - Viper Team Yellow
 
 INDEP
-* ION Security Services (BLU, IND)
+* ION Security Services
     - Infantry
-* Malden Defense Force (BLU, RED, IND)
+* Malden Defense Force
     - Infantry
     - Militia
-* Police Nationale de Malden (BLU, RED, IND)
+* Police Nationale de Malden
     - Infantry
-* Freedom and Independence Army (BLU, RED, IND)
+* Freedom and Independence Army
     - Infantry
 * Livonian Looters
     - Infantry
 * Other/Ambigious
     - Bank robbers (gang, professionals)
     - Presidential guard
-    - 
 
 CIV
 * Randomized Civilians
@@ -198,8 +177,7 @@ Repurposed/reskinned Vehicles:
 * Armored Offroad (FIA, Syndikat)
 * AH-9 Pawnee/MH-9 Hummingbird (ION)
 
-**Faction Tree (WS)**
-
+**Western Sahara (TBA)**
 BLUFOR:
 * Tura (BLU, RED, INDEP)
     - Infantry
@@ -214,10 +192,3 @@ REDFOR:
 INDEP:
 * United Assistance Peacekeepers (France) (BLU, INDEP)
     - Infantry
-
-Ideas:
-FPV Drones with VR goggles (boost button with impulse)
-Can the submarine be driveable (how did EZM make offroad slower? Just mass?)
-Seismic Sensor
-Offroad AAF
-Drone Detector
