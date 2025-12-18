@@ -18,7 +18,7 @@ Repurposed/reskinned Vehicles:
 * AH-9 Pawnee/MH-9 Hummingbird (AAF)
 * PO-38 Orca (AAF)
 * CRV-6 Bobcat (AAF) (TBA)
-* PO-38 Orca (AAFRG)
+* PO-38 Orca (AAF)
 * Sandstorm MLRS (LDF)
 * Technicals (LDF, Straz Lesna Livonia)
 * Zamak MLRS (CSAT)
