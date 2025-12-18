@@ -3542,7 +3542,7 @@ PZFP_fnc_initialize = {
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
   _group setBehaviour "SAFE";
-  private _unit = _group createUnit ["B_support_MG_F", _position, [], 0, "CAN_COLLIDE"]; // heavy MG
+  private _unit = _group createUnit ["B_support_MG_F", _position, [], 0, "CAN_COLLIDE"];
   if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
   [_unit] spawn {
 	params ["_unit"];
