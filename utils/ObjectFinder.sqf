@@ -1,5 +1,3 @@
-comment "Object Exporter Script";
-
 [this] spawn {
 params ["_refObj"];
 

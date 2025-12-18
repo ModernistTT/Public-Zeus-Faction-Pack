@@ -200,7 +200,7 @@ PZFP_fnc_initialize = {
  };
 
 
- PZFP_fnc_blufor_USA_AddIdentity = {
+ PZFP_fnc_USA_AddIdentity = {
   params ["_unit"];
   private _voices = ["Male01ENG", "Male02ENG", "Male03ENG", "Male04ENG", "Male05ENG", "Male06ENG", "Male07ENG", "Male08ENG", "Male09ENG", "Male10ENG", "Male11ENG", "Male12ENG"];
   private _faces = [
@@ -216,7 +216,7 @@ PZFP_fnc_initialize = {
   _unit setFace (selectRandom _faces);
  };
 
- PZFP_fnc_blufor_UK_AddIdentity = {
+ PZFP_fnc_UK_AddIdentity = {
   params ["_unit"];
   private _voices = ["Male01ENGB", "Male02ENGB", "Male03ENGB", "Male04ENGB", "Male05ENGB"];
   private _faces = [
@@ -232,20 +232,34 @@ PZFP_fnc_initialize = {
   _unit setFace (selectRandom _faces);
  };
 
- PZFP_fnc_blufor_GR_AddIdentity = {
+ PZFP_fnc_GR_AddIdentity = {
   params ["_unit"];
   private _voices = ["Male01GRE","Male02GRE","Male03GRE","Male04GRE","Male05GRE","Male06GRE"];
   private _faces = [
    "GreekHead_A3_01","GreekHead_A3_02","GreekHead_A3_03","GreekHead_A3_04",
    "GreekHead_A3_05","GreekHead_A3_06","GreekHead_A3_07","GreekHead_A3_08",
-   "GreekHead_A3_09","GreekHead_A3_10_sa"
+   "GreekHead_A3_09","GreekHead_A3_10"
+  ];
+
+  _unit setSpeaker (selectRandom _voices);
+  _unit setFace (selectRandom _faces);
+ };
+
+ PZFP_fnc_FR_AddIdentity = {
+  params ["_unit"];
+  private _voices = ["Male01FRE","Male02FRE","Male03FRE"];
+  private _faces = [
+   "WhiteHead_01","WhiteHead_02","WhiteHead_03","WhiteHead_04","WhiteHead_05",
+   "WhiteHead_06","WhiteHead_07","WhiteHead_08","WhiteHead_09","WhiteHead_10",
+   "WhiteHead_11","WhiteHead_12","WhiteHead_13","WhiteHead_14","WhiteHead_15",
+   "WhiteHead_16","WhiteHead_17","WhiteHead_18","WhiteHead_19","WhiteHead_20"
   ];
 
   _unit setSpeaker (selectRandom _voices);
   _unit setFace (selectRandom _faces);
  };
  
- PZFP_fnc_blufor_PL_AddIdentity = {
+ PZFP_fnc_PL_AddIdentity = {
   params ["_unit"];
   private _voices = ["Male01POL","Male02POL","Male03POL"];
   private _faces = ["LivonianHead_1","LivonianHead_2","LivonianHead_3","LivonianHead_4",
@@ -257,7 +271,7 @@ PZFP_fnc_initialize = {
   _unit setFace (selectRandom _faces);
  };
 
- PZFP_fnc_opfor_IR_AddIdentity = {
+ PZFP_fnc_IR_AddIdentity = {
   params ["_unit"];
   private _voices = ["Male01PER","Male02PER","Male03PER"];
   private _faces = ["PersianHead_A3_01", "PersianHead_A3_02", "PersianHead_A3_03"];
@@ -266,7 +280,7 @@ PZFP_fnc_initialize = {
   _unit setFace (selectRandom _faces);
  };
 
- PZFP_fnc_opfor_CH_AddIdentity = {
+ PZFP_fnc_CH_AddIdentity = {
   params ["_unit"];
   private _voices = ["Male01CHI","Male02CHI","Male03CHI"];
   private _faces = [
@@ -279,7 +293,7 @@ PZFP_fnc_initialize = {
   _unit setFace (selectRandom _faces);
  };
 
- PZFP_fnc_opfor_TU_AddIdentity = {
+ PZFP_fnc_TU_AddIdentity = {
   params ["_unit"];
   private _voices = ["Male01FRE","Male02FRE","Male03FRE"];
   private _faces = ["GreekHead_A3_13","GreekHead_A3_11",
@@ -290,7 +304,7 @@ PZFP_fnc_initialize = {
   _unit setFace (selectRandom _faces);
  };
 
- PZFP_fnc_opfor_RU_AddIdentity = {
+ PZFP_fnc_RU_AddIdentity = {
   params ["_unit"];
   private _voices = ["Male01RUS","Male02RUS","Male03RUS"];
   private _faces = ["RussianHead_1","RussianHead_2",
@@ -302,7 +316,7 @@ PZFP_fnc_initialize = {
   _unit setFace (selectRandom _faces);
  };
 
- PZFP_fnc_indep_INT_AddIdentity = {
+ PZFP_fnc_INT_AddIdentity = {
   params ["_unit"];
   private _voices = ["Male01ENG", "Male02ENG", "Male03ENG", "Male04ENG", "Male05ENG", "Male06ENG", "Male07ENG", "Male08ENG", "Male09ENG", "Male10ENG", "Male11ENG", "Male12ENG","Male01ENGB", "Male02ENGB", "Male03ENGB", "Male04ENGB", "Male05ENGB","Male01ENGFRE","Male02ENGFRE","Male01GRE","Male02GRE","Male03GRE"];
   private _faces = [
@@ -425,7 +439,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USAF_Pilots_AddLoadoutFighterPilot;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -532,7 +546,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USAF_Pilots_AddLoadoutTransportPilot;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -2308,7 +2322,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -2327,7 +2341,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutLAT;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2345,7 +2359,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutAT;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2364,7 +2378,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutAutorifleman;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2383,7 +2397,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutMarksman;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2402,7 +2416,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutMachineGunner;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2421,7 +2435,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutTeamLeader;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2440,7 +2454,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutSquadLeader;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2459,7 +2473,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutAmmoBearer;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2478,7 +2492,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutMedic;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2497,7 +2511,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutRTO;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2517,7 +2531,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutSergeant;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2536,7 +2550,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutOfficer;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2555,7 +2569,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutCrewman;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2574,7 +2588,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutEngineer;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2593,7 +2607,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutExplosiveSpecialist;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2612,7 +2626,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutHelicopterPilot;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   };
   _unit
@@ -2631,7 +2645,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutHelicopterCrew;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2650,7 +2664,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutMineSpecialist;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2669,7 +2683,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutSurvivor;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -2688,7 +2702,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutUAVOperator;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3449,7 +3463,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3466,7 +3480,7 @@ PZFP_fnc_initialize = {
 	params ["_unit"];
 	sleep 0.1;
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanLAT;
-	[_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3483,7 +3497,7 @@ PZFP_fnc_initialize = {
 	params ["_unit"];
 	sleep 0.1;
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanAT;
-	[_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3500,7 +3514,7 @@ PZFP_fnc_initialize = {
 	params ["_unit"];
 	sleep 0.1;
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutAutorifleman;
-	[_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3517,7 +3531,7 @@ PZFP_fnc_initialize = {
 	params ["_unit"];
 	sleep 0.1;
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutMarksman;
-	[_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3534,7 +3548,7 @@ PZFP_fnc_initialize = {
 	params ["_unit"];
 	sleep 0.1;
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutMachineGunner;
-	[_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3551,7 +3565,7 @@ PZFP_fnc_initialize = {
 	params ["_unit"];
 	sleep 0.1;
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutTeamLeader;
-	[_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3568,7 +3582,7 @@ PZFP_fnc_initialize = {
 	params ["_unit"];
 	sleep 0.1;
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutSquadLeader;
-	[_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3585,7 +3599,7 @@ PZFP_fnc_initialize = {
 	params ["_unit"];
 	sleep 0.1;
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutMedic;
-	[_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3602,7 +3616,7 @@ PZFP_fnc_initialize = {
 	params ["_unit"];
 	sleep 0.1;
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutRTO;
-	[_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3619,7 +3633,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutJTAC;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3636,7 +3650,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutAmmoBearer;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3653,7 +3667,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutDemoSpecialist;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3670,7 +3684,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutEngineer;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3687,7 +3701,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutSniper;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3704,7 +3718,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutSpotter;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3722,7 +3736,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutSergeant;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -3739,7 +3753,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutOfficer;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -4204,7 +4218,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USN_Men_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -4224,7 +4238,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USN_Men_AddLoadoutRiflemanUnarmed;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -4244,7 +4258,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USN_Men_AddLoadoutShipCrew;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -4360,7 +4374,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USN_MenSOFFrogmen_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -4380,7 +4394,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USN_MenSOFFrogmen_AddLoadoutExplosiveSpecialist;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -4400,7 +4414,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USN_MenSOFFrogmen_AddLoadoutTeamLeader;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -4695,7 +4709,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USN_MenSOFRaiders_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -4715,7 +4729,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USN_MenSOFRaiders_AddLoadoutTeamLeader;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -4735,7 +4749,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USN_MenSOFRaiders_AddLoadoutExplosiveSpecialist;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -4755,7 +4769,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USN_MenSOFRaiders_AddLoadoutMedic;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -4775,7 +4789,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USN_MenSOFRaiders_AddLoadoutMarksman;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -4795,7 +4809,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USN_MenSOFRaiders_AddLoadoutRTO;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -4891,7 +4905,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USN_Pilots_AddLoadoutFighterPilot;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -4911,7 +4925,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USN_Pilots_AddLoadoutTransportPilot;
-   [_unit] call PZFP_fnc_blufor_USA_AddIdentity;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -6853,7 +6867,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -6873,7 +6887,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutLAT;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -6893,7 +6907,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutAT;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -6913,7 +6927,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutAutorifleman;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -6933,7 +6947,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutMarksman;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -6953,7 +6967,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutMachineGunner;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -6973,7 +6987,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutTeamLeader;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -6993,7 +7007,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutSquadLeader;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -7013,7 +7027,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutAmmoBearer;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -7033,7 +7047,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutMedic;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -7053,7 +7067,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutRTO;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -7074,7 +7088,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutSergeant;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -7094,7 +7108,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutOfficer;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -7114,7 +7128,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutCrewman;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -7134,7 +7148,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutEngineer;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -7154,7 +7168,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutExplosiveSpecialist;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -7174,7 +7188,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutHelicopterPilot;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   };
   _unit
@@ -7193,7 +7207,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutHelicopterCrew;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -7213,7 +7227,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutMineSpecialist;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -7233,7 +7247,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutSurvivor;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -7253,7 +7267,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutUAVOperator;
-   [_unit] call PZFP_fnc_blufor_UK_AddIdentity;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -7517,7 +7531,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFAF_Pilots_AddLoadoutFighterPilot;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -8924,7 +8938,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -8941,7 +8955,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutLAT;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -8958,7 +8972,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutAT;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -8975,7 +8989,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutAutorifleman;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -8992,7 +9006,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutMarksman;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9009,7 +9023,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutTeamLeader;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9026,7 +9040,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutSquadLeader;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9043,7 +9057,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutAmmoBearer;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9060,7 +9074,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutMedic;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9077,7 +9091,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutRTO;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9095,7 +9109,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutSergeant;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9112,7 +9126,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutOfficer;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9129,7 +9143,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_MenAddLoadoutCrewman;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9146,7 +9160,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutEngineer;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9163,7 +9177,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutExplosiveSpecialist;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9180,7 +9194,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutHelicopterPilot;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9197,7 +9211,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutHelicopterCrew;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9214,7 +9228,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutMineSpecialist;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9231,7 +9245,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutSurvivor;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -9250,7 +9264,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutUAVOperator;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -10067,7 +10081,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10084,7 +10098,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutRifleman;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10101,7 +10115,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutRiflemanLAT;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10118,7 +10132,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutRiflemanAT;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10135,7 +10149,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutAutorifleman;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10152,7 +10166,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutMarksman;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10169,7 +10183,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutTeamLeader;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10186,7 +10200,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutSquadLeader;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10203,7 +10217,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutJTAC;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10220,7 +10234,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutMedic;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10237,7 +10251,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutRTO;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10254,7 +10268,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutAmmoBearer;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10271,7 +10285,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutDemoSpecialist;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10288,7 +10302,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutEngineer;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10305,7 +10319,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutSniper;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10322,7 +10336,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutSpotter;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10340,7 +10354,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutSergeant;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10357,7 +10371,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutOfficer;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -10530,7 +10544,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDFAF_AddLoadoutFighterPilot;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
@@ -10749,7 +10763,7 @@ PZFP_fnc_initialize = {
    ["Door_1_source",0,"Door_2_source",0,"Door_3_source",0,"Door_4_source",0,"Hide_Door_1_source",0,"Hide_Door_2_source",0,"Hide_Door_3_source",0,"Hide_Door_4_source",0,"lights_em_hide",0,"ladder_hide",0,"spare_tyre_holder_hide",0,"spare_tyre_hide",0,"reflective_tape_hide",1,"roof_rack_hide",0,"LED_lights_hide",0,"sidesteps_hide",1,"rearsteps_hide",0,"side_protective_frame_hide",0,"front_protective_frame_hide",0,"beacon_front_hide",1,"beacon_rear_hide",1]
   ] call BIS_fnc_initVehicle;
 
-  private _driver = [] call PZFP_fnc_blufor_LDF_CreateRifleman;
+  private _driver = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
@@ -11860,7 +11874,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -11877,7 +11891,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutRiflemanLAT;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -11894,7 +11908,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutRiflemanAT;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -11911,7 +11925,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutAutorifleman;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -11928,7 +11942,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutMarksman;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -11945,7 +11959,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutTeamLeader;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -11962,7 +11976,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutSquadLeader;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -11979,7 +11993,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutAmmoBearer;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -11996,7 +12010,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutMedic;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12013,7 +12027,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutRTO;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12031,7 +12045,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutSergeant;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12048,7 +12062,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutOfficer;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12065,7 +12079,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutCrewman;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12082,7 +12096,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutExplosiveSpecialist;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12099,7 +12113,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutSurvivor;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12116,7 +12130,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutHelicopterPilot;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12133,7 +12147,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutHelicopterCrew;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12150,7 +12164,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutMineSpecialist;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12167,7 +12181,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutUAVOperator;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12216,7 +12230,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRiflemanLAT = {
@@ -12266,7 +12280,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRiflemanAT = {
@@ -12316,7 +12330,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutAutorifleman = {
@@ -12360,7 +12374,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutMarksman = {
@@ -12407,7 +12421,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_LDF_MenSOF_AddLoadoutTeamLeader = {
@@ -12459,7 +12473,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutSquadLeader = {
@@ -12505,7 +12519,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutJTAC = {
@@ -12553,7 +12567,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutMedic = {
@@ -12601,7 +12615,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRTO = {
@@ -12647,7 +12661,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutAmmoBearer = {
@@ -12696,7 +12710,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutDemoSpecialist = {
@@ -12744,7 +12758,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutEngineer = {
@@ -12792,7 +12806,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutSergeant = {
@@ -12834,7 +12848,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutOfficer = {
@@ -12877,7 +12891,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles_INDEP";
+  _unit linkItem "NVGogglesB_grn_F";
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_CreateRifleman = {
@@ -12891,7 +12905,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12908,7 +12922,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRiflemanLAT;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12925,7 +12939,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRiflemanAT;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12942,7 +12956,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutAutorifleman;
-   [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12959,7 +12973,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutMarksman;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12976,7 +12990,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutTeamLeader;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -12993,7 +13007,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutSquadLeader;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -13010,7 +13024,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutJTAC;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -13027,7 +13041,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutAmmoBearer;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -13044,7 +13058,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutMedic;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -13061,7 +13075,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRTO;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -13078,7 +13092,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutDemoSpecialist;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -13095,7 +13109,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutEngineer;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -13113,7 +13127,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutSergeant;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -13130,7 +13144,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutOfficer;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -13360,7 +13374,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_StrazLesna_Men_AddLoadoutOfficer;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -13377,7 +13391,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_StrazLesna_Men_AddLoadoutOfficerShotgun;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -13394,7 +13408,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_StrazLesna_Men_AddLoadoutOfficerRifle;
-    [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -13448,7 +13462,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_opfor_IRAF_MaintenanceCrew_AddLoadoutRepairSpecialist;
-    [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -13530,7 +13544,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_opfor_IRAF_Pilots_AddLoadoutFighterPilot;
-    [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -13547,7 +13561,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_opfor_IRAF_Pilots_AddLoadoutTransportPilot;
-    [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15016,7 +15030,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutCrewman;
-    [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15035,7 +15049,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15054,7 +15068,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutLAT;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15073,7 +15087,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutAT;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15092,7 +15106,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutAutorifleman;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15111,7 +15125,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutMarksman;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15130,7 +15144,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutTeamLeader;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15149,7 +15163,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutSquadLeader;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15168,7 +15182,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutAmmoBearer;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15187,7 +15201,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutMedic;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15207,7 +15221,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutRTO;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15227,7 +15241,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutSergeant;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15246,7 +15260,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutOfficer;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15265,7 +15279,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutEngineer;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15284,7 +15298,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutExplosiveSpecialist;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15303,7 +15317,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutHelicopterPilot;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15322,7 +15336,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutHelicopterCrew;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15341,7 +15355,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutMineSpecialist;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15360,7 +15374,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutSurvivor;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15379,7 +15393,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutUAVOperator;
-   [_unit] call PZFP_fnc_opfor_IR_AddIdentity;
+   [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15567,6 +15581,17 @@ PZFP_fnc_initialize = {
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
  };
 
+ PZFP_fnc_opfor_CHAF_Drones_CreateFenghuang = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["O_T_UAV_04_CAS_F",_position,[],0,"NONE"];
+
+  createVehicleCrew _vehicle;
+  crew _vehicle joinSilent createGroup [east, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
  PZFP_fnc_opfor_CHAF_Pilots_AddLoadoutFighterPilot = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -15643,7 +15668,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_opfor_CHAF_Pilots_AddLoadoutFighterPilot;
-    [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -15660,7 +15685,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_opfor_CHAF_Pilots_AddLoadoutTransportPilot;
-    [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17162,7 +17187,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17181,7 +17206,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutLAT;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17200,7 +17225,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutAT;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17219,7 +17244,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutAutorifleman;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17238,7 +17263,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutMarksman;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17257,7 +17282,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutTeamLeader;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17276,7 +17301,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutSquadLeader;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17295,7 +17320,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutAmmoBearer;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17314,7 +17339,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutMedic;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17334,7 +17359,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutRTO;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17354,7 +17379,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutSergeant;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17373,7 +17398,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutOfficer;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17390,7 +17415,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutCrewman;
-    [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17409,7 +17434,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutEngineer;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17428,7 +17453,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutExplosiveSpecialist;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17447,7 +17472,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutHelicopterPilot;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17466,7 +17491,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutHelicopterCrew;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17485,7 +17510,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutMineSpecialist;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17504,7 +17529,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutSurvivor;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17523,7 +17548,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutUAVOperator;
-   [_unit] call PZFP_fnc_opfor_CH_AddIdentity;
+   [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -17711,6 +17736,17 @@ PZFP_fnc_initialize = {
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
  };
 
+ PZFP_fnc_opfor_TUAF_Drones_CreateFenghuang = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["O_T_UAV_04_CAS_F",_position,[],0,"NONE"];
+
+  createVehicleCrew _vehicle;
+  crew _vehicle joinSilent createGroup [east, true];
+
+  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+ };
+
  PZFP_fnc_opfor_TUAF_Pilots_AddLoadoutFighterPilot = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -17754,7 +17790,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_opfor_TUAF_Pilots_AddLoadoutFighterPilot;
-    [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -18923,7 +18959,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -18942,7 +18978,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutLAT;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -18961,7 +18997,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutAT;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -18980,7 +19016,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutAutorifleman;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -18999,7 +19035,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutMarksman;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19018,7 +19054,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutTeamLeader;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19037,7 +19073,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutSquadLeader;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19056,7 +19092,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutAmmoBearer;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19075,7 +19111,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutMedic;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19095,7 +19131,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutRTO;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19115,7 +19151,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutSergeant;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19134,7 +19170,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutOfficer;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19151,7 +19187,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutCrewman;
-    [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19170,7 +19206,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutEngineer;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19189,7 +19225,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutExplosiveSpecialist;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19208,7 +19244,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutHelicopterPilot;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19227,7 +19263,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutHelicopterCrew;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19246,7 +19282,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutMineSpecialist;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19265,7 +19301,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutSurvivor;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -19284,7 +19320,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutUAVOperator;
-   [_unit] call PZFP_fnc_opfor_TU_AddIdentity;
+   [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -20194,13 +20230,13 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
  };
 
- PZFP_fnc_opfor_Raven_Men_CreateAT = {
+ PZFP_fnc_opfor_Raven_Men_CreateRiflemanAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [east, true]; 
@@ -20213,7 +20249,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutRiflemanAT;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -20232,7 +20268,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutAutorifleman;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -20251,7 +20287,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutGrenadier;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -20270,7 +20306,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutMarksman;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -20289,7 +20325,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutTeamLeader;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -20308,7 +20344,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutSquadLeader;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -20327,7 +20363,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutAmmoBearer;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -20346,7 +20382,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutMedic;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -20365,7 +20401,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutHelicopterPilot;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -20384,7 +20420,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutUAVOperator;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -20432,7 +20468,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_opfor_RUAF_Pilots_AddLoadoutFighterPilot;
-    [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -21367,7 +21403,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemGPS";
  };
 
- PZFP_fnc_opfor_Raven_Men_AddLoadoutUAVOperator = {
+ PZFP_fnc_opfor_RUS_Men_AddLoadoutUAVOperator = {
   removeAllWeapons _unit;
   removeAllItems _unit;
   removeAllAssignedItems _unit;
@@ -21468,7 +21504,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -21487,7 +21523,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutRiflemanAT;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -21506,7 +21542,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutAutorifleman;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -21525,7 +21561,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutGrenadier;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -21544,7 +21580,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutMarksman;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -21563,7 +21599,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutTeamLeader;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -21582,7 +21618,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutSquadLeader;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -21601,7 +21637,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutAmmoBearer;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -21620,7 +21656,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutMedic;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -21639,7 +21675,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutHelicopterPilot;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -21658,7 +21694,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutUAVOperator;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -21678,7 +21714,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutJTAC;
-   [_unit] call PZFP_fnc_opfor_RU_AddIdentity;
+   [_unit] call PZFP_fnc_RU_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -21696,26 +21732,6 @@ PZFP_fnc_initialize = {
 
   private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
-  crew _vehicle join createGroup [east, true];
-
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
- };
-
- PZFP_fnc_opfor_LPP_Artillery_CreateZamak = {
-  private _cursorPos = getMousePosition;
-  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _vehicle = createVehicle ["I_E_Truck_02_MRL_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["EAF",1],
-   true
-  ] call BIS_fnc_initVehicle;
-  [_vehicle, [0, "a3\props_f_enoch\military\decontamination\data\containmentarea_olive_co.paa"]] remoteExec ['setObjectTexture',0,true];
-
-  private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
-  _driver moveInDriver _vehicle;
-  private _gunner = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
-  _gunner moveInGunner _vehicle;
   crew _vehicle join createGroup [east, true];
 
   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
@@ -21785,7 +21801,8 @@ PZFP_fnc_initialize = {
    ["Green",1], 
    ["hidePolice",1,"HideServices",1,"HideCover",0,"StartBeaconLight",0,"HideRoofRack",1,"HideLoudSpeakers",1,"HideAntennas",1,"HideBeacon",1,"HideSpotlight",1,"HideDoor3",0,"OpenDoor3",0,"HideDoor1",0,"HideDoor2",0,"HideBackpacks",1,"HideBumper1",1,"HideBumper2",0,"HideConstruction",0,"BeaconsStart",0]
   ] call BIS_fnc_initVehicle;
-  [_vehicle, [0, "a3/soft_f_bootcamp/offroad_01/data/offroad_01_ext_ig_08_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle, [0, selectRandom["a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_09_co.paa","a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_08_co.paa","a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_05_co.paa","a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_04_co.paa"]]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle, [0, selectRandom["a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_09_co.paa","a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_08_co.paa","a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_05_co.paa","a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_04_co.paa"]]] remoteExec ['setObjectTexture',0,true];
 
   private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -21803,7 +21820,8 @@ PZFP_fnc_initialize = {
    ["Green",1], 
    ["hidePolice",1,"HideServices",1,"HideCover",0,"StartBeaconLight",0,"HideRoofRack",0,"HideLoudSpeakers",1,"HideAntennas",0,"HideBeacon",1,"HideSpotlight",0,"HideDoor3",0,"OpenDoor3",0,"HideDoor1",0,"HideDoor2",0,"HideBackpacks",1,"HideBumper1",1,"HideBumper2",0,"HideConstruction",0,"BeaconsStart",0]
   ] call BIS_fnc_initVehicle;
-  [_vehicle, [0, "a3/soft_f_bootcamp/offroad_01/data/offroad_01_ext_ig_08_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle, [0, selectRandom["a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_09_co.paa","a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_08_co.paa","a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_05_co.paa","a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_04_co.paa"]]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle, [0, selectRandom["a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_09_co.paa","a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_08_co.paa","a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_05_co.paa","a3\soft_f_bootcamp\offroad_01\data\offroad_01_ext_ig_04_co.paa"]]] remoteExec ['setObjectTexture',0,true];
 
   private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -21838,42 +21856,6 @@ PZFP_fnc_initialize = {
    ["FIA3",1], 
    ["Enable_Cargo",0,"Door_1_source",0,"Door_2_source",0,"Door_3_source",0,"Door_4_source",0,"Hide_Door_1_source",0,"Hide_Door_2_source",0,"Hide_Door_3_source",0,"Hide_Door_4_source",0,"lights_em_hide",0,"ladder_hide",1,"spare_tyre_holder_hide",1,"spare_tyre_hide",1,"reflective_tape_hide",1,"roof_rack_hide",0,"LED_lights_hide",1,"sidesteps_hide",1,"rearsteps_hide",0,"side_protective_frame_hide",1,"front_protective_frame_hide",0,"beacon_front_hide",1,"beacon_rear_hide",1]
   ] call BIS_fnc_initVehicle;
-
-  private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
-  _driver moveInDriver _vehicle;
-  crew _vehicle join createGroup [east, true];
-
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
- };
-
- PZFP_fnc_opfor_LPP_Cars_CreateZamakTransport = {
-  private _cursorPos = getMousePosition;
-  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _vehicle = createVehicle ["C_Truck_02_transport_F",_position,[],0,"NONE"];
-  [ 
-    _vehicle, 
-    ["Orange",1], 
-    true 
-  ] call BIS_fnc_initVehicle;
-  [_vehicle, [0, "a3\props_f_enoch\military\decontamination\data\containmentarea_olive_co.paa"]] remoteExec ['setObjectTexture',0,true];
-
-  private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
-  _driver moveInDriver _vehicle;
-  crew _vehicle join createGroup [east, true];
-  
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
- };
-
- PZFP_fnc_opfor_LPP_Cars_CreateZamakTransportCovered = {
-  private _cursorPos = getMousePosition;
-  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _vehicle = createVehicle ["C_Truck_02_covered_F",_position,[],0,"NONE"];
-  [ 
-    _vehicle, 
-    ["BlueOlive",1], 
-    true 
-  ] call BIS_fnc_initVehicle;
-  [_vehicle, [0, "a3\props_f_enoch\military\decontamination\data\containmentarea_olive_co.paa"]] remoteExec ['setObjectTexture',0,true];
 
   private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -22633,7 +22615,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -22652,7 +22634,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutRiflemanLAT;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -22671,7 +22653,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutRiflemanAT;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -22690,7 +22672,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutAutorifleman;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -22709,7 +22691,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutMarksman;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -22728,7 +22710,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutTeamLeader;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -22747,7 +22729,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutSquadLeader;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -22766,7 +22748,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutAmmoBearer;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -22785,7 +22767,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutMedic;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -22804,7 +22786,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutSergeant;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -22823,7 +22805,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutOfficer;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -22842,7 +22824,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutCrewman;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -22861,7 +22843,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutSurvivor;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -22880,7 +22862,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutUAVOperator;
-   [_unit] call PZFP_fnc_blufor_PL_AddIdentity;
+   [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24083,7 +24065,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24102,7 +24084,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutLAT;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24121,7 +24103,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutAT;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24140,7 +24122,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutAutorifleman;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24159,7 +24141,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutMarksman;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24178,7 +24160,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutTeamLeader;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24197,7 +24179,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutSquadLeader;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24216,7 +24198,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutAmmoBearer;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24235,7 +24217,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutMedic;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24255,7 +24237,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutRTO;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24275,7 +24257,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutSergeant;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24294,7 +24276,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutOfficer;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24311,7 +24293,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutCrewman;
-    [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24330,7 +24312,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutHelicopterPilot;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24349,7 +24331,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutSurvivor;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -24368,7 +24350,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadouIONVOperator;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25415,7 +25397,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutRifleman;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25434,7 +25416,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutRiflemanLAT;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25453,7 +25435,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutRiflemanAT;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25472,7 +25454,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutAutorifleman;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25491,7 +25473,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutMarksman;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25510,7 +25492,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutTeamLeader;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25529,7 +25511,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutSquadLeader;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25548,7 +25530,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutAmmoBearer;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25567,7 +25549,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutMedic;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25587,7 +25569,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutRTO;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25607,7 +25589,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutSergeant;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25626,7 +25608,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutOfficer;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25643,7 +25625,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutCrewman;
-    [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25662,7 +25644,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutHelicopterPilot;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25681,7 +25663,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutSurvivor;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25700,7 +25682,7 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutUAVOperator;
-   [_unit] call PZFP_fnc_indep_INT_AddIdentity;
+   [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25762,8 +25744,27 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "Wallet_ID"; 
   _unit addItemToUniform "Keys";    
   _unit addItemToUniform "Money_bunch"; 
-  _unit addHeadgear selectRandom ["H_Hat_brown","H_Hat_checker","H_Hat_grey","H_Hat_tan"];  
-  
+  switch (uniform _unit) do {
+   case "U_C_FormalSuit_01_black_F": {
+    _unit addHeadgear selectRandom ["", "H_Hat_brown"];
+   };
+   case "U_C_FormalSuit_01_tshirt_black_F": {
+    _unit addHeadgear selectRandom ["", "H_Hat_brown"];
+   };
+   case "U_C_FormalSuit_01_blue_F": {
+    _unit addHeadgear selectRandom ["", "H_Hat_blue"];
+   };
+   case "U_C_FormalSuit_01_gray_F": {
+    _unit addHeadgear selectRandom ["", "H_Hat_brown", "H_Hat_checker", "H_Hat_grey", "", ""];
+   };
+   case "U_C_FormalSuit_01_tshirt_gray_F": {
+    _unit addHeadgear selectRandom ["", "H_Hat_checker", "H_Hat_grey", ""];
+   };
+   case "U_C_FormalSuit_01_khaki_F": {
+    _unit addHeadgear selectRandom ["", "H_Hat_tan", "H_Hat_brown", ""];
+   };
+  };
+
   _unit linkItem "ItemWatch";
  };
 
@@ -25880,7 +25881,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutCivilian;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25897,7 +25898,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutCivilianFormal;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25914,7 +25915,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutFarmer;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25931,7 +25932,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutJournalist;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25948,7 +25949,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutJournalistWar;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25965,7 +25966,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutUtilityWorker;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -25982,7 +25983,7 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutConstructionWorker;
-    [_unit] call PZFP_fnc_blufor_GR_AddIdentity;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
   _unit
@@ -26232,7 +26233,7 @@ PZFP_fnc_initialize = {
   PZFP_blufor_BA_Cars_HEMTTRepair = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "HEMTT (Repair)", "PZFP_fnc_blufor_BA_Cars_CreateHEMTTRepair", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Cars_HEMTTTransport = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "HEMTT Transport", "PZFP_fnc_blufor_BA_Cars_CreateHEMTTTransport", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Cars_HEMTTTransportCovered = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "HEMTT Transport (Covered)", "PZFP_fnc_blufor_BA_Cars_CreateHEMTTCovered", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_BA_Cars_Strider = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "Strider", "PZFP_fnc_blufor_BA_Cars_Strider", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_BA_Cars_Strider = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "Strider", "PZFP_fnc_blufor_BA_Cars_CreateStrider", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Cars_StriderHMG = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "Strider (HMG)", "PZFP_fnc_blufor_BA_Cars_CreateStriderHMG", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Cars_StriderGMG = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "Strider (GMG)", "PZFP_fnc_blufor_BA_Cars_CreateStriderGMG", [1,1,1,1]] call PZFP_fnc_addModule;
 
@@ -26411,6 +26412,9 @@ PZFP_fnc_initialize = {
   PZFP_blufor_LDF_Artillery = [_blufor, PZFP_blufor_LDF, "Artillery", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_LDF_Artillery_Sandstorm = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Artillery, "M5 Sandstorm MLRS", "PZFP_fnc_blufor_LDF_Artillery_CreateSandstorm", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Artillery_Zamak = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Artillery, "Zamak MLRS", "PZFP_fnc_blufor_LDF_Artillery_CreateZamak", [1,1,1,1]] call PZFP_fnc_addModule;
+  
+  PZFP_blufor_LDF_APCs = [_blufor, PZFP_blufor_LDF, "APCs", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_LDF_APCs_Sandstorm = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_APCs, "FV-720 Odyniec", "PZFP_fnc_blufor_LDF_APCs_CreateOdyniec", [1,1,1,1]] call PZFP_fnc_addModule;
   
   PZFP_blufor_LDF_Cars = [_blufor, PZFP_blufor_LDF, "Cars", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_LDF_Cars_Offroad = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Cars, "Offroad", "PZFP_fnc_blufor_LDF_Cars_CreateOffroad", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -26897,7 +26901,6 @@ PZFP_fnc_initialize = {
 
   PZFP_opfor_LPP_Artillery = [_opfor, PZFP_opfor_LPP, "Artillery", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_opfor_LPP_Artillery_Offroad = [_opfor, PZFP_opfor_LPP, PZFP_opfor_LPP_Artillery, "Offroad MLRS", "PZFP_fnc_opfor_LPP_Artillery_CreateOffroad", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_opfor_LPP_Artillery_Zamak = [_opfor, PZFP_opfor_LPP, PZFP_opfor_LPP_Artillery, "Zamak MLRS", "PZFP_fnc_opfor_LPP_Artillery_CreateZamak", [1,1,1,1]] call PZFP_fnc_addModule;
   
   PZFP_opfor_LPP_Cars = [_opfor, PZFP_opfor_LPP, "Cars", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_opfor_LPP_Cars_Offroad = [_opfor, PZFP_opfor_LPP, PZFP_opfor_LPP_Cars, "Offroad", "PZFP_fnc_opfor_LPP_Cars_CreateOffroad", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -26907,12 +26910,7 @@ PZFP_fnc_initialize = {
   PZFP_opfor_LPP_Cars_OffroadComms = [_opfor, PZFP_opfor_LPP, PZFP_opfor_LPP_Cars, "Offroad (Comms)", "PZFP_fnc_opfor_LPP_Cars_CreateOffroadComms", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_LPP_Cars_VanTransport = [_opfor, PZFP_opfor_LPP, PZFP_opfor_LPP_Cars, "Van Transport", "PZFP_fnc_opfor_LPP_Cars_CreateVanTransport", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_LPP_Cars_VanCargo = [_opfor, PZFP_opfor_LPP, PZFP_opfor_LPP_Cars, "Van Cargo", "PZFP_fnc_opfor_LPP_Cars_CreateVanCargo", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_opfor_LPP_Cars_ZamakTransport = [_opfor, PZFP_opfor_LPP, PZFP_opfor_LPP_Cars, "Zamak Transport", "PZFP_fnc_opfor_LPP_Cars_CreateZamakTransport", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_opfor_LPP_Cars_ZamakTransportCovered = [_opfor, PZFP_opfor_LPP, PZFP_opfor_LPP_Cars, "Zamak Transport (Covered)", "PZFP_fnc_opfor_LPP_Cars_CreateZamakTransportCovered", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_opfor_LPP_Cars_ZamakAmmo = [_opfor, PZFP_opfor_LPP, PZFP_opfor_LPP_Cars, "Zamak Ammo", "PZFP_fnc_opfor_LPP_Cars_CreateZamakAmmo", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_opfor_LPP_Cars_ZamakFuel = [_opfor, PZFP_opfor_LPP, PZFP_opfor_LPP_Cars, "Zamak Fuel", "PZFP_fnc_opfor_LPP_Cars_CreateZamakFuel", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_opfor_LPP_Cars_ZamakRepair = [_opfor, PZFP_opfor_LPP, PZFP_opfor_LPP_Cars, "Zamak Repair", "PZFP_fnc_opfor_LPP_Cars_CreateZamakRepair", [1,1,1,1]] call PZFP_fnc_addModule;
-
+  
   PZFP_opfor_LPP_Drones = [_opfor, PZFP_opfor_LPP, "Drones", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_opfor_LPP_Drones_Pelican = [_opfor, PZFP_opfor_LPP, PZFP_opfor_LPP_Drones, "AL-6 Pelican", "PZFP_fnc_opfor_LPP_Drones_CreatePelican", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_LPP_Drones_PelicanDropper = [_opfor, PZFP_opfor_LPP, PZFP_opfor_LPP_Drones, "AL-6 Pelican (Grenade Dropper)", "PZFP_fnc_opfor_LPP_Drones_CreatePelicanDropper", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -27066,7 +27064,7 @@ PZFP_fnc_initialize = {
 
   PZFP_civ_RandomCivilians = [_civ, "Randomized Civilians", [1,1,1,1]] call PZFP_fnc_addCategory;
 
-   PZFP_civ_RandomCivilians_Civilians = [_civ, PZFP_civ_RandomCivilians, "Civilians", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_civ_RandomCivilians_Civilians = [_civ, PZFP_civ_RandomCivilians, "Civilians", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_civ_RandomCivilians_Civilians_Civilian = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "Civilian", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateCivilian", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_civ_RandomCivilians_Civilians_FormalCivilian = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "Civilian (Formal)", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateCivilianFormal", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_civ_RandomCivilians_Civilians_Farmer = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "Farmer", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateFarmer", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -27096,3 +27094,4 @@ PZFP_fnc_initialize = {
 };
 
 [] spawn PZFP_fnc_initialize;
+deleteVehicle this;
