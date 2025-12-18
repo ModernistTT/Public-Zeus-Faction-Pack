@@ -17,12 +17,12 @@ Repurposed/reskinned Vehicles:
 * Strider/Gorgon (BAF)
 * AH-9 Pawnee/MH-9 Hummingbird (AAF)
 * PO-38 Orca (AAF)
-* CRV-6 Bobcat (AAF) ?????
+* CRV-6 Bobcat (AAF) (TBA)
 * PO-38 Orca (AAFRG)
 * Sandstorm MLRS (LDF)
 * Technicals (LDF, Straz Lesna Livonia)
 * Zamak MLRS (CSAT)
-* MLRS Offroad (FIA, LAPP, Syndikat)
+* MLRS Offroad (FIA, LPP, Syndikat)
 * Armored Offroad (FIA, Syndikat)
 * AH-9 Pawnee/MH-9 Hummingbird (ION)
 
