@@ -13,7 +13,7 @@ BLUFOR:
     - Security Forces
 * United States Army
     - Infantry
-    - Airborne
+    - Airborne (TBA)
     - Special Forces
 * United States Navy
     - Infantry
