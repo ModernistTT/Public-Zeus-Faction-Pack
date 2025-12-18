@@ -193,3 +193,9 @@ REDFOR:
 INDEP:
 * United Assistance Peacekeepers (France) (BLU, INDEP)
     - Infantry
+
+## Wishlist/TBA
+* __Code optimization/trimming__
+* Finalized faction content
+* True FPV drones
+* AI Improvements
