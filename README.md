@@ -1,5 +1,6 @@
-<img width="512" height="512" alt="PZFPLogo" src="https://github.com/user-attachments/assets/99ecd13c-d842-46da-9729-7626cc5f068b" />
-
+<p align="center">
+    <img width="512" height="512" alt="PZFPLogo" src="https://github.com/user-attachments/assets/99ecd13c-d842-46da-9729-7626cc5f068b" />
+</p>
 
 # Public Zeus Faction Pack (Beta)
 
