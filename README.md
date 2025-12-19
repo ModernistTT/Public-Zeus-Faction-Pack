@@ -1,4 +1,4 @@
-<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/573eca52-28b4-4ae2-be83-82a2c1288021" />
+<img width="2048" height="2048" alt="PZFPLogo" src="https://github.com/user-attachments/assets/99ecd13c-d842-46da-9729-7626cc5f068b" />
 
 
 # Public Zeus Faction Pack (Beta)
