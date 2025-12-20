@@ -196,7 +196,7 @@ PZFP_fnc_initialize = {
  };
 
  PZFP_fnc_addObjectToInterface = {
-  params ["_objects",[],[[],objNull]];
+  params ["_objects"];
   _curators = allCurators;
   
   if(_objects isEqualType objNull) then {
@@ -5329,6 +5329,74 @@ PZFP_fnc_initialize = {
   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
+ PZFP_fnc_blufor_BA_Cars_CreateStrider = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["I_MRAP_03_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Blufor",1],
+   true
+  ] call BIS_fnc_initVehicle;
+
+  private _driver = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
+  _driver moveInDriver _vehicle;
+
+  private _group = createGroup [west, true];
+  [_driver] joinSilent _group;
+  _group setBehaviour "SAFE";
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_blufor_BA_Cars_CreateStriderHMG = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["I_MRAP_03_hmg_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Blufor",1],
+   true
+  ] call BIS_fnc_initVehicle;
+
+  private _driver = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
+  _driver moveInDriver _vehicle;
+  private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+  private _commander = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
+  _commander moveInTurret [_vehicle, [1]];
+
+  private _group = createGroup [west, true];
+  [_commander, _gunner, _driver] joinSilent _group;
+  _group setBehaviour "SAFE";
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_blufor_BA_Cars_CreateStriderGMG = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["I_MRAP_03_gmg_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Blufor",1],
+   true
+  ] call BIS_fnc_initVehicle;
+
+  private _driver = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
+  _driver moveInDriver _vehicle;
+  private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+  private _commander = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
+  _commander moveInTurret [_vehicle, [1]];
+
+  private _group = createGroup [west, true];
+  [_commander, _gunner, _driver] joinSilent _group;
+  _group setBehaviour "SAFE";
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
  PZFP_fnc_blufor_BA_Cars_CreateHEMTT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
@@ -5529,74 +5597,6 @@ PZFP_fnc_initialize = {
   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
- PZFP_fnc_blufor_BA_Cars_CreateStrider = {
-  private _cursorPos = getMousePosition;
-  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _vehicle = createVehicle ["I_MRAP_03_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
-
-  private _driver = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
-  _driver moveInDriver _vehicle;
-
-  private _group = createGroup [west, true];
-  [_driver] joinSilent _group;
-  _group setBehaviour "SAFE";
-
-  [_vehicle] call PZFP_fnc_addObjectToInterface;
- };
-
- PZFP_fnc_blufor_BA_Cars_CreateStriderHMG = {
-  private _cursorPos = getMousePosition;
-  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _vehicle = createVehicle ["I_MRAP_03_hmg_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
-
-  private _driver = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
-  _driver moveInDriver _vehicle;
-  private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
-  _gunner moveInGunner _vehicle;
-  private _commander = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
-  _commander moveInTurret [_vehicle, [1]];
-
-  private _group = createGroup [west, true];
-  [_commander, _gunner, _driver] joinSilent _group;
-  _group setBehaviour "SAFE";
-
-  [_vehicle] call PZFP_fnc_addObjectToInterface;
- };
-
- PZFP_fnc_blufor_BA_Cars_CreateStriderGMG = {
-  private _cursorPos = getMousePosition;
-  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _vehicle = createVehicle ["I_MRAP_03_gmg_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
-
-  private _driver = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
-  _driver moveInDriver _vehicle;
-  private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
-  _gunner moveInGunner _vehicle;
-  private _commander = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
-  _commander moveInTurret [_vehicle, [1]];
-
-  private _group = createGroup [west, true];
-  [_commander, _gunner, _driver] joinSilent _group;
-  _group setBehaviour "SAFE";
-
-  [_vehicle] call PZFP_fnc_addObjectToInterface;
- };
-
  PZFP_fnc_blufor_BA_Drones_CreatePelican = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
@@ -5695,26 +5695,6 @@ PZFP_fnc_initialize = {
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
-
-  [_vehicle] call PZFP_fnc_addObjectToInterface;
- };
-
- PZFP_fnc_blufor_BA_Cars_CreateStrider = {
-  private _cursorPos = getMousePosition;
-  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _vehicle = createVehicle ["B_MRAP_01_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
-
-  private _driver = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
-  _driver moveInDriver _vehicle;
-
-  private _group = createGroup [west, true];
-  [_driver] joinSilent _group;
-  _group setBehaviour "SAFE";
 
   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
@@ -26666,6 +26646,9 @@ PZFP_fnc_initialize = {
   PZFP_blufor_BA_Boats_RHIB = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Boats, "Rigid Hull Boat", "PZFP_fnc_blufor_BA_Boats_CreateRHIB", [1,1,1,1]] call PZFP_fnc_addModule;
 
   PZFP_blufor_BA_Cars = [_blufor, PZFP_blufor_BA, "Cars", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_BA_Cars_Strider = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "Strider", "PZFP_fnc_blufor_BA_Cars_CreateStrider", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_BA_Cars_StriderHMG = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "Strider (HMG)", "PZFP_fnc_blufor_BA_Cars_CreateStriderHMG", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_BA_Cars_StriderGMG = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "Strider (GMG)", "PZFP_fnc_blufor_BA_Cars_CreateStriderGMG", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Cars_HEMTT = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "HEMTT", "PZFP_fnc_blufor_BA_Cars_CreateHEMTT", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Cars_HEMTTAmmo = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "HEMTT (Ammo)", "PZFP_fnc_blufor_BA_Cars_CreateHEMTTAmmo", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Cars_HEMTTBox = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "HEMTT (Box)", "PZFP_fnc_blufor_BA_Cars_CreateHEMTTBox", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -26676,10 +26659,7 @@ PZFP_fnc_initialize = {
   PZFP_blufor_BA_Cars_HEMTTRepair = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "HEMTT (Repair)", "PZFP_fnc_blufor_BA_Cars_CreateHEMTTRepair", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Cars_HEMTTTransport = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "HEMTT Transport", "PZFP_fnc_blufor_BA_Cars_CreateHEMTTTransport", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Cars_HEMTTTransportCovered = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "HEMTT Transport (Covered)", "PZFP_fnc_blufor_BA_Cars_CreateHEMTTCovered", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_BA_Cars_Strider = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "Strider", "PZFP_fnc_blufor_BA_Cars_CreateStrider", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_BA_Cars_StriderHMG = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "Strider (HMG)", "PZFP_fnc_blufor_BA_Cars_CreateStriderHMG", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_BA_Cars_StriderGMG = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Cars, "Strider (GMG)", "PZFP_fnc_blufor_BA_Cars_CreateStriderGMG", [1,1,1,1]] call PZFP_fnc_addModule;
-
+  
   PZFP_blufor_BA_Drones = [_blufor, PZFP_blufor_BA, "Drones", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_BA_Drones_Pelican = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Drones, "AL-6 Pelican", "PZFP_fnc_blufor_BA_Drones_CreatePelican", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Drones_PelicanMedical = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Drones, "AL-6 Pelican (Medical)", "PZFP_fnc_blufor_BA_Drones_CreatePelicanMedical", [1,1,1,1]] call PZFP_fnc_addModule;
