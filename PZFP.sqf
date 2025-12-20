@@ -73,7 +73,6 @@ PZFP_fnc_initialize = {
   private _functionArraySize = count _functionArray;
   private _functionIndex = 9000 + _functionArraySize;
 
-  systemChat format ["[PZFP] - Adding module '%1' with script '%2'", _moduleText, _moduleScript];
   [_maindisplay, _parentMenu, _moduleText, _moduleScript, _functionIndex] call PZFP_fnc_registerModuleFunction;
 
   private _nl = toString[10];
@@ -86,13 +85,10 @@ PZFP_fnc_initialize = {
  PZFP_fnc_registerModuleFunction = {
   params ["_display", "_treeControl", "_moduleName", "_functionName", "_functionIndex"];
 
-  systemChat format ["[PZFP] - Registering function: %1 with ID: %2", _functionName, _functionIndex];
-
   _functionArray pushBack [_functionIndex, _functionName];
   missionNamespace setVariable ["PZFP_moduleScripts", _functionArray];
 
   private _test = missionNamespace getVariable "PZFP_moduleScripts";
-  systemChat format ["[PZFP] - Current moduleScripts array: %1", str _test];
  };
 
  PZFP_fnc_executeModule = {
