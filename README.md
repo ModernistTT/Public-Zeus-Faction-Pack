@@ -8,7 +8,7 @@ The Public Zeus Faction Pack (PZFP) is an addon (composition) that adds or revam
 
 PZFP is still under development! Bugs and glitches will occur. Please report them on the Discord server as we add more content.
 
-Steam: https://steamcommunity.com/sharedfiles/filedetails/?id= TBA
+Steam: https://steamcommunity.com/sharedfiles/filedetails/?id=3627037158
 
 Discord: https://discord.gg/feDtgN22P6
 
