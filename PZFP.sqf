@@ -27524,6 +27524,36 @@ PZFP_fnc_initialize = {
   };
  };
 
+ {
+  player createDiarySubject ["PZFP", "Zeus Faction Pack"];
+  player createDiaryRecord [
+   "PZFP",
+   [
+    "Vanilla Factions",
+    format [
+     "<font color='#1B9BD6' size='18' face='PuristaMedium'>%1</font><br/>" +
+     "<font size='14' face='PuristaMedium'>%2</font><br/><br/>" +
+     "<font size='16' face='PuristaMedium'>Features:</font><font size='14' face='PuristaMedium'>" +
+     "<br/> • Adds 7 never-seen-before factions, compatible with" +
+     "<br/>   ArmAverse lore" +
+     "<br/> • Revamps all existing vanilla factions" +
+     "<br/> • Adds 8+ high-quality new vehicles using vanilla assets," +
+     "<br/>   and adds 14+ vehicle re-skins" +
+     "<br/> • Adds AI improvements, standardized equipment across" +
+     "<br/>   factions, and randomized civilians" +
+     "<br/> • Includes automatic compatibility with Western Sahara DLC" +
+     "<br/>   content" +
+     "<br/><br/>" +
+     "See the faction list and download for yourself on the " +
+     "<execute expression='copyToClipboard ""https://steamcommunity.com/sharedfiles/filedetails/?id=""'>Steam Workshop!</execute> (click to copy link)" +
+     "</font>",
+     "Vanilla Factions",
+     "PZFP is a complete overhaul of ArmA 3's existing factions, using vanilla content and hidden textures/models to fully utilize ArmA's vast equipment and vehicle roster. Using only vanilla assets, PZFP:"
+    ]
+   ]
+  ];
+ } remoteExec ["call", 0, true];
+
  missionNamespace setVariable ["PZFP_initialized", true];
  systemChat "[PZFP] - PZFP initialized!";
  call BIS_fnc_VRFadeIn;
