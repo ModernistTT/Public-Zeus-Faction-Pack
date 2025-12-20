@@ -27541,7 +27541,7 @@ PZFP_fnc_initialize = {
      "<br/>   content" +
      "<br/><br/>" +
      "See the faction list and download for yourself on the " +
-     "<execute expression='copyToClipboard ""https://steamcommunity.com/sharedfiles/filedetails/?id=""'>Steam Workshop!</execute> (click to copy link)" +
+     "<execute expression='copyToClipboard ""https://steamcommunity.com/sharedfiles/filedetails/?id=3627037158""'>Steam Workshop!</execute> (click to copy link)" +
      "</font>",
      "Vanilla Factions",
      "PZFP is a complete overhaul of ArmA 3's existing factions, using vanilla content and hidden textures/models to fully utilize ArmA's vast equipment and vehicle roster. Using only vanilla assets, PZFP:"
