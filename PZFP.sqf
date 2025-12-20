@@ -27552,6 +27552,7 @@ PZFP_fnc_initialize = {
 
  missionNamespace setVariable ["PZFP_initialized", true];
  systemChat "[PZFP] - PZFP initialized!";
+ systemChat "[PZFP] - WARNING! You are using a beta version of PZFP. Bugs may occur. Report issues on our Discord! (http://discord.gg/feDtgN22P6)";
  call BIS_fnc_VRFadeIn;
  [] call PZFP_fnc_mainLoop;
 };
