@@ -1,10 +1,14 @@
+<p align="center">
+    <img width="512" height="512" alt="PZFPLogo" src="https://github.com/user-attachments/assets/99ecd13c-d842-46da-9729-7626cc5f068b" />
+</p>
+
 # Public Zeus Faction Pack (Beta)
 
 The Public Zeus Faction Pack (PZFP) is an addon (composition) that adds or revamps 17 factions for ArmA 3 using only vanilla equipment and vehicles. By repurposing vanilla items, re-texturing vehicles and equipment, and utilizing hidden textures, PZFP adds 14 new factions, multiple new vehicles to the game, and re-skins for existing vehicles. 
 
 PZFP is still under development! Bugs and glitches will occur. Please report them on the Discord server as we add more content.
 
-Steam: https://steamcommunity.com/sharedfiles/filedetails/?id= TBA
+Steam: https://steamcommunity.com/sharedfiles/filedetails/?id=3627037158
 
 Discord: https://discord.gg/feDtgN22P6
 
