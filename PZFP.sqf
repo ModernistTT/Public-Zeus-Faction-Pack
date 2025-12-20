@@ -199,6 +199,25 @@ PZFP_fnc_initialize = {
   }];
  };
 
+ PZFP_fnc_addObjectToInterface = {
+  params ["_objects",[],[[],objNull]];
+  _curators = allCurators;
+  
+  if(_objects isEqualType objNull) then {
+   _objects = [_objects];
+  };
+  
+  if(!(_curators isEqualType [])) then {
+   _curators = [_curators];
+  };
+
+  [[_objects,_curators],{
+	 params ["_objects","_curators"]; 
+	 {
+	  _x addCuratorEditableObjects [_objects,true];
+	 } foreach _curators;
+  }] remoteExec ["spawn",2];
+ };
 
  PZFP_fnc_USA_AddIdentity = {
   params ["_unit"];
@@ -354,7 +373,7 @@ PZFP_fnc_initialize = {
 
   createVehicleCrew  _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USAF_Pilots_AddLoadoutFighterPilot = {
@@ -442,7 +461,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -458,7 +477,7 @@ PZFP_fnc_initialize = {
   [_pilot] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USAF_Planes_CreateVTOL = {
@@ -482,7 +501,7 @@ PZFP_fnc_initialize = {
   [_pilot,_copilot1,_copilot2,_copilot3] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USAF_Planes_CreateVTOLArmed = {
@@ -506,7 +525,7 @@ PZFP_fnc_initialize = {
   [_pilot,_copilot1,_copilot2,_copilot3] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USAF_Planes_CreateVTOLVehicle = {
@@ -530,7 +549,7 @@ PZFP_fnc_initialize = {
   [_pilot,_copilot1,_copilot2,_copilot3] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USAF_Pilots_CreateTransportPilot = {
@@ -549,7 +568,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -574,7 +593,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_APC_CreateAMV7MarshallMG = {
@@ -615,7 +634,7 @@ PZFP_fnc_initialize = {
   [_driver, _gunner] joinSilent _group;
   _group addVehicle _vehicle2;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_APC_CreateAMV7Marshall = {
@@ -639,7 +658,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_APC_CreateCRV6Bobcat = {
@@ -663,7 +682,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_APC_CreateIFV6cPanther = {
@@ -687,7 +706,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Artillery_CreateScorcher = {
@@ -711,7 +730,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Artillery_CreateSandstorm = {
@@ -733,7 +752,7 @@ PZFP_fnc_initialize = {
   [_gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Boats_CreateAssaultBoat = {
@@ -753,7 +772,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Boats_CreateRescueBoat = {
@@ -773,7 +792,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Boats_CreateRHIB = {
@@ -793,7 +812,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Cars_CreateHEMTT = {
@@ -813,7 +832,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTAmmo = {
@@ -833,7 +852,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTBox = {
@@ -853,7 +872,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTCargo = {
@@ -873,7 +892,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTFlatbed = {
@@ -893,7 +912,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTFuel = {
@@ -913,7 +932,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTMedical = {
@@ -933,7 +952,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTRepair = {
@@ -953,7 +972,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTTransport = {
@@ -973,7 +992,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Cars_CreateHEMTTCovered = {
@@ -993,7 +1012,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Cars_CreateHunter = {
@@ -1013,7 +1032,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Cars_CreateHunterHMG = {
@@ -1035,7 +1054,7 @@ PZFP_fnc_initialize = {
   [_gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Cars_CreateHunterGMG = {
@@ -1057,7 +1076,7 @@ PZFP_fnc_initialize = {
   [_gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Drones_CreatePelican = {
@@ -1073,7 +1092,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Drones_CreatePelicanMedical = {
@@ -1089,7 +1108,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Drones_CreateDarter = {
@@ -1105,7 +1124,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Drones_CreatePelter = {
@@ -1116,7 +1135,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Drones_CreateRoller = {
@@ -1127,7 +1146,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Drones_CreateStomper = {
@@ -1143,7 +1162,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Drones_CreateStomper = {
@@ -1159,7 +1178,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Drones_CreateStomperArmed = {
@@ -1175,7 +1194,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Helicopters_CreatePawnee = {
@@ -1197,7 +1216,7 @@ PZFP_fnc_initialize = {
   [_pilot, _copilot] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Helicopters_CreateBlackfoot = {
@@ -1220,7 +1239,7 @@ PZFP_fnc_initialize = {
   [_pilot, _copilot] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Helicopters_CreateBlackfootStub = {
@@ -1243,7 +1262,7 @@ PZFP_fnc_initialize = {
   [_pilot, _copilot] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Helicopters_CreateHuron = {
@@ -1311,7 +1330,7 @@ PZFP_fnc_initialize = {
   [_pilot, _copilot] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Helicopters_CreateHuronArmed = {
@@ -1383,7 +1402,7 @@ PZFP_fnc_initialize = {
   [_pilot, _copilot, _crew1, _crew2] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Helicopters_CreateHummingbird = {
@@ -1405,7 +1424,7 @@ PZFP_fnc_initialize = {
   [_pilot, _copilot] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Helicopters_CreateGhosthawk = {
@@ -1475,7 +1494,7 @@ PZFP_fnc_initialize = {
   [_pilot, _copilot, _crew1, _crew2] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Helicopters_CreateGhosthawkStub = {
@@ -1541,7 +1560,7 @@ PZFP_fnc_initialize = {
   [_pilot, _copilot] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Men_AddLoadoutRifleman = {
@@ -2325,7 +2344,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2343,7 +2362,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutLAT;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2361,7 +2380,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutAT;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2380,7 +2399,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutAutorifleman;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2399,7 +2418,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutMarksman;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2418,7 +2437,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutMachineGunner;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2437,7 +2456,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutTeamLeader;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
   };
 
@@ -2456,7 +2475,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutSquadLeader;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2475,7 +2494,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutAmmoBearer;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2494,7 +2513,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutMedic;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2513,7 +2532,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutRTO;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2533,7 +2552,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutSergeant;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2552,7 +2571,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutOfficer;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2571,7 +2590,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutCrewman;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2590,7 +2609,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutEngineer;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2609,7 +2628,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutExplosiveSpecialist;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2627,7 +2646,7 @@ PZFP_fnc_initialize = {
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutHelicopterPilot;
    [_unit] call PZFP_fnc_USA_AddIdentity;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   };
   _unit
  };
@@ -2647,7 +2666,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutHelicopterCrew;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2666,7 +2685,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutMineSpecialist;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2685,7 +2704,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutSurvivor;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -2704,7 +2723,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutUAVOperator;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3465,7 +3484,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3482,7 +3501,7 @@ PZFP_fnc_initialize = {
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanLAT;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3499,7 +3518,7 @@ PZFP_fnc_initialize = {
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanAT;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3516,7 +3535,7 @@ PZFP_fnc_initialize = {
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutAutorifleman;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3533,7 +3552,7 @@ PZFP_fnc_initialize = {
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutMarksman;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3550,7 +3569,7 @@ PZFP_fnc_initialize = {
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutMachineGunner;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3567,7 +3586,7 @@ PZFP_fnc_initialize = {
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutTeamLeader;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3584,7 +3603,7 @@ PZFP_fnc_initialize = {
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutSquadLeader;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3601,7 +3620,7 @@ PZFP_fnc_initialize = {
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutMedic;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3618,7 +3637,7 @@ PZFP_fnc_initialize = {
 	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutRTO;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3635,7 +3654,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutJTAC;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3652,7 +3671,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutAmmoBearer;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3669,7 +3688,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutDemoSpecialist;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3686,7 +3705,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutEngineer;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3703,7 +3722,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutSniper;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3720,7 +3739,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutSpotter;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3738,7 +3757,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutSergeant;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3755,7 +3774,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutOfficer;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -3780,7 +3799,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Tanks_CreateSquadLeaderammerUP = {
@@ -3804,7 +3823,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_TankDestroyers_CreateRhino = {
@@ -3828,7 +3847,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_TankDestroyers_CreateRhinoUP = {
@@ -3852,7 +3871,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Turrets_CreateRadar = {
@@ -3868,7 +3887,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Turrets_CreateSAM = {
@@ -3884,7 +3903,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Turrets_CreateHMGTripod = {
@@ -3895,7 +3914,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Turrets_CreateHMGRaised = {
@@ -3906,7 +3925,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Turrets_CreateHMGAuto = {
@@ -3917,7 +3936,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Turrets_CreateGMGTripod = {
@@ -3928,7 +3947,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Turrets_CreateGMGRaised = {
@@ -3939,7 +3958,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Turrets_CreateGMGAuto = {
@@ -3950,7 +3969,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Turrets_CreateMortar = {
@@ -3961,7 +3980,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Turrets_CreatePraetorian = {
@@ -3982,7 +4001,7 @@ PZFP_fnc_initialize = {
   crew _vehicle join createGroup [west, true];
   crew _vehicle select 0 setSkill 1;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Turrets_CreateDesignator = {
@@ -3998,7 +4017,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Turrets_CreateAA = {
@@ -4009,7 +4028,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_Turrets_CreateAT = {
@@ -4020,7 +4039,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USN_Boats_CreateAssaultBoat = {
@@ -4040,7 +4059,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USN_Boats_CreateRescueBoat = {
@@ -4060,7 +4079,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USN_Drones_CreateSentinel = {
@@ -4076,7 +4095,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USN_Boats_CreateRHIB = {
@@ -4096,7 +4115,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USN_Boats_CreatePatrolBoat = {
@@ -4120,7 +4139,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USN_Men_AddLoadoutRifleman = {
@@ -4221,7 +4240,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -4241,7 +4260,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -4261,7 +4280,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -4377,7 +4396,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -4397,7 +4416,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -4417,7 +4436,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -4712,7 +4731,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -4732,7 +4751,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -4752,7 +4771,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -4772,7 +4791,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -4792,7 +4811,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -4812,7 +4831,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -4908,7 +4927,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -4928,7 +4947,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -4949,7 +4968,7 @@ PZFP_fnc_initialize = {
   [_pilot,_copilot1,_copilot2,_copilot3] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USN_Planes_CreateVTOL = {
@@ -4975,7 +4994,7 @@ PZFP_fnc_initialize = {
   [_pilot,_copilot1,_copilot2,_copilot3] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
 
  };
 
@@ -5002,7 +5021,7 @@ PZFP_fnc_initialize = {
   [_pilot,_copilot1,_copilot2,_copilot3] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USN_Planes_CreateVTOLVehicle = {
@@ -5028,7 +5047,7 @@ PZFP_fnc_initialize = {
   [_pilot,_copilot1,_copilot2,_copilot3] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USN_Turrets_CreateCenturion = {
@@ -5044,7 +5063,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USN_Turrets_CreateVLS = {
@@ -5055,7 +5074,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USN_Turrets_CreateHammer= {
@@ -5066,7 +5085,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USN_Turrets_CreateSpartan = {
@@ -5082,7 +5101,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USN_Turrets_CreatePraetorian = {
@@ -5103,7 +5122,7 @@ PZFP_fnc_initialize = {
   crew _vehicle join createGroup [west, true];
   crew _vehicle select 0 setSkill 1;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_AntiAir_CreateIFV6	= {
@@ -5127,7 +5146,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_APC_CreateCRV6Bobcat = {
@@ -5151,7 +5170,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_APC_CreateGorgon = {
@@ -5181,7 +5200,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_APC_CreateIFV6cPanther = {
@@ -5205,7 +5224,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
   PZFP_fnc_blufor_BA_Artillery_CreateScorcher = {
@@ -5229,7 +5248,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Artillery_CreateSandstorm = {
@@ -5251,7 +5270,7 @@ PZFP_fnc_initialize = {
   [_gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Boats_CreateAssaultBoat = {
@@ -5271,7 +5290,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Boats_CreateRescueBoat = {
@@ -5291,7 +5310,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Boats_CreateRHIB = {
@@ -5311,7 +5330,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Cars_CreateHEMTT = {
@@ -5331,7 +5350,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTAmmo = {
@@ -5351,7 +5370,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTBox = {
@@ -5371,7 +5390,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTCargo = {
@@ -5391,7 +5410,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTFlatbed = {
@@ -5411,7 +5430,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTFuel = {
@@ -5431,7 +5450,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTMedical = {
@@ -5451,7 +5470,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTRepair = {
@@ -5471,7 +5490,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTTransport = {
@@ -5491,7 +5510,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Cars_CreateHEMTTCovered = {
@@ -5511,7 +5530,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Cars_CreateStrider = {
@@ -5531,7 +5550,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Cars_CreateStriderHMG = {
@@ -5555,7 +5574,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Cars_CreateStriderGMG = {
@@ -5579,7 +5598,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Drones_CreatePelican = {
@@ -5595,7 +5614,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Drones_CreatePelicanMedical = {
@@ -5611,7 +5630,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Drones_CreateDarter = {
@@ -5627,7 +5646,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Drones_CreatePelter = {
@@ -5638,7 +5657,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Drones_CreateRoller = {
@@ -5649,7 +5668,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Drones_CreateStomper = {
@@ -5665,7 +5684,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Drones_CreateStomperArmed = {
@@ -5681,7 +5700,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Cars_CreateStrider = {
@@ -5701,7 +5720,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Helicopters_CreateBlackfoot = {
@@ -5724,7 +5743,7 @@ PZFP_fnc_initialize = {
   [_pilot, _copilot] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Helicopters_CreateGhosthawk = {
@@ -5795,7 +5814,7 @@ PZFP_fnc_initialize = {
   [_pilot, _copilot, _crew1, _crew2] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Helicopters_CreateGhosthawkStub = {
@@ -5862,7 +5881,7 @@ PZFP_fnc_initialize = {
   [_pilot, _copilot] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Helicopters_CreateHuron = {
@@ -5930,7 +5949,7 @@ PZFP_fnc_initialize = {
   [_pilot, _copilot] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Helicopters_CreateHuronArmed = {
@@ -6002,7 +6021,7 @@ PZFP_fnc_initialize = {
   [_pilot, _copilot, _crew1, _crew2] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Men_AddLoadoutRifleman = {
@@ -6902,7 +6921,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -6922,7 +6941,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -6942,7 +6961,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -6962,7 +6981,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -6982,7 +7001,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7002,7 +7021,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7022,7 +7041,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
   };
 
@@ -7042,7 +7061,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7062,7 +7081,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7082,7 +7101,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7102,7 +7121,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7123,7 +7142,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7143,7 +7162,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7163,7 +7182,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7183,7 +7202,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7203,7 +7222,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7221,7 +7240,7 @@ PZFP_fnc_initialize = {
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutHelicopterPilot;
    [_unit] call PZFP_fnc_UK_AddIdentity;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+   [_unit] call PZFP_fnc_addObjectToInterface;
   };
   _unit
  };
@@ -7242,7 +7261,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7262,7 +7281,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7282,7 +7301,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7302,7 +7321,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -7325,7 +7344,7 @@ PZFP_fnc_initialize = {
   [_driver, _gunner] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Tanks_CreateSquadLeaderammerUP = {
@@ -7347,7 +7366,7 @@ PZFP_fnc_initialize = {
   [_driver, _gunner] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Turrets_CreateRadar = {
@@ -7363,7 +7382,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Turrets_CreateSAM = {
@@ -7379,7 +7398,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Turrets_CreateHMGTripod = {
@@ -7390,7 +7409,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Turrets_CreateHMGRaised = {
@@ -7401,7 +7420,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Turrets_CreateHMGAuto = {
@@ -7412,7 +7431,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Turrets_CreateGMGTripod = {
@@ -7423,7 +7442,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Turrets_CreateGMGRaised = {
@@ -7434,7 +7453,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Turrets_CreateGMGAuto = {
@@ -7445,7 +7464,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Turrets_CreateMortar = {
@@ -7456,7 +7475,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Turrets_CreatePraetorian = {
@@ -7477,7 +7496,7 @@ PZFP_fnc_initialize = {
   crew _vehicle join createGroup [west, true];
   crew _vehicle select 0 setSkill 1;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Turrets_CreateDesignator = {
@@ -7493,7 +7512,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Turrets_CreateAA = {
@@ -7504,7 +7523,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_BA_Turrets_CreateAT = {
@@ -7515,7 +7534,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFAF_Drones_CreateGreyhawk = {
@@ -7530,7 +7549,7 @@ PZFP_fnc_initialize = {
 
   createVehicleCrew  _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFAF_Pilots_AddLoadoutFighterPilot = {
@@ -7581,7 +7600,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
   
@@ -7599,7 +7618,7 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
   };
  
  PZFP_fnc_blufor_AAFAF_Planes_CreateGryphon = {
@@ -7616,7 +7635,7 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_AntiAir_CreateNyx	= {
@@ -7638,7 +7657,7 @@ PZFP_fnc_initialize = {
   [_gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Artillery_CreateZamak = {
@@ -7658,7 +7677,7 @@ PZFP_fnc_initialize = {
   [_driver, _gunner] joinSilent createGroup [west, true];
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_APC_CreateGorgon = {
@@ -7682,7 +7701,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_APC_CreateMora = {
@@ -7706,7 +7725,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Boats_CreateAssaultBoat = {
@@ -7726,7 +7745,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Boats_CreateRescueBoat = {
@@ -7746,7 +7765,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Boats_CreateRHIB = {
@@ -7766,7 +7785,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Cars_CreateStrider = {
@@ -7786,7 +7805,7 @@ PZFP_fnc_initialize = {
   [_driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Cars_CreateStriderHMG = {
@@ -7810,7 +7829,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Cars_CreateStriderGMG = {
@@ -7834,7 +7853,7 @@ PZFP_fnc_initialize = {
   [_commander, _gunner, _driver] joinSilent _group;
   _group setBehaviour "SAFE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Cars_CreateZamak = {
@@ -7854,7 +7873,7 @@ PZFP_fnc_initialize = {
    [_driver] joinSilent _group;
    _group setBehaviour "SAFE";
 
-   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Cars_CreateZamakAmmo = {
@@ -7874,7 +7893,7 @@ PZFP_fnc_initialize = {
    [_driver] joinSilent _group;
    _group setBehaviour "SAFE";
 
-   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+   [_vehicle] call PZFP_fnc_addObjectToInterface;
   };
 
   PZFP_fnc_blufor_AAFA_Cars_CreateZamakFuel = {
@@ -7894,7 +7913,7 @@ PZFP_fnc_initialize = {
    [_driver] joinSilent _group;
    _group setBehaviour "SAFE";
 
-   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Cars_CreateZamakMedical = {
@@ -7914,7 +7933,7 @@ PZFP_fnc_initialize = {
    [_driver] joinSilent _group;
    _group setBehaviour "SAFE";
 
-   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Cars_CreateZamakRepair = {
@@ -7934,7 +7953,7 @@ PZFP_fnc_initialize = {
    [_driver] joinSilent _group;
    _group setBehaviour "SAFE";
 
-   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Cars_CreateZamakTransport = {
@@ -7954,7 +7973,7 @@ PZFP_fnc_initialize = {
    [_driver] joinSilent _group;
    _group setBehaviour "SAFE";
 
-   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Cars_CreateZamakCovered = {
@@ -7974,7 +7993,7 @@ PZFP_fnc_initialize = {
    [_driver] joinSilent _group;
    _group setBehaviour "SAFE";
 
-   getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Drones_CreatePelican = {
@@ -7990,7 +8009,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Drones_CreatePelicanDropper = {
@@ -8037,7 +8056,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Drones_CreatePelicanDropperMortar = {
@@ -8089,7 +8108,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Drones_CreatePelicanCharge = {
@@ -8146,7 +8165,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Drones_CreatePelicanMedical = {
@@ -8162,7 +8181,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Drones_CreatePelicanMedical = {
@@ -8178,7 +8197,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Drones_CreateDarter = {
@@ -8194,7 +8213,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Drones_CreateStomper = {
@@ -8210,7 +8229,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Drones_CreateStomperArmed = {
@@ -8226,7 +8245,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Helicopters_CreateMohawk = {
@@ -8291,7 +8310,7 @@ PZFP_fnc_initialize = {
    ""
   ]] remoteExec ['addAction',0,true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Helicopters_CreateHellcat = {
@@ -8310,7 +8329,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Helicopters_CreateHellcatArmed = {
@@ -8329,7 +8348,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Helicopters_CreateHummingbird = {
@@ -8349,7 +8368,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Helicopters_CreatePawnee = {
@@ -8369,7 +8388,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Men_AddLoadoutRifleman = {
@@ -9207,7 +9226,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9224,7 +9243,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutLAT;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9241,7 +9260,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutAT;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9258,7 +9277,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutAutorifleman;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9275,7 +9294,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutMarksman;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9292,7 +9311,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutTeamLeader;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9309,7 +9328,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutSquadLeader;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9326,7 +9345,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutAmmoBearer;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9343,7 +9362,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutMedic;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9360,7 +9379,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutRTO;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9378,7 +9397,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutSergeant;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9395,7 +9414,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutOfficer;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9412,7 +9431,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_MenAddLoadoutCrewman;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9429,7 +9448,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutEngineer;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9446,7 +9465,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutExplosiveSpecialist;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9463,7 +9482,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutHelicopterPilot;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9480,7 +9499,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutHelicopterCrew;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9497,7 +9516,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutMineSpecialist;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9514,7 +9533,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutSurvivor;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -9534,7 +9553,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit 
  };
 
@@ -10350,7 +10369,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10367,7 +10386,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutRifleman;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10384,7 +10403,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutRiflemanLAT;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10401,7 +10420,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutRiflemanAT;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10418,7 +10437,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutAutorifleman;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10435,7 +10454,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutMarksman;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10452,7 +10471,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutTeamLeader;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10469,7 +10488,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutSquadLeader;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10486,7 +10505,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutJTAC;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
   };
 
@@ -10503,7 +10522,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutMedic;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10520,7 +10539,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutRTO;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10537,7 +10556,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutAmmoBearer;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10554,7 +10573,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutDemoSpecialist;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10571,7 +10590,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutEngineer;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10588,7 +10607,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutSniper;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10605,7 +10624,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutSpotter;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10623,7 +10642,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutSergeant;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10640,7 +10659,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutOfficer;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -10662,7 +10681,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Tanks_CreateNyxRecon = {
@@ -10681,7 +10700,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Tanks_CreateNyxAutocannon = {
@@ -10700,7 +10719,7 @@ PZFP_fnc_initialize = {
   _commander moveInGunner _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Tanks_CreateNyxAT = {
@@ -10719,7 +10738,7 @@ PZFP_fnc_initialize = {
   _commander moveInGunner _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Turrets_CreateHMG = {
@@ -10730,7 +10749,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_AAFA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Turrets_CreateHMGTripod = {
@@ -10741,7 +10760,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_AAFA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Turrets_CreateAA = {
@@ -10752,7 +10771,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_AAFA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_AAFA_Turrets_CreateAT = {
@@ -10763,7 +10782,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_AAFA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDFAF_Drones_CreateGreyhawk = {
@@ -10779,7 +10798,7 @@ PZFP_fnc_initialize = {
 
   createVehicleCrew  _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDFAF_AddLoadoutFighterPilot = {
@@ -10830,7 +10849,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
  
@@ -10850,7 +10869,7 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_APCs_CreateOdyniec = {
@@ -10871,7 +10890,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Artillery_CreateSandstorm = {
@@ -10891,7 +10910,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Artillery_CreateZamak = {
@@ -10910,7 +10929,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Cars_CreateOffroad = {
@@ -10927,7 +10946,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Cars_CreateOffroadHMG = {
@@ -10946,7 +10965,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Cars_CreateOffroadAT = {
@@ -10965,7 +10984,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
   PZFP_fnc_blufor_LDF_Cars_CreateOffroadCovered = {
@@ -10982,7 +11001,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Cars_CreateOffroadComms = {
@@ -10999,7 +11018,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Cars_CreateVanTransport = {
@@ -11016,7 +11035,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Cars_CreateVanCargo = {
@@ -11033,7 +11052,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
   };
 
  PZFP_fnc_blufor_LDF_Cars_CreateVanAmbulance = {
@@ -11050,7 +11069,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
   };
 
  PZFP_fnc_blufor_LDF_Cars_CreateZamakTransport = {
@@ -11067,7 +11086,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Cars_CreateZamakTransportCovered = {
@@ -11084,7 +11103,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Cars_CreateZamakAmmo = {
@@ -11101,7 +11120,7 @@ PZFP_fnc_initialize = {
     _driver moveInDriver _vehicle;
     crew _vehicle join createGroup [west, true];
 
-    getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+    [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Cars_CreateZamakFuel = {
@@ -11118,7 +11137,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Cars_CreateZamakRepair = {
@@ -11135,7 +11154,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Cars_CreateZamakMedical = {
@@ -11152,7 +11171,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Drones_CreatePelican = {
@@ -11168,7 +11187,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Drones_CreatePelicanDropper = {
@@ -11215,7 +11234,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Drones_CreatePelicanDropperMortar = {
@@ -11267,7 +11286,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Drones_CreatePelicanCharge = {
@@ -11324,7 +11343,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Drones_CreatePelicanMedical = {
@@ -11340,7 +11359,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Drones_CreateDarter = {
@@ -11356,7 +11375,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Drones_CreateStomper = {
@@ -11372,7 +11391,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Drones_CreateStomperArmed = {
@@ -11388,7 +11407,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Helicopters_CreateCzapla = {
@@ -11407,7 +11426,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Helicopters_CreateCzaplaArmed = {
@@ -11426,7 +11445,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Men_AddLoadoutRifleman = {
@@ -12191,7 +12210,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12208,7 +12227,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutRiflemanLAT;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12225,7 +12244,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutRiflemanAT;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12242,7 +12261,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutAutorifleman;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12259,7 +12278,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutMarksman;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12276,7 +12295,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutTeamLeader;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12293,7 +12312,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutSquadLeader;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12310,7 +12329,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutAmmoBearer;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12327,7 +12346,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutMedic;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12344,7 +12363,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutRTO;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12362,7 +12381,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutSergeant;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12379,7 +12398,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutOfficer;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12396,7 +12415,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutCrewman;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12413,7 +12432,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutExplosiveSpecialist;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12430,7 +12449,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutSurvivor;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12447,7 +12466,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutHelicopterPilot;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12464,7 +12483,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutHelicopterCrew;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12481,7 +12500,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutMineSpecialist;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -12498,7 +12517,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutUAVOperator;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13222,7 +13241,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13239,7 +13258,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRiflemanLAT;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13256,7 +13275,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRiflemanAT;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13273,7 +13292,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutAutorifleman;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13290,7 +13309,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutMarksman;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13307,7 +13326,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutTeamLeader;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13324,7 +13343,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutSquadLeader;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13341,7 +13360,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutJTAC;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13358,7 +13377,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutAmmoBearer;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13375,7 +13394,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutMedic;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13392,7 +13411,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRTO;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13409,7 +13428,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutDemoSpecialist;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13426,7 +13445,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutEngineer;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13444,7 +13463,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutSergeant;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13461,7 +13480,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutOfficer;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13473,7 +13492,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Turrets_CreateHMGTripod = {
@@ -13484,7 +13503,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Turrets_CreateAA = {
@@ -13495,7 +13514,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_LDF_Turrets_CreateAT = {
@@ -13506,7 +13525,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_blufor_LDF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroad = {
@@ -13523,7 +13542,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroadHMG = {
@@ -13542,7 +13561,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroadCovered = {
@@ -13559,7 +13578,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_StrazLesna_Cars_CreateOffroadComms = {
@@ -13576,7 +13595,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_StrazLesna_Men_AddLoadoutOfficer = {
@@ -13691,7 +13710,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_StrazLesna_Men_AddLoadoutOfficer;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13708,7 +13727,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_StrazLesna_Men_AddLoadoutOfficerShotgun;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13725,7 +13744,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_blufor_StrazLesna_Men_AddLoadoutOfficerRifle;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13744,7 +13763,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRAF_MaintenanceCrew_AddLoadoutRepairSpecialist = {
@@ -13779,7 +13798,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_opfor_IRAF_MaintenanceCrew_AddLoadoutRepairSpecialist;
     [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13861,7 +13880,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_opfor_IRAF_Pilots_AddLoadoutFighterPilot;
     [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13878,7 +13897,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_opfor_IRAF_Pilots_AddLoadoutTransportPilot;
     [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -13891,7 +13910,7 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRAF_Planes_CreateShikra = {
@@ -13908,7 +13927,7 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_AntiAir_CreateTigris = {
@@ -13929,7 +13948,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_AntiAir_CreateKamysh = {
@@ -13980,7 +13999,8 @@ PZFP_fnc_initialize = {
 
   [crew _vehicle, crew _vehicle2] joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle, _vehicle2], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_APCs_CreateKamysh = {
@@ -14001,7 +14021,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_APCs_CreateMarid = {
@@ -14020,7 +14040,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_APCs_CreateMaridAutocannon = {
@@ -14058,7 +14078,8 @@ PZFP_fnc_initialize = {
   group _vehicle addVehicle _vehicle2;
   group _vehicle setBehaviour "AWARE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle, _vehicle2], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Artillery_CreateSochor = {
@@ -14079,7 +14100,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Artillery_CreateZamak = {
@@ -14100,7 +14121,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Boats_CreateAssaultBoat = {
@@ -14117,7 +14138,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Boats_CreateRescueBoat = {
@@ -14134,7 +14155,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Boats_CreateRHIB = {
@@ -14151,7 +14172,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Cars_CreateIfrit = {
@@ -14168,7 +14189,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Cars_CreateIfritHMG = {
@@ -14187,7 +14208,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Cars_CreateIfritGMG = {
@@ -14206,7 +14227,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Cars_CreateZamakTransport = {
@@ -14223,7 +14244,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Cars_CreateZamakTransportCovered = {
@@ -14240,7 +14261,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Cars_CreateZamakRepair = {
@@ -14257,7 +14278,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Cars_CreateZamakFuel = {
@@ -14274,7 +14295,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Cars_CreateZamakAmmo = {
@@ -14291,7 +14312,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Cars_CreateZamakMedical = {
@@ -14308,7 +14329,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Drones_CreateJinaah = {
@@ -14324,7 +14345,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Drones_CreateJinaahMedical = {
@@ -14340,7 +14361,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Drones_CreateTayran = {
@@ -14356,7 +14377,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Helicopters_CreateTaru = {
@@ -14377,7 +14398,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Helicopters_CreateTaruTransport = {
@@ -14398,7 +14419,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Helicopters_CreateTaruRepair = {
@@ -14419,7 +14440,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Helicopters_CreateTaruFuel = {
@@ -14440,7 +14461,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Helicopters_CreateTaruAmmo = {
@@ -14461,7 +14482,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Helicopters_CreateTaruMedical = {
@@ -14482,7 +14503,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Helicopters_CreateTaruCargo = {
@@ -14503,7 +14524,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Helicopters_CreateKajman = {
@@ -14522,7 +14543,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Helicopters_CreateOrca = {
@@ -14541,7 +14562,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Helicopters_CreateOrcaArmed = {
@@ -14560,7 +14581,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutRifleman = {
@@ -15347,7 +15368,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutCrewman;
     [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15366,7 +15387,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15385,7 +15406,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutLAT;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15404,7 +15425,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutAT;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15423,7 +15444,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutAutorifleman;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15442,7 +15463,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutMarksman;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15461,7 +15482,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutTeamLeader;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15480,7 +15501,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutSquadLeader;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15499,7 +15520,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutAmmoBearer;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15518,7 +15539,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutMedic;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15538,7 +15559,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutRTO;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15558,7 +15579,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutSergeant;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15577,7 +15598,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutOfficer;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15596,7 +15617,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutEngineer;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15615,7 +15636,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutExplosiveSpecialist;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15634,7 +15655,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutHelicopterPilot;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15653,7 +15674,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutHelicopterCrew;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15672,7 +15693,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutMineSpecialist;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15691,7 +15712,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutSurvivor;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15710,7 +15731,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutUAVOperator;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15732,7 +15753,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15753,7 +15774,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15775,7 +15796,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -15787,7 +15808,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Turrets_CreateHMGTripod = {
@@ -15798,7 +15819,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Turrets_CreateGMG = {
@@ -15809,7 +15830,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Turrets_CreateGMGTripod = {
@@ -15820,7 +15841,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Turrets_CreateMortar = {
@@ -15831,7 +15852,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Turrets_CreateRadar = {
@@ -15846,7 +15867,7 @@ PZFP_fnc_initialize = {
   
   createVehicleCrew _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Turrets_CreateDesignator = {
@@ -15856,7 +15877,7 @@ PZFP_fnc_initialize = {
 
   createVehicleCrew _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Turrets_CreateSAM = {
@@ -15871,7 +15892,7 @@ PZFP_fnc_initialize = {
 
   createVehicleCrew _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Turrets_CreateAA = {
@@ -15882,7 +15903,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_IRGF_Turrets_CreateAT = {
@@ -15893,7 +15914,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHAF_Drones_CreateFenghuang = {
@@ -15904,7 +15925,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHAF_Pilots_AddLoadoutFighterPilot = {
@@ -15985,7 +16006,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_opfor_CHAF_Pilots_AddLoadoutFighterPilot;
     [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -16002,7 +16023,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_opfor_CHAF_Pilots_AddLoadoutTransportPilot;
     [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -16015,7 +16036,7 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHAF_Planes_CreateXian = {
@@ -16032,7 +16053,7 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHAF_Planes_CreateXianVehicle = {
@@ -16049,7 +16070,7 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHAF_Planes_CreateShikra = {
@@ -16066,7 +16087,7 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_AntiAir_CreateTigris = {
@@ -16087,7 +16108,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_AntiAir_CreateKamysh = {
@@ -16138,7 +16159,8 @@ PZFP_fnc_initialize = {
 
   [crew _vehicle, crew _vehicle2] joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle, _vehicle2], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_APCs_CreateKamysh = {
@@ -16159,7 +16181,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_APCs_CreateMarid = {
@@ -16178,7 +16200,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_APCs_CreateMaridAutocannon = {
@@ -16216,7 +16238,8 @@ PZFP_fnc_initialize = {
   group _vehicle addVehicle _vehicle2;
   group _vehicle setBehaviour "AWARE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle, _vehicle2], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Artillery_CreateSochor = {
@@ -16237,7 +16260,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Artillery_CreateZamak = {
@@ -16258,7 +16281,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Boats_CreateAssaultBoat = {
@@ -16275,7 +16298,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Boats_CreateRescueBoat = {
@@ -16292,7 +16315,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Boats_CreateRHIB = {
@@ -16309,7 +16332,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Cars_CreateIfrit = {
@@ -16326,7 +16349,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Cars_CreateIfritHMG = {
@@ -16345,7 +16368,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Cars_CreateIfritGMG = {
@@ -16364,7 +16387,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Cars_CreateZamakTransport = {
@@ -16381,7 +16404,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Cars_CreateZamakTransportCovered = {
@@ -16398,7 +16421,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Cars_CreateZamakRepair = {
@@ -16415,7 +16438,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Cars_CreateZamakFuel = {
@@ -16432,7 +16455,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Cars_CreateZamakAmmo = {
@@ -16449,7 +16472,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Cars_CreateZamakMedical = {
@@ -16466,7 +16489,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Drones_CreateJinaah = {
@@ -16482,7 +16505,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Drones_CreateJinaahMedical = {
@@ -16498,7 +16521,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Drones_CreateTayran = {
@@ -16514,7 +16537,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Helicopters_CreateTaru = {
@@ -16535,7 +16558,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Helicopters_CreateTaruTransport = {
@@ -16556,7 +16579,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Helicopters_CreateTaruRepair = {
@@ -16577,7 +16600,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Helicopters_CreateTaruFuel = {
@@ -16598,7 +16621,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Helicopters_CreateTaruAmmo = {
@@ -16619,7 +16642,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Helicopters_CreateTaruMedical = {
@@ -16640,7 +16663,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Helicopters_CreateTaruCargo = {
@@ -16661,7 +16684,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Helicopters_CreateKajman = {
@@ -16680,7 +16703,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Helicopters_CreateOrca = {
@@ -16699,7 +16722,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Helicopters_CreateOrcaArmed = {
@@ -16718,7 +16741,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Men_AddLoadoutRifleman = {
@@ -17504,7 +17527,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17523,7 +17546,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutLAT;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17542,7 +17565,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutAT;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17561,7 +17584,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutAutorifleman;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17580,7 +17603,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutMarksman;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17599,7 +17622,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutTeamLeader;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17618,7 +17641,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutSquadLeader;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17637,7 +17660,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutAmmoBearer;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17656,7 +17679,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutMedic;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17676,7 +17699,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutRTO;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17696,7 +17719,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutSergeant;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17715,7 +17738,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutOfficer;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17732,7 +17755,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutCrewman;
     [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17751,7 +17774,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutEngineer;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17770,7 +17793,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutExplosiveSpecialist;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17789,7 +17812,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutHelicopterPilot;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17808,7 +17831,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutHelicopterCrew;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17827,7 +17850,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutMineSpecialist;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17846,7 +17869,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutSurvivor;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17865,7 +17888,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutUAVOperator;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17887,7 +17910,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17908,7 +17931,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17930,7 +17953,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -17942,7 +17965,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Turrets_CreateHMGTripod = {
@@ -17953,7 +17976,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Turrets_CreateGMG = {
@@ -17964,7 +17987,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Turrets_CreateGMGTripod = {
@@ -17975,7 +17998,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Turrets_CreateMortar = {
@@ -17986,7 +18009,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Turrets_CreateRadar = {
@@ -18001,7 +18024,7 @@ PZFP_fnc_initialize = {
   
   createVehicleCrew _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Turrets_CreateDesignator = {
@@ -18011,7 +18034,7 @@ PZFP_fnc_initialize = {
 
   createVehicleCrew _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Turrets_CreateSAM = {
@@ -18026,7 +18049,7 @@ PZFP_fnc_initialize = {
 
   createVehicleCrew _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Turrets_CreateAA = {
@@ -18037,7 +18060,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_CHGF_Turrets_CreateAT = {
@@ -18048,7 +18071,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUAF_Drones_CreateFenghuang = {
@@ -18059,7 +18082,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUAF_MaintenanceCrew_AddLoadoutRepairSpecialist = {
@@ -18094,7 +18117,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_opfor_TUAF_MaintenanceCrew_AddLoadoutRepairSpecialist;
     [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -18143,7 +18166,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_opfor_TUAF_Pilots_AddLoadoutFighterPilot;
     [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -18161,7 +18184,7 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_AntiAir_CreateTigris = {
@@ -18182,7 +18205,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_AntiAir_CreateKamysh = {
@@ -18233,7 +18256,8 @@ PZFP_fnc_initialize = {
 
   [crew _vehicle, crew _vehicle2] joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle, _vehicle2], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_APCs_CreateKamysh = {
@@ -18254,7 +18278,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_APCs_CreateMarid = {
@@ -18273,7 +18297,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_APCs_CreateMaridAutocannon = {
@@ -18311,7 +18335,8 @@ PZFP_fnc_initialize = {
   group _vehicle addVehicle _vehicle2;
   group _vehicle setBehaviour "AWARE";
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle, _vehicle2], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Artillery_CreateZamak = {
@@ -18332,7 +18357,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Cars_CreateIfrit = {
@@ -18349,7 +18374,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Cars_CreateIfritHMG = {
@@ -18368,7 +18393,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Cars_CreateIfritGMG = {
@@ -18387,7 +18412,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Cars_CreateZamakTransport = {
@@ -18404,7 +18429,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Cars_CreateZamakTransportCovered = {
@@ -18421,7 +18446,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Cars_CreateZamakRepair = {
@@ -18438,7 +18463,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Cars_CreateZamakFuel = {
@@ -18455,7 +18480,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Cars_CreateZamakAmmo = {
@@ -18472,7 +18497,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Cars_CreateZamakMedical = {
@@ -18489,7 +18514,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Drones_CreateJinaah = {
@@ -18505,7 +18530,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Drones_CreateJinaahMedical = {
@@ -18521,7 +18546,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Drones_CreateTayran = {
@@ -18537,7 +18562,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
  
  PZFP_fnc_opfor_TUA_Helicopters_CreateOrca = {
@@ -18556,7 +18581,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Helicopters_CreateOrcaArmed = {
@@ -18575,7 +18600,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Men_AddLoadoutRifleman = {
@@ -19312,7 +19337,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19331,7 +19356,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutLAT;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19350,7 +19375,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutAT;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19369,7 +19394,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutAutorifleman;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19388,7 +19413,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutMarksman;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19407,7 +19432,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutTeamLeader;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19426,7 +19451,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutSquadLeader;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19445,7 +19470,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutAmmoBearer;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19464,7 +19489,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutMedic;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19484,7 +19509,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutRTO;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19504,7 +19529,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutSergeant;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19523,7 +19548,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutOfficer;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19540,7 +19565,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutCrewman;
     [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19559,7 +19584,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutEngineer;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19578,7 +19603,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutExplosiveSpecialist;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19597,7 +19622,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutHelicopterPilot;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19616,7 +19641,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutHelicopterCrew;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19635,7 +19660,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutMineSpecialist;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19654,7 +19679,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutSurvivor;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19673,7 +19698,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutUAVOperator;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19695,7 +19720,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -19707,7 +19732,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Turrets_CreateHMGTripod = {
@@ -19718,7 +19743,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Turrets_CreateGMG = {
@@ -19729,7 +19754,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Turrets_CreateGMGTripod = {
@@ -19740,7 +19765,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Turrets_CreateMortar = {
@@ -19751,7 +19776,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Turrets_CreateRadar = {
@@ -19766,7 +19791,7 @@ PZFP_fnc_initialize = {
   
   createVehicleCrew _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Turrets_CreateDesignator = {
@@ -19776,7 +19801,7 @@ PZFP_fnc_initialize = {
 
   createVehicleCrew _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Turrets_CreateSAM = {
@@ -19791,7 +19816,7 @@ PZFP_fnc_initialize = {
 
   createVehicleCrew _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Turrets_CreateAA = {
@@ -19802,7 +19827,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_TUA_Turrets_CreateAT = {
@@ -19813,7 +19838,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_Raven_Cars_CreateOffroad = {
@@ -19829,7 +19854,7 @@ PZFP_fnc_initialize = {
   private _driver = [] call PZFP_fnc_opfor_Raven_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_Raven_Cars_CreateOffroadHMG = {
@@ -19847,7 +19872,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_Raven_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_Raven_Cars_CreateOffroadAT = {
@@ -19865,7 +19890,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_opfor_Raven_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_Raven_Cars_CreateOffroadComms = {
@@ -19881,7 +19906,7 @@ PZFP_fnc_initialize = {
   private _driver = [] call PZFP_fnc_opfor_Raven_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_Raven_Cars_CreateOffroadCovered = {
@@ -19897,7 +19922,7 @@ PZFP_fnc_initialize = {
   private _driver = [] call PZFP_fnc_opfor_Raven_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_Raven_Drones_CreatePelican = {
@@ -19913,7 +19938,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_Raven_Drones_CreatePelicanDropper = {
@@ -19960,7 +19985,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_Raven_Drones_CreatePelicanDropperMortar = {
@@ -20012,7 +20037,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_Raven_Drones_CreatePelicanCharge = {
@@ -20069,7 +20094,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_Raven_Drones_CreatePelicanMedical = {
@@ -20085,7 +20110,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_Raven_Drones_CreateDarter = {
@@ -20101,7 +20126,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_Raven_Helicopters_CreateOrca = {
@@ -20120,7 +20145,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle joinSilent createGroup [east, true];
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_Raven_Helicopters_CreateOrcaArmed = {
@@ -20139,7 +20164,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle joinSilent createGroup [east, true];
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_Raven_Men_AddLoadoutRifleman = {
@@ -20583,7 +20608,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -20602,7 +20627,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutRiflemanAT;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -20621,7 +20646,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutAutorifleman;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -20640,7 +20665,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutGrenadier;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -20659,7 +20684,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutMarksman;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -20678,7 +20703,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutTeamLeader;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -20697,7 +20722,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutSquadLeader;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -20716,7 +20741,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutAmmoBearer;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -20735,7 +20760,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutMedic;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -20754,7 +20779,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutHelicopterPilot;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -20773,7 +20798,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_Raven_Men_AddLoadoutUAVOperator;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -20809,7 +20834,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_opfor_RUAF_MaintenanceCrew_AddLoadoutRepairSpecialist;
     [_unit] call PZFP_fnc_IR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  }; 
 
@@ -20857,7 +20882,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_opfor_RUAF_Pilots_AddLoadoutFighterPilot;
     [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -20875,7 +20900,7 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUAF_Planes_CreateShikraStealth = {
@@ -20892,7 +20917,7 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Cars_CreateQilin = {
@@ -20909,7 +20934,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Cars_CreateQilinMinigun = {
@@ -20928,7 +20953,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Cars_CreateQilinAT = {
@@ -20947,7 +20972,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;  
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Helicopters_CreateTaru = {
@@ -20968,7 +20993,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Helicopters_CreateTaruTransport = {
@@ -20989,7 +21014,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Helicopters_CreateTaruRepair = {
@@ -21010,7 +21035,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Helicopters_CreateTaruFuel = {
@@ -21031,7 +21056,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Helicopters_CreateTaruAmmo = {
@@ -21052,7 +21077,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Helicopters_CreateTaruMedical = {
@@ -21073,7 +21098,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Helicopters_CreateTaruCargo = {
@@ -21094,7 +21119,7 @@ PZFP_fnc_initialize = {
   _loadmaster moveInTurret [_vehicle, [1]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Helicopters_CreateKajman = {
@@ -21113,7 +21138,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Helicopters_CreateOrca = {
@@ -21132,7 +21157,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Helicopters_CreateOrcaArmed = {
@@ -21151,7 +21176,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle joinSilent createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Drones_CreatePelican = {
@@ -21167,7 +21192,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Drones_CreatePelicanDropper = {
@@ -21214,7 +21239,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Drones_CreatePelicanDropperMortar = {
@@ -21266,7 +21291,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Drones_CreatePelicanCharge = {
@@ -21323,7 +21348,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Drones_CreatePelicanMedical = {
@@ -21339,7 +21364,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Drones_CreateDarter = {
@@ -21355,7 +21380,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_RUS_Men_AddLoadoutRifleman = {
@@ -21893,7 +21918,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -21912,7 +21937,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutRiflemanAT;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -21931,7 +21956,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutAutorifleman;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -21950,7 +21975,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutGrenadier;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -21969,7 +21994,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutMarksman;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -21988,7 +22013,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutTeamLeader;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -22007,7 +22032,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutSquadLeader;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -22026,7 +22051,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutAmmoBearer;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -22045,7 +22070,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutMedic;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -22064,7 +22089,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutHelicopterPilot;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -22083,7 +22108,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutUAVOperator;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -22103,7 +22128,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_RUS_Men_AddLoadoutJTAC;
    [_unit] call PZFP_fnc_RU_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
  
@@ -22121,7 +22146,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Cars_CreateOffroad = {
@@ -22138,7 +22163,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Cars_CreateOffroadHMG = {
@@ -22157,7 +22182,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Cars_CreateOffroadAT = {
@@ -22176,7 +22201,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Cars_CreateOffroadCovered = {
@@ -22195,7 +22220,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Cars_CreateOffroadComms = {
@@ -22214,7 +22239,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [east, true];
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Cars_CreateVanTransport = {
@@ -22231,7 +22256,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Cars_CreateVanCargo = {
@@ -22248,7 +22273,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Cars_CreateZamakAmmo = {
@@ -22267,7 +22292,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Cars_CreateZamakFuel = {
@@ -22285,7 +22310,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [east, true];
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Cars_CreateZamakRepair = {
@@ -22303,7 +22328,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Drones_CreatePelican = {
@@ -22319,7 +22344,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Drones_CreatePelicanDropper = {
@@ -22366,7 +22391,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Drones_CreatePelicanDropperMortar = {
@@ -22418,7 +22443,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Drones_CreatePelicanCharge = {
@@ -22475,7 +22500,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Drones_CreatePelicanMedical = {
@@ -22491,7 +22516,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Drones_CreateDarter = {
@@ -22507,7 +22532,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [east, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Men_AddLoadoutRifleman = {
@@ -23004,7 +23029,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -23023,7 +23048,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutRiflemanLAT;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -23042,7 +23067,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutRiflemanAT;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -23061,7 +23086,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutAutorifleman;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -23080,7 +23105,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutMarksman;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -23099,7 +23124,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutTeamLeader;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -23118,7 +23143,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutSquadLeader;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -23137,7 +23162,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutAmmoBearer;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -23156,7 +23181,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutMedic;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -23175,7 +23200,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutSergeant;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -23194,7 +23219,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutOfficer;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -23213,7 +23238,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutCrewman;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -23232,7 +23257,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutSurvivor;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -23251,41 +23276,41 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_opfor_LPP_Men_AddLoadoutUAVOperator;
    [_unit] call PZFP_fnc_PL_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
  PZFP_fnc_opfor_LPP_Turrets_CreateHMG = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _turret = createVehicle ["O_HMG_01_F", _position, [], 0, "NONE"];
+  private _vehicle = createVehicle ["O_HMG_01_F", _position, [], 0, "NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
-  _gunner moveInGunner _turret;
+  _gunner moveInGunner _vehicle;
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_turret], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Turrets_CreateHMGTripod = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _turret = createVehicle ["O_HMG_01_high_F", _position, [], 0, "NONE"];
+  private _vehicle = createVehicle ["O_HMG_01_high_F", _position, [], 0, "NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
-  _gunner moveInGunner _turret;
+  _gunner moveInGunner _vehicle;
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_turret], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_opfor_LPP_Turrets_CreateMortar = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _turret = createVehicle ["O_Mortar_01_F", _position, [], 0, "NONE"];
+  private _vehicle = createVehicle ["O_Mortar_01_F", _position, [], 0, "NONE"];
   
   private _gunner = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
-  _gunner moveInGunner _turret;
+  _gunner moveInGunner _vehicle;
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_turret], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_APCs_CreateMarshall = {
@@ -23313,7 +23338,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Cars_CreateOffroad = {
@@ -23332,7 +23357,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Cars_CreateOffroadHMG = {
@@ -23353,7 +23378,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Cars_CreateOffroadAT = {
@@ -23374,7 +23399,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_ION_Cars_CreateOffroadCovered = {
@@ -23393,7 +23418,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_ION_Cars_CreateOffroadComms = {
@@ -23412,7 +23437,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [west, true];
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Cars_CreateZamakTransport = {
@@ -23430,7 +23455,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Cars_CreateZamakTransportCovered = {
@@ -23448,7 +23473,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Cars_CreateZamakAmmo = {
@@ -23467,7 +23492,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Cars_CreateZamakFuel = {
@@ -23485,7 +23510,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Cars_CreateZamakRepair = {
@@ -23503,7 +23528,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Drones_CreatePelican = {
@@ -23519,7 +23544,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Drones_CreatePelicanDropper = {
@@ -23566,7 +23591,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Drones_CreatePelicanDropperMortar = {
@@ -23618,7 +23643,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Drones_CreatePelicanCharge = {
@@ -23675,7 +23700,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Drones_CreatePelicanMedical = {
@@ -23691,7 +23716,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Drones_CreateDarter = {
@@ -23707,7 +23732,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Helicopters_CreateM900 = {
@@ -23726,7 +23751,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Helicopters_CreateHummingbird = {
@@ -23746,7 +23771,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Helicopters_CreatePawnee = {
@@ -23766,7 +23791,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Helicopters_CreateOrca = {
@@ -23785,7 +23810,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Helicopters_CreateOrcaArmed = {
@@ -23804,7 +23829,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Helicopters_CreateMohawk = {
@@ -23826,7 +23851,7 @@ PZFP_fnc_initialize = {
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Men_AddLoadoutRifleman = {
@@ -24492,7 +24517,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24511,7 +24536,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutLAT;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24530,7 +24555,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutAT;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24549,7 +24574,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutAutorifleman;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24568,7 +24593,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutMarksman;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24587,7 +24612,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutTeamLeader;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24606,7 +24631,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutSquadLeader;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24625,7 +24650,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutAmmoBearer;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24644,7 +24669,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutMedic;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24664,7 +24689,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutRTO;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24684,7 +24709,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutSergeant;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24703,7 +24728,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutOfficer;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24720,7 +24745,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutCrewman;
     [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24739,7 +24764,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutHelicopterPilot;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24758,7 +24783,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutSurvivor;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24777,7 +24802,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_ION_Men_AddLoadouIONVOperator;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -24789,7 +24814,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_indep_ION_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_ION_Turrets_CreateHMGTripod = {
@@ -24800,7 +24825,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_indep_ION_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_APCs_CreateGorgon = {
@@ -24821,7 +24846,7 @@ PZFP_fnc_initialize = {
   _commander moveInCommander _vehicle;
   crew _vehicle joinSilent createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Cars_CreateOffroad = {
@@ -24838,7 +24863,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Cars_CreateOffroadHMG = {
@@ -24857,7 +24882,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Cars_CreateOffroadAT = {
@@ -24876,7 +24901,7 @@ PZFP_fnc_initialize = {
   _gunner moveInGunner _vehicle;
   crew _vehicle joinSilent createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Cars_CreateZamakTransport = {
@@ -24893,7 +24918,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Cars_CreateZamakTransportCovered = {
@@ -24910,7 +24935,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Cars_CreateZamakAmmo = {
@@ -24929,7 +24954,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Cars_CreateZamakAmmo = {
@@ -24946,7 +24971,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Cars_CreateZamakRepair = {
@@ -24963,7 +24988,7 @@ PZFP_fnc_initialize = {
   _driver moveInDriver _vehicle;
   crew _vehicle joinSilent createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Drones_CreatePelican = {
@@ -24979,7 +25004,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Drones_CreatePelicanDropper = {
@@ -25026,7 +25051,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Drones_CreatePelicanDropperMortar = {
@@ -25078,7 +25103,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Drones_CreatePelicanCharge = {
@@ -25135,7 +25160,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Drones_CreatePelicanMedical = {
@@ -25151,7 +25176,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Drones_CreateDarter = {
@@ -25167,7 +25192,7 @@ PZFP_fnc_initialize = {
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [independent, true];
 
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Men_AddLoadoutRifleman = {
@@ -25824,7 +25849,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -25843,7 +25868,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutRiflemanLAT;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -25862,7 +25887,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutRiflemanAT;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -25881,7 +25906,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutAutorifleman;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -25900,7 +25925,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutMarksman;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -25919,7 +25944,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutTeamLeader;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -25938,7 +25963,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutSquadLeader;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -25957,7 +25982,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutAmmoBearer;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -25976,7 +26001,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutMedic;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -25996,7 +26021,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutRTO;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -26016,7 +26041,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutSergeant;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -26035,7 +26060,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutOfficer;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -26052,7 +26077,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutCrewman;
     [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -26071,7 +26096,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutHelicopterPilot;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -26090,7 +26115,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutSurvivor;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -26109,7 +26134,7 @@ PZFP_fnc_initialize = {
    [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutUAVOperator;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -26121,7 +26146,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_indep_MDF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_indep_MDF_Turrets_CreateHMGTripod = {
@@ -26132,7 +26157,7 @@ PZFP_fnc_initialize = {
   private _gunner = [] call PZFP_fnc_indep_MDF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
   
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_vehicle], true];
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutCivilian = {
@@ -26308,7 +26333,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutCivilian;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -26325,7 +26350,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutCivilianFormal;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -26342,7 +26367,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutFarmer;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -26359,7 +26384,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutJournalist;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -26376,7 +26401,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutJournalistWar;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -26393,7 +26418,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutUtilityWorker;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -26410,7 +26435,7 @@ PZFP_fnc_initialize = {
     [_unit] call PZFP_fnc_civ_RandomCivilians_Civilians_AddLoadoutConstructionWorker;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
-  getAssignedCuratorLogic player addCuratorEditableObjects [[_unit], true];
+  [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
  };
 
@@ -27515,7 +27540,7 @@ PZFP_fnc_initialize = {
   [] spawn {
    while { true } do {
 	  waitUntil { !isNull (findDisplay 312) };
-	  sleep 0.1;
+	  sleep 1;
 
 	  [] call PZFP_fnc_rebuildZeusTree;
 
@@ -27524,36 +27549,39 @@ PZFP_fnc_initialize = {
   };
  };
 
- {
-  player createDiarySubject ["PZFP", "Zeus Faction Pack"];
-  player createDiaryRecord [
-   "PZFP",
-   [
-    "Vanilla Factions",
-    format [
-     "<font color='#1B9BD6' size='18' face='PuristaMedium'>%1</font><br/>" +
-     "<font size='14' face='PuristaMedium'>%2</font><br/><br/>" +
-     "<font size='16' face='PuristaMedium'>Features:</font><font size='14' face='PuristaMedium'>" +
-     "<br/> • Adds 7 never-seen-before factions, compatible with" +
-     "<br/>   ArmAverse lore" +
-     "<br/> • Revamps all existing vanilla factions" +
-     "<br/> • Adds 8+ high-quality new vehicles using vanilla assets," +
-     "<br/>   and adds 14+ vehicle re-skins" +
-     "<br/> • Adds AI improvements, standardized equipment across" +
-     "<br/>   factions, and randomized civilians" +
-     "<br/> • Includes automatic compatibility with Western Sahara DLC" +
-     "<br/>   content" +
-     "<br/><br/>" +
-     "See the faction list and download for yourself on the " +
-     "<execute expression='copyToClipboard ""https://steamcommunity.com/sharedfiles/filedetails/?id=""'>Steam Workshop!</execute> (click to copy link)" +
-     "</font>",
+ if (!(missionNamespace getVariable ["PZFP_diaryEntry", false])) then {
+  {
+    player createDiarySubject ["PZFP", "Zeus Faction Pack"];
+    player createDiaryRecord [
+     "PZFP",
+     [
      "Vanilla Factions",
-     "PZFP is a complete overhaul of ArmA 3's existing factions, using vanilla content and hidden textures/models to fully utilize ArmA's vast equipment and vehicle roster. Using only vanilla assets, PZFP:"
+     format [
+      "<font color='#1B9BD6' size='18' face='PuristaMedium'>%1</font><br/>" +
+      "<font size='14' face='PuristaMedium'>%2</font><br/><br/>" +
+      "<font size='16' face='PuristaMedium'>Features:</font><font size='14' face='PuristaMedium'>" +
+      "<br/> • Adds 7 never-seen-before factions, compatible with" +
+      "<br/>   ArmAverse lore" +
+      "<br/> • Revamps all existing vanilla factions" +
+      "<br/> • Adds 8+ high-quality new vehicles using vanilla assets," +
+      "<br/>   and adds 14+ vehicle re-skins" +
+      "<br/> • Adds AI improvements, standardized equipment across" +
+      "<br/>   factions, and randomized civilians" +
+      "<br/> • Includes automatic compatibility with Western Sahara DLC" +
+      "<br/>   content" +
+      "<br/><br/>" +
+      "See the faction list and download for yourself on the " +
+      "<execute expression='copyToClipboard ""https://steamcommunity.com/sharedfiles/filedetails/?id=3627037158""'>Steam Workshop!</execute> (click to copy link)" +
+      "</font>",
+      "Vanilla Factions",
+      "PZFP is a complete overhaul of ArmA 3's existing factions, using vanilla content and hidden textures/models to fully utilize ArmA's vast equipment and vehicle roster. Using only vanilla assets, PZFP:"
+     ]
     ]
-   ]
-  ];
- } remoteExec ["call", 0, true];
+   ];
+  } remoteExec ["call", 0, true];
+ };
 
+ missionNamespace setVariable ["PZFP_diaryEntry", true];
  missionNamespace setVariable ["PZFP_initialized", true];
  systemChat "[PZFP] - PZFP initialized!";
  call BIS_fnc_VRFadeIn;
