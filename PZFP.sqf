@@ -8117,6 +8117,7 @@ PZFP_fnc_initialize = {
     private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _drone, [], 0, "NONE"];
     _charge setDamage 1;
     _drone setVariable ["fired", 1];
+    deleteVehicle _unit;
   }];
 
   _vehicle addEventHandler ["Killed", {
@@ -8128,6 +8129,7 @@ PZFP_fnc_initialize = {
       private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _unit, [], 0, "NONE"];
       _charge setDamage 1;
       _unit setVariable ["fired", 1];
+      deleteVehicle _unit;
     };
   }];
 
@@ -11295,6 +11297,7 @@ PZFP_fnc_initialize = {
     private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _drone, [], 0, "NONE"];
     _charge setDamage 1;
     _drone setVariable ["fired", 1];
+    deleteVehicle _unit;
   }];
 
   _vehicle addEventHandler ["Killed", {
@@ -11306,6 +11309,7 @@ PZFP_fnc_initialize = {
       private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _unit, [], 0, "NONE"];
       _charge setDamage 1;
       _unit setVariable ["fired", 1];
+      deleteVehicle _unit;
     };
   }];
 
@@ -20046,6 +20050,7 @@ PZFP_fnc_initialize = {
     private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _drone, [], 0, "NONE"];
     _charge setDamage 1;
     _drone setVariable ["fired", 1];
+    deleteVehicle _unit;
   }];
 
   _vehicle addEventHandler ["Killed", {
@@ -20057,6 +20062,7 @@ PZFP_fnc_initialize = {
       private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _unit, [], 0, "NONE"];
       _charge setDamage 1;
       _unit setVariable ["fired", 1];
+      deleteVehicle _unit;
     };
   }];
 
@@ -21300,6 +21306,7 @@ PZFP_fnc_initialize = {
     private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _drone, [], 0, "NONE"];
     _charge setDamage 1;
     _drone setVariable ["fired", 1];
+    deleteVehicle _unit;
   }];
 
   _vehicle addEventHandler ["Killed", {
@@ -21311,6 +21318,7 @@ PZFP_fnc_initialize = {
       private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _unit, [], 0, "NONE"];
       _charge setDamage 1;
       _unit setVariable ["fired", 1];
+      deleteVehicle _unit;
     };
   }];
 
@@ -22452,6 +22460,7 @@ PZFP_fnc_initialize = {
     private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _drone, [], 0, "NONE"];
     _charge setDamage 1;
     _drone setVariable ["fired", 1];
+    deleteVehicle _unit;
   }];
 
   _vehicle addEventHandler ["Killed", {
@@ -22463,6 +22472,7 @@ PZFP_fnc_initialize = {
       private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _unit, [], 0, "NONE"];
       _charge setDamage 1;
       _unit setVariable ["fired", 1];
+      deleteVehicle _unit;
     };
   }];
 
@@ -23652,6 +23662,7 @@ PZFP_fnc_initialize = {
     private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _drone, [], 0, "NONE"];
     _charge setDamage 1;
     _drone setVariable ["fired", 1];
+    deleteVehicle _unit;
   }];
 
   _vehicle addEventHandler ["Killed", {
@@ -23663,6 +23674,7 @@ PZFP_fnc_initialize = {
       private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _unit, [], 0, "NONE"];
       _charge setDamage 1;
       _unit setVariable ["fired", 1];
+      deleteVehicle _unit;
     };
   }];
 
@@ -25112,6 +25124,7 @@ PZFP_fnc_initialize = {
     private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _drone, [], 0, "NONE"];
     _charge setDamage 1;
     _drone setVariable ["fired", 1];
+    deleteVehicle _unit;
   }];
 
   _vehicle addEventHandler ["Killed", {
@@ -25123,6 +25136,7 @@ PZFP_fnc_initialize = {
       private _charge = createVehicle ["DemoCharge_Remote_Ammo", position _unit, [], 0, "NONE"];
       _charge setDamage 1;
       _unit setVariable ["fired", 1];
+      deleteVehicle _unit;
     };
   }];
 
