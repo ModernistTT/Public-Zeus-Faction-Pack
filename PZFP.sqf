@@ -67,7 +67,6 @@ PZFP_fnc_initialize = {
    default {"B_Soldier_VR_F"};
   };
   _parentMenu tvSetData [_path, _vrType];
-  _parentMenu ctrlCommit 0;
 
   private _functionArray = missionNamespace getVariable ["PZFP_moduleScripts", []];
   private _functionArraySize = count _functionArray;
@@ -164,9 +163,15 @@ PZFP_fnc_initialize = {
  PZFP_fnc_declutterTrees = {
   {
    for '_n' from 0 to ((_maindisplay displayCtrl _x) tvCount []) do {
-	(_maindisplay displayCtrl _x) tvCollapse [_n];
+	  (_maindisplay displayCtrl _x) tvCollapse [_n];
    };
   } forEach [270,271,272,273,274,275,276,277,278,280];
+
+  {
+   while { _maindisplay displayCtrl _x tvCount [] > 0 } do {
+    (_maindisplay displayCtrl _x) tvDelete [0];
+   };
+  } forEach [270,271,272,273];  
  };
 
   PZFP_fnc_vehicleCleanup = {
@@ -26491,11 +26496,6 @@ PZFP_fnc_initialize = {
   [] call PZFP_fnc_declutterTrees;
 
 
-  PZFP_bluforDividerSpace = [_blufor, "", [1,1,1,0]] call PZFP_fnc_addCategory;
-  PZFP_bluforTitle = [_blufor, "PZFP Factions", [0,0.3,0.7,1]] call PZFP_fnc_addCategory;
-  PZFP_bluforDivider = [_blufor, "--------------------------------------------", [0,0.3,0.7,1]] call PZFP_fnc_addCategory;
-
-
 
   PZFP_blufor_USAF = [_blufor, "United States Air Force", [1,1,1,1]] call PZFP_fnc_addCategory;
 
@@ -26993,13 +26993,7 @@ PZFP_fnc_initialize = {
   PZFP_blufor_StrazLesna_Men_Officer = [_blufor, PZFP_blufor_StrazLesna, PZFP_blufor_StrazLesna_Men, "Officer", "PZFP_fnc_blufor_StrazLesna_Men_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_StrazLesna_Men_OfficerShotgun = [_blufor, PZFP_blufor_StrazLesna, PZFP_blufor_StrazLesna_Men, "Officer (Shotgun)", "PZFP_fnc_blufor_StrazLesna_Men_CreateOfficerShotgun", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_StrazLesna_Men_OfficerRifle = [_blufor, PZFP_blufor_StrazLesna, PZFP_blufor_StrazLesna_Men, "Officer (Rifle)", "PZFP_fnc_blufor_StrazLesna_Men_CreateOfficerRifle", [1,1,1,1]] call PZFP_fnc_addModule;
-  
 
-
-  
-  PZFP_opforDividerSpace = [_opfor, "", [1,1,1,0]] call PZFP_fnc_addCategory;
-  PZFP_opforTitle = [_opfor, "PZFP Factions", [0.7,0.3,0,1]] call PZFP_fnc_addCategory;
-  PZFP_opforDivider = [_opfor, "--------------------------------------------", [0.7,0.3,0,1]] call PZFP_fnc_addCategory;
 
 
 
@@ -27435,12 +27429,6 @@ PZFP_fnc_initialize = {
 
 
 
-  PZFP_indepDividerSpace = [_indep, "", [1,1,1,0]] call PZFP_fnc_addCategory;
-  PZFP_indepTitle = [_indep, "PZFP Factions", [0,0.7,0.3,1]] call PZFP_fnc_addCategory;
-  PZFP_indepDivider = [_indep, "--------------------------------------------", [0,0.7,0.3,1]] call PZFP_fnc_addCategory;
-
-
-
 
   PZFP_indep_ION = [_indep, "ION Services", [1,1,1,1]] call PZFP_fnc_addCategory;
 
@@ -27545,12 +27533,6 @@ PZFP_fnc_initialize = {
   PZFP_indep_MDF_Turrets_HMGTripod = [_indep, PZFP_indep_MDF, PZFP_indep_MDF_Turrets, "M2 HMG (Raised Tripod)", "PZFP_fnc_indep_MDF_Turrets_CreateHMGTripod", [1,1,1,1]] call PZFP_fnc_addModule;
 
   
-  
-
-  PZFP_civDividerSpace = [_civ, "", [1,1,1,0]] call PZFP_fnc_addCategory;
-  PZFP_civTitle = [_civ, "PZFP Factions", [0.749,0,1,1]] call PZFP_fnc_addCategory;
-  PZFP_civDivider = [_civ, "--------------------------------------------", [0.749,0,1,1]] call PZFP_fnc_addCategory;
-
 
 
 
@@ -27570,7 +27552,6 @@ PZFP_fnc_initialize = {
   [] spawn {
    while { true } do {
 	  waitUntil { !isNull (findDisplay 312) };
-	  sleep 1;
 
 	  [] call PZFP_fnc_rebuildZeusTree;
 
@@ -27581,6 +27562,7 @@ PZFP_fnc_initialize = {
 
  if (!(missionNamespace getVariable ["PZFP_diaryEntry", false])) then {
   {
+    if (player diarySubjectExists "PZFP") exitWith {};
     player createDiarySubject ["PZFP", "Zeus Faction Pack"];
     player createDiaryRecord [
      "PZFP",
