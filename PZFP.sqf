@@ -15879,6 +15879,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Static_AA_F",_position,[],0,"NONE"];
+  private _launcher = createSimpleObject ["Weapon_launch_O_vorona_brown_F", _position];
 
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -15890,6 +15891,14 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Static_AT_F",_position,[],0,"NONE"];
+  private _launcher = createSimpleObject ["Weapon_launch_O_vorona_brown_F", _position];
+
+  [_vehicle, [0, ""]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle, [1, ""]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle, [2, ""]] remoteExec ['setObjectTexture',0,true];
+
+  _launcher attachTo [static, [-0.231,-0.4761,-1.022], "usti hlavne",true];
+  _launcher setVectorDirAndUp [[0.000,-0.188,0.982],[1.000,0.000,0.000]];
 
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -18047,6 +18056,14 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Static_AT_F",_position,[],0,"NONE"];
+  private _launcher = createSimpleObject ["Weapon_launch_O_vorona_brown_F", _position];
+
+  [_vehicle, [0, ""]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle, [1, ""]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle, [2, ""]] remoteExec ['setObjectTexture',0,true];
+
+  _launcher attachTo [static, [-0.231,-0.4761,-1.022], "usti hlavne",true];
+  _launcher setVectorDirAndUp [[0.000,-0.188,0.982],[1.000,0.000,0.000]];
 
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -19814,6 +19831,14 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Static_AT_F",_position,[],0,"NONE"];
+  private _launcher = createSimpleObject ["Weapon_launch_O_vorona_brown_F", _position];
+
+  [_vehicle, [0, ""]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle, [1, ""]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle, [2, ""]] remoteExec ['setObjectTexture',0,true];
+
+  _launcher attachTo [static, [-0.231,-0.4761,-1.022], "usti hlavne",true];
+  _launcher setVectorDirAndUp [[0.000,-0.188,0.982],[1.000,0.000,0.000]];
 
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -27061,7 +27086,7 @@ PZFP_fnc_initialize = {
   PZFP_opfor_IRGF_Turrets_Designator = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "Remote Designator", "PZFP_fnc_opfor_IRGF_Turrets_CreateDesignator", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_IRGF_Turrets_SAM = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "S-750 Rhea", "PZFP_fnc_opfor_IRGF_Turrets_CreateSAM", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_IRGF_Turrets_AA = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "Static Titan Launcher (AA)", "PZFP_fnc_opfor_IRGF_Turrets_CreateAA", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_opfor_IRGF_Turrets_AT = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "Static Titan Launcher (AT)", "PZFP_fnc_opfor_IRGF_Turrets_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRGF_Turrets_AT = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Turrets, "Static 9M135 Vorona Launcher", "PZFP_fnc_opfor_IRGF_Turrets_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
   
   
 
@@ -27164,7 +27189,7 @@ PZFP_fnc_initialize = {
   PZFP_opfor_CHGF_Turrets_Designator = [_opfor, PZFP_opfor_CHGF, PZFP_opfor_CHGF_Turrets, "Remote Designator", "PZFP_fnc_opfor_CHGF_Turrets_CreateDesignator", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_CHGF_Turrets_SAM = [_opfor, PZFP_opfor_CHGF, PZFP_opfor_CHGF_Turrets, "S-750 Rhea", "PZFP_fnc_opfor_CHGF_Turrets_CreateSAM", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_CHGF_Turrets_AA = [_opfor, PZFP_opfor_CHGF, PZFP_opfor_CHGF_Turrets, "Static Titan Launcher (AA)", "PZFP_fnc_opfor_CHGF_Turrets_CreateAA", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_opfor_CHGF_Turrets_AT = [_opfor, PZFP_opfor_CHGF, PZFP_opfor_CHGF_Turrets, "Static Titan Launcher (AT)", "PZFP_fnc_opfor_CHGF_Turrets_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_CHGF_Turrets_AT = [_opfor, PZFP_opfor_CHGF, PZFP_opfor_CHGF_Turrets, "Static 9M135 Vorona Launcher (AT)", "PZFP_fnc_opfor_CHGF_Turrets_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
   
   
   
@@ -27252,7 +27277,7 @@ PZFP_fnc_initialize = {
   PZFP_opfor_TUA_Turrets_Designator = [_opfor, PZFP_opfor_TUA, PZFP_opfor_TUA_Turrets, "Remote Designator", "PZFP_fnc_opfor_TUA_Turrets_CreateDesignator", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_TUA_Turrets_SAM = [_opfor, PZFP_opfor_TUA, PZFP_opfor_TUA_Turrets, "S-750 Rhea", "PZFP_fnc_opfor_TUA_Turrets_CreateSAM", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_TUA_Turrets_AA = [_opfor, PZFP_opfor_TUA, PZFP_opfor_TUA_Turrets, "Static Titan Launcher (AA)", "PZFP_fnc_opfor_TUA_Turrets_CreateAA", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_opfor_TUA_Turrets_AT = [_opfor, PZFP_opfor_TUA, PZFP_opfor_TUA_Turrets, "Static Titan Launcher (AT)", "PZFP_fnc_opfor_TUA_Turrets_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_TUA_Turrets_AT = [_opfor, PZFP_opfor_TUA, PZFP_opfor_TUA_Turrets, "Static 9M135 Vorona Launcher (AT)", "PZFP_fnc_opfor_TUA_Turrets_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
   
 
   PZFP_opfor_Raven = [_opfor, "Raven Security Group", [1,1,1,1]] call PZFP_fnc_addCategory;
