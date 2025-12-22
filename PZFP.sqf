@@ -15879,6 +15879,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Static_AA_F",_position,[],0,"NONE"];
+  private _launcher = createSimpleObject ["Weapon_launch_O_vorona_brown_F", _position];
 
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -15890,15 +15891,20 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Static_AT_F",_position,[],0,"NONE"];
-  private _launcher = createSimpleObject ["a3\weapons_f_tank\launchers\vorona\vorona_launcher_f.p3d", _position];
+  private _launcher = createVehicle ["Weapon_launch_O_vorona_brown_F", _position];
 
   [_vehicle, [0, ""]] remoteExec ['setObjectTexture',0,true];
   [_vehicle, [1, ""]] remoteExec ['setObjectTexture',0,true];
   [_vehicle, [2, ""]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle] call PZFP_fnc_vehicleCleanup;
+  _vehicle removeWeaponTurret ["missiles_titan_static",[0]];
+  _vehicle addWeaponTurret ["missiles_Vorona",[0]];
+  for "_i" from 1 to 6 do {_vehicle addMagazineTurret ["Vorona_HEAT",[0]];};
 
-  _launcher attachTo [_vehicle, [-0.231,-0.4761,-0.15], "usti hlavne",true];
-  _launcher setVectorDirAndUp [[0.982,0.000,0.188],[0.000,-1.000,0.000]];;
-
+  _launcher attachTo [_vehicle, [-0.231,-0.4761,-0.135], "usti hlavne",true];
+  _launcher setVectorDirAndUp [[0.000,-0.188,0.982],[1.000,0.000,0.000]];
+  _launcher setDamage 1;
+  
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
 
@@ -18055,14 +18061,19 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Static_AT_F",_position,[],0,"NONE"];
-  private _launcher = createSimpleObject ["a3\weapons_f_tank\launchers\vorona\vorona_launcher_f.p3d", _position];
+  private _launcher = createVehicle ["Weapon_launch_O_vorona_brown_F", _position];
 
   [_vehicle, [0, ""]] remoteExec ['setObjectTexture',0,true];
   [_vehicle, [1, ""]] remoteExec ['setObjectTexture',0,true];
   [_vehicle, [2, ""]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle] call PZFP_fnc_vehicleCleanup;
+  _vehicle removeWeaponTurret ["missiles_titan_static",[0]];
+  _vehicle addWeaponTurret ["missiles_Vorona",[0]];
+  for "_i" from 1 to 6 do {_vehicle addMagazineTurret ["Vorona_HEAT",[0]];};
 
-  _launcher attachTo [_vehicle, [-0.131,-0.4761,-0.15], "usti hlavne",true];
-  _launcher setVectorDirAndUp [[0.9848,0.1736,0],[0,0,1]];
+  _launcher attachTo [_vehicle, [-0.231,-0.4761,-0.135], "usti hlavne",true];
+  _launcher setVectorDirAndUp [[0.000,-0.188,0.982],[1.000,0.000,0.000]];
+  _launcher setDamage 1;
 
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -19830,14 +19841,19 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Static_AT_F",_position,[],0,"NONE"];
-  private _launcher = createSimpleObject ["a3\weapons_f_tank\launchers\vorona\vorona_launcher_f.p3d", _position];
+  private _launcher = createVehicle ["Weapon_launch_O_vorona_brown_F", _position];
 
   [_vehicle, [0, ""]] remoteExec ['setObjectTexture',0,true];
   [_vehicle, [1, ""]] remoteExec ['setObjectTexture',0,true];
   [_vehicle, [2, ""]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle] call PZFP_fnc_vehicleCleanup;
+  _vehicle removeWeaponTurret ["missiles_titan_static",[0]];
+  _vehicle addWeaponTurret ["missiles_Vorona",[0]];
+  for "_i" from 1 to 6 do {_vehicle addMagazineTurret ["Vorona_HEAT",[0]];};
 
-  _launcher attachTo [_vehicle, [-0.231,-0.4761,-0.15], "usti hlavne",true];
-  _launcher setVectorDirAndUp [[0.982,0.000,0.188],[0.000,-1.000,0.000]];;
+  _launcher attachTo [_vehicle, [-0.231,-0.4761,-0.135], "usti hlavne",true];
+  _launcher setVectorDirAndUp [[0.000,-0.188,0.982],[1.000,0.000,0.000]];
+  _launcher setDamage 1;
 
   private _gunner = [] call PZFP_fnc_opfor_TUA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
