@@ -27597,8 +27597,8 @@ PZFP_fnc_initialize = {
  [] call PZFP_fnc_addDiarySubject;
  [] call PZFP_fnc_addMainDiaryRecord;
  missionNamespace setVariable ["PZFP_initialized", true];
- systemChat "[PZFP] - PZFP initialized!";
- systemChat "[PZFP] - WARNING! You are using a beta version of PZFP. Bugs may occur. Report issues on our Discord! (http://discord.gg/feDtgN22P6)";
+ ["[PZFP] - PZFP initialized!"] remoteExec ['systemChat',0,true];
+ ["[PZFP] - WARNING! You are using a beta version of PZFP. Bugs may occur. Report issues on our Discord! (http://discord.gg/feDtgN22P6)"] remoteExec ['systemChat',0,true];
  call BIS_fnc_VRFadeIn;
  [] call PZFP_fnc_mainLoop;
 };
