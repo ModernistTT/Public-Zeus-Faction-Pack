@@ -10944,7 +10944,8 @@ PZFP_fnc_initialize = {
  
   private _driver = [] call PZFP_fnc_blufor_ANP_Men_CreateOfficer;
   _driver moveInDriver _vehicle;
-
+  [_vehicle, ["clan", '#(rgb,512,512,3)text(1,1,"PuristaBold",1,"#FFFFFF00","#000000","112")']] remoteExec ['setObjectTexture',0,true];
+  
   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
@@ -10957,6 +10958,7 @@ PZFP_fnc_initialize = {
    ["Grey",1], 
    true
   ] call BIS_fnc_initVehicle;
+  [_vehicle, ["clan", '#(rgb,512,512,3)text(1,1,"PuristaBold",1.25,"#FFFFFF00","#000000","112")']] remoteExec ['setObjectTexture',0,true];
  
   private _driver = [] call PZFP_fnc_blufor_ANP_Men_CreateOfficer;
   _driver moveInDriver _vehicle;
@@ -10972,6 +10974,7 @@ PZFP_fnc_initialize = {
    ["Door_1_source",0,"Door_2_source",0,"Door_3_source",0,"Door_4_source",0,"Hide_Door_1_source",0,"Hide_Door_2_source",0,"Hide_Door_3_source",0,"Hide_Door_4_source",0,"lights_em_hide",0,"ladder_hide",1,"spare_tyre_holder_hide",0,"spare_tyre_hide",0,"reflective_tape_hide",1,"roof_rack_hide",1,"LED_lights_hide",0,"sidesteps_hide",1,"rearsteps_hide",0,"side_protective_frame_hide",0,"front_protective_frame_hide",0,"beacon_front_hide",0,"beacon_rear_hide",0]
   ] call BIS_fnc_initVehicle;
   [_vehicle, [0, "a3\soft_f_orange\van_02\data\van_body_white_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle, ["clan", '#(rgb,512,512,3)text(1,1,"PuristaBold",1,"#FFFFFF00","#000000","112")']] remoteExec ['setObjectTexture',0,true];
  
   private _driver = [] call PZFP_fnc_blufor_ANP_Men_CreateOfficer;
   _driver moveInDriver _vehicle;
