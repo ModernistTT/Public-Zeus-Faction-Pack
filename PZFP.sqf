@@ -377,6 +377,69 @@ PZFP_fnc_initialize = {
   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
+ PZFP_fnc_blufor_USAF_MaintenanceCrew_AddLoadoutRepairSpecialist = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam";
+  _unit addVest selectRandom ["V_Safety_blue_F","V_Safety_orange_F","V_Safety_yellow_F"];
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addHeadgear "H_Cap_marshal";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_blufor_USAF_MaintenanceCrew_CreateRepairSpecialist = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  _group setBehaviour "SAFE";
+  private _unit = _group createUnit ["B_soldier_repair_F", _position, [], 0, "CAN_COLLIDE"];
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then {
+   doStop _unit;
+  };
+  [_unit] spawn {
+   params ["_unit"];
+   sleep 0.1;
+   [_unit] call PZFP_fnc_blufor_USAF_MaintenanceCrew_AddLoadoutRepairSpecialist;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
+  };
+  private _curator = getAssignedCuratorLogic player;
+  [_unit] call PZFP_fnc_addObjectToInterface;
+  _unit
+ };
+
+ PZFP_fnc_blufor_USAF_SFCars_CreateHunter = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["B_MRAP_01_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Blufor",1],
+   true
+  ] call BIS_fnc_initVehicle;
+
+  private _driver = [] call PZFP_fnc_blufor_USAF_SF_CreateRifleman;
+  _driver moveInDriver _vehicle;
+
+  [_driver] joinSilent createGroup [west, true];
+  _group setBehaviour "SAFE";
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
  PZFP_fnc_blufor_USAF_Pilots_AddLoadoutFighterPilot = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -566,6 +629,59 @@ PZFP_fnc_initialize = {
    params ["_unit"];
    sleep 0.1;
    [_unit] call PZFP_fnc_blufor_USAF_Pilots_AddLoadoutTransportPilot;
+   [_unit] call PZFP_fnc_USA_AddIdentity;
+  };
+  private _curator = getAssignedCuratorLogic player;
+  [_unit] call PZFP_fnc_addObjectToInterface;
+  _unit
+ };
+
+ PZFP_fnc_blufor_USAF_SF_AddLoadoutRifleman = {
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_F";
+  _unit addPrimaryWeaponItem "acc_flashlight";
+  _unit addPrimaryWeaponItem "optic_Holosight";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
+  _unit addWeapon "hgun_P07_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam";
+  _unit addVest "V_PlateCarrier1_rgr";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "Wallet_ID";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "Chemlight_blue";
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  _unit addHeadgear "H_Cap_police";
+  _unit addGoggles selectRandom ["","","","G_Squares_Tinted","G_Spectacles_Tinted","G_Aviator"];
+ };
+
+  PZFP_fnc_blufor_USAF_SF_CreateRifleman = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  _group setBehaviour "SAFE";
+  private _unit = _group createUnit ["B_Soldier_F", _position, [], 0, "CAN_COLLIDE"];
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then {
+   doStop _unit;
+  };
+  [_unit] spawn {
+   params ["_unit"];
+   sleep 0.1;
+   [_unit] call PZFP_fnc_blufor_USAF_SF_AddLoadoutRifleman;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
@@ -7518,6 +7634,49 @@ PZFP_fnc_initialize = {
   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
+ PZFP_fnc_blufor_BN_Submariners_AddLoadoutSubCrew = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit forceAddUniform "U_B_GEN_Commander_F";
+  _unit addHeadgear "H_MilCap_blue";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+ };
+
+ PZFP_fnc_blufor_BN_Submariners_CreateSubCrew = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_crew_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then {
+   doStop _unit;
+  };
+  [_unit] spawn {
+   params ["_unit"];
+   sleep 0.1;
+   [_unit] call PZFP_fnc_blufor_BN_Submariners_AddLoadoutSubCrew;
+   [_unit] call PZFP_fnc_UK_AddIdentity;
+  };
+  private _curator = getAssignedCuratorLogic player;
+  [_unit] call PZFP_fnc_addObjectToInterface;
+  _unit
+ };
+
+ PZFP_fnc_blufor_BN_Submarines_CreateHMSProteus = {
+  systemChat "TBA!";
+ };
+
  PZFP_fnc_blufor_AAFAF_Drones_CreateGreyhawk = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
@@ -10757,6 +10916,232 @@ PZFP_fnc_initialize = {
   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
+ PZFP_fnc_blufor_ANP_Boats_CreateMotorboat = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["C_Boat_Civil_01_police_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Police",1], 
+   ["hidePolice",0,"HideRescueSigns",1,"HidePoliceSigns",0]
+  ] call BIS_fnc_initVehicle;
+ 
+  private _driver = [] call PZFP_fnc_blufor_ANP_Men_CreateOfficer;
+  _driver moveInDriver _vehicle;
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_blufor_ANP_Cars_CreateOffroad = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["C_Offroad_01_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["White",1], 
+   ["HideDoor1",0,"HideDoor2",0,"HideDoor3",0,"HideBackpacks",1,"HideBumper1",1,"HideBumper2",0,"HideConstruction",0,"hidePolice",0,"HideServices",1,"BeaconsStart",0,"BeaconsServicesStart",0]
+  ] call BIS_fnc_initVehicle;
+ 
+  private _driver = [] call PZFP_fnc_blufor_ANP_Men_CreateOfficer;
+  _driver moveInDriver _vehicle;
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_blufor_ANP_Cars_CreateSUV = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  _vehicle = createVehicle ["C_SUV_01_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Grey",1], 
+   true
+  ] call BIS_fnc_initVehicle;
+ 
+  private _driver = [] call PZFP_fnc_blufor_ANP_Men_CreateOfficer;
+  _driver moveInDriver _vehicle;
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_blufor_ANP_Cars_CreateVan = {
+  _vehicle = createVehicle ["I_E_Van_02_transport_MP_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["EAF",1], 
+   ["Door_1_source",0,"Door_2_source",0,"Door_3_source",0,"Door_4_source",0,"Hide_Door_1_source",0,"Hide_Door_2_source",0,"Hide_Door_3_source",0,"Hide_Door_4_source",0,"lights_em_hide",0,"ladder_hide",1,"spare_tyre_holder_hide",0,"spare_tyre_hide",0,"reflective_tape_hide",1,"roof_rack_hide",1,"LED_lights_hide",0,"sidesteps_hide",1,"rearsteps_hide",0,"side_protective_frame_hide",0,"front_protective_frame_hide",0,"beacon_front_hide",0,"beacon_rear_hide",0]
+  ] call BIS_fnc_initVehicle;
+  [_vehicle, [0, "a3\soft_f_orange\van_02\data\van_body_white_co.paa"]] remoteExec ['setObjectTexture',0,true];
+ 
+  private _driver = [] call PZFP_fnc_blufor_ANP_Men_CreateOfficer;
+  _driver moveInDriver _vehicle;
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_blufor_ANP_Helicopters_CreateM900 = {
+  _vehicle = createVehicle ["C_Heli_Light_01_civil_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["BlueLine",1], 
+   ["AddDoors",1,"AddBackseats",1,"AddTread",1,"AddTread_Short",0] 
+  ] call BIS_fnc_initVehicle;
+ 
+  private _pilot = [] call PZFP_fnc_blufor_ANP_Men_CreateHelicopterPilot;
+  _pilot moveInDriver _vehicle;
+  private _copilot = [] call PZFP_fnc_blufor_ANP_Men_CreateHelicopterPilot;
+  _copilot moveInTurret [_vehicle, [0]];
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_blufor_ANP_Men_AddLoadoutOfficer = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "hgun_ACPC2_F";
+  _unit addHandgunItem "9Rnd_45ACP_mag";
+  _unit addHandgunItem "acc_flashlight_pistol";
+
+  _unit forceAddUniform "U_B_GEN_Soldier_F";
+  [_unit, [0, "#(argb,8,8,3)color(0.6,0.6,0.6,0.7)"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_TacVest_blk_POLICE";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform selectRandom ["SmartPhone","MobilePhone"];    
+  _unit addItemToUniform "Wallet_ID"; 
+  _unit addItemToUniform "Keys";    
+  _unit addItemToUniform "Money_bunch";
+  for "_i" from 1 to 5 do {_unit addItemToVest "9Rnd_45ACP_mag";};
+  _unit addHeadgear "H_Cap_police";
+  _unit addGoggles selectRandom ["","","","G_Squares_tinted","G_Spectacles_tinted","G_Aviator"];
+
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_blufor_ANP_Men_AddLoadoutOfficerSMG = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "SMG_03C_TR_black";
+  _unit addPrimaryWeaponItem "acc_flashlight";
+  _unit addPrimaryWeaponItem "optic_Holosight_smg_blk_F";
+  _unit addPrimaryWeaponItem "50Rnd_570x28_SMG_03";
+
+  _unit forceAddUniform "U_B_GEN_Soldier_F";
+  [_unit, [0, "#(argb,8,8,3)color(0.6,0.6,0.6,0.7)"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_TacVest_blk_POLICE";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform selectRandom ["SmartPhone","MobilePhone"];    
+  _unit addItemToUniform "Wallet_ID"; 
+  _unit addItemToUniform "Keys";    
+  _unit addItemToUniform "Money_bunch";
+  for "_i" from 1 to 5 do {_unit addItemToVest "50Rnd_570x28_SMG_03";};
+  _unit addHeadgear "H_Cap_police";
+  _unit addGoggles selectRandom ["","","","G_Squares_tinted","G_Spectacles_tinted","G_Aviator"];
+
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_blufor_ANP_Men_AddLoadoutHelicopterPilot = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit forceAddUniform "U_B_GEN_Soldier_F";
+  [_unit, [0, "#(argb,8,8,3)color(0.6,0.6,0.6,0.7)"]] remoteExec ['setObjectTexture',0,true];
+  _unit addVest "V_TacVest_blk_POLICE";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform selectRandom ["SmartPhone","MobilePhone"];    
+  _unit addItemToUniform "Wallet_ID"; 
+  _unit addItemToUniform "Keys";    
+  _unit addItemToUniform "Money_bunch";
+  for "_i" from 1 to 5 do {_unit addItemToVest "9Rnd_45ACP_mag";};
+  _unit addHeadgear "H_Cap_marshal";
+  _unit addGoggles selectRandom ["","","","G_Squares_tinted","G_Spectacles_tinted","G_Aviator"];
+
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_blufor_ANP_Men_CreateOfficer = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_officer_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+   params ["_unit"];
+   sleep 0.1;
+   [_unit] call PZFP_fnc_blufor_ANP_Men_AddLoadoutOfficer;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
+  };
+  [_unit] call PZFP_fnc_addObjectToInterface;
+  _unit
+ };
+
+ PZFP_fnc_blufor_ANP_Men_CreateOfficerSMG = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_officer_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+   params ["_unit"];
+   sleep 0.1;
+   [_unit] call PZFP_fnc_blufor_ANP_Men_AddLoadoutOfficerSMG;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
+  };
+  [_unit] call PZFP_fnc_addObjectToInterface;
+  _unit
+ };
+
+ PZFP_fnc_blufor_ANP_Men_CreateHelicopterPilot = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_HeliPilot_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+   params ["_unit"];
+   sleep 0.1;
+   [_unit] call PZFP_fnc_blufor_ANP_Men_AddLoadoutHelicopterPilot;
+   [_unit] call PZFP_fnc_GR_AddIdentity;
+  };
+  [_unit] call PZFP_fnc_addObjectToInterface;
+  _unit
+ };
+
  PZFP_fnc_blufor_AAFA_Turrets_CreateAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
@@ -13762,7 +14147,7 @@ PZFP_fnc_initialize = {
   removeGoggles _unit;
 
   _unit forceAddUniform "U_O_officer_noInsignia_hex_F";
-  _unit addVest "V_Safety_yellow_F";
+  _unit addVest selectRandom ["V_Safety_blue_F","V_Safety_orange_F","V_Safety_yellow_F"];
   _unit addHeadgear "H_Cap_marshal";
 
   _unit linkItem "ItemWatch";
@@ -18108,7 +18493,7 @@ PZFP_fnc_initialize = {
   removeGoggles _unit;
 
   _unit forceAddUniform "U_O_officer_noInsignia_hex_F";
-  _unit addVest "V_Safety_yellow_F";
+  _unit addVest selectRandom ["V_Safety_blue_F","V_Safety_orange_F","V_Safety_yellow_F"];
   _unit addHeadgear "H_Cap_marshal";
 
   _unit linkItem "ItemWatch";
@@ -20841,7 +21226,7 @@ PZFP_fnc_initialize = {
   removeGoggles _unit;
 
   _unit forceAddUniform "U_O_R_Gorka_01_camo_F";
-  _unit addVest "V_Safety_yellow_F";
+  _unit addVest selectRandom ["V_Safety_blue_F","V_Safety_orange_F","V_Safety_yellow_F"];
   _unit addHeadgear "H_Cap_marshal";
 
   _unit linkItem "ItemWatch";
@@ -26500,8 +26885,14 @@ PZFP_fnc_initialize = {
 
   PZFP_blufor_USAF = [_blufor, "United States Air Force", [1,1,1,1]] call PZFP_fnc_addCategory;
 
+  PZFP_blufor_USAF_SFCars = [_blufor, PZFP_blufor_USAF, "Cars (Security Forces)", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_USAF_SFCars_Hunter = [_blufor, PZFP_blufor_USAF, PZFP_blufor_USAF_SFCars, "Hunter", "PZFP_fnc_blufor_USAF_SFCars_CreateHunter", [1,1,1,1]] call PZFP_fnc_addModule;
+  
   PZFP_blufor_USAF_Drones = [_blufor, PZFP_blufor_USAF, "Drones", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_USAF_Drones_Greyhawk = [_blufor, PZFP_blufor_USAF, PZFP_blufor_USAF_Drones, "MQ-4A Greyhawk", "PZFP_fnc_blufor_USAF_Drones_CreateGreyhawk", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_blufor_USAF_MaintenanceCrew = [_blufor, PZFP_blufor_USAF, "Maintenance Crew", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_USAF_MaintenanceCrew_RepairSpecialist = [_blufor, PZFP_blufor_USAF, PZFP_blufor_USAF_MaintenanceCrew, "Repair Specialist", "PZFP_fnc_blufor_USAF_MaintenanceCrew_CreateRepairSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
 
   PZFP_blufor_USAF_Pilots = [_blufor, PZFP_blufor_USAF, "Pilots", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_USAF_Pilots_FighterPilot = [_blufor, PZFP_blufor_USAF, PZFP_blufor_USAF_Pilots, "Fighter Pilot", "PZFP_fnc_blufor_USAF_Pilots_CreateFighterPilot", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -26513,8 +26904,11 @@ PZFP_fnc_initialize = {
   PZFP_blufor_USAF_Planes_VTOLArmed = [_blufor, PZFP_blufor_USAF, PZFP_blufor_USAF_Planes, "V-44/X Blackfish (Gunship)", "PZFP_fnc_blufor_USAF_Planes_CreateVTOLArmed", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USAF_Planes_VTOLVehicle = [_blufor, PZFP_blufor_USAF, PZFP_blufor_USAF_Planes, "V-44/X Blackfish (Vehicle Transport)", "PZFP_fnc_blufor_USAF_Planes_CreateVTOLVehicle", [1,1,1,1]] call PZFP_fnc_addModule;
 
+  PZFP_blufor_USAF_SF = [_blufor, PZFP_blufor_USAF, "Security Forces", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_USAF_SF_Rifleman = [_blufor, PZFP_blufor_USAF, PZFP_blufor_USAF_SF, "Rifleman", "PZFP_fnc_blufor_USAF_SF_CreateRifleman", [1,1,1,1]] call PZFP_fnc_addModule;
+  
 
-
+  
   PZFP_blufor_USA = [_blufor, "United States Army", [1,1,1,1]] call PZFP_fnc_addCategory;
 
   PZFP_blufor_USA_AntiAir = [_blufor, PZFP_blufor_USA, "Anti-Air", [1,1,1,1]] call PZFP_fnc_addSubCategory;
@@ -26768,7 +27162,17 @@ PZFP_fnc_initialize = {
   PZFP_blufor_BA_Turrets_AA = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Turrets, "Static Launcher (AA)", "PZFP_fnc_blufor_BA_Turrets_CreateAA", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Turrets_AT = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Turrets, "Static Launcher (AT)", "PZFP_fnc_blufor_BA_Turrets_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
 
-  
+
+
+  PZFP_blufor_BN = [_blufor, "British Navy", [1,1,1,1]] call PZFP_fnc_addCategory;
+
+  PZFP_blufor_BN_Submariners = [_blufor, PZFP_blufor_BN, "Submariners ", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_BN_Submariners_SubCrew = [_blufor, PZFP_blufor_BN, PZFP_blufor_BN_Submariners, "Submarine Crewman", "PZFP_fnc_blufor_BN_Submariners_CreateSubCrew", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_blufor_BN_Submarines = [_blufor, PZFP_blufor_BN, "Submarines", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_BN_Submarines_HMSProteus = [_blufor, PZFP_blufor_BN, PZFP_blufor_BN_Submariners, "HMS Proteus", "PZFP_fnc_blufor_BN_Submarines_CreateHMSProteus", [1,1,1,1]] call PZFP_fnc_addModule;
+
+
 
   PZFP_blufor_AAFAF = [_blufor, "Altis Armed Forces Air Force", [1,1,1,1]] call PZFP_fnc_addCategory;
 
@@ -26884,6 +27288,26 @@ PZFP_fnc_initialize = {
   PZFP_blufor_AAFA_Turrets_AT = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Turrets, "Static Launcher (AT)", "PZFP_fnc_blufor_AAFA_Turrets_CreateAT", [1,1,1,1]] call PZFP_fnc_addModule;
  
 
+
+  PZFP_blufor_ANP = [_blufor, "Altis National Police", [1,1,1,1]] call PZFP_fnc_addCategory;
+
+  PZFP_blufor_ANP_Boats = [_blufor, PZFP_blufor_ANP, "Boats", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_ANP_Boats_Motorboat = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Boats, "Motorboat", "PZFP_fnc_blufor_ANP_Boats_CreateMotorboat", [1,1,1,1]] call PZFP_fnc_addModule;
+  
+  PZFP_blufor_ANP_Cars = [_blufor, PZFP_blufor_ANP, "Cars", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_ANP_Cars_Offroad = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Cars, "Offroad", "PZFP_fnc_blufor_ANP_Cars_CreateOffroad", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_ANP_Cars_SUV = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Cars, "SUV", "PZFP_fnc_blufor_ANP_Cars_CreateSUV", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_ANP_Cars_Van = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Cars, "Van Transport", "PZFP_fnc_blufor_ANP_Cars_CreateVan", [1,1,1,1]] call PZFP_fnc_addModule;
+  
+  PZFP_blufor_ANP_Helicopters = [_blufor, PZFP_blufor_ANP, "Helicopters", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_ANP_Helicopters_M900 = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Helicopters, "M900", "PZFP_fnc_blufor_ANP_Helicopters_CreateM900", [1,1,1,1]] call PZFP_fnc_addModule;
+  
+  PZFP_blufor_ANP_Men = [_blufor, PZFP_blufor_ANP, "Men", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_ANP_Men_Officer = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Men, "Officer", "PZFP_fnc_blufor_ANP_Men_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_ANP_Men_OfficerSMG = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Men, "Officer (SMG)", "PZFP_fnc_blufor_ANP_Men_CreateOfficerSMG", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_ANP_Men_HelicopterPilot = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Men, "Helicopter Pilot", "PZFP_fnc_blufor_ANP_Men_CreateHelicopterPilot", [1,1,1,1]] call PZFP_fnc_addModule;
+  
+    
 
   PZFP_blufor_LDFAF = [_blufor, "Livonian Defense Force Air Force", [1,1,1,1]] call PZFP_fnc_addCategory;
 

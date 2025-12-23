@@ -43,8 +43,8 @@ Repurposed/reskinned Vehicles:
 BLUFOR:
 * United States Air Force
     - Pilots
-    - Maintenance Crew (TBA)
-    - Security Forces (TBA)
+    - Maintenance Crew (WIP)
+    - Security Forces
 * United States Army
     - Infantry
     - Airborne (TBA)
@@ -56,7 +56,7 @@ BLUFOR:
 * British Army
     - Infantry
     - Special Operations
-* British Navy (TBA)
+* British Navy (WIP)
     - Submariners
 * Altis Armed Forces Air Force
     - Pilots
@@ -64,7 +64,7 @@ BLUFOR:
 * Altis Armed Forces Land Forces
     - Infantry
     - Special Operations
-* Altis National Police (TBA)
+* Altis National Police (WIP)
     - Infantry
 * Altis Royal Guard (TBA)
     - Infantry
