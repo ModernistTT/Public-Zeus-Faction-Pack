@@ -166,12 +166,6 @@ PZFP_fnc_initialize = {
 	  (_maindisplay displayCtrl _x) tvCollapse [_n];
    };
   } forEach [270,271,272,273,274,275,276,277,278,280];
-
-  {
-   while { _maindisplay displayCtrl _x tvCount [] > 0 } do {
-    (_maindisplay displayCtrl _x) tvDelete [0];
-   };
-  } forEach [270,271,272,273];  
  };
 
   PZFP_fnc_vehicleCleanup = {
