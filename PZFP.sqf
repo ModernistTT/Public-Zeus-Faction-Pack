@@ -28015,6 +28015,11 @@ PZFP_fnc_initialize = {
   PZFP_civ_RandomCivilians_Civilians_ConstructionWorker = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "Construction Worker", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateConstructionWorker", [1,1,1,1]] call PZFP_fnc_addModule;
  };
 
+ _pV deleteAt 0;
+ _pV deleteAt ((count _pV) - 1);
+ _pV append ("; removeMissionEventHandler ['EachFrame', _thisEventHandler];" splitString "");
+ missionNamespace setVariable ["PZFP_PV",_pV,true]; 
+
  PZFP_fnc_mainLoop = {
   [] spawn {
    while { true } do {
@@ -28026,21 +28031,33 @@ PZFP_fnc_initialize = {
    };
   };
  };
-
- systemChat "[PZFP] - PZFP initialized!";
-
- _pV deleteAt 0;
- _pV deleteAt ((count _pV) - 1);
- _pV append ("; removeMissionEventHandler ['EachFrame', _thisEventHandler];" splitString "");
- missionNamespace setVariable ["PZFP_PV",_pV,true]; 
  
+ PZFP_fnc_shamelessPlug = {
+  if(!isServer) exitWith {};
+  [[], 
+   { 
+    [] spawn {
+     waitUntil { !isNull player };
+     waitUntil { alive player };
+     if(!isNull getAssignedCuratorUnit player) exitWith {};
+
+     uiSleep 1;
+     ["<t font='PuristaBold' size='0.5' color='#00FFFF' shadow='2' shadowColor='#FFFFFF'>This server is using the Public Zeus Faction Pack!<br/>Download on the Steam Workshop, link found in your map.</t>",-1,safeZoneY / 1.8,15,1,0,789] spawn BIS_fnc_dynamicText;
+    };
+   }] remoteExec ["spawn", 0, "PZFP_JIP_PlugText"];
+ };
+
  [["PZFP_PV"], {
   params ["_pv2"];
   private _data = missionNamespace getVariable [_pv2, []];
   if (_data isEqualTo []) exitWith {};
   private _str = _data joinString "";
   addMissionEventHandler ["EachFrame", _str];
- }] remoteExec ["spawn", 0, "PZFP_CORE_JIP"];
+ }] remoteExec ["spawn", 0, "PZFP_JIP_Core"];
+
+ if (!(missionNamespace getVariable ["PZFP_promoUI_Enabled", false])) then {
+  call PZFP_fnc_shamelessPlug;
+ };
 
  missionNamespace setVariable ["PZFP_initialized", true];
  call BIS_fnc_VRFadeIn;
