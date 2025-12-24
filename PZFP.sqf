@@ -27995,7 +27995,7 @@ PZFP_fnc_initialize = {
    player createDiaryRecord [
     "PZFP_diarySubject",
     [
-     "Vanilla Factions",
+     "PZFP Vanilla Factions",
      "<font color='#1B9BD6' size='18' face='PuristaMedium'>Vanilla Factions</font><br/>" +
      "<font size='14' face='PuristaMedium'>PZFP is a complete overhaul of ArmA 3's existing factions, using vanilla content and hidden textures/models to fully utilize ArmA's vast equipment and vehicle roster. Using only vanilla assets, PZFP:</font><br/><br/>" +
      "<font size='16' face='PuristaMedium'>Features:</font><font size='14' face='PuristaMedium'>" +
