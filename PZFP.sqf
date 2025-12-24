@@ -735,6 +735,8 @@ PZFP_fnc_initialize = {
   [_vehicle2, [0, ""]] remoteExec ['setObjectTexture',0,true];
   [_vehicle2, [1, ""]] remoteExec ['setObjectTexture',0,true];
   [_vehicle2, [2, "A3\data_f\vehicles\turret_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  for "_i" from 1 to 2 do {_vehicle2 removeMagazineTurret ["200Rnd_127x99_mag_Tracer_Green",[0]];};
+  for "_i" from 1 to 2 do {_vehicle2 addMagazineTurret ["500Rnd_127x99_mag_Tracer_Red",[0]];};
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -746,6 +748,7 @@ PZFP_fnc_initialize = {
   _group addVehicle _vehicle2;
 
   [_vehicle] call PZFP_fnc_addObjectToInterface;
+  [_vehicle2] call PZFP_fnc_addObjectToInterface;
  };
 
  PZFP_fnc_blufor_USA_APC_CreateAMV7Marshall = {
@@ -5298,7 +5301,13 @@ PZFP_fnc_initialize = {
   [_vehicle, [1, "A3\Armor_F_Gamma\APC_Wheeled_03\Data\apc_wheeled_03_ext2_co.paa"]] remoteExec ['setObjectTexture',0,true];
   [_vehicle, [2, "A3\Armor_F_Gamma\APC_Wheeled_03\Data\rcws30_co.paa"]] remoteExec ['setObjectTexture',0,true];
   [_vehicle, [3, "A3\Armor_F_Gamma\APC_Wheeled_03\Data\apc_wheeled_03_ext_alpha_co.paa"]] remoteExec ['setObjectTexture',0,true];
-
+  for "_i" from 1 to 2 do {_vehicle removeMagazineTurret ["140Rnd_30mm_MP_shells_Tracer_Yellow",[0]];};
+  for "_i" from 1 to 2 do {_vehicle removeMagazineTurret ["60Rnd_30mm_APFSDS_shells_Tracer_Yellow",[0]];};
+  for "_i" from 1 to 2 do {_vehicle addMagazineTurret ["140Rnd_30mm_MP_shells_Tracer_Red",[0]];};
+  for "_i" from 1 to 2 do {_vehicle addMagazineTurret ["60Rnd_30mm_APFSDS_shells_Tracer_Red",[0]];};
+  for "_i" from 1 to 8 do {_vehicle removeMagazineTurret ["200Rnd_762x51_Belt_Yellow",[0]];};
+  for "_i" from 1 to 2 do {_vehicle addMagazineTurret ["200Rnd_762x51_Belt_T_Red",[0]];};
+  for "_i" from 1 to 6 do {_vehicle addMagazineTurret ["200Rnd_762x51_Belt_Red",[0]];};
 
   private _driver = [] call PZFP_fnc_blufor_BA_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -5473,6 +5482,8 @@ PZFP_fnc_initialize = {
    ["Blufor",1],
    true
   ] call BIS_fnc_initVehicle;
+  for "_i" from 1 to 2 do {_vehicle removeMagazineTurret ["200Rnd_127x99_mag_Tracer_Yellow",[0]];};
+  for "_i" from 1 to 2 do {_vehicle addMagazineTurret ["200Rnd_127x99_mag_Tracer_Red",[0]];};
 
   private _driver = [] call PZFP_fnc_blufor_BA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
