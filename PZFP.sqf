@@ -149,51 +149,6 @@ PZFP_fnc_initialize = {
   };
  };
 
- private _pV = (str {
-
-  PZFP_fnc_addDiarySubject = {
-   PZFP_diarySubject = player createDiarySubject ["PZFP_diarySubject", "Zeus Faction Pack!"];
-  };
-
-  PZFP_fnc_addMainDiaryRecord = {
-  waitUntil { !isNil "PZFP_diarySubject" };
-   player createDiaryRecord [
-    "PZFP_diarySubject",
-    [
-     "Vanilla Factions",
-     format [
-      "<font color='#1B9BD6' size='18' face='PuristaMedium'>%1</font><br/>" +
-      "<font size='14' face='PuristaMedium'>%2</font><br/><br/>" +
-      "<font size='16' face='PuristaMedium'>Features:</font><font size='14' face='PuristaMedium'>" +
-      "<br/> • Adds 7 never-seen-before factions, compatible with" +
-      "<br/>   ArmAverse lore" +
-      "<br/> • Revamps all existing vanilla factions" +
-      "<br/> • Adds 8+ high-quality new vehicles using vanilla assets," +
-      "<br/>   and adds 14+ vehicle re-skins" +
-      "<br/> • Adds AI improvements, standardized equipment across" +
-      "<br/>   factions, and randomized civilians" +
-      "<br/> • Includes automatic compatibility with Western Sahara DLC" +
-      "<br/>   content" +
-      "<br/><br/>" +
-      "See the faction list and download for yourself on the " +
-      "<execute expression='copyToClipboard ""https://steamcommunity.com/sharedfiles/filedetails/?id=3627037158""'>Steam Workshop!</execute> (click to copy link)" +
-      "</font>",
-      "Vanilla Factions",
-      "PZFP is a complete overhaul of ArmA 3's existing factions, using vanilla content and hidden textures/models to fully utilize ArmA's vast equipment and vehicle roster. Using only vanilla assets, PZFP:"
-     ]
-    ]
-   ];
-  }; 
-  
-  if (!(missionNamespace getVariable ["PZFP_promoUI_Enabled", false])) then {
-   [] call PZFP_fnc_addDiarySubject;
-   [] call PZFP_fnc_addMainDiaryRecord;
-  
-   ["[PZFP] - WARNING! You are using a beta version of PZFP. Bugs may occur. Report issues on our Discord! (http://discord.gg/feDtgN22P6)"] remoteExec ['systemChat',0,"PZFP_JIP_SYSTEMCHAT"];
-   missionNamespace setVariable ["PZFP_promoUI_Enabled",true,true];
-  };
- }) splitString "";
-
  PZFP_fnc_findCursorPosition = {
   params ["_cursorPos"];
   private _position = if (visibleMap) then {
@@ -28013,12 +27968,7 @@ PZFP_fnc_initialize = {
   PZFP_civ_RandomCivilians_Civilians_JournalistWar = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "War Journalist", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateJournalistWar", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_civ_RandomCivilians_Civilians_UtilityWorker = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "Utility Worker", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateUtilityWorker", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_civ_RandomCivilians_Civilians_ConstructionWorker = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "Construction Worker", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateConstructionWorker", [1,1,1,1]] call PZFP_fnc_addModule;
- };
-
- _pV deleteAt 0;
- _pV deleteAt ((count _pV) - 1);
- _pV append ("; removeMissionEventHandler ['EachFrame', _thisEventHandler];" splitString "");
- missionNamespace setVariable ["PZFP_PV",_pV,true]; 
+ }; 
 
  PZFP_fnc_mainLoop = {
   [] spawn {
@@ -28031,9 +27981,43 @@ PZFP_fnc_initialize = {
    };
   };
  };
- 
+
+ PZFP_fnc_addDiarySubject = {
+  [[], { 
+   PZFP_diarySubject = player createDiarySubject ["PZFP_diarySubject", "Zeus Faction Pack!"];
+  }] remoteExec ['spawn',0,true];
+ };
+
+ PZFP_fnc_addMainDiaryRecord = {
+  [[], {
+   waitUntil { uisleep 0.1; !isNull findDisplay 46 && alive player };
+   waitUntil { !isNil "PZFP_diarySubject" };
+   player createDiaryRecord [
+    "PZFP_diarySubject",
+    [
+     "Vanilla Factions",
+     "<font color='#1B9BD6' size='18' face='PuristaMedium'>Vanilla Factions</font><br/>" +
+     "<font size='14' face='PuristaMedium'>PZFP is a complete overhaul of ArmA 3's existing factions, using vanilla content and hidden textures/models to fully utilize ArmA's vast equipment and vehicle roster. Using only vanilla assets, PZFP:</font><br/><br/>" +
+     "<font size='16' face='PuristaMedium'>Features:</font><font size='14' face='PuristaMedium'>" +
+     "<br/> • Adds 7 never-seen-before factions, compatible with" +
+     "<br/>   ArmAverse lore" +
+     "<br/> • Revamps all existing vanilla factions" +
+     "<br/> • Adds 8+ high-quality new vehicles using vanilla assets," +
+     "<br/>   and adds 14+ vehicle re-skins" +
+     "<br/> • Adds AI improvements, standardized equipment across" +
+     "<br/>   factions, and randomized civilians" +
+     "<br/> • Includes automatic compatibility with Western Sahara DLC" +
+     "<br/>   content" +
+     "<br/><br/>" +
+     "See the faction list and download for yourself on the " +
+     "<execute expression='copyToClipboard ""https://steamcommunity.com/sharedfiles/filedetails/?id=3627037158""'>Steam Workshop!</execute> (click to copy link)" +
+     "</font>"
+    ]
+   ];
+   }] remoteExec ['spawn',0,true];
+ }; 
+   
  PZFP_fnc_shamelessPlug = {
-  if(!isServer) exitWith {};
   [[], 
    { 
     [] spawn {
@@ -28045,20 +28029,17 @@ PZFP_fnc_initialize = {
      ["<t font='PuristaBold' size='0.5' color='#00FFFF' shadow='2' shadowColor='#FFFFFF'>This server is using the Public Zeus Faction Pack!<br/>Download on the Steam Workshop, link found in your map.</t>",-1,safeZoneY / 1.8,15,1,0,789] spawn BIS_fnc_dynamicText;
     };
    }] remoteExec ["spawn", 0, "PZFP_JIP_PlugText"];
+   missionNamespace setVariable ["PZFP_promoUI_Enabled", true]
  };
-
- [["PZFP_PV"], {
-  params ["_pv2"];
-  private _data = missionNamespace getVariable [_pv2, []];
-  if (_data isEqualTo []) exitWith {};
-  private _str = _data joinString "";
-  addMissionEventHandler ["EachFrame", _str];
- }] remoteExec ["spawn", 0, "PZFP_JIP_Core"];
 
  if (!(missionNamespace getVariable ["PZFP_promoUI_Enabled", false])) then {
   call PZFP_fnc_shamelessPlug;
  };
-
+ 
+ [] call PZFP_fnc_addDiarySubject;
+ [] call PZFP_fnc_addMainDiaryRecord;
+ ["[PZFP] - PZFP Initialized!"] remoteExec ['systemChat',0];
+ ["[PZFP] - WARNING! You are using a beta version of PZFP. Bugs may occur. Report issues on our Discord! (http://discord.gg/feDtgN22P6)"] remoteExec ['systemChat',0,true];
  missionNamespace setVariable ["PZFP_initialized", true];
  call BIS_fnc_VRFadeIn;
  [] call PZFP_fnc_mainLoop;
