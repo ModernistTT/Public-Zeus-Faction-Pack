@@ -66,6 +66,7 @@ BLUFOR:
     - Special Operations
 * Altis National Police (WIP)
     - Infantry
+    - Special Operations
 * Altis Royal Guard (TBA)
     - Infantry
     - VIPs
@@ -74,8 +75,8 @@ BLUFOR:
     - Maintenance Crew (TBA)
 * Livonian Army
     - Infantry
-    - Military Police
-    - 5th Regiment
+    - Military Police (TBA)
+    - 5th Regiment (TBA)
     - Special Operations
 * Livonian Territorial Militia (TBA)
     - Infantry

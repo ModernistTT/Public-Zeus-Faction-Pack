@@ -2111,7 +2111,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutRTO = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutRadioOperator = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
@@ -2694,7 +2694,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_USA_Men_CreateRTO = {
+ PZFP_fnc_blufor_USA_Men_CreateRadioOperator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -2706,7 +2706,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutRTO;
+   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutRadioOperator;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3308,7 +3308,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_MenSF_AddLoadoutRTO = {
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutRadioOperator = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -3784,7 +3784,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_USA_MenSF_CreateRTO = {
+ PZFP_fnc_blufor_USA_MenSF_CreateRadioOperator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -3794,7 +3794,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
 	params ["_unit"];
 	sleep 0.1;
-	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutRTO;
+	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutRadioOperator;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -4006,7 +4006,7 @@ PZFP_fnc_initialize = {
 
   private _officer = [_position] call PZFP_fnc_blufor_USA_Men_CreateOfficer;
   private _sergeant = [_position] call PZFP_fnc_blufor_USA_Men_CreateSergeant;
-  private _rto = [_position] call PZFP_fnc_blufor_USA_Men_CreateRTO;
+  private _rto = [_position] call PZFP_fnc_blufor_USA_Men_CreateRadioOperator;
   private _medic = [_position] call PZFP_fnc_blufor_USA_Men_CreateMedic;
   [_officer, _sergeant, _rto, _medic] joinSilent _group;
 
@@ -4084,7 +4084,7 @@ PZFP_fnc_initialize = {
 
   private _officer = [_position] call PZFP_fnc_blufor_USA_MenSF_CreateOfficer;
   private _sergeant = [_position] call PZFP_fnc_blufor_USA_MenSF_CreateSergeant;
-  private _rto = [_position] call PZFP_fnc_blufor_USA_MenSF_CreateRTO;
+  private _rto = [_position] call PZFP_fnc_blufor_USA_MenSF_CreateRadioOperator;
   private _medic = [_position] call PZFP_fnc_blufor_USA_MenSF_CreateMedic;
   private _jtac = [_position] call PZFP_fnc_blufor_USA_MenSF_CreateJTAC;
   [_officer, _sergeant, _rto, _medic, _jtac] joinSilent _group;
@@ -5010,7 +5010,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
  };
 
- PZFP_fnc_blufor_USN_MenSOFRaiders_AddLoadoutRTO = {
+ PZFP_fnc_blufor_USN_MenSOFRaiders_AddLoadoutRadioOperator = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -5156,7 +5156,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_USN_MenSOFRaiders_CreateRTO = {
+ PZFP_fnc_blufor_USN_MenSOFRaiders_CreateRadioOperator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -5168,7 +5168,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USN_MenSOFRaiders_AddLoadoutRTO;
+   [_unit] call PZFP_fnc_blufor_USN_MenSOFRaiders_AddLoadoutRadioOperator;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
@@ -5290,6 +5290,45 @@ PZFP_fnc_initialize = {
   private _curator = getAssignedCuratorLogic player;
   [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
+ };
+
+ PZFP_fnc_blufor_USN_GroupsSOFFrogmen_CreateUnderwaterDemolitionTeam = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  _group setBehaviour "SAFE";
+
+  private _tl = [_position] call PZFP_fnc_blufor_USN_MenSOFFrogmen_CreateTeamLeader;
+  private _rifleman1 = [_position] call PZFP_fnc_blufor_USN_MenSOFFrogmen_CreateRifleman;
+  private _rifleman2 = [_position] call PZFP_fnc_blufor_USN_MenSOFFrogmen_CreateRifleman;
+  private _demo = [_position] call PZFP_fnc_blufor_USN_MenSOFFrogmen_CreateExplosiveSpecialist;
+  [_tl, _rifleman1, _rifleman2, _demo] joinSilent _group;
+ };
+
+ PZFP_fnc_blufor_USN_GroupsSOFRaiders_CreateBoardingAssaultTeam = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  _group setBehaviour "SAFE";
+
+  private _tl = [_position] call PZFP_fnc_blufor_USN_MenSOFRaiders_CreateTeamLeader;
+  private _rifleman = [_position] call PZFP_fnc_blufor_USN_MenSOFRaiders_CreateRifleman;
+  private _medic = [_position] call PZFP_fnc_blufor_USN_MenSOFRaiders_CreateMedic;
+  private _demo = [_position] call PZFP_fnc_blufor_USN_MenSOFRaiders_CreateExplosiveSpecialist;
+  [_tl, _rifleman, _medic, _demo] joinSilent _group;
+ };
+
+ PZFP_fnc_blufor_USN_GroupsSOFRaiders_CreateBoardingSupportTeam = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  _group setBehaviour "SAFE";
+
+  private _tl = [_position] call PZFP_fnc_blufor_USN_MenSOFRaiders_CreateTeamLeader;
+  private _rifleman = [_position] call PZFP_fnc_blufor_USN_MenSOFRaiders_CreateRifleman;
+  private _marksman = [_position] call PZFP_fnc_blufor_USN_MenSOFRaiders_CreateMarksman;
+  private _radio = [_position] call PZFP_fnc_blufor_USN_MenSOFRaiders_CreateRadioOperator;
+  [_tl, _rifleman, _marksman, _radio] joinSilent _group;
  };
 
  PZFP_fnc_blufor_USN_Planes_CreateBlackWasp = {
@@ -6841,7 +6880,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_BA_Men_AddLoadoutRTO = {
+ PZFP_fnc_blufor_BA_Men_AddLoadoutRadioOperator = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -7499,7 +7538,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_BA_Men_CreateRTO = {
+ PZFP_fnc_blufor_BA_Men_CreateRadioOperator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -7511,7 +7550,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutRTO;
+   [_unit] call PZFP_fnc_blufor_BA_Men_AddLoadoutRadioOperator;
    [_unit] call PZFP_fnc_UK_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
@@ -7767,7 +7806,7 @@ PZFP_fnc_initialize = {
 
   private _officer = [_position] call PZFP_fnc_blufor_BA_Men_CreateOfficer;
   private _sergeant = [_position] call PZFP_fnc_blufor_BA_Men_CreateSergeant;
-  private _rto = [_position] call PZFP_fnc_blufor_BA_Men_CreateRTO;
+  private _rto = [_position] call PZFP_fnc_blufor_BA_Men_CreateRadioOperator;
   private _medic = [_position] call PZFP_fnc_blufor_BA_Men_CreateMedic;
   [_officer, _sergeant, _rto, _medic] joinSilent _group;
 
@@ -9282,7 +9321,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles_INDEP";
  };
 
- PZFP_fnc_blufor_AAFA_Men_AddLoadoutRTO = {
+ PZFP_fnc_blufor_AAFA_Men_AddLoadoutRadioOperator = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -9883,7 +9922,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_AAFA_Men_CreateRTO = {
+ PZFP_fnc_blufor_AAFA_Men_CreateRadioOperator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -9893,7 +9932,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutRTO;
+   [_unit] call PZFP_fnc_blufor_AAFA_Men_AddLoadoutRadioOperator;
    [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -10500,7 +10539,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles_INDEP";
  };
 
- PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutRTO = {
+ PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutRadioOperator = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -11043,7 +11082,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_AAFA_MenSOF_CreateRTO = {
+ PZFP_fnc_blufor_AAFA_MenSOF_CreateRadioOperator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -11053,7 +11092,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
     params ["_unit"];
     sleep 0.1;
-    [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutRTO;
+    [_unit] call PZFP_fnc_blufor_AAFA_MenSOF_AddLoadoutRadioOperator;
     [_unit] call PZFP_fnc_GR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -11248,7 +11287,7 @@ PZFP_fnc_initialize = {
 
   private _officer = [_position] call PZFP_fnc_blufor_AAFA_Men_CreateOfficer;
   private _sergeant = [_position] call PZFP_fnc_blufor_AAFA_Men_CreateSergeant;
-  private _rto = [_position] call PZFP_fnc_blufor_AAFA_Men_CreateRTO;
+  private _rto = [_position] call PZFP_fnc_blufor_AAFA_Men_CreateRadioOperator;
   private _medic = [_position] call PZFP_fnc_blufor_AAFA_Men_CreateMedic;
   [_officer, _sergeant, _rto, _medic] joinSilent _group;
 
@@ -11326,7 +11365,7 @@ PZFP_fnc_initialize = {
 
   private _officer = [_position] call PZFP_fnc_blufor_AAFA_MenSOF_CreateOfficer;
   private _sergeant = [_position] call PZFP_fnc_blufor_AAFA_MenSOF_CreateSergeant;
-  private _rto = [_position] call PZFP_fnc_blufor_AAFA_MenSOF_CreateRTO;
+  private _rto = [_position] call PZFP_fnc_blufor_AAFA_MenSOF_CreateRadioOperator;
   private _medic = [_position] call PZFP_fnc_blufor_AAFA_MenSOF_CreateMedic;
   [_officer, _sergeant, _rto, _medic] joinSilent _group;
 
@@ -11674,6 +11713,30 @@ PZFP_fnc_initialize = {
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
+ };
+
+ PZFP_fnc_blufor_ANP_Groups_CreateFootPatrol = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  _group setBehaviour "SAFE";
+
+  private _officer1 = [_position] call PZFP_fnc_blufor_ANP_Men_CreateOfficer;
+  private _officer2 = [_position] call PZFP_fnc_blufor_ANP_Men_CreateOfficerSMG;
+  [_officer1, _officer2] joinSilent _group;
+ };
+
+ PZFP_fnc_blufor_ANP_Groups_CreatePatrolTeam = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  _group setBehaviour "SAFE";
+
+  private _officer = [_position] call PZFP_fnc_blufor_ANP_Men_CreateOfficer;
+  private _officer2 = [_position] call PZFP_fnc_blufor_ANP_Men_CreateOfficerSMG;
+  private _officer3 = [_position] call PZFP_fnc_blufor_ANP_Men_CreateOfficer;
+  private _officer4 = [_position] call PZFP_fnc_blufor_ANP_Men_CreateOfficerSMG;
+  [_officer, _officer2, _officer3, _officer4] joinSilent _group;
  };
 
  PZFP_fnc_blufor_AAFA_Turrets_CreateAT = {
@@ -12724,7 +12787,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles_INDEP";
  };
 
- PZFP_fnc_blufor_LDF_Men_AddLoadoutRTO = {
+ PZFP_fnc_blufor_LDF_Men_AddLoadoutRadioOperator = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -13254,7 +13317,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_LDF_Men_CreateRTO = {
+ PZFP_fnc_blufor_LDF_Men_CreateRadioOperator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -13264,7 +13327,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
     params ["_unit"];
     sleep 0.1;
-    [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutRTO;
+    [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutRadioOperator;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -13856,7 +13919,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGogglesB_grn_F";
  };
 
- PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRTO = {
+ PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRadioOperator = {
   removeAllWeapons _unit;
   removeAllItems _unit;
   removeAllAssignedItems _unit;
@@ -14302,7 +14365,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_blufor_LDF_MenSOF_CreateRTO = {
+ PZFP_fnc_blufor_LDF_MenSOF_CreateRadioOperator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [west, true];
@@ -14312,7 +14375,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
     params ["_unit"];
     sleep 0.1;
-    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRTO;
+    [_unit] call PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutRadioOperator;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -14456,7 +14519,7 @@ PZFP_fnc_initialize = {
 
   private _officer = [_position] call PZFP_fnc_blufor_LDF_Men_CreateOfficer;
   private _sergeant = [_position] call PZFP_fnc_blufor_LDF_Men_CreateSergeant;
-  private _rto = [_position] call PZFP_fnc_blufor_LDF_Men_CreateRTO;
+  private _rto = [_position] call PZFP_fnc_blufor_LDF_Men_CreateRadioOperator;
   private _medic = [_position] call PZFP_fnc_blufor_LDF_Men_CreateMedic;
   [_officer, _sergeant, _rto, _medic] joinSilent _group;
 
@@ -14534,7 +14597,7 @@ PZFP_fnc_initialize = {
 
   private _officer = [_position] call PZFP_fnc_blufor_LDF_MenSOF_CreateOfficer;
   private _sergeant = [_position] call PZFP_fnc_blufor_LDF_MenSOF_CreateSergeant;
-  private _rto = [_position] call PZFP_fnc_blufor_LDF_MenSOF_CreateRTO;
+  private _rto = [_position] call PZFP_fnc_blufor_LDF_MenSOF_CreateRadioOperator;
   private _medic = [_position] call PZFP_fnc_blufor_LDF_MenSOF_CreateMedic;
   [_officer, _sergeant, _rto, _medic] joinSilent _group;
 
@@ -16030,7 +16093,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
- PZFP_fnc_opfor_IRGF_Men_AddLoadoutRTO = {
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutRadioOperator = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -16624,7 +16687,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_opfor_IRGF_Men_CreateRTO = {
+ PZFP_fnc_opfor_IRGF_Men_CreateRadioOperator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [east, true];
@@ -16637,7 +16700,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutRTO;
+   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutRadioOperator;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -18201,7 +18264,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
- PZFP_fnc_opfor_CHGF_Men_AddLoadoutRTO = {
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutRadioOperator = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -18778,7 +18841,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_opfor_CHGF_Men_CreateRTO = {
+ PZFP_fnc_opfor_CHGF_Men_CreateRadioOperator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [east, true];
@@ -18791,7 +18854,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutRTO;
+   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutRadioOperator;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -20047,7 +20110,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
  };
 
- PZFP_fnc_opfor_TUA_Men_AddLoadoutRTO = {
+ PZFP_fnc_opfor_TUA_Men_AddLoadoutRadioOperator = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -20601,7 +20664,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_opfor_TUA_Men_CreateRTO = {
+ PZFP_fnc_opfor_TUA_Men_CreateRadioOperator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [east, true];
@@ -20614,7 +20677,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutRTO;
+   [_unit] call PZFP_fnc_opfor_TUA_Men_AddLoadoutRadioOperator;
    [_unit] call PZFP_fnc_TU_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -25383,7 +25446,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemGPS";
  };
 
- PZFP_fnc_indep_ION_Men_AddLoadoutRTO = {
+ PZFP_fnc_indep_ION_Men_AddLoadoutRadioOperator = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -25813,7 +25876,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_indep_ION_Men_CreateRTO = {
+ PZFP_fnc_indep_ION_Men_CreateRadioOperator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [independent, true];
@@ -25826,7 +25889,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutRTO;
+   [_unit] call PZFP_fnc_indep_ION_Men_AddLoadoutRadioOperator;
    [_unit] call PZFP_fnc_INT_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -26716,7 +26779,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
  };
 
- PZFP_fnc_indep_MDF_Men_AddLoadoutRTO = {
+ PZFP_fnc_indep_MDF_Men_AddLoadoutRadioOperator = {
   removeAllWeapons _unit;
   removeAllItems _unit;
   removeAllAssignedItems _unit;
@@ -27147,7 +27210,7 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- PZFP_fnc_indep_MDF_Men_CreateRTO = {
+ PZFP_fnc_indep_MDF_Men_CreateRadioOperator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _group = createGroup [independent, true];
@@ -27160,7 +27223,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutRTO;
+   [_unit] call PZFP_fnc_indep_MDF_Men_AddLoadoutRadioOperator;
    [_unit] call PZFP_fnc_FR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -27694,7 +27757,7 @@ PZFP_fnc_initialize = {
   PZFP_blufor_USA_Men_SquadLeader = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Squad Leader", "PZFP_fnc_blufor_USA_Men_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_AmmoBearer = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Ammo Bearer", "PZFP_fnc_blufor_USA_Men_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_Medic = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Medic", "PZFP_fnc_blufor_USA_Men_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_USA_Men_RTO = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Radio-Telephone Operator", "PZFP_fnc_blufor_USA_Men_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USA_Men_RTO = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Radio-Telephone Operator", "PZFP_fnc_blufor_USA_Men_CreateRadioOperator", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_Sergeant = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Sergeant", "PZFP_fnc_blufor_USA_Men_CreateSergeant", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_Officer = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Officer", "PZFP_fnc_blufor_USA_Men_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_Crewman = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Crewman", "PZFP_fnc_blufor_USA_Men_CreateCrewman", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -27715,7 +27778,7 @@ PZFP_fnc_initialize = {
   PZFP_blufor_USA_MenSF_SquadLeader = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Squad Leader", "PZFP_fnc_blufor_USA_MenSF_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_MenSF_JTAC = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "JTAC", "PZFP_fnc_blufor_USA_MenSF_CreateJTAC", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_MenSF_Medic = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Medic", "PZFP_fnc_blufor_USA_MenSF_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_USA_MenSF_RTO = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Radio-Telephone Operator", "PZFP_fnc_blufor_USA_MenSF_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USA_MenSF_RTO = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Radio-Telephone Operator", "PZFP_fnc_blufor_USA_MenSF_CreateRadioOperator", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_MenSF_AmmoBearer = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Ammo Bearer", "PZFP_fnc_blufor_USA_MenSF_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_MenSF_DemoSpecialist = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Demolitions Specialist", "PZFP_fnc_blufor_USA_MenSF_CreateDemoSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_MenSF_Engineer = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Engineer", "PZFP_fnc_blufor_USA_MenSF_CreateEngineer", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -27791,11 +27854,18 @@ PZFP_fnc_initialize = {
   PZFP_blufor_USN_MenSOFRaiders_TeamLeader = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_MenSOFRaiders, "Team Leader", "PZFP_fnc_blufor_USN_MenSOFRaiders_CreateTeamLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USN_MenSOFRaiders_ExplosiveSpecialist = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_MenSOFRaiders, "Explosive Specialist", "PZFP_fnc_blufor_USN_MenSOFRaiders_CreateExplosiveSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USN_MenSOFRaiders_Medic = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_MenSOFRaiders, "Medic", "PZFP_fnc_blufor_USN_MenSOFRaiders_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_USN_MenSOFRaiders_RTO = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_MenSOFRaiders, "Radio-Telephone Operator", "PZFP_fnc_blufor_USN_MenSOFRaiders_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USN_MenSOFRaiders_RTO = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_MenSOFRaiders, "Radio-Telephone Operator", "PZFP_fnc_blufor_USN_MenSOFRaiders_CreateRadioOperator", [1,1,1,1]] call PZFP_fnc_addModule;
 
   PZFP_blufor_USN_Pilots = [_blufor, PZFP_blufor_USN, "Pilots", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_USN_Pilots_FighterPilot = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_Pilots, "Fighter Pilot", "PZFP_fnc_blufor_USN_Pilots_CreateFighterPilot", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USN_Pilots_TransportPilot = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_Pilots, "Transport Pilot", "PZFP_fnc_blufor_USN_Pilots_CreateTransportPilot", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_blufor_USN_GroupsSOFFrogmen = [_blufor, PZFP_blufor_USN, "Groups (Frogmen)", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_USN_GroupsSOFFrogmen_UnderwaterDemolitionTeam = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_GroupsSOFFrogmen, "Underwater Demolition Team", "PZFP_fnc_blufor_USN_GroupsSOFFrogmen_CreateUnderwaterDemolitionTeam", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_blufor_USN_GroupsSOFRaiders = [_blufor, PZFP_blufor_USN, "Groups (Naval Raiders)", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_USN_GroupsSOFRaiders_BoardingAssaultTeam = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_GroupsSOFRaiders, "Boarding Assault Team", "PZFP_fnc_blufor_USN_GroupsSOFRaiders_CreateBoardingAssaultTeam", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USN_GroupsSOFRaiders_BoardingSupportTeam = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_GroupsSOFRaiders, "Boarding Support Team", "PZFP_fnc_blufor_USN_GroupsSOFRaiders_CreateBoardingSupportTeam", [1,1,1,1]] call PZFP_fnc_addModule;
 
   PZFP_blufor_USN_Planes = [_blufor, PZFP_blufor_USN, "Planes", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_USN_Planes_Wasp = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_Planes, "F/A-181 Black Wasp II", "PZFP_fnc_blufor_USN_Planes_CreateBlackWasp", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -27805,7 +27875,7 @@ PZFP_fnc_initialize = {
 
   PZFP_blufor_USN_StaticWeapons = [_blufor, PZFP_blufor_USN, "Static Weapons", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_USN_StaticWeapons_Centurion = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_StaticWeapons, "Mk21 Centurion", "PZFP_fnc_blufor_USN_Turrets_CreateCenturion", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_USN_StaticWeapons_VLS = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_StaticWeapons, "Mk41 VLS", "PZFP_fnc_blufor_USN_Turrets_CreateVLS", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USN_StaticWeapons_VLS = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_StaticWeapons, "Mk41 Vertical Launch System", "PZFP_fnc_blufor_USN_Turrets_CreateVLS", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USN_StaticWeapons_Hammer = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_StaticWeapons, "Mk45 Hammer", "PZFP_fnc_blufor_USN_Turrets_CreateHammer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USN_StaticWeapons_Spartan = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_StaticWeapons, "Mk49 Spartan", "PZFP_fnc_blufor_USN_Turrets_CreateSpartan", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USN_StaticWeapons_Praetorian = [_blufor, PZFP_blufor_USN, PZFP_blufor_USN_StaticWeapons, "Praetorian 1C", "PZFP_fnc_blufor_USN_Turrets_CreatePraetorian", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -27873,7 +27943,7 @@ PZFP_fnc_initialize = {
   PZFP_blufor_BA_Men_SquadLeader = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Squad Leader", "PZFP_fnc_blufor_BA_Men_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Men_AmmoBearer = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Ammo Bearer", "PZFP_fnc_blufor_BA_Men_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Men_Medic = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Medic", "PZFP_fnc_blufor_BA_Men_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_BA_Men_RTO = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Radio-Telephone Operator", "PZFP_fnc_blufor_BA_Men_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_BA_Men_RTO = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Radio-Telephone Operator", "PZFP_fnc_blufor_BA_Men_CreateRadioOperator", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Men_Sergeant = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Sergeant", "PZFP_fnc_blufor_BA_Men_CreateSergeant", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Men_Officer = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Officer", "PZFP_fnc_blufor_BA_Men_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_BA_Men_Crewman = [_blufor, PZFP_blufor_BA, PZFP_blufor_BA_Men, "Crewman", "PZFP_fnc_blufor_BA_Men_CreateCrewman", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -27989,7 +28059,7 @@ PZFP_fnc_initialize = {
   PZFP_blufor_AAFA_Men_SquadLeader = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Squad Leader", "PZFP_fnc_blufor_AAFA_Men_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_Men_AmmoBearer = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Ammo Bearer", "PZFP_fnc_blufor_AAFA_Men_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_Men_Medic = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Medic", "PZFP_fnc_blufor_AAFA_Men_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_AAFA_Men_RTO = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Radio-Telephone Operator", "PZFP_fnc_blufor_AAFA_Men_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_AAFA_Men_RTO = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Radio-Telephone Operator", "PZFP_fnc_blufor_AAFA_Men_CreateRadioOperator", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_Men_Sergeant = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Sergeant", "PZFP_fnc_blufor_AAFA_Men_CreateSergeant", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_Men_Officer = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Officer", "PZFP_fnc_blufor_AAFA_Men_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_Men_Crewman = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_Men, "Crewman", "PZFP_fnc_blufor_AAFA_Men_CreateCrewman", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -28010,7 +28080,7 @@ PZFP_fnc_initialize = {
   PZFP_blufor_AAFA_MenSOF_SquadLeader = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "Squad Leader", "PZFP_fnc_blufor_AAFA_MenSOF_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_MenSOF_JTAC = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "JTAC", "PZFP_fnc_blufor_AAFA_MenSOF_CreateJTAC", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_MenSOF_Medic = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "Medic", "PZFP_fnc_blufor_AAFA_MenSOF_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_AAFA_MenSOF_RTO = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "Radio-Telephone Operator", "PZFP_fnc_blufor_AAFA_MenSOF_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_AAFA_MenSOF_RTO = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "Radio-Telephone Operator", "PZFP_fnc_blufor_AAFA_MenSOF_CreateRadioOperator", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_MenSOF_AmmoBearer = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "Ammo Bearer", "PZFP_fnc_blufor_AAFA_MenSOF_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_MenSOF_DemoSpecialist = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "Demolitions Specialist", "PZFP_fnc_blufor_AAFA_MenSOF_CreateDemoSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_AAFA_MenSOF_Engineer = [_blufor, PZFP_blufor_AAFA, PZFP_blufor_AAFA_MenSOF, "Engineer", "PZFP_fnc_blufor_AAFA_MenSOF_CreateEngineer", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -28065,6 +28135,10 @@ PZFP_fnc_initialize = {
   PZFP_blufor_ANP_Men_OfficerSMG = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Men, "Officer (SMG)", "PZFP_fnc_blufor_ANP_Men_CreateOfficerSMG", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_ANP_Men_HelicopterPilot = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Men, "Helicopter Pilot", "PZFP_fnc_blufor_ANP_Men_CreateHelicopterPilot", [1,1,1,1]] call PZFP_fnc_addModule;
   
+  PZFP_blufor_ANP_Groups = [_blufor, PZFP_blufor_ANP, "Groups", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_ANP_Groups_FootPatrol = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Groups, "Foot Patrol", "PZFP_fnc_blufor_ANP_Groups_CreateFootPatrol", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_ANP_Groups_PatrolTeam = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Groups, "Patrol Team", "PZFP_fnc_blufor_ANP_Groups_CreatePatrolTeam", [1,1,1,1]] call PZFP_fnc_addModule;
+
     
 
   PZFP_blufor_LDFAF = [_blufor, "Livonian Defense Force Air Force", [1,1,1,1]] call PZFP_fnc_addCategory;
@@ -28130,7 +28204,7 @@ PZFP_fnc_initialize = {
   PZFP_blufor_LDF_Men_SquadLeader = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Squad Leader", "PZFP_fnc_blufor_LDF_Men_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_AmmoBearer = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Ammo Bearer", "PZFP_fnc_blufor_LDF_Men_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_Medic = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Medic", "PZFP_fnc_blufor_LDF_Men_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_LDF_Men_RTO = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Radio-Telephone Operator", "PZFP_fnc_blufor_LDF_Men_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_Men_RTO = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Radio-Telephone Operator", "PZFP_fnc_blufor_LDF_Men_CreateRadioOperator", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_Sergeant = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Sergeant", "PZFP_fnc_blufor_LDF_Men_CreateSergeant", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_Officer = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Officer", "PZFP_fnc_blufor_LDF_Men_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_Crewman = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Crewman", "PZFP_fnc_blufor_LDF_Men_CreateCrewman", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -28151,7 +28225,7 @@ PZFP_fnc_initialize = {
   PZFP_blufor_LDF_MenSOF_SquadLeader = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Squad Leader", "PZFP_fnc_blufor_LDF_MenSOF_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_MenSOF_JTAC = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "JTAC", "PZFP_fnc_blufor_LDF_MenSOF_CreateJTAC", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_MenSOF_Medic = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Medic", "PZFP_fnc_blufor_LDF_MenSOF_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_LDF_MenSOF_RTO = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Radio-Telephone Operator", "PZFP_fnc_blufor_LDF_MenSOF_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_MenSOF_RTO = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Radio-Telephone Operator", "PZFP_fnc_blufor_LDF_MenSOF_CreateRadioOperator", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_MenSOF_AmmoBearer = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Ammo Bearer", "PZFP_fnc_blufor_LDF_MenSOF_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_MenSOF_DemoSpecialist = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Demolitions Specialist", "PZFP_fnc_blufor_LDF_MenSOF_CreateDemoSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_MenSOF_Engineer = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Engineer", "PZFP_fnc_blufor_LDF_MenSOF_CreateEngineer", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -28271,7 +28345,7 @@ PZFP_fnc_initialize = {
   PZFP_opfor_IRGF_Men_SquadLeader = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Men, "Squad Leader", "PZFP_fnc_opfor_IRGF_Men_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_IRGF_Men_AmmoBearer = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Men, "Ammo Bearer", "PZFP_fnc_opfor_IRGF_Men_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_IRGF_Men_Medic = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Men, "Medic", "PZFP_fnc_opfor_IRGF_Men_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_opfor_IRGF_Men_RTO = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Men, "Radio-Telephone Operator", "PZFP_fnc_opfor_IRGF_Men_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_IRGF_Men_RTO = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Men, "Radio-Telephone Operator", "PZFP_fnc_opfor_IRGF_Men_CreateRadioOperator", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_IRGF_Men_Sergeant = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Men, "Sergeant", "PZFP_fnc_opfor_IRGF_Men_CreateSergeant", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_IRGF_Men_Officer = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Men, "Officer", "PZFP_fnc_opfor_IRGF_Men_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_IRGF_Men_Crewman = [_opfor, PZFP_opfor_IRGF, PZFP_opfor_IRGF_Men, "Crewman", "PZFP_fnc_opfor_IRGF_Men_CreateCrewman", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -28374,7 +28448,7 @@ PZFP_fnc_initialize = {
   PZFP_opfor_CHGF_Men_SquadLeader = [_opfor, PZFP_opfor_CHGF, PZFP_opfor_CHGF_Men, "Squad Leader", "PZFP_fnc_opfor_CHGF_Men_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_CHGF_Men_AmmoBearer = [_opfor, PZFP_opfor_CHGF, PZFP_opfor_CHGF_Men, "Ammo Bearer", "PZFP_fnc_opfor_CHGF_Men_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_CHGF_Men_Medic = [_opfor, PZFP_opfor_CHGF, PZFP_opfor_CHGF_Men, "Medic", "PZFP_fnc_opfor_CHGF_Men_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_opfor_CHGF_Men_RTO = [_opfor, PZFP_opfor_CHGF, PZFP_opfor_CHGF_Men, "Radio-Telephone Operator", "PZFP_fnc_opfor_CHGF_Men_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_CHGF_Men_RTO = [_opfor, PZFP_opfor_CHGF, PZFP_opfor_CHGF_Men, "Radio-Telephone Operator", "PZFP_fnc_opfor_CHGF_Men_CreateRadioOperator", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_CHGF_Men_Sergeant = [_opfor, PZFP_opfor_CHGF, PZFP_opfor_CHGF_Men, "Sergeant", "PZFP_fnc_opfor_CHGF_Men_CreateSergeant", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_CHGF_Men_Officer = [_opfor, PZFP_opfor_CHGF, PZFP_opfor_CHGF_Men, "Officer", "PZFP_fnc_opfor_CHGF_Men_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_CHGF_Men_Crewman = [_opfor, PZFP_opfor_CHGF, PZFP_opfor_CHGF_Men, "Crewman", "PZFP_fnc_opfor_CHGF_Men_CreateCrewman", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -28464,7 +28538,7 @@ PZFP_fnc_initialize = {
   PZFP_opfor_TUA_Men_SquadLeader = [_opfor, PZFP_opfor_TUA, PZFP_opfor_TUA_Men, "Squad Leader", "PZFP_fnc_opfor_TUA_Men_CreateSquadLeader", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_TUA_Men_AmmoBearer = [_opfor, PZFP_opfor_TUA, PZFP_opfor_TUA_Men, "Ammo Bearer", "PZFP_fnc_opfor_TUA_Men_CreateAmmoBearer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_TUA_Men_Medic = [_opfor, PZFP_opfor_TUA, PZFP_opfor_TUA_Men, "Medic", "PZFP_fnc_opfor_TUA_Men_CreateMedic", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_opfor_TUA_Men_RTO = [_opfor, PZFP_opfor_TUA, PZFP_opfor_TUA_Men, "Radio-Telephone Operator", "PZFP_fnc_opfor_TUA_Men_CreateRTO", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_opfor_TUA_Men_RTO = [_opfor, PZFP_opfor_TUA, PZFP_opfor_TUA_Men, "Radio-Telephone Operator", "PZFP_fnc_opfor_TUA_Men_CreateRadioOperator", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_TUA_Men_Sergeant = [_opfor, PZFP_opfor_TUA, PZFP_opfor_TUA_Men, "Sergeant", "PZFP_fnc_opfor_TUA_Men_CreateSergeant", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_TUA_Men_Officer = [_opfor, PZFP_opfor_TUA, PZFP_opfor_TUA_Men, "Officer", "PZFP_fnc_opfor_TUA_Men_CreateOfficer", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_opfor_TUA_Men_Crewman = [_opfor, PZFP_opfor_TUA, PZFP_opfor_TUA_Men, "Crewman", "PZFP_fnc_opfor_TUA_Men_CreateCrewman", [1,1,1,1]] call PZFP_fnc_addModule;
