@@ -310,7 +310,7 @@ PZFP_fnc_initialize = {
     case "malden":  { _terrainType = "Mediterranean"; };
     case "tanoa":   { _terrainType = "Tropical"; };
     case "livonia": { _terrainType = "Woodland"; };
-    default         { _terrainType = "Woodland"; }
+    default         { _terrainType = "Tropical"; }
   };
   _terrainType;
  };
@@ -1835,14 +1835,14 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
   _unit addWeapon "launch_MRAWS_olive_F";
   _unit addSecondaryWeaponItem "MRAWS_HEAT_F";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
-  _unit addBackpack "B_Kitbag_mcamo";
+  _unit addBackpack "B_Kitbag_sgg";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
@@ -1879,7 +1879,7 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
-  _unit addBackpack "B_Kitbag_mcamo";
+  _unit addBackpack "B_Kitbag_rgr";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
@@ -1914,7 +1914,7 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_Aco";
+  _unit addPrimaryWeaponItem "optic_Holosight";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
   _unit addWeapon "launch_NLAW_F";
   _unit addSecondaryWeaponItem "NLAW_F";
@@ -1953,7 +1953,7 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_Aco";
+  _unit addPrimaryWeaponItem "optic_Holosight_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
   _unit addWeapon "launch_NLAW_F";
   _unit addSecondaryWeaponItem "NLAW_F";
@@ -1962,7 +1962,7 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
-  _unit addBackpack "B_Kitbag_mcamo";
+  _unit addBackpack "B_Kitbag_sgg";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
@@ -1992,7 +1992,7 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_Aco";
+  _unit addPrimaryWeaponItem "optic_Holosight_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
   _unit addWeapon "launch_NLAW_F";
   _unit addSecondaryWeaponItem "NLAW_F";
@@ -2001,7 +2001,7 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
-  _unit addBackpack "B_Kitbag_mcamo";
+  _unit addBackpack "B_Kitbag_rgr";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
@@ -2064,7 +2064,7 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "LMG_Mk200_BLACK_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
   _unit addPrimaryWeaponItem "200Rnd_65x39_cased_Box";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
@@ -2368,7 +2368,7 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_GL_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
   _unit addPrimaryWeaponItem "1Rnd_HE_Grenade_shell";
   _unit addWeapon "hgun_P07_F";
@@ -2504,7 +2504,7 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier1_tna_F";
-  _unit addBackpack "B_AssaultPack_mcamo";
+  _unit addBackpack "B_AssaultPack_tna_F";
 
   _unit addWeapon "Binocular";
 
@@ -2547,7 +2547,7 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier1_wdl";
-  _unit addBackpack "B_AssaultPack_mcamo";
+  _unit addBackpack "B_AssaultPack_wdl_F";
 
   _unit addWeapon "Binocular";
 
@@ -2595,7 +2595,7 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_CombatUniform_mcam";
   _unit addVest "V_PlateCarrier1_rgr";
-  _unit addBackpack "B_Carryall_mcamo";
+  _unit addBackpack "B_KitBag_mcamo";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
@@ -2637,7 +2637,7 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier1_tna_F";
-  _unit addBackpack "B_Carryall_mcamo";
+  _unit addBackpack "B_KitBag_sgg";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
@@ -2679,7 +2679,7 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier1_wdl";
-  _unit addBackpack "B_Carryall_mcamo";
+  _unit addBackpack "B_KitBag_rgr";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
@@ -2721,7 +2721,7 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
-  _unit addBackpack "B_Kitbag_mcamo";
+  _unit addBackpack "B_Kitbag_sgg";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
@@ -2759,7 +2759,7 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
-  _unit addBackpack "B_Kitbag_mcamo";
+  _unit addBackpack "B_Kitbag_rgr";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
@@ -2834,7 +2834,7 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier1_tna_F";
-  _unit addBackpack "B_RadioBag_01_mtp_F";
+  _unit addBackpack "B_RadioBag_01_tropic_F";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
@@ -2871,7 +2871,7 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier1_wdl";
-  _unit addBackpack "B_RadioBag_01_mtp_F";
+  _unit addBackpack "B_RadioBag_01_wdl_F";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
@@ -3056,7 +3056,7 @@ PZFP_fnc_initialize = {
   removeHeadgear _unit; removeGoggles _unit;
 
   _unit addWeapon "arifle_MXC_khk_F";
-  _unit addPrimaryWeaponItem "optic_Holosight";
+  _unit addPrimaryWeaponItem "optic_Holosight_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
   _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
@@ -3092,7 +3092,7 @@ PZFP_fnc_initialize = {
   removeHeadgear _unit; removeGoggles _unit;
 
   _unit addWeapon "arifle_MXC_Black_F";
-  _unit addPrimaryWeaponItem "optic_Holosight";
+  _unit addPrimaryWeaponItem "optic_Holosight_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
   _unit addWeapon "hgun_P07_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
@@ -3165,8 +3165,8 @@ PZFP_fnc_initialize = {
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
-  _unit addVest "V_BandollierB_tna_F";
-  _unit addHeadgear "H_HelmetCrew_B_tna_F";
+  _unit addVest "V_BandollierB_oli";
+  _unit addHeadgear "H_HelmetCrew_B";
   _unit addGoggles "G_Combat";
 
   _unit addItemToUniform "FirstAidKit";
@@ -3189,17 +3189,22 @@ PZFP_fnc_initialize = {
 
  PZFP_fnc_blufor_USA_Men_AddLoadoutCrewman_W = {
   params ["_unit"];
-  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
-  removeUniform _unit; removeVest _unit; removeBackpack _unit;
-  removeHeadgear _unit; removeGoggles _unit;
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
 
   _unit addWeapon "arifle_MXC_Black_F";
   _unit addPrimaryWeaponItem "acc_flashlight";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
-  _unit addVest "V_BandollierB_wdl";
-  _unit addHeadgear "H_HelmetCrew_B_plain_wdl";
+  _unit addVest "V_BandollierB_oli";
+  _unit addHeadgear "H_HelmetCrew_B";
   _unit addGoggles "G_Combat";
 
   _unit addItemToUniform "FirstAidKit";
@@ -3263,7 +3268,7 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_Holosight";
+  _unit addPrimaryWeaponItem "optic_Holosight_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
@@ -3297,12 +3302,12 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_Holosight";
+  _unit addPrimaryWeaponItem "optic_Holosight_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier1_wdl";
-  _unit addBackpack "B_AssaultPack_wdl";
+  _unit addBackpack "B_AssaultPack_wdl_F";
   _unit addHeadgear "H_HelmetB_plain_wdl";
   _unit addGoggles "G_Combat";
 
@@ -3367,13 +3372,13 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MXC_khk_F";
   _unit addPrimaryWeaponItem "acc_flashlight";
-  _unit addPrimaryWeaponItem "optic_Holosight";
+  _unit addPrimaryWeaponItem "optic_Holosight_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrierSpec_tna_F";
   _unit addBackpack "B_Kitbag_tna_F";
-  _unit addHeadgear "H_HelmetSpecB_tna_F";
+  _unit addHeadgear "H_HelmetB_tna_F";
   _unit addGoggles "G_Tactical_Clear";
 
   _unit addItemToUniform "FirstAidKit";
@@ -3403,13 +3408,13 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MXC_Black_F";
   _unit addPrimaryWeaponItem "acc_flashlight";
-  _unit addPrimaryWeaponItem "optic_Holosight";
+  _unit addPrimaryWeaponItem "optic_Holosight_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrierSpec_wdl";
-  _unit addBackpack "B_Kitbag_wdl";
-  _unit addHeadgear "H_HelmetSpecB_plain_wdl";
+  _unit addBackpack "B_Kitbag_wdl_F";
+  _unit addHeadgear "H_HelmetB_plain_wdl";
   _unit addGoggles "G_Tactical_Clear";
 
   _unit addItemToUniform "FirstAidKit";
@@ -3476,7 +3481,7 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_flashlight";
-  _unit addPrimaryWeaponItem "optic_Holosight";
+  _unit addPrimaryWeaponItem "optic_Holosight_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
@@ -3513,7 +3518,7 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_Black_F";
   _unit addPrimaryWeaponItem "acc_flashlight";
-  _unit addPrimaryWeaponItem "optic_Holosight";
+  _unit addPrimaryWeaponItem "optic_Holosight_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
@@ -3660,7 +3665,7 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_CombatUniform_mcam";
   _unit addVest "V_PlateCarrierSpec_mtp";
-  _unit addBackpack "B_Carryall_mcamo";
+  _unit addBackpack "B_KitBag_mcamo";
   _unit addHeadgear "H_HelmetB_snakeskin";
   _unit addGoggles "G_Combat";
 
@@ -3693,12 +3698,12 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MXC_khk_F";
   _unit addPrimaryWeaponItem "acc_flashlight";
-  _unit addPrimaryWeaponItem "optic_Holosight";
+  _unit addPrimaryWeaponItem "optic_Holosight_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrierSpec_tna_F";
-  _unit addBackpack "B_Carryall_tna_F";
+  _unit addBackpack "B_KitBag_sgg";
   _unit addHeadgear "H_HelmetB_tna_F";
   _unit addGoggles "G_Combat";
 
@@ -3731,12 +3736,12 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MXC_Black_F";
   _unit addPrimaryWeaponItem "acc_flashlight";
-  _unit addPrimaryWeaponItem "optic_Holosight";
+  _unit addPrimaryWeaponItem "optic_Holosight_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrierSpec_wdl";
-  _unit addBackpack "B_Carryall_wdl";
+  _unit addBackpack "B_KitBag_rgr";
   _unit addHeadgear "H_HelmetB_plain_wdl";
   _unit addGoggles "G_Combat";
 
@@ -4320,13 +4325,13 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_Hamr";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
   _unit addWeapon "hgun_P07_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_vest";
-  _unit addVest "V_PlateCarrier2_rgr_noflag_F";
+  _unit addVest "V_PlateCarrier2_rgr";
 
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "muzzle_snds_H_snd_F";
@@ -4359,16 +4364,16 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
 
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
@@ -4384,7 +4389,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutRifleman_W = {
@@ -4395,16 +4400,16 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_blk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
 
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
@@ -4420,7 +4425,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanLAT = {
@@ -4436,7 +4441,7 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_Hamr";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
   _unit addWeapon "launch_MRAWS_sand_F";
   _unit addSecondaryWeaponItem "MRAWS_HEAT_F";
@@ -4445,7 +4450,7 @@ PZFP_fnc_initialize = {
 
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_vest";
-  _unit addVest "V_PlateCarrier2_rgr_noflag_F";
+  _unit addVest "V_PlateCarrier2_rgr";
   _unit addBackpack "B_KitBag_mcamo";
 
   _unit addItemToUniform "FirstAidKit";
@@ -4478,19 +4483,19 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
   _unit addWeapon "launch_MRAWS_olive_F";
   _unit addSecondaryWeaponItem "MRAWS_HEAT_F";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
-  _unit addBackpack "B_KitBag_mcamo";
+  _unit addBackpack "B_KitBag_sgg";
 
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
@@ -4508,30 +4513,34 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanLAT_W = {
   params ["_unit"];
-  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
-  removeUniform _unit; removeVest _unit; removeBackpack _unit;
-  removeHeadgear _unit; removeGoggles _unit;
+  removeAllWeapons _unit; 
+  removeAllItems _unit; 
+  removeAllAssignedItems _unit;
+  removeUniform _unit; 
+  removeVest _unit; 
+  removeBackpack _unit;
+  removeHeadgear _unit; 
+  removeGoggles _unit;
 
   _unit addWeapon "arifle_MX_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
   _unit addWeapon "launch_MRAWS_green_F";
   _unit addSecondaryWeaponItem "MRAWS_HEAT_F";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_blk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
-  _unit addBackpack "B_KitBag_mcamo";
-
+  _unit addBackpack "B_Kitbag_rgr";
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
@@ -4549,7 +4558,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanAT = {
@@ -4576,7 +4585,6 @@ PZFP_fnc_initialize = {
   _unit forceAddUniform "U_B_CombatUniform_mcam_vest";
   _unit addVest "V_PlateCarrier2_rgr_noflag_F";
   _unit addBackpack "B_KitBag_mcamo";
-
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "muzzle_snds_H_snd_F";
   _unit addItemToUniform "Wallet_ID";
@@ -4599,13 +4607,18 @@ PZFP_fnc_initialize = {
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanAT_T = {
   params ["_unit"];
-  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
-  removeUniform _unit; removeVest _unit; removeBackpack _unit;
-  removeHeadgear _unit; removeGoggles _unit;
+  removeAllWeapons _unit; 
+  removeAllItems _unit; 
+  removeAllAssignedItems _unit;
+  removeUniform _unit; 
+  removeVest _unit; 
+  removeBackpack _unit;
+  removeHeadgear _unit; 
+  removeGoggles _unit;
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
   _unit addWeapon "launch_NLAW_F";
   _unit addSecondaryWeaponItem "NLAW_F";
@@ -4614,9 +4627,8 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
-
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
@@ -4631,18 +4643,23 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanAT_W = {
   params ["_unit"];
-  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
-  removeUniform _unit; removeVest _unit; removeBackpack _unit;
-  removeHeadgear _unit; removeGoggles _unit;
+  removeAllWeapons _unit; 
+  removeAllItems _unit; 
+  removeAllAssignedItems _unit;
+  removeUniform _unit; 
+  removeVest _unit; 
+  removeBackpack _unit;
+  removeHeadgear _unit; 
+  removeGoggles _unit;
 
   _unit addWeapon "arifle_MX_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
   _unit addWeapon "launch_NLAW_F";
   _unit addSecondaryWeaponItem "NLAW_F";
@@ -4651,9 +4668,8 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
-
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
@@ -4668,7 +4684,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutAutorifleman = {
@@ -4686,10 +4702,11 @@ PZFP_fnc_initialize = {
   _unit addPrimaryWeaponItem "acc_pointer_IR";
   _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
   _unit addPrimaryWeaponItem "200Rnd_65x39_cased_Box";
+  _unit addWeapon "hgun_P07_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_vest";
-  _unit addVest "V_PlateCarrier2_rgr_noflag_F";
-
+  _unit addVest "V_PlateCarrier2_rgr";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "muzzle_snds_H_snd_F";
   _unit addItemToUniform "Wallet_ID";
@@ -4715,16 +4732,17 @@ PZFP_fnc_initialize = {
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
   removeHeadgear _unit; removeGoggles _unit;
 
-  _unit addWeapon "LMG_Mk200_F";
+  _unit addWeapon "LMG_Mk200_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
   _unit addPrimaryWeaponItem "200Rnd_65x39_cased_Box";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
-
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 2 do {_unit addItemToVest "200Rnd_65x39_cased_Box_Red";};
@@ -4739,7 +4757,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutAutorifleman_W = {
@@ -4748,16 +4766,17 @@ PZFP_fnc_initialize = {
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
   removeHeadgear _unit; removeGoggles _unit;
 
-  _unit addWeapon "LMG_Mk200_F";
+  _unit addWeapon "LMG_Mk200_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
   _unit addPrimaryWeaponItem "200Rnd_65x39_cased_Box";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
-
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 2 do {_unit addItemToVest "200Rnd_65x39_cased_Box_Red";};
@@ -4772,7 +4791,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutMarksman = {
@@ -4796,9 +4815,8 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_vest";
   _unit addVest "V_PlateCarrier2_rgr_noflag_F";
-
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_B";
+  _unit addItemToUniform "muzzle_snds_B_snd_F";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 6 do {_unit addItemToVest "20Rnd_762x51_Mag";};
@@ -4822,19 +4840,27 @@ PZFP_fnc_initialize = {
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutMarksman_T = {
   params ["_unit"];
-  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
-  removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit;
+  removeAllWeapons _unit; 
+  removeAllItems _unit; 
+  removeAllAssignedItems _unit;
+  removeUniform _unit; 
+  removeVest _unit; 
+  removeBackpack _unit; 
+  removeHeadgear _unit; 
+  removeGoggles _unit;
+
   _unit addWeapon "srifle_EBR_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_AMS_snd";
+  _unit addPrimaryWeaponItem "optic_AMS";
   _unit addPrimaryWeaponItem "20Rnd_762x51_Mag";
   _unit addPrimaryWeaponItem "bipod_01_F_blk";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
+
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_B_khk_F";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 6 do {_unit addItemToVest "20Rnd_762x51_Mag";};
@@ -4843,7 +4869,13 @@ PZFP_fnc_initialize = {
   _unit addItemToVest "SmokeShell";
   _unit addHeadgear "H_HelmetB_Enh_tna_F";
   _unit addGoggles "G_Tactical_Clear";
-  _unit linkItem "ItemMap"; _unit linkItem "ItemCompass"; _unit linkItem "ItemWatch"; _unit linkItem "ItemRadio"; _unit linkItem "ItemGPS"; _unit linkItem "NVGoggles";
+
+  _unit linkItem "ItemMap"; 
+  _unit linkItem "ItemCompass"; 
+  _unit linkItem "ItemWatch"; 
+  _unit linkItem "ItemRadio"; 
+  _unit linkItem "ItemGPS"; 
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutMarksman_W = {
@@ -4852,15 +4884,15 @@ PZFP_fnc_initialize = {
   removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit;
   _unit addWeapon "srifle_EBR_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_AMS_snd";
+  _unit addPrimaryWeaponItem "optic_AMS";
   _unit addPrimaryWeaponItem "20Rnd_762x51_Mag";
   _unit addPrimaryWeaponItem "bipod_01_F_blk";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_blk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_B";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 6 do {_unit addItemToVest "20Rnd_762x51_Mag";};
@@ -4869,7 +4901,7 @@ PZFP_fnc_initialize = {
   _unit addItemToVest "SmokeShell";
   _unit addHeadgear "H_HelmetSpecB_wdl";
   _unit addGoggles "G_Tactical_Clear";
-  _unit linkItem "ItemMap"; _unit linkItem "ItemCompass"; _unit linkItem "ItemWatch"; _unit linkItem "ItemRadio"; _unit linkItem "ItemGPS"; _unit linkItem "NVGoggles";
+  _unit linkItem "ItemMap"; _unit linkItem "ItemCompass"; _unit linkItem "ItemWatch"; _unit linkItem "ItemRadio"; _unit linkItem "ItemGPS"; _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutTeamLeader = {
@@ -4922,21 +4954,53 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutTeamLeader_T = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit;
-  _unit addWeapon "arifle_MX_khk_F"; _unit addPrimaryWeaponItem "acc_pointer_IR"; _unit addPrimaryWeaponItem "optic_ERCO_snd_F"; _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag"; _unit addWeapon "hgun_P07_F"; _unit addHandgunItem "16Rnd_9x21_Mag";
-  _unit forceAddUniform "U_B_T_Soldier_F"; _unit addVest "V_PlateCarrier2_tna_F";
-  _unit addItemToUniform "FirstAidKit"; _unit addItemToUniform "muzzle_snds_H_snd_F"; _unit addItemToUniform "Wallet_ID"; _unit addItemToUniform "Chemlight_blue";
-  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";}; for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";}; for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";}; _unit addItemToVest "SmokeShell"; _unit addHeadgear "H_HelmetB_Enh_tna_F"; _unit addGoggles "G_Tactical_Clear";
-  _unit linkItem "ItemMap"; _unit linkItem "ItemCompass"; _unit linkItem "ItemWatch"; _unit linkItem "ItemRadio"; _unit linkItem "ItemGPS"; _unit linkItem "NVGoggles";
+  _unit addWeapon "arifle_MX_khk_F"; 
+  _unit addPrimaryWeaponItem "acc_pointer_IR"; 
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F"; 
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag"; 
+  _unit addWeapon "hgun_P07_khk_F"; 
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F"; 
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addItemToUniform "FirstAidKit"; 
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+  _unit addItemToUniform "Wallet_ID"; 
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";}; 
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";}; 
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";}; 
+  _unit addItemToVest "SmokeShell"; 
+  _unit addHeadgear "H_HelmetB_Enh_tna_F"; 
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap"; _unit linkItem "ItemCompass"; _unit linkItem "ItemWatch"; _unit linkItem "ItemRadio"; _unit linkItem "ItemGPS"; _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutTeamLeader_W = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit;
-  _unit addWeapon "arifle_MX_Black_F"; _unit addPrimaryWeaponItem "acc_pointer_IR"; _unit addPrimaryWeaponItem "optic_ERCO_snd_F"; _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag"; _unit addWeapon "hgun_P07_F"; _unit addHandgunItem "16Rnd_9x21_Mag";
-  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f"; _unit addVest "V_PlateCarrier2_wdl";
-  _unit addItemToUniform "FirstAidKit"; _unit addItemToUniform "muzzle_snds_H_snd_F"; _unit addItemToUniform "Wallet_ID"; _unit addItemToUniform "Chemlight_blue";
-  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";}; for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";}; for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";}; _unit addItemToVest "SmokeShell"; _unit addHeadgear "H_HelmetSpecB_wdl"; _unit addGoggles "G_Tactical_Clear";
-  _unit linkItem "ItemMap"; _unit linkItem "ItemCompass"; _unit linkItem "ItemWatch"; _unit linkItem "ItemRadio"; _unit linkItem "ItemGPS"; _unit linkItem "NVGoggles";
+  _unit addWeapon "arifle_MX_Black_F"; 
+  _unit addPrimaryWeaponItem "acc_pointer_IR"; 
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F"; 
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag"; 
+  _unit addWeapon "hgun_P07_blk_F"; 
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f"; 
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addItemToUniform "FirstAidKit"; 
+  _unit addItemToUniform "muzzle_snds_H"; 
+  _unit addItemToUniform "Wallet_ID"; 
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";}; 
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";}; 
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";}; 
+  _unit addItemToVest "SmokeShell"; 
+  _unit addHeadgear "H_HelmetSpecB_wdl"; 
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap"; _unit linkItem "ItemCompass"; _unit linkItem "ItemWatch"; _unit linkItem "ItemRadio"; _unit linkItem "ItemGPS"; _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutSquadLeader = {
@@ -4959,8 +5023,6 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_CombatUniform_mcam";
   _unit addVest "V_PlateCarrier2_rgr_noflag_F";
-
-  _unit addWeapon "Binocular";
 
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
@@ -4998,15 +5060,15 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
 
@@ -5022,7 +5084,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutSquadLeader_W = {
@@ -5038,15 +5100,15 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_blk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
 
@@ -5062,7 +5124,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutJTAC = {
@@ -5126,9 +5188,9 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
@@ -5137,7 +5199,7 @@ PZFP_fnc_initialize = {
   _unit addWeapon "Laserdesignator";
 
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
   _unit addItemToUniform "Laserbatteries";
@@ -5157,7 +5219,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutJTAC_W = {
@@ -5173,9 +5235,9 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_blk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
@@ -5184,7 +5246,7 @@ PZFP_fnc_initialize = {
   _unit addWeapon "Laserdesignator";
 
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
   _unit addItemToUniform "Laserbatteries";
@@ -5204,7 +5266,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutMedic = {
@@ -5263,18 +5325,18 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
-  _unit addBackpack "B_Kitbag_mcamo";
+  _unit addBackpack "B_Kitbag_sgg";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
 
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
@@ -5290,7 +5352,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutMedic_W = {
@@ -5306,18 +5368,18 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_blk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
-  _unit addBackpack "B_Kitbag_mcamo";
+  _unit addBackpack "B_Kitbag_rgr";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H";
 
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
@@ -5333,7 +5395,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutRTO = {
@@ -5361,6 +5423,7 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_snd_F";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
@@ -5388,17 +5451,18 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
-  _unit addBackpack "B_RadioBag_01_mtp_F";
+  _unit addBackpack "B_RadioBag_01_tropic_F";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
 
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
@@ -5412,7 +5476,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemCompass";
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutRTO_W = {
@@ -5430,15 +5494,16 @@ PZFP_fnc_initialize = {
   _unit addPrimaryWeaponItem "acc_pointer_IR";
   _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_blk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
-  _unit addBackpack "B_RadioBag_01_mtp_F";
+  _unit addBackpack "B_RadioBag_01_wdl_F";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H";
 
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
@@ -5452,7 +5517,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemCompass";
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutAmmoBearer = {
@@ -5480,6 +5545,7 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_snd_F";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
@@ -5508,17 +5574,18 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
-  _unit addBackpack "B_Kitbag_mcamo";
+  _unit addBackpack "B_Kitbag_sgg";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
 
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
@@ -5532,7 +5599,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemCompass";
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutAmmoBearer_W = {
@@ -5548,17 +5615,18 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_blk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
-  _unit addBackpack "B_Kitbag_mcamo";
+  _unit addBackpack "B_Kitbag_rgr";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H";
 
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
@@ -5572,7 +5640,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemCompass";
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutDemoSpecialist = {
@@ -5600,6 +5668,7 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_snd_F";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
@@ -5630,17 +5699,18 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
-  _unit addBackpack "B_kitbag_mcamo";
+  _unit addBackpack "B_Kitbag_sgg";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
 
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
@@ -5658,7 +5728,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemCompass";
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutDemoSpecialist_W = {
@@ -5674,17 +5744,18 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_blk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
-  _unit addBackpack "B_kitbag_mcamo";
+  _unit addBackpack "B_kitbag_rgr";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H";
 
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
@@ -5702,7 +5773,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemCompass";
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutEngineer = {
@@ -5730,6 +5801,7 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_snd_F";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
@@ -5758,17 +5830,18 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
-  _unit addBackpack "B_kitbag_mcamo";
+  _unit addBackpack "B_Kitbag_sgg";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
 
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
@@ -5784,7 +5857,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemCompass";
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutEngineer_W = {
@@ -5800,17 +5873,18 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_blk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
-  _unit addBackpack "B_kitbag_mcamo";
+  _unit addBackpack "B_kitbag_rgr";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H";
 
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
@@ -5826,7 +5900,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemCompass";
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutSniper = {
@@ -5886,14 +5960,14 @@ PZFP_fnc_initialize = {
   removeHeadgear _unit;
   removeGoggles _unit;
 
-  _unit addWeapon "srifle_LRR_camo_F";
+  _unit addWeapon "srifle_LRR_tna_F";
   _unit addPrimaryWeaponItem "optic_AMS";
   _unit addPrimaryWeaponItem "7Rnd_408_Mag";
   _unit addWeapon "hgun_P07_F";
   _unit addHandgunItem "muzzle_snds_L";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
-  _unit forceAddUniform "U_B_FullGhillie_sard";
+  _unit forceAddUniform "U_B_T_FullGhillie_tna_F";
   _unit addVest "V_Chestrig_rgr";
   _unit addWeapon "Rangefinder";
   _unit addItemToUniform "FirstAidKit";
@@ -5918,7 +5992,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutSniper_W = {
@@ -5964,7 +6038,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutSpotter = {
@@ -6023,16 +6097,16 @@ PZFP_fnc_initialize = {
   removeHeadgear _unit;
   removeGoggles _unit;
 
-  _unit addWeapon "srifle_DMR_03_multicam_F";
-  _unit addPrimaryWeaponItem "muzzle_snds_B_snd_F";
+  _unit addWeapon "srifle_DMR_03_woodland_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_B_khk_F";
   _unit addPrimaryWeaponItem "optic_AMS";
   _unit addPrimaryWeaponItem "20Rnd_762x51_Mag";
-  _unit addPrimaryWeaponItem "bipod_01_F_mtp";
-  _unit addWeapon "hgun_P07_F";
+  _unit addPrimaryWeaponItem "bipod_01_F_blk";
+  _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "muzzle_snds_L";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
-  _unit forceAddUniform "U_B_FullGhillie_sard";
+  _unit forceAddUniform "U_B_T_FullGhillie_tna_F";
   _unit addVest "V_Chestrig_rgr";
   _unit addMagazine "Laserbatteries";
   _unit addWeapon "Laserdesignator";
@@ -6054,7 +6128,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutSpotter_W = {
@@ -6069,11 +6143,11 @@ PZFP_fnc_initialize = {
   removeGoggles _unit;
 
   _unit addWeapon "srifle_DMR_03_woodland_F";
-  _unit addPrimaryWeaponItem "muzzle_snds_B_snd_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_B_blk_F";
   _unit addPrimaryWeaponItem "optic_AMS";
   _unit addPrimaryWeaponItem "20Rnd_762x51_Mag";
   _unit addPrimaryWeaponItem "bipod_01_F_mtp";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_blk_F";
   _unit addHandgunItem "muzzle_snds_L";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
@@ -6099,7 +6173,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutSergeant = {
@@ -6160,15 +6234,15 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
   _unit addItemToUniform "Wallet_ID";
 
   for "_i" from 1 to 5 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
@@ -6185,7 +6259,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutSergeant_W = {
@@ -6201,15 +6275,15 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_blk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H_blk_F";
   _unit addItemToUniform "Wallet_ID";
 
   for "_i" from 1 to 5 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
@@ -6226,7 +6300,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutOfficer = {
@@ -6282,15 +6356,15 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_T_Soldier_F";
   _unit addVest "V_PlateCarrier2_tna_F";
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
   _unit addItemToUniform "Wallet_ID";
 
   for "_i" from 1 to 5 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
@@ -6304,7 +6378,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutOfficer_W = {
@@ -6320,15 +6394,15 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_Black_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addWeapon "hgun_P07_blk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
   _unit addVest "V_PlateCarrier2_wdl";
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_F";
+  _unit addItemToUniform "muzzle_snds_H_blk_F";
   _unit addItemToUniform "Wallet_ID";
 
   for "_i" from 1 to 5 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
@@ -6342,7 +6416,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_CreateRifleman = {
@@ -16088,7 +16162,7 @@ PZFP_fnc_initialize = {
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutOfficer = {
-  params ["unit"];
+  params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
   removeAllAssignedItems _unit;
