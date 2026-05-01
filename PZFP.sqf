@@ -14512,10 +14512,21 @@ PZFP_fnc_initialize = {
    ["White",1], 
    ["HideDoor1",0,"HideDoor2",0,"HideDoor3",0,"HideBackpacks",1,"HideBumper1",1,"HideBumper2",0,"HideConstruction",0,"hidePolice",0,"HideServices",1,"BeaconsStart",0,"BeaconsServicesStart",0]
   ] call BIS_fnc_initVehicle;
+  [_vehicle] call PZFP_fnc_vehicleCleanup;
+  [_vehicle, ["clan", '#(rgb,512,512,3)text(1,1,"PuristaBold",1,"#00000000","#ffffffff","112")']] remoteExec ['setObjectTexture',0,true];
+  
+  _object1 = createSimpleObject ["UserTexture1m_F", _vehicle modelToWorld [-1.01904,0.220215,4.4255]];
+  [_object1, [0, '#(argb,512,512,3)text(1,1,""PuristaBold"",0.45,""#00000000"",""#ffffffff"","POLICE")']] remoteExec ['setObjectTexture',0,true];
+  [_object1, _vehicle] call BIS_fnc_attachToRelative;
+  _object1 setVectorDirAndUp [[0.9964, 0, 0.0850], [-0.0850, 0, 0.9964]];
+
+  _object2 = createSimpleObject ["UserTexture1m_F", _vehicle modelToWorld [0.958008,0.15918,4.5815]];
+  [_object2, [0, '#(argb,512,512,3)text(1,1,""PuristaBold"",0.35,""#00000000"",""#ffffffff"","POLICE")']] remoteExec ['setObjectTexture',0,true];
+  [_object2, _vehicle] call BIS_fnc_attachToRelative;
+  _object2 setVectorDirAndUp [[-0.9964, 0, 0.0850], [-0.0850, 0, 0.9964]];
  
   private _driver = [] call PZFP_fnc_blufor_ANP_Men_CreateOfficer;
   _driver moveInDriver _vehicle;
-  [_vehicle, ["clan", '#(rgb,512,512,3)text(1,1,"PuristaBold",1,"#FFFFFF00","#000000","112")']] remoteExec ['setObjectTexture',0,true];
   
   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
@@ -14529,7 +14540,17 @@ PZFP_fnc_initialize = {
    ["Grey",1], 
    true
   ] call BIS_fnc_initVehicle;
-  [_vehicle, ["clan", '#(rgb,512,512,3)text(1,1,"PuristaBold",1.25,"#FFFFFF00","#000000","112")']] remoteExec ['setObjectTexture',0,true];
+  [_vehicle] call PZFP_fnc_vehicleCleanup;
+
+  _object1 = createSimpleObject ["UserTexture1m_F", _vehicle modelToWorld [-0.961426,0.0795898,4.59792]];
+  [_object1, [0, '#(argb,512,512,3)text(1,1,""PuristaBold"",0.45,""#00000000"",""#ffffffff"","POLICE")']] remoteExec ['setObjectTexture',0,true];
+  [_object1, _vehicle] call BIS_fnc_attachToRelative;
+  _object1 setVectorDirAndUp [[0.990927,0.0109619,-0.133952],[0.133641,0.0253817,0.990705]];
+
+  _object2 = createSimpleObject ["UserTexture1m_F", _vehicle modelToWorld [0.961426,0.0795898,4.59792]];
+  [_object2, [0, '#(argb,512,512,3)text(1,1,""PuristaBold"",0.45,""#00000000"",""#ffffffff"","POLICE")']] remoteExec ['setObjectTexture',0,true];
+  [_object2, _vehicle] call BIS_fnc_attachToRelative;
+  _object2 setVectorDirAndUp [[-0.990927,0.0109619,-0.133952],[-0.133641,0.0253817,0.990705]];
  
   private _driver = [] call PZFP_fnc_blufor_ANP_Men_CreateOfficer;
   _driver moveInDriver _vehicle;
@@ -14545,7 +14566,27 @@ PZFP_fnc_initialize = {
    ["Door_1_source",0,"Door_2_source",0,"Door_3_source",0,"Door_4_source",0,"Hide_Door_1_source",0,"Hide_Door_2_source",0,"Hide_Door_3_source",0,"Hide_Door_4_source",0,"lights_em_hide",0,"ladder_hide",1,"spare_tyre_holder_hide",0,"spare_tyre_hide",0,"reflective_tape_hide",1,"roof_rack_hide",1,"LED_lights_hide",0,"sidesteps_hide",1,"rearsteps_hide",0,"side_protective_frame_hide",0,"front_protective_frame_hide",0,"beacon_front_hide",0,"beacon_rear_hide",0]
   ] call BIS_fnc_initVehicle;
   [_vehicle, [0, "a3\soft_f_orange\van_02\data\van_body_white_co.paa"]] remoteExec ['setObjectTexture',0,true];
-  [_vehicle, ["clan", '#(rgb,512,512,3)text(1,1,"PuristaBold",1,"#FFFFFF00","#000000","112")']] remoteExec ['setObjectTexture',0,true];
+  [_vehicle] call PZFP_fnc_vehicleCleanup;
+
+  _object1 = createSimpleObject ["UserTexture1m_F", _vehicle modelToWorld [-1.07031,0.244141,4.41195]];
+  [_object1, [0, '#(argb,512,512,3)text(1,1,""PuristaBold"",0.45,""#00000000"",""#ffffffff"","POLICE")']] remoteExec ['setObjectTexture',0,true];
+  [_object1, _vehicle] call BIS_fnc_attachToRelative;
+  _object1 setVectorDirAndUp [[0.999943,-4.18091e-08,0.0106379],[-0.0106379,1.7881e-07,0.999943]];
+
+  _object2 = createSimpleObject ["UserTexture1m_F", _vehicle modelToWorld [-1.07031,-2.44141,4.41195]];
+  [_object2, [0, '#(argb,512,512,3)text(1,1,""PuristaBold"",0.45,""#00000000"",""#ffffffff"","112")']] remoteExec ['setObjectTexture',0,true];
+  [_object2, _vehicle] call BIS_fnc_attachToRelative;
+  _object2 setVectorDirAndUp [[0.999943,-4.18091e-08,0.0106379],[-0.0106379,1.7881e-07,0.999943]];
+
+  _object3 = createSimpleObject ["UserTexture1m_F", _vehicle modelToWorld [1.07031,0.244141,4.41195]];
+  [_object3, [0, '#(argb,512,512,3)text(1,1,""PuristaBold"",0.45,""#00000000"",""#ffffffff"","POLICE")']] remoteExec ['setObjectTexture',0,true];
+  [_object3, _vehicle] call BIS_fnc_attachToRelative;
+  _object3 setVectorDirAndUp [[-0.999943,-4.18091e-08,0.0106379],[0.0106379,1.7881e-07,0.999943]];
+
+  _object4 = createSimpleObject ["UserTexture1m_F", _vehicle modelToWorld [1.07031,-2.44141,4.41195]];
+  [_object4, [0, '#(argb,512,512,3)text(1,1,""PuristaBold"",0.45,""#00000000"",""#ffffffff"","112")']] remoteExec ['setObjectTexture',0,true];
+  [_object4, _vehicle] call BIS_fnc_attachToRelative;
+  _object4 setVectorDirAndUp [[-0.999943,-4.18091e-08,0.0106379],[0.0106379,1.7881e-07,0.999943]];
  
   private _driver = [] call PZFP_fnc_blufor_ANP_Men_CreateOfficer;
   _driver moveInDriver _vehicle;
@@ -33442,7 +33483,6 @@ PZFP_fnc_initialize = {
   
   PZFP_blufor_ANP_Cars = [_blufor, PZFP_blufor_ANP, "Cars", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_ANP_Cars_Offroad = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Cars, "Offroad", "PZFP_fnc_blufor_ANP_Cars_CreateOffroad", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_ANP_Cars_SUV = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Cars, "SUV", "PZFP_fnc_blufor_ANP_Cars_CreateSUV", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_ANP_Cars_Van = [_blufor, PZFP_blufor_ANP, PZFP_blufor_ANP_Cars, "Van Transport", "PZFP_fnc_blufor_ANP_Cars_CreateVan", [1,1,1,1]] call PZFP_fnc_addModule;
   
   PZFP_blufor_ANP_Helicopters = [_blufor, PZFP_blufor_ANP, "Helicopters", [1,1,1,1]] call PZFP_fnc_addSubCategory;
