@@ -28448,9 +28448,20 @@ PZFP_fnc_initialize = {
    [selectRandom["Guerilla_09","Guerilla_08","Guerilla_04","Guerilla_05"],1],
    ["HideDoor1",1,"HideDoor2",1,"HideDoor3",0,"HideBackpacks",1,"HideBumper1",1,"HideBumper2",0,"HideConstruction",0]
   ] call BIS_fnc_initVehicle;
+  [_vehicle] call PZFP_fnc_vehicleCleanup;
+
+  _vehicle removeWeaponTurret ["launcher_SPG9", [0]];
+  _vehicle addWeaponTurret ["Rocket_03_HE_Plane_CAS_02_F", [0]];
+  for "_i" from 1 to 2 do {_vehicle addMagazineTurret ["20Rnd_Rocket_03_HE_F", [0]];};
+
+  _object1 = createSimpleObject ["a3\weapons_f_epc\ammo\rocket_pod_01_f.p3d", _vehicle modelToWorld [0.00439453,-1.83203,0.03965]];
+  _object1 attachTo [_vehicle, [0.10994,0.39203,-0.07285], "OsaHlavne", true];
+  _object1 setVectorDirAndUp [[0,-1,0],[0,0,-1]];
 
   private _driver = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
+  private _gunner = [] call PZFP_fnc_opfor_LPP_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
   crew _vehicle join createGroup [east, true];
 
   [_vehicle] call PZFP_fnc_addObjectToInterface;
