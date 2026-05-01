@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch",
+      "WebSearch",
+      "Bash(grep -n \"PZFP_fnc_blufor_USA_Men_AddLoadoutRifleman_W\" \"c:\\\\\\\\Users\\\\\\\\aidan_kwwpkum\\\\\\\\Public-Zeus-Faction-Pack\\\\\\\\PZFP.sqf\")"
+    ]
+  }
+}
