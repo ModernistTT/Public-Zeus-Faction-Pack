@@ -1934,7 +1934,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutLAT_T = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutRiflemanLAT_T = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
@@ -1974,7 +1974,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles_INDEP";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutLAT_W = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutRiflemanLAT_W = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
@@ -2014,7 +2014,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles_INDEP";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutAT = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutRiflemanAT = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -2058,7 +2058,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutAT_T = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutRiflemanAT_T = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
@@ -2097,7 +2097,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles_INDEP";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutAT_W = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutRiflemanAT_W = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
@@ -4152,7 +4152,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutLAT"] call PZFP_fnc_USA_addLoadoutUnit;
+   [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutRiflemanLAT"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -4171,7 +4171,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
   params ["_unit"];
   sleep 0.1;
-  [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutAT"] call PZFP_fnc_USA_addLoadoutUnit;
+  [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutRiflemanAT"] call PZFP_fnc_USA_addLoadoutUnit;
   [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -18777,7 +18777,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_ghex_F";
  };
 
- PZFP_fnc_opfor_IRGF_Men_AddLoadoutLAT = {
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutRiflemanLAT = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -18818,7 +18818,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
- PZFP_fnc_opfor_IRGF_Men_AddLoadoutLAT_T = {
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutRiflemanLAT_T = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -18859,7 +18859,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_ghex_F";
  };
 
- PZFP_fnc_opfor_IRGF_Men_AddLoadoutAT = {
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutRiflemanAT = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -18900,7 +18900,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
- PZFP_fnc_opfor_IRGF_Men_AddLoadoutAT_T = {
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutRiflemanAT_T = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -20294,7 +20294,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutLAT"] call PZFP_fnc_CSAT_addLoadoutUnit;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutRiflemanLAT"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -20313,7 +20313,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutAT"] call PZFP_fnc_CSAT_addLoadoutUnit;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutRiflemanAT"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -22457,7 +22457,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_ghex_F";
  };
 
- PZFP_fnc_opfor_CHGF_Men_AddLoadoutLAT_T = {
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutRiflemanLAT_T = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -22498,7 +22498,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_ghex_F";
  };
 
- PZFP_fnc_opfor_CHGF_Men_AddLoadoutAT_T = {
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutRiflemanAT_T = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -23219,7 +23219,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutLAT"] call PZFP_fnc_CSAT_addLoadoutUnit;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutRiflemanLAT"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -23238,7 +23238,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutAT"] call PZFP_fnc_CSAT_addLoadoutUnit;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutRiflemanAT"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -26751,7 +26751,7 @@ PZFP_fnc_initialize = {
   private _tl = [_position] call PZFP_fnc_opfor_Raven_Men_CreateTeamLeader;
   private _rifleman = [_position] call PZFP_fnc_opfor_Raven_Men_CreateRifleman;
   private _autorifleman = [_position] call PZFP_fnc_opfor_Raven_Men_CreateAutorifleman;
-  private _riflemanLAT = [_position] call PZFP_fnc_opfor_Raven_Men_CreateRiflemanLAT;
+  private _riflemanLAT = [_position] call PZFP_fnc_opfor_Raven_Men_CreateRiflemanAT;
   [_tl, _rifleman, _autorifleman, _riflemanLAT] joinSilent _group;
  };
 
@@ -26780,7 +26780,7 @@ PZFP_fnc_initialize = {
   private _rifleman2 = [_position] call PZFP_fnc_opfor_Raven_Men_CreateRifleman;
   private _autorifleman1 = [_position] call PZFP_fnc_opfor_Raven_Men_CreateAutorifleman;
   private _autorifleman2 = [_position] call PZFP_fnc_opfor_Raven_Men_CreateAutorifleman;
-  private _riflemanLAT = [_position] call PZFP_fnc_opfor_Raven_Men_CreateRiflemanLAT;
+  private _riflemanLAT = [_position] call PZFP_fnc_opfor_Raven_Men_CreateRiflemanAT;
   private _marksman = [_position] call PZFP_fnc_opfor_Raven_Men_CreateMarksman;
   [_sl, _tl, _rifleman1, _rifleman2, _autorifleman1, _autorifleman2, _riflemanLAT, _marksman] joinSilent _group;
  };
