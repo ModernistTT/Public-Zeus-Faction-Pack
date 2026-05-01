@@ -14,6 +14,14 @@ PZFP_fnc_initialize = {
 
  systemChat "[PZFP] - Loading...";
 
+
+
+
+ comment "------------------------------------------TREE FUNCTIONS-----------------------------------------------";
+
+
+
+
  private _curator = getAssignedCuratorLogic player;
  private _maindisplay = findDisplay 312;
  private _control = _maindisplay displayCtrl 280;
@@ -168,7 +176,95 @@ PZFP_fnc_initialize = {
   } forEach [270,271,272,273,274,275,276,277,278,280];
  };
 
-  PZFP_fnc_vehicleCleanup = {
+
+
+
+
+ comment "------------------------------------------ITEM MODULES-----------------------------------------------";
+ 
+
+
+ 
+
+ PZFP_fnc_addDroneDetection = {
+  params ["_unit"];
+  private _sound = "A3\Missions_F_Oldman\Data\sound\beep.ogg";
+  private _range = 250;
+  private _checkEvery = 0.05;
+
+  _unit setVariable ["droneBeep_next", 0];
+
+  [_unit, _sound, _range, _checkEvery] spawn {
+   params ["_u", "_snd", "_rng", "_tick"];
+
+   private _minInterval = 0.1;
+   private _maxInterval = 5;
+   private _expFactor = 3;
+
+   while { alive _u } do {
+    private _now = time;
+    private _unitSide = side (group _u);
+
+    private _closestDrone = objNull;
+    private _closestDistance = _rng + 1;
+
+    {
+     private _controller = (UAVControl _x) param [0, objNull];
+     private _droneSide = if (!isNull _controller) then {
+      side (group _controller)
+     } else {
+      side (group _x)
+     };
+
+     if (alive _x && { _droneSide != _unitSide }) then {
+      private _dist = _u distance _x;
+      if (_dist < _closestDistance) then {
+       _closestDistance = _dist;
+       _closestDrone = _x;
+      };
+     };
+    } forEach (nearestObjects [
+     getPosATL _u,
+     ["UAV_01_base_F","UAV_02_base_F","UAV_06_base_F"],
+     _rng,
+     true
+    ]);
+
+    if (!isNull _closestDrone) then {
+     if (_closestDistance < 0) then { _closestDistance = 0 };
+     if (_closestDistance > _rng) then { _closestDistance = _rng };
+
+     private _ratio = _closestDistance / _rng;
+
+     private _cooldown =
+      _minInterval +
+      (_maxInterval - _minInterval) *
+      ((exp (_expFactor * _ratio) - 1) / (exp _expFactor - 1));
+
+     private _next = _u getVariable ["droneBeep_next", 0];
+
+     if (_now >= _next) then {
+      playSound3D [_snd, _u, false, getPosASL _u, 5, 0.5, 10, 0, false];
+      _u setVariable ["droneBeep_next", _now + _cooldown];
+     };
+    };
+
+    sleep _tick;
+   };
+  };
+ };
+
+ 
+
+
+
+ comment "------------------------------------------UTILITY FUNCTIONS-----------------------------------------------";
+
+
+
+
+
+ PZFP_fnc_vehicleCleanup = {
   params ["_vehicle"];
   _vehicle addEventhandler ["Killed", {
    params ["_vehicle"];
@@ -194,6 +290,22 @@ PZFP_fnc_initialize = {
   }];
  };
 
+ PZFP_fnc_getTerrainType = {
+  private _terrain = toLower worldName;
+  private _terrainType = "";
+  switch (_terrain) do {
+    case "altis":   { _terrainType = "Mediterranean"; };
+    case "stratis": { _terrainType = "Mediterranean"; };
+    case "malden":  { _terrainType = "Mediterranean"; };
+    case "tanoa":   { _terrainType = "Tropical"; };
+    case "livonia": { _terrainType = "Woodland"; };
+    default         { _terrainType = "Mediterranean"; }
+  };
+  missionNamespace setVariable ["PZFP_terrainType", _terrainType];
+  _terrainType;
+ };
+ [] call PZFP_fnc_getTerrainType;
+
  PZFP_fnc_addObjectToInterface = {
   params ["_objects"];
   _curators = allCurators;
@@ -212,6 +324,80 @@ PZFP_fnc_initialize = {
 	  _x addCuratorEditableObjects [_objects,true];
 	 } foreach _curators;
   }] remoteExec ["spawn",2];
+ };
+
+
+
+
+
+ comment "------------------------------------------FACTION FUNCTIONS-----------------------------------------------";
+
+
+
+ PZFP_fnc_USA_vehicleInit = {
+  params ["_vehicle", "_colorName", "_params", "_version"];
+  private _terrainType = missionNamespace getVariable ["PZFP_terrainType", "Mediterranean"];
+  private _color = _colorName;
+  switch (_terrainType) do {
+   case "Tropical": {
+    if (_version == 1) then { _color = "Green"; } else { _color = "Olive"; };
+   };
+   case "Woodland": {
+    if (_version == 1) then { _color = "Green"; } else { _color = "Olive"; };
+   };
+  };
+  [_vehicle, [_color, 1], _params] call BIS_fnc_initVehicle;
+ };
+ 
+ PZFP_fnc_USA_addLoadoutUnit = {
+  params ["_unit", "_main"];
+
+  if (_main isEqualTo "" || isNull _unit) exitWith {};
+  private _terrainType = missionNamespace getVariable ["PZFP_terrainType", "Mediterranean"];
+  private _fnName = _main;
+  switch (_terrainType) do {
+   case "Tropical": {
+    _fnName = _main + "_T";
+   };
+   case "Woodland": {
+    _fnName = _main + "_W";
+   };
+  };
+
+  [_unit] call (call compile _fnName);
+ };
+
+ PZFP_fnc_CSAT_vehicleInit = {
+  params ["_vehicle", "_colorName", "_params", "_version"];
+  private _terrainType = missionNamespace getVariable ["PZFP_terrainType", "Mediterranean"];
+  private _color = _colorName;
+  switch (_terrainType) do {
+   case "Tropical": {
+    if (_version == 1) then { _color = "JungleHex"; } else { _color = "GreenHex"; };
+   };
+   case "Woodland": {
+    if (_version == 1) then { _color = "JungleHex"; } else { _color = "GreenHex"; };
+   };
+  };
+  [_vehicle, [_color, 1], _params] call BIS_fnc_initVehicle;
+ };
+
+ PZFP_fnc_CSAT_addLoadoutUnit = {
+  params ["_unit", "_main"];
+
+  if (_main isEqualTo "" || isNull _unit) exitWith {};
+  private _terrainType = missionNamespace getVariable ["PZFP_terrainType", "Mediterranean"];
+  private _fnName = _main;
+  switch (_terrainType) do {
+   case "Tropical": {
+    _fnName = _main + "_T";
+   };
+   case "Woodland": {
+    _fnName = _main + "_T";
+   };
+  };
+
+  [_unit] call (call compile _fnName);
  };
 
  PZFP_fnc_USA_AddIdentity = {
@@ -349,11 +535,11 @@ PZFP_fnc_initialize = {
 
 
 
+
+ comment "------------------------------------------BLUFOR FACTIONS-----------------------------------------------";
+
+
  
- comment "------------------------------------------BLUFOR-----------------------------------------------";
-
-
-
 
 
  PZFP_fnc_blufor_USAF_Drones_CreateGreyhawk = {
@@ -502,7 +688,7 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemGPS";
   _unit linkItem "NVGoggles";
  };
-
+  
  PZFP_fnc_blufor_USAF_Pilots_CreateFighterPilot = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
@@ -687,11 +873,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_APC_Tracked_01_AA_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Sand",1],
-   ["showCamonetTurret",0,"showCamonetHull",0,"showBags",1]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Sand", ["showCamonetTurret",0,"showCamonetHull",0,"showBags",1], 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -711,11 +893,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_APC_Wheeled_01_cannon_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Sand",1],
-   ["showBags",0,"showCamonetHull",0,"showCamonetTurret",0,"showSLATHull",0,"showSLATTurret",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Sand", ["showBags",0,"showCamonetHull",0,"showCamonetTurret",0,"showSLATHull",0,"showSLATTurret",0], 2] call PZFP_fnc_USA_vehicleInit;
   private _allTurrets = _vehicle call BIS_fnc_allTurrets;
   [_vehicle, ["HideTurret",1]] remoteExec ['animate',0,true];
   [_vehicle, [[0],true]] remoteExec ['lockTurret',0,true];
@@ -732,6 +910,8 @@ PZFP_fnc_initialize = {
   _vehicle2 lockDriver true;
   _vehicle2 lockCargo true;
   _vehicle2 lockInventory true;
+  private _terrainType = missionNamespace getVariable ["PZFP_terrainType", "Mediterranean"];
+  private _turretTexture = if (_terrainType in ["Tropical","Woodland"]) then {"a3\data_f_exp\vehicles\turret_olive_co.paa"} else {"A3\data_f\vehicles\turret_co.paa"};
   [_vehicle2, [0, ""]] remoteExec ['setObjectTexture',0,true];
   [_vehicle2, [1, ""]] remoteExec ['setObjectTexture',0,true];
   [_vehicle2, [2, "A3\data_f\vehicles\turret_co.paa"]] remoteExec ['setObjectTexture',0,true];
@@ -755,11 +935,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_APC_Wheeled_01_cannon_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Sand",1],
-   ["showBags",1,"showCamonetHull",0,"showCamonetTurret",0,"showSLATHull",0,"showSLATTurret",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Sand", ["showBags",1,"showCamonetHull",0,"showCamonetTurret",0,"showSLATHull",0,"showSLATTurret",0], 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -779,11 +955,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_APC_Tracked_01_CRV_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Sand",1],
-   ["showAmmobox",selectRandom [0,1],"showWheels",1,"showCamonetHull",0,"showBags",selectRandom [0,1]]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Sand", ["showAmmobox",selectRandom [0,1],"showWheels",1,"showCamonetHull",0,"showBags",selectRandom [0,1]], 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -803,11 +975,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_APC_Tracked_01_rcws_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Sand",1],
-   ["showCamonetHull",0,"showBags",1]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Sand", ["showCamonetHull",0,"showBags",1], 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -827,11 +995,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_MBT_01_Arty_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Sand",1],
-   ["showCanisters",1,"showCamonetTurret",0,"showAmmobox",1,"showCamonetHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Sand", ["showCanisters",1,"showCamonetTurret",0,"showAmmobox",1,"showCamonetHull",0], 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -851,11 +1015,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_MBT_01_mlrs_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Sand",1],
-   ["showCamonetTurret",0,"showCamonetHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Sand", ["showCamonetTurret",0,"showCamonetHull",0], 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -933,11 +1093,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_Truck_01_mover_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -953,11 +1109,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_Truck_01_ammo_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -973,11 +1125,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_Truck_01_box_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -993,11 +1141,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_Truck_01_cargo_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -1013,11 +1157,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_Truck_01_flatbed_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -1033,11 +1173,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_Truck_01_fuel_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -1053,11 +1189,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_Truck_01_medical_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -1073,11 +1205,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_Truck_01_repair_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -1093,11 +1221,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_Truck_01_transport_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -1113,11 +1237,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_Truck_01_covered_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -1133,11 +1253,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_MRAP_01_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -1153,11 +1269,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_MRAP_01_hmg_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -1175,11 +1287,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_MRAP_01_gmg_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -1283,11 +1391,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_UGV_01_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
@@ -1299,11 +1403,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_UGV_01_RCWS_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Blufor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Blufor", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
@@ -1678,6 +1778,45 @@ PZFP_fnc_initialize = {
  };
 
  PZFP_fnc_blufor_USA_Men_AddLoadoutRifleman = {
+   params ["_unit"];
+   removeAllWeapons _unit;
+   removeAllItems _unit;
+   removeAllAssignedItems _unit;
+   removeUniform _unit;
+   removeVest _unit;
+   removeBackpack _unit;
+   removeHeadgear _unit;
+   removeGoggles _unit;
+
+   _unit addWeapon "arifle_MX_F";
+   _unit addPrimaryWeaponItem "acc_pointer_IR";
+   _unit addPrimaryWeaponItem "optic_Hamr";
+   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
+   _unit addWeapon "hgun_P07_F";
+   _unit addHandgunItem "16Rnd_9x21_Mag";
+
+   _unit forceAddUniform "U_B_CombatUniform_mcam";
+   _unit addVest "V_PlateCarrier1_rgr";
+   _unit addHeadgear "H_HelmetB_snakeskin";
+   _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
+   _unit addGoggles selectRandom _goggles;
+
+   _unit addItemToUniform "Wallet_ID";
+	 _unit addItemToUniform "FirstAidKit";
+   _unit addItemToUniform "Chemlight_blue";
+
+   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
+   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+   _unit addItemToVest "SmokeShell";
+
+   _unit linkItem "ItemCompass";
+   _unit linkItem "ItemMap";
+   _unit linkItem "ItemWatch";
+   _unit linkItem "ItemRadio";
+   _unit linkItem "NVGoggles";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutRifleman_T = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -1688,25 +1827,24 @@ PZFP_fnc_initialize = {
   removeHeadgear _unit;
   removeGoggles _unit;
 
-  _unit addWeapon "arifle_MX_F";
+  _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_Hamr";
-  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
-  _unit addWeapon "hgun_P07_F";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
-  _unit forceAddUniform "U_B_CombatUniform_mcam";
-  _unit addVest "V_PlateCarrier1_rgr";
-  _unit addHeadgear "H_HelmetB_snakeskin";
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier1_tna_F";
+  _unit addHeadgear "H_HelmetB_tna_F";
   _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
   _unit addGoggles selectRandom _goggles;
 
   _unit addItemToUniform "Wallet_ID";
 	_unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Chemlight_blue";
-
-
-  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
   _unit addItemToVest "SmokeShell";
 
@@ -1714,7 +1852,46 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemMap";
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutRifleman_W = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier1_wdl";
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
+  _unit addGoggles selectRandom _goggles;
+
+  _unit addItemToUniform "Wallet_ID";
+	_unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_Men_AddLoadoutRiflemanLAT = {
@@ -1729,6 +1906,8 @@ PZFP_fnc_initialize = {
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
   _unit addWeapon "launch_MRAWS_sand_F";
   _unit addSecondaryWeaponItem "MRAWS_HEAT_F";
+  _unit addWeapon "hgun_P07_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam";
   _unit addVest "V_PlateCarrier2_rgr";
@@ -1738,6 +1917,7 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
   _unit addItemToVest "SmokeShell";
   for "_i" from 1 to 2 do {_unit addItemToBackpack "MRAWS_HEAT_F";};
@@ -1754,7 +1934,87 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutRiflemanAT = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutLAT_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "launch_MRAWS_olive_F";
+  _unit addSecondaryWeaponItem "MRAWS_HEAT_F";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addBackpack "B_Kitbag_sgg";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "MRAWS_HEAT_F";};
+  _unit addItemToBackpack "MRAWS_HE_F";
+
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutLAT_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "launch_MRAWS_green_F";
+  _unit addSecondaryWeaponItem "MRAWS_HEAT_F";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addBackpack "B_Kitbag_rgr";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "MRAWS_HEAT_F";};
+  _unit addItemToBackpack "MRAWS_HE_F";
+
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutAT = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -1767,7 +2027,7 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_Aco";
+  _unit addPrimaryWeaponItem "optic_Holosight";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
   _unit addWeapon "launch_NLAW_F";
   _unit addSecondaryWeaponItem "NLAW_F";
@@ -1798,38 +2058,108 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutRiflemanHAT = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutAT_T = {
   params ["_unit"];
-  removeAllWeapons _unit;
-  removeAllItems _unit;
-  removeAllAssignedItems _unit;
-  removeUniform _unit;
-  removeVest _unit;
-  removeBackpack _unit;
-  removeHeadgear _unit;
-  removeGoggles _unit;
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
 
-  _unit addWeapon "arifle_MX_F";
+  _unit addWeapon "arifle_MX_khk_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_Aco";
-  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
-  _unit addWeapon "launch_B_Titan_short_F";
-  _unit addSecondaryWeaponItem "Titan_AT";
+  _unit addPrimaryWeaponItem "optic_Holosight_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "launch_NLAW_F";
+  _unit addSecondaryWeaponItem "NLAW_F";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addBackpack "B_Kitbag_sgg";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "NLAW_F";};
+
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutAT_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Holosight_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "launch_NLAW_F";
+  _unit addSecondaryWeaponItem "NLAW_F";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addBackpack "B_Kitbag_rgr";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "NLAW_F";};
+
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutAutorifleman = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "LMG_Mk200_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "200Rnd_65x39_cased_Box";
   _unit addWeapon "hgun_P07_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam";
   _unit addVest "V_PlateCarrier2_rgr";
-  _unit addBackpack "B_Kitbag_mcamo";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Chemlight_blue";
-  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
+  _unit addItemToVest "200Rnd_65x39_cased_Box_Red";
+  _unit addItemToVest "200Rnd_65x39_cased_Box_Tracer_Red";
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
   _unit addItemToVest "SmokeShell";
-  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
-  for "_i" from 1 to 2 do {_unit addItemToBackpack "Titan_AT";};
 
   _unit addHeadgear "H_HelmetB_snakeskin";
   _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
@@ -1842,37 +2172,76 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutAutorifleman = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutAutorifleman_T = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
   removeHeadgear _unit; removeGoggles _unit;
 
-  _unit addWeapon "LMG_Mk200_F";
+  _unit addWeapon "LMG_Mk200_BLACK_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_Hamr";
-  _unit addPrimaryWeaponItem "200Rnd_65x39_cased_Box_Red";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
+  _unit addPrimaryWeaponItem "200Rnd_65x39_cased_Box";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
 
-  _unit forceAddUniform "U_B_CombatUniform_mcam";
-  _unit addVest "V_PlateCarrier2_rgr";
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Chemlight_blue";
   _unit addItemToVest "200Rnd_65x39_cased_Box_Red";
   _unit addItemToVest "200Rnd_65x39_cased_Box_Tracer_Red";
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
   _unit addItemToVest "SmokeShell";
 
-  _unit addHeadgear "H_HelmetB_snakeskin";
-  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
   _unit addGoggles selectRandom _goggles;
 
   _unit linkItem "ItemCompass";
   _unit linkItem "ItemMap";
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
-  _unit linkItem "NVGoggles";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutAutorifleman_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "LMG_Mk200_black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "200Rnd_65x39_cased_Box";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToVest "200Rnd_65x39_cased_Box_Red";
+  _unit addItemToVest "200Rnd_65x39_cased_Box_Tracer_Red";
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_Men_AddLoadoutMarksman = {
@@ -1885,6 +2254,8 @@ PZFP_fnc_initialize = {
   _unit addPrimaryWeaponItem "acc_pointer_IR";
   _unit addPrimaryWeaponItem "optic_Hamr";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam";
   _unit addVest "V_PlateCarrier1_rgr";
@@ -1893,6 +2264,7 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
   _unit addItemToVest "SmokeShell";
 
@@ -1905,6 +2277,76 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "NVGoggles";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutMarksman_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MXM_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier1_tna_F";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutMarksman_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MXM_black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier1_wdl";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_Men_AddLoadoutMachineGunner = {
@@ -1928,7 +2370,7 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 2 do {_unit addItemToVest "130Rnd_338_Mag";};
-
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   _unit addHeadgear "H_HelmetB_snakeskin";
   _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
   _unit addGoggles selectRandom _goggles;
@@ -1938,6 +2380,72 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "NVGoggles";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutMachineGunner_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "MMG_02_black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
+  _unit addPrimaryWeaponItem "130Rnd_338_Mag";
+  _unit addPrimaryWeaponItem "bipod_01_F_blk";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier1_tna_F";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 2 do {_unit addItemToVest "130Rnd_338_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutMachineGunner_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "MMG_02_black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "130Rnd_338_Mag";
+  _unit addPrimaryWeaponItem "bipod_01_F_blk";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier1_wdl";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 2 do {_unit addItemToVest "130Rnd_338_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_Men_AddLoadoutTeamLeader = {
@@ -1983,6 +2491,92 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
+ PZFP_fnc_blufor_USA_Men_AddLoadoutTeamLeader_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_GL_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addPrimaryWeaponItem "1Rnd_HE_Grenade_shell";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier1_tna_F";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 5 do {_unit addItemToVest "1Rnd_HE_Grenade_shell";};
+  _unit addItemToVest "UGL_FlareWhite_F";
+  _unit addItemToVest "1Rnd_Smoke_Grenade_shell";
+  _unit addItemToVest "1Rnd_SmokeRed_Grenade_shell";
+  _unit addItemToVest "1Rnd_SmokeGreen_Grenade_shell";
+  _unit addItemToVest "1Rnd_SmokeBlue_Grenade_shell";
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutTeamLeader_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_GL_black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addPrimaryWeaponItem "1Rnd_HE_Grenade_shell";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier1_wdl";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 5 do {_unit addItemToVest "1Rnd_HE_Grenade_shell";};
+  _unit addItemToVest "UGL_FlareWhite_F";
+  _unit addItemToVest "1Rnd_Smoke_Grenade_shell";
+  _unit addItemToVest "1Rnd_SmokeRed_Grenade_shell";
+  _unit addItemToVest "1Rnd_SmokeGreen_Grenade_shell";
+  _unit addItemToVest "1Rnd_SmokeBlue_Grenade_shell";
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
  PZFP_fnc_blufor_USA_Men_AddLoadoutSquadLeader = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
@@ -2026,6 +2620,92 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
+ PZFP_fnc_blufor_USA_Men_AddLoadoutSquadLeader_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier1_tna_F";
+  _unit addBackpack "B_AssaultPack_tna_F";
+
+  _unit addWeapon "Binocular";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "SmokeShellOrange";
+
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutSquadLeader_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier1_wdl";
+  _unit addBackpack "B_AssaultPack_wdl_F";
+
+  _unit addWeapon "Binocular";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "SmokeShellOrange";
+
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
  PZFP_fnc_blufor_USA_Men_AddLoadoutAmmoBearer = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -2046,12 +2726,13 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_CombatUniform_mcam";
   _unit addVest "V_PlateCarrier1_rgr";
-  _unit addBackpack "B_Carryall_mcamo";
+  _unit addBackpack "B_KitBag_mcamo";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
   for "_i" from 1 to 2 do {_unit addItemToVest "SmokeShell";};
   for "_i" from 1 to 10 do {_unit addItemToBackpack "30Rnd_65x39_caseless_mag";};
@@ -2073,6 +2754,92 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
+ PZFP_fnc_blufor_USA_Men_AddLoadoutAmmoBearer_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier1_tna_F";
+  _unit addBackpack "B_KitBag_sgg";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "SmokeShell";};
+  for "_i" from 1 to 10 do {_unit addItemToBackpack "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 3 do {_unit addItemToBackpack "200Rnd_65x39_cased_Box";};
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "1Rnd_SmokeRed_Grenade_shell";};
+  _unit addItemToBackpack "1Rnd_Smoke_Grenade_shell";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "1Rnd_SmokeBlue_Grenade_shell";};
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "1Rnd_SmokeGreen_Grenade_shell";};
+  for "_i" from 1 to 5 do {_unit addItemToBackpack "1Rnd_HE_Grenade_shell";};
+
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutAmmoBearer_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier1_wdl";
+  _unit addBackpack "B_KitBag_rgr";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "SmokeShell";};
+  for "_i" from 1 to 10 do {_unit addItemToBackpack "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 3 do {_unit addItemToBackpack "200Rnd_65x39_cased_Box";};
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "1Rnd_SmokeRed_Grenade_shell";};
+  _unit addItemToBackpack "1Rnd_Smoke_Grenade_shell";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "1Rnd_SmokeBlue_Grenade_shell";};
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "1Rnd_SmokeGreen_Grenade_shell";};
+  for "_i" from 1 to 5 do {_unit addItemToBackpack "1Rnd_HE_Grenade_shell";};
+
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
  PZFP_fnc_blufor_USA_Men_AddLoadoutMedic = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
@@ -2086,9 +2853,9 @@ PZFP_fnc_initialize = {
   _unit addWeapon "hgun_P07_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
-  _unit forceAddUniform "U_B_CombatUniform_mcam_tshirt";
-  _unit addVest "V_PlateCarrierGL_mtp";
-  _unit addBackpack "B_Kitbag_mcamo";
+  _unit forceAddUniform "U_B_CombatUniform_mcam";
+  _unit addVest "V_PlateCarrier2_rgr";
+  _unit addBackpack "B_Kitbag_mcam";
 
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
@@ -2101,7 +2868,7 @@ PZFP_fnc_initialize = {
   for "_i" from 1 to 3 do {_unit addItemToBackpack "FirstAidKit";};
 
   _unit addHeadgear "H_HelmetB_snakeskin";
-  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
   _unit addGoggles selectRandom _goggles;
 
   _unit linkItem "ItemCompass";
@@ -2111,7 +2878,83 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_Men_AddLoadoutRadioOperator = {
+ PZFP_fnc_blufor_USA_Men_AddLoadoutMedic_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addBackpack "B_Kitbag_sgg";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "SmokeShell";};
+  _unit addItemToBackpack "Medikit";
+  for "_i" from 1 to 3 do {_unit addItemToBackpack "FirstAidKit";};
+
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutMedic_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addBackpack "B_Kitbag_rgr";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "SmokeShell";};
+  _unit addItemToBackpack "Medikit";
+  for "_i" from 1 to 3 do {_unit addItemToBackpack "FirstAidKit";};
+
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""]; 
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutRTO = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
   removeUniform _unit; removeVest _unit; removeBackpack _unit;
@@ -2121,7 +2964,7 @@ PZFP_fnc_initialize = {
   _unit addPrimaryWeaponItem "acc_pointer_IR";
   _unit addPrimaryWeaponItem "optic_Hamr";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
-  _unit addWeapon "hgun_P07_khk_F";
+  _unit addWeapon "hgun_P07_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam";
@@ -2146,6 +2989,80 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
   _unit linkItem "NVGoggles";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutRTO_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier1_tna_F";
+  _unit addBackpack "B_RadioBag_01_tropic_F";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "SmokeShell";};
+
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutRTO_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier1_wdl";
+  _unit addBackpack "B_RadioBag_01_wdl_F";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "SmokeShell";};
+
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_Men_AddLoadoutSergeant = {
@@ -2188,6 +3105,86 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
+ PZFP_fnc_blufor_USA_Men_AddLoadoutSergeant_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "SmokeShellPurple";
+  _unit addItemToVest "SmokeShellGreen";
+
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutSergeant_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "SmokeShellPurple";
+  _unit addItemToVest "SmokeShellGreen";
+
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
  PZFP_fnc_blufor_USA_Men_AddLoadoutOfficer = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
@@ -2224,6 +3221,78 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
+ PZFP_fnc_blufor_USA_Men_AddLoadoutOfficer_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MXC_khk_F";
+  _unit addPrimaryWeaponItem "optic_Holosight_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier1_tna_F";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 5 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellBlue";
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutOfficer_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MXC_Black_F";
+  _unit addPrimaryWeaponItem "optic_Holosight_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier1_wdl";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 5 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellBlue";
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
+  _unit addGoggles selectRandom _goggles;
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
  PZFP_fnc_blufor_USA_Men_AddLoadoutCrewman = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
@@ -2254,9 +3323,81 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemCompass";
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
-  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles";
  };
 
+ PZFP_fnc_blufor_USA_Men_AddLoadoutCrewman_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MXC_khk_F";
+  _unit addPrimaryWeaponItem "acc_flashlight";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_BandollierB_oli";
+  _unit addHeadgear "H_HelmetCrew_B";
+  _unit addGoggles "G_Combat";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+
+  for "_i" from 1 to 4 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "SmokeShellBlue";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutCrewman_W = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MXC_Black_F";
+  _unit addPrimaryWeaponItem "acc_flashlight";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_BandollierB_oli";
+  _unit addHeadgear "H_HelmetCrew_B";
+  _unit addGoggles "G_Combat";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+
+  for "_i" from 1 to 4 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "SmokeShellBlue";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+  
  PZFP_fnc_blufor_USA_Men_AddLoadoutEngineer = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
@@ -2267,6 +3408,8 @@ PZFP_fnc_initialize = {
   _unit addPrimaryWeaponItem "acc_pointer_IR";
   _unit addPrimaryWeaponItem "optic_Holosight";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
+  _unit addWeapon "hgun_P07_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam";
   _unit addVest "V_PlateCarrier1_rgr";
@@ -2277,8 +3420,8 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
-
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
   _unit addItemToVest "SmokeShell";
   _unit addItemToBackpack "ToolKit";
@@ -2289,6 +3432,78 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
   _unit linkItem "NVGoggles";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutEngineer_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Holosight_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier1_tna_F";
+  _unit addBackpack "B_AssaultPack_tna_F";
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _unit addGoggles "G_Combat";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToBackpack "ToolKit";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutEngineer_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Holosight_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier1_wdl";
+  _unit addBackpack "B_AssaultPack_wdl_F";
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _unit addGoggles "G_Combat";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToBackpack "ToolKit";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_Men_AddLoadoutExplosiveSpecialist = {
@@ -2301,6 +3516,8 @@ PZFP_fnc_initialize = {
   _unit addPrimaryWeaponItem "acc_flashlight";
   _unit addPrimaryWeaponItem "optic_Holosight";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
+  _unit addWeapon "hgun_P07_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam";
   _unit addVest "V_PlateCarrierSpec_mtp";
@@ -2311,8 +3528,8 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
-
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
   _unit addItemToVest "SmokeShell";
   _unit addItemToBackpack "ToolKit";
@@ -2325,6 +3542,82 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
   _unit linkItem "NVGoggles";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutExplosiveSpecialist_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MXC_khk_F";
+  _unit addPrimaryWeaponItem "acc_flashlight";
+  _unit addPrimaryWeaponItem "optic_Holosight_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrierSpec_tna_F";
+  _unit addBackpack "B_Kitbag_tna_F";
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToBackpack "ToolKit";
+  _unit addItemToBackpack "SatchelCharge_Remote_Mag";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "DemoCharge_Remote_Mag";};
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutExplosiveSpecialist_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MXC_Black_F";
+  _unit addPrimaryWeaponItem "acc_flashlight";
+  _unit addPrimaryWeaponItem "optic_Holosight_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrierSpec_wdl";
+  _unit addBackpack "B_Kitbag_wdl_F";
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToBackpack "ToolKit";
+  _unit addItemToBackpack "SatchelCharge_Remote_Mag";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "DemoCharge_Remote_Mag";};
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_Men_AddLoadoutHelicopterPilot = {
@@ -2364,6 +3657,80 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
+ PZFP_fnc_blufor_USA_Men_AddLoadoutHelicopterPilot_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_flashlight";
+  _unit addPrimaryWeaponItem "optic_Holosight_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_TacVest_oli";
+  _unit addHeadgear "H_PilotHelmetHeli_B";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+
+  for "_i" from 1 to 4 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "B_IR_Grenade";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "SmokeShellOrange";
+  _unit addItemToVest "SmokeShellYellow";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutHelicopterPilot_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_flashlight";
+  _unit addPrimaryWeaponItem "optic_Holosight_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_TacVest_oli";
+  _unit addHeadgear "H_PilotHelmetHeli_B";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+
+  for "_i" from 1 to 4 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "B_IR_Grenade";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "SmokeShellOrange";
+  _unit addItemToVest "SmokeShellYellow";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
  PZFP_fnc_blufor_USA_Men_AddLoadoutHelicopterCrew = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
@@ -2399,6 +3766,76 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
+ PZFP_fnc_blufor_USA_Men_AddLoadoutHelicopterCrew_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_flashlight";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_TacVest_oli";
+  _unit addHeadgear "H_CrewHelmetHeli_B";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+
+  for "_i" from 1 to 4 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "B_IR_Grenade";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "SmokeShellOrange";
+  _unit addItemToVest "SmokeShellYellow";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutHelicopterCrew_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_flashlight";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_TacVest_oli";
+  _unit addHeadgear "H_CrewHelmetHeli_B";
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+
+  for "_i" from 1 to 4 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "B_IR_Grenade";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "SmokeShellOrange";
+  _unit addItemToVest "SmokeShellYellow";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
  PZFP_fnc_blufor_USA_Men_AddLoadoutMineSpecialist = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
@@ -2409,18 +3846,20 @@ PZFP_fnc_initialize = {
   _unit addPrimaryWeaponItem "acc_flashlight";
   _unit addPrimaryWeaponItem "optic_Holosight";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
+  _unit addWeapon "hgun_P07_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam";
   _unit addVest "V_PlateCarrierSpec_mtp";
-  _unit addBackpack "B_Carryall_mcamo";
+  _unit addBackpack "B_KitBag_mcamo";
   _unit addHeadgear "H_HelmetB_snakeskin";
   _unit addGoggles "G_Combat";
 
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
-
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
   _unit addItemToVest "SmokeShell";
 
@@ -2437,6 +3876,86 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
+ PZFP_fnc_blufor_USA_Men_AddLoadoutMineSpecialist_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MXC_khk_F";
+  _unit addPrimaryWeaponItem "acc_flashlight";
+  _unit addPrimaryWeaponItem "optic_Holosight_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrierSpec_tna_F";
+  _unit addBackpack "B_KitBag_sgg";
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _unit addGoggles "G_Combat";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+
+  _unit addItemToBackpack "MineDetector";
+  _unit addItemToBackpack "ATMine_Range_Mag";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "APERSMineDispenser_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "APERSBoundingMine_Range_Mag";};
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutMineSpecialist_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MXC_Black_F";
+  _unit addPrimaryWeaponItem "acc_flashlight";
+  _unit addPrimaryWeaponItem "optic_Holosight_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrierSpec_wdl";
+  _unit addBackpack "B_KitBag_rgr";
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _unit addGoggles "G_Combat";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+
+  _unit addItemToBackpack "MineDetector";
+  _unit addItemToBackpack "ATMine_Range_Mag";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "APERSMineDispenser_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "APERSBoundingMine_Range_Mag";};
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
  PZFP_fnc_blufor_USA_Men_AddLoadoutSurvivor = {
   params ["_unit"];
   removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
@@ -2444,6 +3963,24 @@ PZFP_fnc_initialize = {
   removeHeadgear _unit; removeGoggles _unit;
 
   _unit forceAddUniform "U_B_CombatUniform_mcam";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutSurvivor_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutSurvivor_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
  };
 
  PZFP_fnc_blufor_USA_Men_AddLoadoutUAVOperator = {
@@ -2473,8 +4010,8 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Chemlight_blue";
-
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
   _unit addItemToVest "SmokeShell";
 
@@ -2484,6 +4021,86 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
   _unit linkItem "B_UavTerminal";
   _unit linkItem "NVGoggles";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutUAVOperator_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "optic_Hamr_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier1_tna_F";
+  _unit addHeadgear "H_HelmetB_tna_F";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
+  _unit addGoggles selectRandom _goggles;
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "B_UavTerminal";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_Men_AddLoadoutUAVOperator_W = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "optic_Hamr";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier1_wdl";
+  _unit addHeadgear "H_HelmetB_plain_wdl";
+  _goggles = ["G_Tactical_Clear", "G_Tactical_Clear", "G_Tactical_Clear", "G_Combat", "G_Combat", "G_Combat", "G_Spectacles_Tinted", "G_Squares_Tinted", ""];
+  _unit addGoggles selectRandom _goggles;
+
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "B_UavTerminal";
+  _unit linkItem "NVGoggles_INDEP";
  };
 
  PZFP_fnc_blufor_USA_Men_CreateRifleman = {
@@ -2498,7 +4115,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutRifleman;
+   [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutRifleman"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   private _curator = getAssignedCuratorLogic player;
@@ -2535,7 +4152,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutRiflemanAT;
+   [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutLAT"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -2552,10 +4169,10 @@ PZFP_fnc_initialize = {
    doStop _unit;
   };
   [_unit] spawn {
-   params ["_unit"];
-   sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutRiflemanHAT;
-   [_unit] call PZFP_fnc_USA_AddIdentity;
+  params ["_unit"];
+  sleep 0.1;
+  [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutAT"] call PZFP_fnc_USA_addLoadoutUnit;
+  [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
@@ -2571,10 +4188,10 @@ PZFP_fnc_initialize = {
    doStop _unit;
   };
   [_unit] spawn {
-   params ["_unit"];
-   sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutAutorifleman;
-   [_unit] call PZFP_fnc_USA_AddIdentity;
+  params ["_unit"];
+  sleep 0.1;
+  [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutAutorifleman"] call PZFP_fnc_USA_addLoadoutUnit;
+  [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
@@ -2590,10 +4207,10 @@ PZFP_fnc_initialize = {
    doStop _unit;
   };
   [_unit] spawn {
-   params ["_unit"];
-   sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutMarksman;
-   [_unit] call PZFP_fnc_USA_AddIdentity;
+  params ["_unit"];
+  sleep 0.1;
+  [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutMarksman"] call PZFP_fnc_USA_addLoadoutUnit;
+  [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
@@ -2609,10 +4226,10 @@ PZFP_fnc_initialize = {
    doStop _unit;
   };
   [_unit] spawn {
-   params ["_unit"];
-   sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutMachineGunner;
-   [_unit] call PZFP_fnc_USA_AddIdentity;
+  params ["_unit"];
+  sleep 0.1;
+  [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutMachineGunner"] call PZFP_fnc_USA_addLoadoutUnit;
+  [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
@@ -2628,10 +4245,10 @@ PZFP_fnc_initialize = {
    doStop _unit;
   };
   [_unit] spawn {
-   params ["_unit"];
-   sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutTeamLeader;
-   [_unit] call PZFP_fnc_USA_AddIdentity;
+  params ["_unit"];
+  sleep 0.1;
+  [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutTeamLeader"] call PZFP_fnc_USA_addLoadoutUnit;
+  [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
@@ -2647,10 +4264,10 @@ PZFP_fnc_initialize = {
    doStop _unit;
   };
   [_unit] spawn {
-   params ["_unit"];
-   sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutSquadLeader;
-   [_unit] call PZFP_fnc_USA_AddIdentity;
+  params ["_unit"];
+  sleep 0.1;
+  [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutSquadLeader"] call PZFP_fnc_USA_addLoadoutUnit;
+  [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
@@ -2666,10 +4283,10 @@ PZFP_fnc_initialize = {
    doStop _unit;
   };
   [_unit] spawn {
-   params ["_unit"];
-   sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutAmmoBearer;
-   [_unit] call PZFP_fnc_USA_AddIdentity;
+  params ["_unit"];
+  sleep 0.1;
+  [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutAmmoBearer"] call PZFP_fnc_USA_addLoadoutUnit;
+  [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
@@ -2685,10 +4302,10 @@ PZFP_fnc_initialize = {
    doStop _unit;
   };
   [_unit] spawn {
-   params ["_unit"];
-   sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutMedic;
-   [_unit] call PZFP_fnc_USA_AddIdentity;
+  params ["_unit"];
+  sleep 0.1;
+  [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutMedic"] call PZFP_fnc_USA_addLoadoutUnit;
+  [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
@@ -2704,10 +4321,10 @@ PZFP_fnc_initialize = {
    doStop _unit;
   };
   [_unit] spawn {
-   params ["_unit"];
-   sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutRadioOperator;
-   [_unit] call PZFP_fnc_USA_AddIdentity;
+  params ["_unit"];
+  sleep 0.1;
+  [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutRTO"] call PZFP_fnc_USA_addLoadoutUnit;
+  [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
   _unit
@@ -2726,7 +4343,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutSergeant;
+   [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutSergeant"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -2745,7 +4362,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutOfficer;
+   [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutOfficer"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -2764,7 +4381,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutCrewman;
+   [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutCrewman"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -2783,7 +4400,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutEngineer;
+   [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutEngineer"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -2802,7 +4419,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutExplosiveSpecialist;
+   [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutExplosiveSpecialist"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -2821,7 +4438,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutHelicopterPilot;
+   [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutHelicopterPilot"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   [_unit] call PZFP_fnc_addObjectToInterface;
   };
@@ -2840,7 +4457,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutHelicopterCrew;
+   [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutHelicopterCrew"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -2859,7 +4476,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutMineSpecialist;
+   [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutMineSpecialist"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -2878,7 +4495,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutSurvivor;
+   [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutSurvivor"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -2897,7 +4514,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_Men_AddLoadoutUAVOperator;
+   [_unit, "PZFP_fnc_blufor_USA_Men_AddLoadoutUAVOperator"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -2917,13 +4534,13 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_Hamr";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
   _unit addWeapon "hgun_P07_F";
   _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_vest";
-  _unit addVest "V_PlateCarrier2_rgr_noflag_F";
+  _unit addVest "V_PlateCarrier2_rgr";
 
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "muzzle_snds_H_snd_F";
@@ -2948,7 +4565,79 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
-  PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanLAT = {
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutRifleman_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "B_IR_Grenade";
+  _unit addHeadgear "H_HelmetB_Enh_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutRifleman_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "B_IR_Grenade";
+  _unit addHeadgear "H_HelmetSpecB_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_OPFOR";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanLAT = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -2961,7 +4650,7 @@ PZFP_fnc_initialize = {
 
   _unit addWeapon "arifle_MX_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
-  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "optic_Hamr";
   _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_mag";
   _unit addWeapon "launch_MRAWS_sand_F";
   _unit addSecondaryWeaponItem "MRAWS_HEAT_F";
@@ -2970,7 +4659,7 @@ PZFP_fnc_initialize = {
 
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_vest";
-  _unit addVest "V_PlateCarrier2_rgr_noflag_F";
+  _unit addVest "V_PlateCarrier2_rgr";
   _unit addBackpack "B_KitBag_mcamo";
 
   _unit addItemToUniform "FirstAidKit";
@@ -2993,6 +4682,92 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
   _unit linkItem "NVGoggles";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanLAT_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "launch_MRAWS_olive_F";
+  _unit addSecondaryWeaponItem "MRAWS_HEAT_F";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addBackpack "B_KitBag_sgg";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "B_IR_Grenade";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "MRAWS_HEAT_F";};
+  _unit addItemToBackpack "MRAWS_HE_F";
+  _unit addHeadgear "H_HelmetB_Enh_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanLAT_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; 
+  removeAllItems _unit; 
+  removeAllAssignedItems _unit;
+  removeUniform _unit; 
+  removeVest _unit; 
+  removeBackpack _unit;
+  removeHeadgear _unit; 
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "launch_MRAWS_green_F";
+  _unit addSecondaryWeaponItem "MRAWS_HEAT_F";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addBackpack "B_Kitbag_rgr";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "B_IR_Grenade";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "MRAWS_HEAT_F";};
+  _unit addItemToBackpack "MRAWS_HE_F";
+  _unit addHeadgear "H_HelmetSpecB_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanAT = {
@@ -3019,7 +4794,6 @@ PZFP_fnc_initialize = {
   _unit forceAddUniform "U_B_CombatUniform_mcam_vest";
   _unit addVest "V_PlateCarrier2_rgr_noflag_F";
   _unit addBackpack "B_KitBag_mcamo";
-
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "muzzle_snds_H_snd_F";
   _unit addItemToUniform "Wallet_ID";
@@ -3040,6 +4814,88 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanAT_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; 
+  removeAllItems _unit; 
+  removeAllAssignedItems _unit;
+  removeUniform _unit; 
+  removeVest _unit; 
+  removeBackpack _unit;
+  removeHeadgear _unit; 
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "launch_NLAW_F";
+  _unit addSecondaryWeaponItem "NLAW_F";
+  _unit addWeapon "hgun_P07_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addHeadgear "H_HelmetB_Enh_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanAT_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; 
+  removeAllItems _unit; 
+  removeAllAssignedItems _unit;
+  removeUniform _unit; 
+  removeVest _unit; 
+  removeBackpack _unit;
+  removeHeadgear _unit; 
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "launch_NLAW_F";
+  _unit addSecondaryWeaponItem "NLAW_F";
+  _unit addWeapon "hgun_P07_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addHeadgear "H_HelmetSpecB_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_OPFOR";
+ };
+
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutAutorifleman = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -3054,11 +4910,12 @@ PZFP_fnc_initialize = {
   _unit addWeapon "LMG_Mk200_F";
   _unit addPrimaryWeaponItem "acc_pointer_IR";
   _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
-  _unit addPrimaryWeaponItem "200Rnd_65x39_cased_Box_Red";
+  _unit addPrimaryWeaponItem "200Rnd_65x39_cased_Box";
+  _unit addWeapon "hgun_P07_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_vest";
-  _unit addVest "V_PlateCarrier2_rgr_noflag_F";
-
+  _unit addVest "V_PlateCarrier2_rgr";
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "muzzle_snds_H_snd_F";
   _unit addItemToUniform "Wallet_ID";
@@ -3076,14 +4933,81 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
   _unit linkItem "NVGoggles";
+ };
 
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutAutorifleman_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "LMG_Mk200_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
+  _unit addPrimaryWeaponItem "200Rnd_65x39_cased_Box";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 2 do {_unit addItemToVest "200Rnd_65x39_cased_Box_Red";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addHeadgear "H_HelmetB_Enh_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutAutorifleman_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit;
+  removeHeadgear _unit; removeGoggles _unit;
+
+  _unit addWeapon "LMG_Mk200_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "200Rnd_65x39_cased_Box";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 2 do {_unit addItemToVest "200Rnd_65x39_cased_Box_Red";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addHeadgear "H_HelmetSpecB_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutMarksman = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
-  removeAllAssignedItems _unit;-
+  removeAllAssignedItems _unit;
   removeUniform _unit;
   removeVest _unit;
   removeBackpack _unit;
@@ -3100,9 +5024,8 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_CombatUniform_mcam_vest";
   _unit addVest "V_PlateCarrier2_rgr_noflag_F";
-
   _unit addItemToUniform "FirstAidKit";
-  _unit addItemToUniform "muzzle_snds_H_snd_B";
+  _unit addItemToUniform "muzzle_snds_B_snd_F";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
   for "_i" from 1 to 6 do {_unit addItemToVest "20Rnd_762x51_Mag";};
@@ -3122,6 +5045,72 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
   _unit linkItem "NVGoggles";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutMarksman_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; 
+  removeAllItems _unit; 
+  removeAllAssignedItems _unit;
+  removeUniform _unit; 
+  removeVest _unit; 
+  removeBackpack _unit; 
+  removeHeadgear _unit; 
+  removeGoggles _unit;
+
+  _unit addWeapon "srifle_EBR_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_AMS";
+  _unit addPrimaryWeaponItem "20Rnd_762x51_Mag";
+  _unit addPrimaryWeaponItem "bipod_01_F_blk";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_B_khk_F";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "20Rnd_762x51_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addHeadgear "H_HelmetB_Enh_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap"; 
+  _unit linkItem "ItemCompass"; 
+  _unit linkItem "ItemWatch"; 
+  _unit linkItem "ItemRadio"; 
+  _unit linkItem "ItemGPS"; 
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutMarksman_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit;
+  removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit;
+  _unit addWeapon "srifle_EBR_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_AMS";
+  _unit addPrimaryWeaponItem "20Rnd_762x51_Mag";
+  _unit addPrimaryWeaponItem "bipod_01_F_blk";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_B";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "20Rnd_762x51_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addHeadgear "H_HelmetSpecB_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+  _unit linkItem "ItemMap"; _unit linkItem "ItemCompass"; _unit linkItem "ItemWatch"; _unit linkItem "ItemRadio"; _unit linkItem "ItemGPS"; _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutTeamLeader = {
@@ -3171,6 +5160,58 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutTeamLeader_T = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit;
+  _unit addWeapon "arifle_MX_khk_F"; 
+  _unit addPrimaryWeaponItem "acc_pointer_IR"; 
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F"; 
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag"; 
+  _unit addWeapon "hgun_P07_khk_F"; 
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F"; 
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addItemToUniform "FirstAidKit"; 
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+  _unit addItemToUniform "Wallet_ID"; 
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";}; 
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";}; 
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";}; 
+  _unit addItemToVest "SmokeShell"; 
+  _unit addHeadgear "H_HelmetB_Enh_tna_F"; 
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap"; _unit linkItem "ItemCompass"; _unit linkItem "ItemWatch"; _unit linkItem "ItemRadio"; _unit linkItem "ItemGPS"; _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutTeamLeader_W = {
+  params ["_unit"];
+  removeAllWeapons _unit; removeAllItems _unit; removeAllAssignedItems _unit; removeUniform _unit; removeVest _unit; removeBackpack _unit; removeHeadgear _unit; removeGoggles _unit;
+  _unit addWeapon "arifle_MX_Black_F"; 
+  _unit addPrimaryWeaponItem "acc_pointer_IR"; 
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F"; 
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag"; 
+  _unit addWeapon "hgun_P07_blk_F"; 
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f"; 
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addItemToUniform "FirstAidKit"; 
+  _unit addItemToUniform "muzzle_snds_H"; 
+  _unit addItemToUniform "Wallet_ID"; 
+  _unit addItemToUniform "Chemlight_blue";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";}; 
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";}; 
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";}; 
+  _unit addItemToVest "SmokeShell"; 
+  _unit addHeadgear "H_HelmetSpecB_wdl"; 
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap"; _unit linkItem "ItemCompass"; _unit linkItem "ItemWatch"; _unit linkItem "ItemRadio"; _unit linkItem "ItemGPS"; _unit linkItem "NVGoggles_OPFOR";
+ };
+
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutSquadLeader = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -3191,8 +5232,6 @@ PZFP_fnc_initialize = {
 
   _unit forceAddUniform "U_B_CombatUniform_mcam";
   _unit addVest "V_PlateCarrier2_rgr_noflag_F";
-
-  _unit addWeapon "Binocular";
 
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
@@ -3215,6 +5254,86 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
   _unit linkItem "NVGoggles";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutSquadLeader_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addHeadgear "H_HelmetB_Enh_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutSquadLeader_W = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addHeadgear "H_HelmetSpecB_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutJTAC = {
@@ -3265,6 +5384,100 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutJTAC_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addMagazine "Laserbatteries";
+  _unit addWeapon "Laserdesignator";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "Laserbatteries";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "B_IR_Grenade";
+  _unit addHeadgear "H_HelmetB_Enh_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutJTAC_W = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addMagazine "Laserbatteries";
+  _unit addWeapon "Laserdesignator";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "Laserbatteries";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "B_IR_Grenade";
+  _unit addHeadgear "H_HelmetSpecB_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_OPFOR";
+ };
+
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutMedic = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -3308,7 +5521,93 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
- PZFP_fnc_blufor_USA_MenSF_AddLoadoutRadioOperator = {
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutMedic_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addBackpack "B_Kitbag_sgg";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "SmokeShell";};
+  _unit addItemToBackpack "Medikit";
+  for "_i" from 1 to 3 do {_unit addItemToBackpack "FirstAidKit";};
+  _unit addHeadgear "H_HelmetB_Enh_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutMedic_W = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addBackpack "B_Kitbag_rgr";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H";
+
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "SmokeShell";};
+  _unit addItemToBackpack "Medikit";
+  for "_i" from 1 to 3 do {_unit addItemToBackpack "FirstAidKit";};
+  _unit addHeadgear "H_HelmetSpecB_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_OPFOR";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutRTO = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -3333,6 +5632,7 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_snd_F";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
@@ -3345,6 +5645,88 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "NVGoggles";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutRTO_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addBackpack "B_RadioBag_01_tropic_F";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "SmokeShell";};
+
+  _unit addHeadgear "H_HelmetB_Enh_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutRTO_W = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_snd_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addBackpack "B_RadioBag_01_wdl_F";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H";
+
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "SmokeShell";};
+
+  _unit addHeadgear "H_HelmetSpecB_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutAmmoBearer = {
@@ -3372,6 +5754,7 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_snd_F";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
@@ -3385,6 +5768,88 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "NVGoggles";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutAmmoBearer_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addBackpack "B_Kitbag_sgg";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "SmokeShell";};
+
+  _unit addHeadgear "H_HelmetB_Enh_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutAmmoBearer_W = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addBackpack "B_Kitbag_rgr";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H";
+
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "SmokeShell";};
+
+  _unit addHeadgear "H_HelmetSpecB_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutDemoSpecialist = {
@@ -3412,6 +5877,7 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_snd_F";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
@@ -3427,6 +5893,96 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "NVGoggles";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutDemoSpecialist_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addBackpack "B_Kitbag_sgg";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToBackpack "ToolKit";
+  _unit addItemToBackpack "SatchelCharge_Remote_Mag";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "DemoCharge_Remote_Mag";};
+
+  _unit addHeadgear "H_HelmetB_Enh_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutDemoSpecialist_W = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addBackpack "B_kitbag_rgr";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H";
+
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToBackpack "ToolKit";
+  _unit addItemToBackpack "SatchelCharge_Remote_Mag";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "DemoCharge_Remote_Mag";};
+
+  _unit addHeadgear "H_HelmetSpecB_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutEngineer = {
@@ -3454,6 +6010,7 @@ PZFP_fnc_initialize = {
   _unit addItemToUniform "FirstAidKit";
   _unit addItemToUniform "Wallet_ID";
   _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_snd_F";
   for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
   for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
@@ -3467,6 +6024,92 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "NVGoggles";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutEngineer_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addBackpack "B_Kitbag_sgg";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToBackpack "ToolKit";
+
+  _unit addHeadgear "H_HelmetB_Enh_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutEngineer_W = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addBackpack "B_kitbag_rgr";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Wallet_ID";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addItemToUniform "muzzle_snds_H";
+
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToBackpack "ToolKit";
+
+  _unit addHeadgear "H_HelmetSpecB_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutSniper = {
@@ -3515,6 +6158,98 @@ PZFP_fnc_initialize = {
 
  };
 
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutSniper_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "srifle_LRR_tna_F";
+  _unit addPrimaryWeaponItem "optic_AMS";
+  _unit addPrimaryWeaponItem "7Rnd_408_Mag";
+  _unit addWeapon "hgun_P07_F";
+  _unit addHandgunItem "muzzle_snds_L";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_FullGhillie_tna_F";
+  _unit addVest "V_Chestrig_rgr";
+  _unit addWeapon "Rangefinder";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+
+  for "_i" from 1 to 2 do {_unit addItemToUniform "7Rnd_408_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "B_IR_Grenade";
+  _unit addItemToVest "ClaymoreDirectionalMine_Remote_Mag";
+  _unit addItemToVest "APERSTripMine_Wire_Mag";
+
+  for "_i" from 1 to 3 do {_unit addItemToVest "7Rnd_408_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutSniper_W = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "srifle_LRR_camo_F";
+  _unit addPrimaryWeaponItem "optic_AMS";
+  _unit addPrimaryWeaponItem "7Rnd_408_Mag";
+  _unit addWeapon "hgun_P07_F";
+  _unit addHandgunItem "muzzle_snds_L";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_FullGhillie_sard";
+  _unit addVest "V_Chestrig_rgr";
+  _unit addWeapon "Rangefinder";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+
+  for "_i" from 1 to 2 do {_unit addItemToUniform "7Rnd_408_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "B_IR_Grenade";
+  _unit addItemToVest "ClaymoreDirectionalMine_Remote_Mag";
+  _unit addItemToVest "APERSTripMine_Wire_Mag";
+
+  for "_i" from 1 to 3 do {_unit addItemToVest "7Rnd_408_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_OPFOR";
+ };
+
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutSpotter = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -3558,7 +6293,96 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
   _unit linkItem "NVGoggles";
+ };
 
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutSpotter_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "srifle_DMR_03_woodland_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_B_khk_F";
+  _unit addPrimaryWeaponItem "optic_AMS";
+  _unit addPrimaryWeaponItem "20Rnd_762x51_Mag";
+  _unit addPrimaryWeaponItem "bipod_01_F_blk";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "muzzle_snds_L";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_FullGhillie_tna_F";
+  _unit addVest "V_Chestrig_rgr";
+  _unit addMagazine "Laserbatteries";
+  _unit addWeapon "Laserdesignator";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Laserbatteries";
+  _unit addItemToUniform "Chemlight_blue";
+
+  for "_i" from 1 to 7 do {_unit addItemToVest "20Rnd_762x51_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+
+  _unit addItemToVest "APERSTripMine_Wire_Mag";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "SmokeShellOrange";
+  _unit addItemToVest "B_IR_Grenade";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutSpotter_W = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "srifle_DMR_03_woodland_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_B_blk_F";
+  _unit addPrimaryWeaponItem "optic_AMS";
+  _unit addPrimaryWeaponItem "20Rnd_762x51_Mag";
+  _unit addPrimaryWeaponItem "bipod_01_F_mtp";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "muzzle_snds_L";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_FullGhillie_sard";
+  _unit addVest "V_Chestrig_rgr";
+  _unit addMagazine "Laserbatteries";
+  _unit addWeapon "Laserdesignator";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Laserbatteries";
+  _unit addItemToUniform "Chemlight_blue";
+
+  for "_i" from 1 to 7 do {_unit addItemToVest "20Rnd_762x51_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+
+  _unit addItemToVest "APERSTripMine_Wire_Mag";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "SmokeShellOrange";
+  _unit addItemToVest "B_IR_Grenade";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_OPFOR";
  };
 
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutSergeant = {
@@ -3606,6 +6430,88 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutSergeant_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+  _unit addItemToUniform "Wallet_ID";
+
+  for "_i" from 1 to 5 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellBlue";
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+
+  _unit addHeadgear "H_HelmetB_Enh_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutSergeant_W = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H_blk_F";
+  _unit addItemToUniform "Wallet_ID";
+
+  for "_i" from 1 to 5 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellBlue";
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+
+  _unit addHeadgear "H_HelmetSpecB_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_OPFOR";
+ };
+
  PZFP_fnc_blufor_USA_MenSF_AddLoadoutOfficer = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -3646,6 +6552,82 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles";
  };
 
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutOfficer_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_khk_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_khk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_khaki_mag";
+  _unit addWeapon "hgun_P07_khk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_T_Soldier_F";
+  _unit addVest "V_PlateCarrier2_tna_F";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H_khk_F";
+  _unit addItemToUniform "Wallet_ID";
+
+  for "_i" from 1 to 5 do {_unit addItemToVest "30Rnd_65x39_caseless_khaki_mag";};
+  _unit addItemToVest "SmokeShell";
+
+  _unit addHeadgear "H_HelmetB_Enh_tna_F";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_INDEP";
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_AddLoadoutOfficer_W = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_MX_Black_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ERCO_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_black_mag";
+  _unit addWeapon "hgun_P07_blk_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_B_CombatUniform_mcam_wdl_f";
+  _unit addVest "V_PlateCarrier2_wdl";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "muzzle_snds_H_blk_F";
+  _unit addItemToUniform "Wallet_ID";
+
+  for "_i" from 1 to 5 do {_unit addItemToVest "30Rnd_65x39_caseless_black_mag";};
+  _unit addItemToVest "SmokeShell";
+
+  _unit addHeadgear "H_HelmetSpecB_wdl";
+  _unit addGoggles "G_Tactical_Clear";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "NVGoggles_OPFOR";
+ };
+
  PZFP_fnc_blufor_USA_MenSF_CreateRifleman = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
@@ -3658,7 +6640,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutRifleman;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutRifleman"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3675,7 +6657,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
 	params ["_unit"];
 	sleep 0.1;
-	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanLAT;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanLAT"] call PZFP_fnc_USA_addLoadoutUnit;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3692,7 +6674,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
 	params ["_unit"];
 	sleep 0.1;
-	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanAT;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutRiflemanAT"] call PZFP_fnc_USA_addLoadoutUnit;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3709,7 +6691,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
 	params ["_unit"];
 	sleep 0.1;
-	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutAutorifleman;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutAutorifleman"] call PZFP_fnc_USA_addLoadoutUnit;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3726,7 +6708,24 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
 	params ["_unit"];
 	sleep 0.1;
-	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutMarksman;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutMarksman"] call PZFP_fnc_USA_addLoadoutUnit;
+	[_unit] call PZFP_fnc_USA_AddIdentity;
+  };
+  [_unit] call PZFP_fnc_addObjectToInterface;
+  _unit
+ };
+
+ PZFP_fnc_blufor_USA_MenSF_CreateMachineGunner = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  _group setBehaviour "SAFE";
+  private _unit = _group createUnit ["B_support_MG_F", _position, [], 0, "CAN_COLLIDE"];
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+	params ["_unit"];
+	sleep 0.1;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutMachineGunner"] call PZFP_fnc_USA_addLoadoutUnit;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3743,7 +6742,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
 	params ["_unit"];
 	sleep 0.1;
-	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutTeamLeader;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutTeamLeader"] call PZFP_fnc_USA_addLoadoutUnit;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3760,7 +6759,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
 	params ["_unit"];
 	sleep 0.1;
-	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutSquadLeader;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutSquadLeader"] call PZFP_fnc_USA_addLoadoutUnit;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3777,7 +6776,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
 	params ["_unit"];
 	sleep 0.1;
-	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutMedic;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutMedic"] call PZFP_fnc_USA_addLoadoutUnit;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3794,7 +6793,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
 	params ["_unit"];
 	sleep 0.1;
-	[_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutRadioOperator;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutRTO"] call PZFP_fnc_USA_addLoadoutUnit;
 	[_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3811,7 +6810,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutJTAC;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutJTAC"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3828,7 +6827,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutAmmoBearer;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutAmmoBearer"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3845,7 +6844,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutDemoSpecialist;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutDemoSpecialist"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3862,7 +6861,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutEngineer;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutEngineer"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3879,7 +6878,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutSniper;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutSniper"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3896,7 +6895,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutSpotter;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutSpotter"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3914,7 +6913,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutSergeant;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutSergeant"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -3931,7 +6930,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_blufor_USA_MenSF_AddLoadoutOfficer;
+  [_unit, "PZFP_fnc_blufor_USA_MenSF_AddLoadoutOfficer"] call PZFP_fnc_USA_addLoadoutUnit;
    [_unit] call PZFP_fnc_USA_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -4123,11 +7122,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_MBT_01_Cannon_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Sand",1],
-   ["showBags",1,"showCamonetTurret",0,"showCamonetHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Sand", ["showBags",1,"showCamonetTurret",0,"showCamonetHull",0], 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -4147,11 +7142,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_MBT_01_TUSK_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Sand",1],
-   ["showBags",1,"showCamonetTurret",0,"showCamonetHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Sand", ["showBags",1,"showCamonetTurret",0,"showCamonetHull",0], 2] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -4171,11 +7162,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_AFV_Wheeled_01_Cannon_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Sand",1],
-   ["showCamonetHull",0,"showCamonetTurret",0,"showSLATHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Sand", ["showCamonetHull",0,"showCamonetTurret",0,"showSLATHull",0], 1] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -4195,11 +7182,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_AFV_Wheeled_01_Up_Cannon_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Sand",1],
-   ["showCamonetHull",0,"showCamonetTurret",0,"showSLATHull",1]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Sand", ["showCamonetHull",0,"showCamonetTurret",0,"showSLATHull",1], 1] call PZFP_fnc_USA_vehicleInit;
 
   private _driver = [] call PZFP_fnc_blufor_USA_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -4219,11 +7202,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_Radar_System_01_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Desert",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Desert", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
@@ -4235,11 +7214,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_SAM_System_03_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Desert",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Desert", true, 2] call PZFP_fnc_USA_vehicleInit;
 
   createVehicleCrew _vehicle;
   crew _vehicle join createGroup [west, true];
@@ -4328,11 +7303,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["B_AAA_System_01_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Sand",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle, "Sand", true, 1] call PZFP_fnc_USA_vehicleInit;
 
   _vehicle removeWeaponTurret["weapon_Cannon_Phalanx",[0]];
   _vehicle addWeaponTurret["gatling_20mm_VTOL_01",[0]];
@@ -4348,10 +7319,12 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateDesignator = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _terrainType = missionNamespace getVariable ["PZFP_terrainType", "Mediterreanean"];
+  private _variant = if (_terrainType in ["Tropical","Woodland"]) then {"Khaki"} else {"Desert"};
   private _vehicle = createVehicle ["B_Static_Designator_01_F",_position,[],0,"NONE"];
   [
    _vehicle,
-   ["Desert",1],
+   [_variant,1],
    true
   ] call BIS_fnc_initVehicle;
 
@@ -4364,7 +7337,9 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateAA = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _vehicle = createVehicle ["B_Static_AA_F",_position,[],0,"NONE"];
+  private _terrainType = missionNamespace getVariable ["PZFP_terrainType", "Mediterreanean"];
+  private _variant = if (_terrainType in ["Tropical","Woodland"]) then {"B_T_Static_AA_F"} else {"B_Static_AA_F"};
+  private _vehicle = createVehicle [_variant, _position, [], 0, "NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -4375,7 +7350,9 @@ PZFP_fnc_initialize = {
  PZFP_fnc_blufor_USA_Turrets_CreateAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _vehicle = createVehicle ["B_Static_AT_F",_position,[],0,"NONE"];
+  private _terrainType = missionNamespace getVariable ["PZFP_terrainType", "Mediterreanean"];
+  private _variant = if (_terrainType in ["Tropical","Woodland"]) then {"B_T_Static_AT_F"} else {"B_Static_AT_F"};
+  private _vehicle = createVehicle [_variant, _position, [], 0, "NONE"];
 
   private _gunner = [] call PZFP_fnc_blufor_USA_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -13188,6 +16165,31 @@ PZFP_fnc_initialize = {
   _unit linkItem "NVGoggles_INDEP";
  };
 
+ PZFP_fnc_blufor_LDF_Men_AddLoadoutUAVOperatorFPV = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit forceAddUniform "U_I_E_Uniform_01_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_blue";
+  _unit addHeadgear "H_Cap_oli_hs";
+  _unit addGoggles "G_Goggles_VR";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "B_UavTerminal";
+ };
+
  PZFP_fnc_blufor_LDF_Men_CreateRifleman = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
@@ -13506,6 +16508,23 @@ PZFP_fnc_initialize = {
     params ["_unit"];
     sleep 0.1;
     [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutUAVOperator;
+    [_unit] call PZFP_fnc_PL_AddIdentity;
+  };
+  [_unit] call PZFP_fnc_addObjectToInterface;
+  _unit
+ };
+
+ PZFP_fnc_blufor_LDF_Men_CreateUAVOperatorFPV = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  private _unit = _group createUnit ["B_soldier_UAV_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_blufor_LDF_Men_AddLoadoutUAVOperatorFPV;
     [_unit] call PZFP_fnc_PL_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -14177,7 +17196,7 @@ PZFP_fnc_initialize = {
  };
 
  PZFP_fnc_blufor_LDF_MenSOF_AddLoadoutOfficer = {
-  params ["unit"];
+  params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
   removeAllAssignedItems _unit;
@@ -14906,20 +17925,7 @@ PZFP_fnc_initialize = {
   [_officer1, _officer2] joinSilent _group;
  };
 
- PZFP_fnc_blufor_StrazLesna_Groups_CreatePatrolTeam = {
-  private _cursorPos = getMousePosition;
-  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-  private _group = createGroup [west, true];
-  _group setBehaviour "SAFE";
-
-  private _officer = [_position] call PZFP_fnc_blufor_StrazLesna_Men_CreateOfficer;
-  private _officer2 = [_position] call PZFP_fnc_blufor_StrazLesna_Men_CreateOfficerRifle;
-  private _officer3 = [_position] call PZFP_fnc_blufor_StrazLesna_Men_CreateOfficer;
-  private _officer4 = [_position] call PZFP_fnc_blufor_StrazLesna_Men_CreateOfficerShotgun;
-  [_officer, _officer2, _officer3, _officer4] joinSilent _group;
- };
-
-  comment "------------------------------------------OPFOR-----------------------------------------------";
+  comment "------------------------------------------OPFOR FACTIONS-----------------------------------------------";
 
 
   
@@ -15102,11 +18108,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_APC_Tracked_02_AA_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   ["showTracks",selectRandom[0,1],"showCamonetHull",0,"showCamonetTurret",0,"showSLATHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showTracks",selectRandom[0,1],"showCamonetHull",0,"showCamonetTurret",0,"showSLATHull",0],0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -15122,24 +18124,16 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_AntiAir_CreateKamysh = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
-
+  
   private _vehicle = createVehicle ["O_APC_Tracked_02_cannon_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   [["showTracks",selectRandom[0,1],"showCamonetHull",0,"showBags",0,"showSLATHull",1]]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showTracks",selectRandom[0,1],"showCamonetHull",0,"showBags",0,"showSLATHull",1],0] call PZFP_fnc_CSAT_vehicleInit;
   [_vehicle, ["HideTurret",1]] remoteExec ['animate',0,true];
   [_vehicle, [[0],true]] remoteExec ['lockTurret',0,true];
   [_vehicle, [[0,0],true]] remoteExec ['lockTurret',0,true];
   [_vehicle] call PZFP_fnc_vehicleCleanup;
 
   private _vehicle2 = createVehicle ["O_SAM_System_04_F",_position,[],0,"NONE"];
-  [
-   _vehicle2,
-   ["Hex",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle2,"AridHex",true,1] call PZFP_fnc_CSAT_vehicleInit;
   [_vehicle2, [0, ""]] remoteExec ['setObjectTexture',0,true];
   [_vehicle2, [2, ""]] remoteExec ['setObjectTexture',0,true];
   [_vehicle2, [3, ""]] remoteExec ['setObjectTexture',0,true];
@@ -15175,11 +18169,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_APC_Tracked_02_cannon_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   ["showTracks",selectRandom[0,1],"showCamonetHull",0,"showBags",0,"showSLATHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showTracks",selectRandom[0,1],"showCamonetHull",0,"showBags",0,"showSLATHull",0],0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -15196,11 +18186,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_APC_Wheeled_02_rcws_v2_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   ["showBags",0,"showCanisters",selectRandom[0,1],"showTools",selectRandom[0,1],"showCamonetHull",0,"showSLATHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showBags",0,"showCanisters",selectRandom[0,1],"showTools",selectRandom[0,1],"showCamonetHull",0,"showSLATHull",0],0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -15214,20 +18200,21 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_APCs_CreateMaridAutocannon = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+
+  private _terrainType = missionNamespace getVariable ["PZFP_terrainType", "Mediterranean"];
+  private _turretTexture = if (_terrainType in ["Tropical","Woodland"]) then {"a3\armor_f_exp\apc_tracked_02\data\rcws30_ghex_co.paa"} else {"a3\armor_f_beta\apc_tracked_02\data\rcws30_opfor_co.paa"};
+
   private _vehicle = createVehicle ["O_APC_Wheeled_02_rcws_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   ["showBags",0,"showCanisters",selectRandom[0,1],"showTools",selectRandom[0,1],"showCamonetHull",0,"showSLATHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showBags",0,"showCanisters",selectRandom[0,1],"showTools",selectRandom[0,1],"showCamonetHull",0,"showSLATHull",0],0] call PZFP_fnc_CSAT_vehicleInit;
   [_vehicle, ["hideTurret",1]] remoteExec ['animate',0,true];
   [_vehicle, [[0],true]] remoteExec ['lockTurret',0,true];
   [_vehicle] call PZFP_fnc_vehicleCleanup;
 
   private _vehicle2 = "I_APC_Wheeled_03_cannon_F" createVehicle _position;      
   [_vehicle2, [0, ""]] remoteExec ['setObjectTexture',0,true];      
-  [_vehicle2, [1, ""]] remoteExec ['setObjectTexture',0,true];      
-  [_vehicle2, [2, "a3\armor_f_beta\apc_tracked_02\data\rcws30_opfor_co.paa"]] remoteExec ['setObjectTexture',0,true];      
+  [_vehicle2, [1, ""]] remoteExec ['setObjectTexture',0,true]; 
+
+  [_vehicle2, [2, _turretTexture]] remoteExec ['setObjectTexture',0,true];      
   [_vehicle2, [3, ""]] remoteExec ['setObjectTexture',0,true];      
   [_vehicle2, [4, ""]] remoteExec ['setObjectTexture',0,true];      
   _vehicle2 attachTo [_vehicle, [-0.1261,-0.9185,0.02]];      
@@ -15254,11 +18241,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_MBT_02_arty_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   ["showBags",0,"showCanisters",selectRandom[0,1],"showTools",selectRandom[0,1],"showCamonetHull",0,"showSLATHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showBags",0,"showCanisters",selectRandom[0,1],"showTools",selectRandom[0,1],"showCamonetHull",0,"showSLATHull",0],0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -15274,14 +18257,18 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Artillery_CreateZamak = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  
+  private _terrainType = missionNamespace getVariable ["PZFP_terrainType", "Mediterranean"];
+  private _hullTexture = if (_terrainType in ["Tropical","Woodland"]) then {"a3\soft_f_exp\truck_02\data\truck_02_kab_ghex_co.paa"} else {"a3\soft_f_beta\Truck_02\data\truck_02_kab_OPFOR_CO.paa"};
+
   private _vehicle = createVehicle ["I_Truck_02_MRL_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep",1],
    true
   ] call BIS_fnc_initVehicle;
-  [_vehicle, [0,"a3\soft_f_beta\Truck_02\data\truck_02_kab_OPFOR_CO.paa"]] remoteExec ['setObjectTexture',0,true]; 
-  [_vehicle, [2,'a3\soft_f_gamma\Truck_02\Data\Truck_02_MRL_OPFOR_CO.paa']] remoteExec ['setObjectTexture',0,true];
+  [_vehicle, [0,_hullTexture]] remoteExec ['setObjectTexture',0,true]; 
+  [_vehicle, [2,"a3\soft_f_gamma\Truck_02\Data\Truck_02_MRL_OPFOR_CO.paa"]] remoteExec ['setObjectTexture',0,true];
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -15347,11 +18334,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_MRAP_02_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -15364,11 +18347,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_MRAP_02_hmg_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -15383,11 +18362,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_MRAP_02_gmg_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -15402,11 +18377,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Truck_02_transport_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Opfor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"OPFOR",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -15419,11 +18390,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Truck_02_covered_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Opfor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"OPFOR",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -15436,11 +18403,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Truck_02_box_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Opfor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"OPFOR",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -15453,11 +18416,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Truck_02_fuel_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Opfor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"OPFOR",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -15470,11 +18429,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Truck_02_ammo_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Opfor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"OPFOR",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -15487,11 +18442,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Truck_02_medical_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Opfor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"OPFOR",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -15789,7 +18740,44 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
- PZFP_fnc_opfor_IRGF_Men_AddLoadoutRiflemanLAT = {
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutRifleman_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutLAT = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -15830,7 +18818,48 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
- PZFP_fnc_opfor_IRGF_Men_AddLoadoutRiflemanAT = {
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutLAT_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+  _unit addWeapon "launch_RPG7_F";
+  _unit addSecondaryWeaponItem "RPG7_F";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_TacticalPack_oli";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "RPG7_F";};
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutAT = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -15871,6 +18900,47 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutAT_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+  _unit addWeapon "launch_O_Vorona_green_F";
+  _unit addSecondaryWeaponItem "Vorona_HEAT";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_TacticalPack_oli";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "Vorona_HEAT";};
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutAutorifleman = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -15907,6 +18977,44 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "O_NVGoggles_hex_F";
+ };
+
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutAutorifleman_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "LMG_Zafir_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "150Rnd_762x54_Box";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToVest "150Rnd_762x54_Box";
+  _unit addItemToVest "150Rnd_762x54_Box_Tracer";
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
  };
 
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutMarksman = {
@@ -15947,6 +19055,46 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "O_NVGoggles_hex_F";
+ };
+
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutMarksman_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "srifle_DMR_01_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_DMS";
+  _unit addPrimaryWeaponItem "10Rnd_762x54_Mag";
+  _unit addWeapon "hgun_Pistol_01_F";
+  _unit addHandgunItem "10Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "10Rnd_762x54_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "10Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
  };
 
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutTeamLeader = {
@@ -15993,6 +19141,50 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutTeamLeader_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_GL_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+  _unit addPrimaryWeaponItem "1Rnd_HE_Grenade_shell";
+  _unit addWeapon "hgun_Pistol_01_F";
+  _unit addHandgunItem "10Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 5 do {_unit addItemToVest "1Rnd_HE_Grenade_shell";};
+  _unit addItemToVest "UGL_FlareWhite_F";
+  _unit addItemToVest "1Rnd_Smoke_Grenade_shell";
+  _unit addItemToVest "1Rnd_SmokeRed_Grenade_shell";
+  _unit addItemToVest "1Rnd_SmokeGreen_Grenade_shell";
+  _unit addItemToVest "UGL_FlareWhite_Illumination_F";
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutSquadLeader = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -16033,6 +19225,48 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
   _unit linkItem "O_NVGoggles_hex_F";
+ };
+
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutSquadLeader_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+  _unit addWeapon "hgun_Pistol_01_F";
+  _unit addHandgunItem "10Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_ViperHarness_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "10Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "O_NVGoggles_ghex_F";
  };
 
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutAmmoBearer = {
@@ -16076,6 +19310,47 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutAmmoBearer_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_TacticalPack_oli";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  for "_i" from 1 to 10 do {_unit addItemToBackpack "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "150Rnd_762x51_Box";};
+  for "_i" from 1 to 10 do {_unit addItemToBackpack "1Rnd_HE_Grenade_shell";};
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutMedic = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -16117,7 +19392,48 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
- PZFP_fnc_opfor_IRGF_Men_AddLoadoutRadioOperator = {
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutMedic_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+  _unit addWeapon "hgun_Pistol_01_F";
+  _unit addHandgunItem "10Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_TacticalPack_oli";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "10Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutRTO = {
   params ["_unit"];
   removeAllWeapons _unit;
   removeAllItems _unit;
@@ -16153,6 +19469,44 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemWatch";
   _unit linkItem "ItemRadio";
   _unit linkItem "O_NVGoggles_hex_F";
+ };
+
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutRTO_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_RadioBag_01_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
  };
 
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutSergeant = {
@@ -16196,6 +19550,47 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutSergeant_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+  _unit addWeapon "hgun_Pistol_01_F";
+  _unit addHandgunItem "10Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "10Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutOfficer = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -16237,6 +19632,47 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutOfficer_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_C_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ACO_grn";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+  _unit addWeapon "hgun_Pistol_01_F";
+  _unit addHandgunItem "10Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "10Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutCrewman = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -16263,6 +19699,41 @@ PZFP_fnc_initialize = {
   _unit addItemToVest "SmokeShellGreen";
   _unit addHeadgear "H_Tank_black_F";
   _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutCrewman_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_C_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_BandollierB_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 4 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_Tank_black_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
 
   _unit linkItem "ItemMap";
   _unit linkItem "ItemCompass";
@@ -16310,6 +19781,45 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutEngineer_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_C_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_ViperHarness_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToBackpack "Toolkit";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutExplosiveSpecialist = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -16349,6 +19859,45 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutExplosiveSpecialist_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackPack "B_TacticalPack_oli";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "DemoCharge_Remote_Mag";};
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutHelicopterPilot = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -16383,6 +19932,42 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
   _unit linkItem "O_NVGoggles_hex_F";
+ };
+
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutHelicopterPilot_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_F";
+  _unit addPrimaryWeaponItem "optic_ACO_grn";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  _unit addVest "V_TacVest_oli";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 4 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "O_IR_Grenade";
+  _unit addHeadgear "H_PilotHelmetHeli_O";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "O_NVGoggles_ghex_F";
  };
 
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutHelicopterCrew = {
@@ -16420,6 +20005,43 @@ PZFP_fnc_initialize = {
   _unit linkItem "ItemRadio";
   _unit linkItem "ItemGPS";
   _unit linkItem "O_NVGoggles_hex_F";
+ };
+
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutHelicopterCrew_T = {
+  params ["_unit"];
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_F";
+  _unit addPrimaryWeaponItem "optic_ACO_grn";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  _unit addVest "V_TacVest_oli";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 4 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "O_IR_Grenade";
+  _unit addHeadgear "H_CrewHelmetHeli_O";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "O_NVGoggles_ghex_F";
  };
 
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutMineSpecialist = {
@@ -16462,6 +20084,46 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutMineSpecialist_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_ViperHarness_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  for "_i" from 1 to 5 do {_unit addItemToBackpack "APERSMine_Range_Mag";};
+  for "_i" from 1 to 5 do {_unit addItemToBackpack "APERSTripMine_Wire_Mag";};
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
  PZFP_fnc_opfor_IRGF_Men_AddLoadoutSurvivor = {
   params ["_unit"];
   removeAllWeapons _unit;
@@ -16474,6 +20136,28 @@ PZFP_fnc_initialize = {
   removeGoggles _unit;
 
   _unit forceAddUniform "U_O_officer_noInsignia_hex_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+ };
+
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutSurvivor_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit forceAddUniform "U_O_T_Officer_F";
   [_unit, ""] call BIS_fnc_setUnitInsignia;
 
   _unit addItemToUniform "FirstAidKit";
@@ -16523,6 +20207,45 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
+ PZFP_fnc_opfor_IRGF_Men_AddLoadoutUAVOperator_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_Katiba_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "O_UAV_01_backpack_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat_Goggles_tna_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_UavTerminal";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
  PZFP_fnc_opfor_IRGF_Men_CreateCrewman = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
@@ -16533,7 +20256,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
     params ["_unit"];
     sleep 0.1;
-    [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutCrewman;
+    [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutCrewman"] call PZFP_fnc_CSAT_addLoadoutUnit;
     [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16552,7 +20275,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutRifleman;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutRifleman"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16571,7 +20294,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutRiflemanLAT;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutLAT"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16590,7 +20313,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutRiflemanAT;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutAT"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16609,7 +20332,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutAutorifleman;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutAutorifleman"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16628,7 +20351,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutMarksman;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutMarksman"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16647,7 +20370,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutTeamLeader;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutTeamLeader"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16666,7 +20389,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutSquadLeader;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutSquadLeader"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16685,7 +20408,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutAmmoBearer;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutAmmoBearer"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16704,7 +20427,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutMedic;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutMedic"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16724,7 +20447,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutRadioOperator;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutRTO"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16744,7 +20467,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutSergeant;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutSergeant"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16763,7 +20486,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutOfficer;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutOfficer"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16782,7 +20505,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutEngineer;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutEngineer"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16801,7 +20524,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutExplosiveSpecialist;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutExplosiveSpecialist"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16820,7 +20543,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutHelicopterPilot;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutHelicopterPilot"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16839,7 +20562,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutHelicopterCrew;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutHelicopterCrew"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16858,7 +20581,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutMineSpecialist;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutMineSpecialist"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16877,7 +20600,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutSurvivor;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutSurvivor"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16896,7 +20619,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_IRGF_Men_AddLoadoutUAVOperator;
+   [_unit, "PZFP_fnc_opfor_IRGF_Men_AddLoadoutUAVOperator"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_IR_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -16985,11 +20708,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_MBT_02_cannon_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   ["showCamonetHull",0,"showCamonetTurret",0,"showLog",1]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showCamonetHull",0,"showCamonetTurret",0,"showLog",1],0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -17006,11 +20725,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_IRGF_Tanks_CreateAngara = {
   private _cursorPos = getMousePosition;
   private _vehicle = createVehicle ["O_MBT_04_cannon_F",_position,[],0,"NONE"];
-  [
-	 _vehicle,
-   ["Hex",1], 
-   ["showCamonetHull",0,"showCamonetTurret",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showCamonetHull",0,"showCamonetTurret",0],0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -17028,11 +20743,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_MBT_04_command_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   ["showCamonetHull",0,"showCamonetTurret",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showCamonetHull",0,"showCamonetTurret",0],0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_IRGF_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -17105,11 +20816,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Radar_System_02_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["AridHex",1], 
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"AridHex",true,1] call PZFP_fnc_CSAT_vehicleInit;
   
   createVehicleCrew _vehicle;
 
@@ -17130,11 +20837,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_SAM_System_04_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["AridHex",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"AridHex",true,1] call PZFP_fnc_CSAT_vehicleInit;
 
   createVehicleCrew _vehicle;
 
@@ -17145,7 +20848,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Static_AA_F",_position,[],0,"NONE"];
-  private _launcher = createSimpleObject ["Weapon_launch_O_vorona_brown_F", _position];
+  [_vehicle,"AridHex",true,1] call PZFP_fnc_CSAT_vehicleInit;
 
   private _gunner = [] call PZFP_fnc_opfor_IRGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -17354,11 +21057,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_APC_Tracked_02_AA_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   ["showTracks",selectRandom[0,1],"showCamonetHull",0,"showCamonetTurret",0,"showSLATHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showTracks",selectRandom[0,1],"showCamonetHull",0,"showCamonetTurret",0,"showSLATHull",0],0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -17376,22 +21075,14 @@ PZFP_fnc_initialize = {
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
 
   private _vehicle = createVehicle ["O_APC_Tracked_02_cannon_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   [["showTracks",selectRandom[0,1],"showCamonetHull",0,"showBags",0,"showSLATHull",1]]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",[["showTracks",selectRandom[0,1],"showCamonetHull",0,"showBags",0,"showSLATHull",1]],0] call PZFP_fnc_CSAT_vehicleInit;
   [_vehicle, ["HideTurret",1]] remoteExec ['animate',0,true];
   [_vehicle, [[0],true]] remoteExec ['lockTurret',0,true];
   [_vehicle, [[0,0],true]] remoteExec ['lockTurret',0,true];
   [_vehicle] call PZFP_fnc_vehicleCleanup;
 
   private _vehicle2 = createVehicle ["O_SAM_System_04_F",_position,[],0,"NONE"];
-  [
-   _vehicle2,
-   ["Hex",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle2,"AridHex",true,1] call PZFP_fnc_CSAT_vehicleInit;
   [_vehicle2, [0, ""]] remoteExec ['setObjectTexture',0,true];
   [_vehicle2, [2, ""]] remoteExec ['setObjectTexture',0,true];
   [_vehicle2, [3, ""]] remoteExec ['setObjectTexture',0,true];
@@ -17427,11 +21118,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_APC_Tracked_02_cannon_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   ["showTracks",selectRandom[0,1],"showCamonetHull",0,"showBags",0,"showSLATHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showTracks",selectRandom[0,1],"showCamonetHull",0,"showBags",0,"showSLATHull",0],0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -17448,11 +21135,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_APC_Wheeled_02_rcws_v2_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   ["showBags",0,"showCanisters",selectRandom[0,1],"showTools",selectRandom[0,1],"showCamonetHull",0,"showSLATHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showBags",0,"showCanisters",selectRandom[0,1],"showTools",selectRandom[0,1],"showCamonetHull",0,"showSLATHull",0],0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -17466,20 +21149,20 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_APCs_CreateMaridAutocannon = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+
+  private _terrainType = missionNamespace getVariable ["PZFP_terrainType", "Mediterranean"];
+  private _turretTexture = if (_terrainType in ["Tropical","Woodland"]) then {"a3\armor_f_exp\apc_tracked_02\data\rcws30_ghex_co.paa"} else {"a3\armor_f_beta\apc_tracked_02\data\rcws30_opfor_co.paa"};
+
   private _vehicle = createVehicle ["O_APC_Wheeled_02_rcws_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   ["showBags",0,"showCanisters",selectRandom[0,1],"showTools",selectRandom[0,1],"showCamonetHull",0,"showSLATHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showBags",0,"showCanisters",selectRandom[0,1],"showTools",selectRandom[0,1],"showCamonetHull",0,"showSLATHull",0],0] call PZFP_fnc_CSAT_vehicleInit;
   [_vehicle, ["hideTurret",1]] remoteExec ['animate',0,true];
   [_vehicle, [[0],true]] remoteExec ['lockTurret',0,true];
   [_vehicle] call PZFP_fnc_vehicleCleanup;
 
-  private _vehicle2 = "I_APC_Wheeled_03_cannon_F" createVehicle _position;      
-  [_vehicle2, [0, ""]] remoteExec ['setObjectTexture',0,true];      
-  [_vehicle2, [1, ""]] remoteExec ['setObjectTexture',0,true];      
-  [_vehicle2, [2, "a3\armor_f_beta\apc_tracked_02\data\rcws30_opfor_co.paa"]] remoteExec ['setObjectTexture',0,true];      
+  private _vehicle2 = "I_APC_Wheeled_03_cannon_F" createVehicle _position;
+  [_vehicle2, [0, ""]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle2, [1, ""]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle2, [2, _turretTexture]] remoteExec ['setObjectTexture',0,true];      
   [_vehicle2, [3, ""]] remoteExec ['setObjectTexture',0,true];      
   [_vehicle2, [4, ""]] remoteExec ['setObjectTexture',0,true];      
   _vehicle2 attachTo [_vehicle, [-0.1261,-0.9185,0.02]];      
@@ -17506,11 +21189,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_MBT_02_arty_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   ["showBags",0,"showCanisters",selectRandom[0,1],"showTools",selectRandom[0,1],"showCamonetHull",0,"showSLATHull",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showBags",0,"showCanisters",selectRandom[0,1],"showTools",selectRandom[0,1],"showCamonetHull",0,"showSLATHull",0],0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -17526,13 +21205,17 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Artillery_CreateZamak = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+
+  private _terrainType = missionNamespace getVariable ["PZFP_terrainType", "Mediterranean"];
+  private _hullTexture = if (_terrainType in ["Tropical","Woodland"]) then {"a3\soft_f_exp\truck_02\data\truck_02_kab_ghex_co.paa"} else {"a3\soft_f_beta\Truck_02\data\truck_02_kab_OPFOR_CO.paa"};
+
   private _vehicle = createVehicle ["I_Truck_02_MRL_F",_position,[],0,"NONE"];
   [
    _vehicle,
    ["Indep",1],
    true
   ] call BIS_fnc_initVehicle;
-  [_vehicle, [0,"a3\soft_f_beta\Truck_02\data\truck_02_kab_OPFOR_CO.paa"]] remoteExec ['setObjectTexture',0,true]; 
+  [_vehicle, [0,_hullTexture]] remoteExec ['setObjectTexture',0,true];
   [_vehicle, [2,'a3\soft_f_gamma\Truck_02\Data\Truck_02_MRL_OPFOR_CO.paa']] remoteExec ['setObjectTexture',0,true];
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
@@ -17599,11 +21282,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_MRAP_02_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -17616,11 +21295,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_MRAP_02_hmg_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -17635,11 +21310,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_MRAP_02_gmg_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -17654,11 +21325,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Truck_02_transport_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Opfor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Opfor",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -17671,11 +21338,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Truck_02_covered_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Opfor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Opfor",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -17688,11 +21351,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Truck_02_box_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Opfor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Opfor",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -17705,11 +21364,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Truck_02_fuel_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Opfor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Opfor",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -17722,11 +21377,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Truck_02_ammo_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Opfor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Opfor",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -17739,11 +21390,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Truck_02_medical_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Opfor",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Opfor",true,0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
@@ -18772,6 +22419,775 @@ PZFP_fnc_initialize = {
   _unit linkItem "O_NVGoggles_hex_F";
  };
 
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutRifleman_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_ghex_F";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutLAT_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_ghex_F";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+  _unit addWeapon "launch_RPG7_F";
+  _unit addSecondaryWeaponItem "RPG7_F";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_TacticalPack_oli";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "RPG7_F";};
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutAT_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_ghex_F";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+  _unit addWeapon "launch_O_Vorona_green_F";
+  _unit addSecondaryWeaponItem "Vorona_HEAT";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_TacticalPack_oli";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "Vorona_HEAT";};
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutAutorifleman_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTARS_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_ghex_F";
+  _unit addPrimaryWeaponItem "100Rnd_580x42_ghex_Mag_F";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToVest "100Rnd_580x42_ghex_Mag_F";
+  _unit addItemToVest "100Rnd_580x42_ghex_Mag_Tracer_F";
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutMarksman_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "srifle_DMR_07_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_DMS_ghex_F";
+  _unit addPrimaryWeaponItem "20Rnd_650x39_Cased_Mag_F";
+  _unit addWeapon "hgun_Rook40_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "20Rnd_650x39_Cased_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutTeamLeader_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_GL_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_ghex_F";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+  _unit addPrimaryWeaponItem "1Rnd_HE_Grenade_shell";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 5 do {_unit addItemToVest "1Rnd_HE_Grenade_shell";};
+  _unit addItemToVest "UGL_FlareWhite_F";
+  _unit addItemToVest "1Rnd_Smoke_Grenade_shell";
+  _unit addItemToVest "1Rnd_SmokeRed_Grenade_shell";
+  _unit addItemToVest "1Rnd_SmokeGreen_Grenade_shell";
+  _unit addItemToVest "UGL_FlareWhite_Illumination_F";
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutSquadLeader_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_ghex_F";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+  _unit addWeapon "hgun_Rook40_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_FieldPack_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutAmmoBearer_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_ghex_F";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_TacticalPack_oli";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  for "_i" from 1 to 10 do {_unit addItemToBackpack "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "150Rnd_762x51_Box";};
+  for "_i" from 1 to 10 do {_unit addItemToBackpack "1Rnd_HE_Grenade_shell";};
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutMedic_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_ghex_F";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+  _unit addWeapon "hgun_Rook40_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_TacticalPack_oli";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutRTO_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_ghex_F";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_RadioBag_01_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutSergeant_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_ghex_F";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+  _unit addWeapon "hgun_Rook40_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutOfficer_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_ACO_grn";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+  _unit addWeapon "hgun_Rook40_F";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutCrewman_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  _unit addVest "V_BandollierB_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 4 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetCrew_O_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutEngineer_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_ghex_F";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_FieldPack_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToBackpack "Toolkit";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutExplosiveSpecialist_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_ghex_F";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_TacticalPack_oli";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "DemoCharge_Remote_Mag";};
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutHelicopterPilot_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "optic_ACO_grn";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  _unit addVest "V_TacVest_oli";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 4 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "O_IR_Grenade";
+  _unit addHeadgear "H_PilotHelmetHeli_O";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutHelicopterCrew_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "optic_ACO_grn";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  _unit addVest "V_TacVest_oli";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 4 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addItemToVest "O_IR_Grenade";
+  _unit addHeadgear "H_CrewHelmetHeli_O";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutMineSpecialist_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_ghex_F";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "B_FieldPack_ghex_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  for "_i" from 1 to 5 do {_unit addItemToBackpack "APERSMine_Range_Mag";};
+  for "_i" from 1 to 5 do {_unit addItemToBackpack "APERSTripMine_Wire_Mag";};
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutSurvivor_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+ };
+
+ PZFP_fnc_opfor_CHGF_Men_AddLoadoutUAVOperator_T = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_CTAR_ghex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_ghex_F";
+  _unit addPrimaryWeaponItem "30Rnd_580x42_Mag_F";
+
+  _unit forceAddUniform "U_O_T_Officer_F";
+  [_unit, ""] call BIS_fnc_setUnitInsignia;
+  _unit addVest "V_HarnessO_ghex_F";
+  _unit addBackpack "O_UAV_01_backpack_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  for "_i" from 1 to 6 do {_unit addItemToVest "30Rnd_580x42_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellGreen";
+  _unit addHeadgear "H_HelmetO_ghex_F";
+  _unit addGoggles "G_Combat";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "O_UavTerminal";
+  _unit linkItem "O_NVGoggles_ghex_F";
+ };
+
  PZFP_fnc_opfor_CHGF_Men_CreateRifleman = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
@@ -18784,7 +23200,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutRifleman;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutRifleman"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -18803,7 +23219,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutRiflemanLAT;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutLAT"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -18822,7 +23238,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutRiflemanAT;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutAT"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -18841,7 +23257,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutAutorifleman;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutAutorifleman"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -18860,7 +23276,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutMarksman;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutMarksman"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -18879,7 +23295,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutTeamLeader;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutTeamLeader"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -18898,7 +23314,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutSquadLeader;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutSquadLeader"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -18917,7 +23333,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutAmmoBearer;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutAmmoBearer"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -18936,7 +23352,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutMedic;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutMedic"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -18956,7 +23372,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutRadioOperator;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutRTO"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -18976,7 +23392,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutSergeant;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutSergeant"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -18995,7 +23411,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutOfficer;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutOfficer"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -19012,7 +23428,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
     params ["_unit"];
     sleep 0.1;
-    [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutCrewman;
+    [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutCrewman"] call PZFP_fnc_CSAT_addLoadoutUnit;
     [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -19031,7 +23447,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutEngineer;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutEngineer"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -19050,7 +23466,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutExplosiveSpecialist;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutExplosiveSpecialist"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -19069,7 +23485,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutHelicopterPilot;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutHelicopterPilot"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -19088,7 +23504,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutHelicopterCrew;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutHelicopterCrew"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -19107,7 +23523,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutMineSpecialist;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutMineSpecialist"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -19126,7 +23542,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutSurvivor;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutSurvivor"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -19145,7 +23561,7 @@ PZFP_fnc_initialize = {
   [_unit] spawn {
    params ["_unit"];
    sleep 0.1;
-   [_unit] call PZFP_fnc_opfor_CHGF_Men_AddLoadoutUAVOperator;
+   [_unit, "PZFP_fnc_opfor_CHGF_Men_AddLoadoutUAVOperator"] call PZFP_fnc_CSAT_addLoadoutUnit;
    [_unit] call PZFP_fnc_CH_AddIdentity;
   };
   [_unit] call PZFP_fnc_addObjectToInterface;
@@ -19234,11 +23650,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_MBT_02_cannon_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   ["showCamonetHull",0,"showCamonetTurret",0,"showLog",1]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showCamonetHull",0,"showCamonetTurret",0,"showLog",1],0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -19255,11 +23667,7 @@ PZFP_fnc_initialize = {
  PZFP_fnc_opfor_CHGF_Tanks_CreateAngara = {
   private _cursorPos = getMousePosition;
   private _vehicle = createVehicle ["O_MBT_04_cannon_F",_position,[],0,"NONE"];
-  [
-	 _vehicle,
-   ["Hex",1], 
-   ["showCamonetHull",0,"showCamonetTurret",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showCamonetHull",0,"showCamonetTurret",0],0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -19277,11 +23685,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_MBT_04_command_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["Hex",1], 
-   ["showCamonetHull",0,"showCamonetTurret",0]
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"Hex",["showCamonetHull",0,"showCamonetTurret",0],0] call PZFP_fnc_CSAT_vehicleInit;
 
   private _driver = [] call PZFP_fnc_opfor_CHGF_Men_CreateCrewman;
   _driver moveInDriver _vehicle;
@@ -19354,11 +23758,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Radar_System_02_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["AridHex",1], 
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"AridHex",true,1] call PZFP_fnc_CSAT_vehicleInit;
   
   createVehicleCrew _vehicle;
 
@@ -19379,11 +23779,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_SAM_System_04_F",_position,[],0,"NONE"];
-  [
-   _vehicle,
-   ["AridHex",1],
-   true
-  ] call BIS_fnc_initVehicle;
+  [_vehicle,"AridHex",true,1] call PZFP_fnc_CSAT_vehicleInit;
 
   createVehicleCrew _vehicle;
 
@@ -19394,6 +23790,7 @@ PZFP_fnc_initialize = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
   private _vehicle = createVehicle ["O_Static_AA_F",_position,[],0,"NONE"];
+  [_vehicle,"AridHex",true,1] call PZFP_fnc_CSAT_vehicleInit;
 
   private _gunner = [] call PZFP_fnc_opfor_CHGF_Men_CreateRifleman;
   _gunner moveInGunner _vehicle;
@@ -25273,6 +29670,12 @@ PZFP_fnc_initialize = {
   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
+
+
+ comment "------------------------------------------INDEP FACTIONS-----------------------------------------------";
+
+
+
  PZFP_fnc_indep_ION_APCs_CreateMarshall = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
@@ -28682,7 +33085,7 @@ PZFP_fnc_initialize = {
   PZFP_blufor_USA_Men_HelicopterCrew = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Helicopter Crew", "PZFP_fnc_blufor_USA_Men_CreateHelicopterCrew", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_MineSpecialist = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "Mine Specialist", "PZFP_fnc_blufor_USA_Men_CreateMineSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_Men_UAVOperator = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Men, "UAV Operator", "PZFP_fnc_blufor_USA_Men_CreateUAVOperator", [1,1,1,1]] call PZFP_fnc_addModule;
-
+  
   PZFP_blufor_USA_MenSF = [_blufor, PZFP_blufor_USA, "Men (Special Forces)", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_USA_MenSF_Rifleman = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Rifleman", "PZFP_fnc_blufor_USA_MenSF_CreateRifleman", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_USA_MenSF_RiflemanLAT = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_MenSF, "Rifleman (LAT)", "PZFP_fnc_blufor_USA_MenSF_CreateRiflemanLAT", [1,1,1,1]] call PZFP_fnc_addModule;
@@ -29129,6 +33532,7 @@ PZFP_fnc_initialize = {
   PZFP_blufor_LDF_Men_HelicopterCrew = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Helicopter Crew", "PZFP_fnc_blufor_LDF_Men_CreateHelicopterCrew", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_MineSpecialist = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "Mine Specialist", "PZFP_fnc_blufor_LDF_Men_CreateMineSpecialist", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_LDF_Men_UAVOperator = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "UAV Operator", "PZFP_fnc_blufor_LDF_Men_CreateUAVOperator", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_LDF_Men_UAVOperatorFPV = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_Men, "UAV Operator (FPV)", "PZFP_fnc_blufor_LDF_Men_CreateUAVOperatorFPV", [1,1,1,1]] call PZFP_fnc_addModule;
   
   PZFP_blufor_LDF_MenSOF = [_blufor, PZFP_blufor_LDF, "Men (SOF)", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_LDF_MenSOF_Rifleman = [_blufor, PZFP_blufor_LDF, PZFP_blufor_LDF_MenSOF, "Rifleman", "PZFP_fnc_blufor_LDF_MenSOF_CreateRifleman", [1,1,1,1]] call PZFP_fnc_addModule;
