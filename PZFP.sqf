@@ -1493,52 +1493,6 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   private _copilot = [] call PZFP_fnc_blufor_USA_Men_CreateHelicopterPilot;
   _copilot moveInTurret [_vehicle, [0]];
-  _vehicle lockCargo true;
-  _vehicle setVariable ["doorsClosed", true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L_source", 1]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R_source", 1]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_rear_source", 1]] remoteExec ['animateDoor',0,true];
-    _target lockCargo false;
-    _target setVariable ["doorsClosed", false];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', true] == true",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L_source", 0]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R_source", 0]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_rear_source", 0]] remoteExec ['animateDoor',0,true];
-    _target lockCargo true;
-    _target setVariable ["doorsClosed", true];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', false] == false",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
 
   private _group = createGroup [west, true];
   [_pilot, _copilot] joinSilent _group;
@@ -1565,52 +1519,6 @@ PZFP_fnc_initialize = {
   _crew1 moveInTurret [_vehicle, [1]];
   private _crew2 = [] call PZFP_fnc_blufor_USA_Men_CreateHelicopterCrew;
   _crew2 moveInTurret [_vehicle, [2]];
-  _vehicle lockCargo true;
-  _vehicle setVariable ["doorsClosed", true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L_source", 1]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R_source", 1]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_rear_source", 1]] remoteExec ['animateDoor',0,true];
-    _target lockCargo false;
-    _target setVariable ["doorsClosed", false];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', true] == true",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L_source", 0]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R_source", 0]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_rear_source", 0]] remoteExec ['animateDoor',0,true];
-    _target lockCargo true;
-    _target setVariable ["doorsClosed", true];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', false] == false",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
 
   private _group = createGroup [west, true];
   [_pilot, _copilot, _crew1, _crew2] joinSilent _group;
@@ -1659,50 +1567,6 @@ PZFP_fnc_initialize = {
   _crew1 moveInTurret [_vehicle, [1]];
   private _crew2 = [] call PZFP_fnc_blufor_USA_Men_CreateHelicopterCrew;
   _crew2 moveInTurret [_vehicle, [2]];
-  _vehicle lockCargo true;
-  _vehicle setVariable ["doorsClosed", true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L", 1]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R", 1]] remoteExec ['animateDoor',0,true];
-    _target lockCargo false;
-    _target setVariable ["doorsClosed", false];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', true] == true",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L", 0]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R", 0]] remoteExec ['animateDoor',0,true];
-    _target lockCargo true;
-    _target setVariable ["doorsClosed", true];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', false] == false",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
 
   private _group = createGroup [west, true];
   [_pilot, _copilot, _crew1, _crew2] joinSilent _group;
@@ -1725,50 +1589,6 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   private _copilot = [] call PZFP_fnc_blufor_USA_Men_CreateHelicopterPilot;
   _copilot moveInTurret [_vehicle, [0]];
-  _vehicle lockCargo true;
-  _vehicle setVariable ["doorsClosed", true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L", 1]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R", 1]] remoteExec ['animateDoor',0,true];
-    _target lockCargo false;
-    _target setVariable ["doorsClosed", false];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', true] == true",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L", 0]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R", 0]] remoteExec ['animateDoor',0,true];
-    _target lockCargo true;
-    _target setVariable ["doorsClosed", true];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', false] == false",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
 
   private _group = createGroup [west, true];
   [_pilot, _copilot] joinSilent _group;
@@ -9108,52 +8928,7 @@ PZFP_fnc_initialize = {
   private _crew1 = [] call PZFP_fnc_blufor_BA_Men_CreateHelicopterCrew;
   _crew1 moveInTurret [_vehicle, [1]];
   private _crew2 = [] call PZFP_fnc_blufor_BA_Men_CreateHelicopterCrew;
-  _crew2 moveInTurret [_vehicle, [2]];
-  _vehicle lockCargo true;
-  _vehicle setVariable ["doorsClosed", true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L", 1]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R", 1]] remoteExec ['animateDoor',0,true];
-    _target lockCargo false;
-    _target setVariable ["doorsClosed", false];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', true] == true",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L", 0]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R", 0]] remoteExec ['animateDoor',0,true];
-    _target lockCargo true;
-    _target setVariable ["doorsClosed", true];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', false] == false",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
-  
+  _crew2 moveInTurret [_vehicle, [2]];  
 
   private _group = createGroup [west, true];
   [_pilot, _copilot, _crew1, _crew2] joinSilent _group;
@@ -9175,52 +8950,7 @@ PZFP_fnc_initialize = {
   private _pilot = [] call PZFP_fnc_blufor_BA_Men_CreateHelicopterPilot;
   _pilot moveInDriver _vehicle;
   private _copilot = [] call PZFP_fnc_blufor_BA_Men_CreateHelicopterPilot;
-  _copilot moveInTurret [_vehicle, [0]];
-  _vehicle lockCargo true;
-  _vehicle setVariable ["doorsClosed", true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L", 1]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R", 1]] remoteExec ['animateDoor',0,true];
-    _target lockCargo false;
-    _target setVariable ["doorsClosed", false];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', true] == true",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L", 0]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R", 0]] remoteExec ['animateDoor',0,true];
-    _target lockCargo true;
-    _target setVariable ["doorsClosed", true];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', false] == false",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
-  
+  _copilot moveInTurret [_vehicle, [0]]; 
 
   private _group = createGroup [west, true];
   [_pilot, _copilot] joinSilent _group;
@@ -9243,52 +8973,6 @@ PZFP_fnc_initialize = {
   _pilot moveInDriver _vehicle;
   private _copilot = [] call PZFP_fnc_blufor_BA_Men_CreateHelicopterPilot;
   _copilot moveInTurret [_vehicle, [0]];
-  _vehicle lockCargo true;
-  _vehicle setVariable ["doorsClosed", true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L_source", 1]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R_source", 1]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_rear_source", 1]] remoteExec ['animateDoor',0,true];
-    _target lockCargo false;
-    _target setVariable ["doorsClosed", false];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', true] == true",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L_source", 0]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R_source", 0]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_rear_source", 0]] remoteExec ['animateDoor',0,true];
-    _target lockCargo true;
-    _target setVariable ["doorsClosed", true];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', false] == false",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
 
   private _group = createGroup [west, true];
   [_pilot, _copilot] joinSilent _group;
@@ -9315,52 +8999,6 @@ PZFP_fnc_initialize = {
   _crew1 moveInTurret [_vehicle, [1]];
   private _crew2 = [] call PZFP_fnc_blufor_BA_Men_CreateHelicopterCrew;
   _crew2 moveInTurret [_vehicle, [2]];
-  _vehicle lockCargo true;
-  _vehicle setVariable ["doorsClosed", true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L_source", 1]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R_source", 1]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_rear_source", 1]] remoteExec ['animateDoor',0,true];
-    _target lockCargo false;
-    _target setVariable ["doorsClosed", false];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', true] == true",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_L_source", 0]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_R_source", 0]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_rear_source", 0]] remoteExec ['animateDoor',0,true];
-    _target lockCargo true;
-    _target setVariable ["doorsClosed", true];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', false] == false",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
 
   private _group = createGroup [west, true];
   [_pilot, _copilot, _crew1, _crew2] joinSilent _group;
@@ -11752,52 +11390,6 @@ PZFP_fnc_initialize = {
   private _copilot = [] call PZFP_fnc_blufor_AAFA_Men_CreateHelicopterPilot;
   _copilot moveInTurret [_vehicle, [0]];
   crew _vehicle join createGroup [west, true];
-  _vehicle lockCargo true;
-  _vehicle setVariable ["doorsClosed", true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Open Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_Back_L", 1]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_Back_R", 1]] remoteExec ['animateDoor',0,true];
-    [_target, ["CargoRamp_Open", 1]] remoteExec ['animateDoor',0,true];
-    _target lockCargo false;
-    _target setVariable ["doorsClosed", false];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', true] == true",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
-
-  [_vehicle,
-  ["<img image='\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa'></image><t color='#32CD32'> Close Passenger Doors</t>",
-   {
-    params ["_target"];
-    [_target, ["Door_Back_L", 0]] remoteExec ['animateDoor',0,true];
-    [_target, ["Door_Back_R", 0]] remoteExec ['animateDoor',0,true];
-    [_target, ["CargoRamp_Open", 0]] remoteExec ['animateDoor',0,true];
-    _target lockCargo true;
-    _target setVariable ["doorsClosed", true];
-   },
-   nil,
-   2,
-   true,
-   false,
-   "",
-   "_target getVariable ['doorsClosed', false] == false",
-   7,
-   false,
-   "",
-   ""
-  ]] remoteExec ['addAction',0,true];
 
   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
@@ -33174,8 +32766,8 @@ PZFP_fnc_initialize = {
   PZFP_blufor_USA_GroupsSF_DemoTeam = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_GroupsSF, "Demolition Team", "PZFP_fnc_blufor_USA_GroupsSF_CreateDemoTeam", [1,1,1,1]] call PZFP_fnc_addModule;
 
   PZFP_blufor_USA_Tanks = [_blufor, PZFP_blufor_USA, "Tanks", [1,1,1,1]] call PZFP_fnc_addSubCategory;
-  PZFP_blufor_USA_Tanks_Slammer = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Tanks, "M2A1 Slammer", "PZFP_fnc_blufor_USA_Tanks_CreateSquadLeaderammer", [1,1,1,1]] call PZFP_fnc_addModule;
-  PZFP_blufor_USA_Tanks_SlammerUp = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Tanks, "M2A4 Slammer (Urban Kit)", "PZFP_fnc_blufor_USA_Tanks_CreateSquadLeaderammerUp", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USA_Tanks_Slammer = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Tanks, "M2A1 Slammer", "PZFP_fnc_blufor_USA_Tanks_CreateSlammer", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_USA_Tanks_SlammerUp = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_Tanks, "M2A4 Slammer (Urban Kit)", "PZFP_fnc_blufor_USA_Tanks_CreateSlammerUp", [1,1,1,1]] call PZFP_fnc_addModule;
 
   PZFP_blufor_USA_TankDestroyers = [_blufor, PZFP_blufor_USA, "Tank Destroyers", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_USA_TanksDestroyers_Rhino = [_blufor, PZFP_blufor_USA, PZFP_blufor_USA_TankDestroyers, "Rhino MGS", "PZFP_fnc_blufor_USA_TankDestroyers_CreateRhino", [1,1,1,1]] call PZFP_fnc_addModule;

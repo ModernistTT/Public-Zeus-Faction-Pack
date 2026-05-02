@@ -1,0 +1,35 @@
+
+comment "Exported from Arsenal by Modernist";
+
+comment "[!] UNIT MUST BE LOCAL [!]";
+if (!local this) exitWith {};
+
+comment "Remove existing items";
+removeAllWeapons this;
+removeAllItems this;
+removeAllAssignedItems this;
+removeUniform this;
+removeVest this;
+removeBackpack this;
+removeHeadgear this;
+removeGoggles this;
+
+comment "Add weapons";
+this addWeapon "arifle_SPAR_02_blk_F";
+this addPrimaryWeaponItem "acc_flashlight";
+this addPrimaryWeaponItem "optic_Holosight_blk_F";
+this addPrimaryWeaponItem "30Rnd_556x45_Stanag";
+this addPrimaryWeaponItem "bipod_02_F_blk";
+
+comment "Add containers";
+this forceAddUniform "U_B_GEN_Commander_F";
+this addVest "V_TacVest_blk_POLICE";
+
+comment "Add items to containers";
+for "_i" from 1 to 3 do {this addItemToUniform "30Rnd_556x45_Stanag";};
+for "_i" from 1 to 5 do {this addItemToVest "30Rnd_556x45_Stanag_red";};
+this addHeadgear "H_PASGT_basic_blue_F";
+this addGoggles "G_Bandanna_blk";
+
+comment "Set identity";
+[this,"GreekHead_A3_01","male04gre"] call BIS_fnc_setIdentity;
