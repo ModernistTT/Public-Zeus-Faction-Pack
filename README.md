@@ -144,7 +144,7 @@ INDEP
     - Infantry
 * Police Nationale de Malden (TBA)
     - Infantry
-* Freedom and Independence Army (TBA)
+* Freedom and Independence Army
     - Infantry
 * Livonian Looters (TBA)
     - Infantry
