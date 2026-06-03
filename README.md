@@ -64,9 +64,9 @@ BLUFOR:
 * Altis Armed Forces Land Forces
     - Infantry
     - Special Operations
-* Altis National Police (WIP)
+* Altis National Police
     - Infantry
-    - Special Operations
+    - Special Operations (TBA)
 * Altis Royal Guard (TBA)
     - Infantry
     - VIPs
