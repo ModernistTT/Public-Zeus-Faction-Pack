@@ -20025,7 +20025,6 @@ PZFP_fnc_initialize = {
   _unit
  };
 
- 
  PZFP_fnc_blufor_HIDF_Groups_CreateFireteamAT = {
   private _cursorPos = getMousePosition;
   private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
@@ -20104,6 +20103,83 @@ PZFP_fnc_initialize = {
   [_position] call PZFP_fnc_blufor_HIDF_Groups_CreateWeaponsSquad;
  };
 
+ PZFP_fnc_blufor_HIDF_GroupsFL_CreateFireteamAT = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  _group setBehaviour "SAFE";
+
+  private _tl = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateTeamLeader;
+  private _rifleman = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateRifleman;
+  private _autorifleman = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateAutorifleman;
+  private _riflemanLAT = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateRiflemanLAT;
+  [_tl, _rifleman, _autorifleman, _riflemanLAT] joinSilent _group;
+ };
+
+ PZFP_fnc_blufor_HIDF_GroupsFL_CreateFireteamMarksman = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  _group setBehaviour "SAFE";
+
+  private _sl = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateSquadLeader;
+  private _rifleman = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateRifleman;
+  private _autorifleman = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateAutorifleman;
+  private _marksman = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateMarksman;
+  [_sl, _rifleman, _autorifleman, _marksman] joinSilent _group;
+ };
+
+ PZFP_fnc_blufor_HIDF_GroupsFL_CreateRifleSquad = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  _group setBehaviour "SAFE";
+
+  private _sl = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateSquadLeader;
+  private _tl = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateTeamLeader;
+  private _rifleman1 = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateRifleman;
+  private _rifleman2 = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateRifleman;
+  private _autorifleman1 = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateAutorifleman;
+  private _autorifleman2 = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateAutorifleman;
+  private _riflemanLAT = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateRiflemanLAT;
+  private _marksman = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateMarksman;
+  [_sl, _tl, _rifleman1, _rifleman2, _autorifleman1, _autorifleman2, _riflemanLAT, _marksman] joinSilent _group;
+ };
+
+ PZFP_fnc_blufor_HIDF_GroupsFL_CreateWeaponsSquad = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  _group setBehaviour "SAFE";
+
+  private _sl = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateSquadLeader;
+  private _mg1 = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateMachineGunner;
+  private _mg2 = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateMachineGunner;
+  private _ammoBearer = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateAmmoBearer;
+  private _riflemanAT1 = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateRiflemanAT;
+  private _riflemanAT2 = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateRiflemanAT;
+  private _rifleman1 = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateRifleman;
+  private _rifleman2 = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateRifleman;
+  [_sl, _mg1, _mg2, _ammoBearer, _riflemanAT1, _riflemanAT2, _rifleman1, _rifleman2] joinSilent _group;
+ };
+
+ PZFP_fnc_blufor_HIDF_GroupsFL_CreateInfantryPlatoon = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [west, true];
+  _group setBehaviour "SAFE";
+
+  private _officer = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateOfficer;
+  private _sergeant = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateSergeant;
+  private _rto = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateRadioOperator;
+  private _medic = [_position] call PZFP_fnc_blufor_HIDF_MenFL_CreateMedic;
+  [_officer, _sergeant, _rto, _medic] joinSilent _group;
+
+  for "_i" from 1 to 3 do {
+   [_position] call PZFP_fnc_blufor_HIDF_GroupsFL_CreateRifleSquad;
+  };
+  [_position] call PZFP_fnc_blufor_HIDF_GroupsFL_CreateWeaponsSquad;
+ };
 
  PZFP_fnc_blufor_HIDF_Turrets_CreateHMG = {
   private _cursorPos = getMousePosition;
@@ -38494,6 +38570,19 @@ PZFP_fnc_initialize = {
   PZFP_blufor_HIDF_MenFL_Survivor = [_blufor, PZFP_blufor_HIDF, PZFP_blufor_HIDF_MenFL, "Survivor", "PZFP_fnc_blufor_HIDF_MenFL_CreateSurvivor", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_blufor_HIDF_MenFL_UAVOperatorFPV = [_blufor, PZFP_blufor_HIDF, PZFP_blufor_HIDF_MenFL, "UAV Operator (FPV)", "PZFP_fnc_blufor_HIDF_MenFL_CreateUAVOperatorFPV", [1,1,1,1]] call PZFP_fnc_addModule;
 
+  PZFP_blufor_HIDF_Groups = [_blufor, PZFP_blufor_HIDF, "Groups", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_HIDF_Groups_FireteamAT = [_blufor, PZFP_blufor_HIDF, PZFP_blufor_HIDF_Groups, "Fireteam (AT)", "PZFP_fnc_blufor_HIDF_Groups_CreateFireteamAT", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_HIDF_Groups_FireteamMarksman = [_blufor, PZFP_blufor_HIDF, PZFP_blufor_HIDF_Groups, "Fireteam (Marksman)", "PZFP_fnc_blufor_HIDF_Groups_CreateFireteamMarksman", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_HIDF_Groups_RifleSquad = [_blufor, PZFP_blufor_HIDF, PZFP_blufor_HIDF_Groups, "Rifle Squad", "PZFP_fnc_blufor_HIDF_Groups_CreateRifleSquad", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_HIDF_Groups_WeaponsSquad = [_blufor, PZFP_blufor_HIDF, PZFP_blufor_HIDF_Groups, "Weapons Squad", "PZFP_fnc_blufor_HIDF_Groups_CreateWeaponsSquad", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_HIDF_Groups_InfantryPlatoon = [_blufor, PZFP_blufor_HIDF, PZFP_blufor_HIDF_Groups, "Infantry Platoon", "PZFP_fnc_blufor_HIDF_Groups_CreateInfantryPlatoon", [1,1,1,1]] call PZFP_fnc_addModule;
+  
+  PZFP_blufor_HIDF_GroupsFL = [_blufor, PZFP_blufor_HIDF, "Groups (FL)", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_blufor_HIDF_GroupsFL_FireteamAT = [_blufor, PZFP_blufor_HIDF, PZFP_blufor_HIDF_GroupsFL, "Fireteam (AT)", "PZFP_fnc_blufor_HIDF_GroupsFL_CreateFireteamAT", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_HIDF_GroupsFL_FireteamMarksman = [_blufor, PZFP_blufor_HIDF, PZFP_blufor_HIDF_GroupsFL, "Fireteam (Marksman)", "PZFP_fnc_blufor_HIDF_GroupsFL_CreateFireteamMarksman", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_HIDF_GroupsFL_RifleSquad = [_blufor, PZFP_blufor_HIDF, PZFP_blufor_HIDF_GroupsFL, "Rifle Squad", "PZFP_fnc_blufor_HIDF_GroupsFL_CreateRifleSquad", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_HIDF_GroupsFL_WeaponsSquad = [_blufor, PZFP_blufor_HIDF, PZFP_blufor_HIDF_GroupsFL, "Weapons Squad", "PZFP_fnc_blufor_HIDF_GroupsFL_CreateWeaponsSquad", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_blufor_HIDF_GroupsFL_InfantryPlatoon = [_blufor, PZFP_blufor_HIDF, PZFP_blufor_HIDF_GroupsFL, "Infantry Platoon", "PZFP_fnc_blufor_HIDF_GroupsFL_CreateInfantryPlatoon", [1,1,1,1]] call PZFP_fnc_addModule;
   
   PZFP_blufor_HIDF_Turrets = [_blufor, PZFP_blufor_HIDF, "Turrets", [1,1,1,1]] call PZFP_fnc_addSubCategory;
   PZFP_blufor_HIDF_Turrets_HMG = [_blufor, PZFP_blufor_HIDF, PZFP_blufor_HIDF_Turrets, "M2 HMG", "PZFP_fnc_blufor_HIDF_Turrets_CreateHMG", [1,1,1,1]] call PZFP_fnc_addModule;
