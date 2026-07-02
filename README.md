@@ -67,7 +67,7 @@ BLUFOR:
 * Altis National Police
     - Infantry
     - Special Operations (TBA)
-* Altis Royal Guard (TBA)
+* Altis Royal Guard
     - Infantry
     - VIPs
 * Livonian Air Force
@@ -83,11 +83,11 @@ BLUFOR:
     - International Legion
 * Straz Lesna Livonia
     - Infantry
-* Horizon Islands Defence Forces Army (TBA)
+* Horizon Islands Defence Forces Army
     - Infantry
     - Foreign Legion
     - Special Operations
-* Horizon Islands Defence Forces Air Force (TBA)
+* Horizon Islands Defence Forces Air Force
     - Pilots
     - Maintenance Crew
 * Horizon Islands Defence Forces Coast Guard (TBA)
@@ -128,9 +128,9 @@ REDFOR
     - Pilots
 * Russian Spetznaz GRU
     - Infantry
-* Syndikat (TBA)
+* Syndikat
     - Infantry
-* Livonian Armed People's Party (TBA)
+* Livonian Armed People's Party
     - Infantry
 * Viper Group (TBA)
     - Viper Team Red
