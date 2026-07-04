@@ -565,7 +565,7 @@ PZFP_fnc_initialize = {
    true
   ] call BIS_fnc_initVehicle;
 
-  createVehicleCrew  _vehicle;
+  createVehicleCrew _vehicle;
 
   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
@@ -34453,6 +34453,7 @@ PZFP_fnc_initialize = {
   private _group = createGroup [independent, true];  
   _group setBehaviour "SAFE";
   private _unit = _group createUnit ["O_G_Soldier_LAT2_F", _position, [], 0, "CAN_COLLIDE"];
+  [_unit] joinSilent _group;
   if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then {
    doStop _unit;
   };
@@ -37846,6 +37847,305 @@ PZFP_fnc_initialize = {
   _unit
  };
 
+ PZFP_fnc_civ_NEHS_Boats_CreateMotorboat = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["C_Boat_Civil_01_rescue_F", _position, [], 0, "NONE"];
+  [
+   _vehicle,
+   ["Rescue",1], 
+   ["hidePolice",0,"HideRescueSigns",0,"HidePoliceSigns",1]
+  ] call BIS_fnc_initVehicle;
+  
+  private _driver = [] call PZFP_fnc_civ_NEHS_Men_CreateParamedic;
+  _driver moveInDriver _vehicle;
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_civ_NEHS_Boats_CreateRescueBoat = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["C_Rubberboat", _position, [], 0, "NONE"];
+  [
+   _vehicle,
+   ["Rescue",1], 
+   true
+  ] call BIS_fnc_initVehicle;
+
+  private _driver = [] call PZFP_fnc_civ_NEHS_Men_CreateParamedic;
+  _driver moveInDriver _vehicle;
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_civ_NEHS_Cars_CreateVan = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["C_Van_02_medevac_F", _position, [], 0, "NONE"];
+  [
+   _vehicle,
+   ["CivAmbulance",1], 
+   ["Door_1_source",0,"Door_2_source",0,"Door_3_source",0,"Door_4_source",0,"Hide_Door_1_source",0,"Hide_Door_2_source",0,"Hide_Door_3_source",0,"Hide_Door_4_source",0,"lights_em_hide",0,"ladder_hide",0,"spare_tyre_holder_hide",0,"spare_tyre_hide",0,"reflective_tape_hide",0,"roof_rack_hide",0,"LED_lights_hide",0,"sidesteps_hide",0,"rearsteps_hide",0,"side_protective_frame_hide",1,"front_protective_frame_hide",0,"beacon_front_hide",0,"beacon_rear_hide",0]
+  ] call BIS_fnc_initVehicle;
+
+  private _driver = [] call PZFP_fnc_civ_NEHS_Men_CreateParamedic;
+  _driver moveInDriver _vehicle;
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_civ_NEHS_Drones_CreatePelican = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["C_UAV_06_medical_F", _position, [], 0, "NONE"];
+  [
+   _vehicle,
+   ["Civ",1], 
+   ["LED_lights_hide",0,"lights_em_hide",0,"Inventory_door",0]
+  ] call BIS_fnc_initVehicle;
+
+  createVehicleCrew _vehicle;
+  
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_civ_NEHS_Helicopters_CreateM900 = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["C_Heli_Light_01_civil_F", _position, [], 0, "NONE"];
+  [
+   _vehicle,
+   ["Sunset",1], 
+   ["AddDoors",1,"AddBackseats",1,"AddTread",0,"AddTread_Short",0]
+  ] call BIS_fnc_initVehicle;
+
+  private _pilot = [] call PZFP_fnc_civ_NEHS_Men_CreateHelicopterPilot;
+  _pilot moveInDriver _vehicle;
+  private _copilot = [] call PZFP_fnc_civ_NEHS_Men_CreateHelicopterPilot;
+  _copilot moveInTurret [_vehicle, [0]];
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_civ_NEHS_Men_AddLoadoutParamedic = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit forceAddUniform "U_C_Paramedic_01_F";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform selectRandom ["SmartPhone","MobilePhone"];    
+  _unit addItemToUniform "Wallet_ID"; 
+  _unit addItemToUniform "Keys";   
+  _unit addHeadgear "H_Cap_red";
+
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_civ_NEHS_Men_AddLoadoutParamedicHeavy = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit forceAddUniform "U_C_Paramedic_01_F";
+  _unit addVest "V_DeckCrew_red_F";
+  _unit addBackpack "B_Messenger_Black_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform selectRandom ["SmartPhone","MobilePhone"];    
+  _unit addItemToUniform "Wallet_ID"; 
+  _unit addItemToUniform "Keys";
+  _unit addItemToBackpack "Medikit";
+  _unit addHeadgear "H_Cap_red";
+  _unit addGoggles selectRandom["G_Respirator_blue_F","G_Respirator_white_F","G_Respirator_yellow_F"];
+
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_civ_NEHS_Men_AddLoadoutDiver = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit forceAddUniform "U_C_Paramedic_01_F";
+  _unit addVest "V_RebreatherB";
+  _unit addBackpack "B_SCBA_01_F";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform selectRandom ["SmartPhone","MobilePhone"];    
+  _unit addItemToUniform "Wallet_ID"; 
+  _unit addItemToUniform "Keys";
+  _unit addHeadgear "H_Helmet_Skate";
+  _unit addGoggles "G_Diving";
+
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_civ_NEHS_Men_AddLoadoutHelicopterPilot = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit forceAddUniform "U_C_Paramedic_01_F";
+  _unit addVest "V_TacVestIR_blk";
+
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform "Chemlight_yellow";
+  _unit addItemToUniform selectRandom ["SmartPhone","MobilePhone"];    
+  _unit addItemToUniform "Wallet_ID"; 
+  _unit addItemToUniform "Keys";
+  _unit addHeadgear "H_PilotHelmetHeli_B";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "ItemGPS";
+ };
+
+ PZFP_fnc_civ_NEHS_Men_AddLoadoutUAVOperator = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit forceAddUniform "U_C_Paramedic_01_F";
+  _unit addItemToUniform "FirstAidKit";
+  _unit addItemToUniform selectRandom ["SmartPhone","MobilePhone"];    
+  _unit addItemToUniform "Wallet_ID"; 
+  _unit addItemToUniform "Keys";
+  _unit addHeadgear "H_Cap_red";
+  _unit addGoggles "G_Goggles_VR";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+  _unit linkItem "C_UavTerminal";
+ };
+
+ PZFP_fnc_civ_NEHS_Men_CreateParamedic = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [civilian, true];
+  private _unit = _group createUnit ["C_Man_Paramedic_01_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_civ_NEHS_Men_AddLoadoutParamedic;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
+  };
+  [_unit] call PZFP_fnc_addObjectToInterface;
+  _unit
+ };
+
+ PZFP_fnc_civ_NEHS_Men_CreateParamedicHeavy = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [civilian, true];
+  private _unit = _group createUnit ["C_Man_Paramedic_01_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_civ_NEHS_Men_AddLoadoutParamedicHeavy;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
+  };
+  [_unit] call PZFP_fnc_addObjectToInterface;
+  _unit
+ };
+
+ PZFP_fnc_civ_NEHS_Men_CreateDiver = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [civilian, true];
+  private _unit = _group createUnit ["B_diver_tl_F", _position, [], 0, "CAN_COLLIDE"];
+  [_unit] joinSilent _group;
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_civ_NEHS_Men_AddLoadoutDiver;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
+  };
+  [_unit] call PZFP_fnc_addObjectToInterface;
+  _unit
+ };
+
+ PZFP_fnc_civ_NEHS_Men_CreateHelicopterPilot = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [civilian, true];
+  private _unit = _group createUnit ["B_HeliPilot_F", _position, [], 0, "CAN_COLLIDE"];
+  [_unit] joinSilent _group;
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_civ_NEHS_Men_AddLoadoutHelicopterPilot;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
+  };
+  [_unit] call PZFP_fnc_addObjectToInterface;
+  _unit
+ };
+
+ PZFP_fnc_civ_NEHS_Men_CreateUAVOperator = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _group = createGroup [civilian, true];
+  private _unit = _group createUnit ["C_Man_UAV_06_medical_F", _position, [], 0, "CAN_COLLIDE"];
+  _group setBehaviour "SAFE";
+  if ((missionNamespace getVariable ["PZFP_AIStopEnabled", true])) then { doStop _unit; };
+  [_unit] spawn {
+    params ["_unit"];
+    sleep 0.1;
+    [_unit] call PZFP_fnc_civ_NEHS_Men_AddLoadoutUAVOperator;
+    [_unit] call PZFP_fnc_GR_AddIdentity;
+  };
+  [_unit] call PZFP_fnc_addObjectToInterface;
+  _unit
+ };
+
  PZFP_fnc_rebuildZeusTree = {
   disableSerialization;
   private _display = findDisplay 312;
@@ -39313,6 +39613,28 @@ PZFP_fnc_initialize = {
   PZFP_civ_RandomCivilians_Civilians_JournalistWar = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "War Journalist", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateJournalistWar", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_civ_RandomCivilians_Civilians_UtilityWorker = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "Utility Worker", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateUtilityWorker", [1,1,1,1]] call PZFP_fnc_addModule;
   PZFP_civ_RandomCivilians_Civilians_ConstructionWorker = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Civilians, "Construction Worker", "PZFP_fnc_civ_RandomCivilians_Civilians_CreateConstructionWorker", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_civ_RandomCivilians = [_civ, "National Emergency Health Service (Altis)", [1,1,1,1]] call PZFP_fnc_addCategory;
+
+  PZFP_civ_RandomCivilians_Boats = [_civ, PZFP_civ_RandomCivilians, "Boats", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_civ_RandomCivilians_Boats_MotorBoat = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Boats, "Motorboat", "PZFP_fnc_civ_NEHS_Boats_CreateMotorBoat", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_civ_RandomCivilians_Boats_RescueBoat = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Boats, "Rescue Boat", "PZFP_fnc_civ_NEHS_Boats_CreateRescueBoat", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_civ_RandomCivilians_Cars = [_civ, PZFP_civ_RandomCivilians, "Cars", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_civ_RandomCivilians_Cars_Van = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Cars, "Van", "PZFP_fnc_civ_NEHS_Cars_CreateVan", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_civ_RandomCivilians_Drones = [_civ, PZFP_civ_RandomCivilians, "Drones", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_civ_RandomCivilians_Drones_Pelican = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Drones, "AL-6 Pelican (Medical)", "PZFP_fnc_civ_NEHS_Drones_CreatePelican", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_civ_RandomCivilians_Helicopters = [_civ, PZFP_civ_RandomCivilians, "Helicopters", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_civ_RandomCivilians_Helicopters_M900 = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Helicopters, "M-900", "PZFP_fnc_civ_NEHS_Helicopters_CreateM900", [1,1,1,1]] call PZFP_fnc_addModule;
+
+  PZFP_civ_RandomCivilians_Men = [_civ, PZFP_civ_RandomCivilians, "Men", [1,1,1,1]] call PZFP_fnc_addSubCategory;
+  PZFP_civ_RandomCivilians_Men_Paramedic = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Men, "Paramedic", "PZFP_fnc_civ_NEHS_Men_CreateParamedic", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_civ_RandomCivilians_Men_ParamedicHeavy = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Men, "Paramedic (Heavy)", "PZFP_fnc_civ_NEHS_Men_CreateParamedicHeavy", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_civ_RandomCivilians_Men_Diver = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Men, "Diver", "PZFP_fnc_civ_NEHS_Men_CreateDiver", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_civ_RandomCivilians_Men_HelicopterPilot = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Men, "Helicopter Pilot", "PZFP_fnc_civ_NEHS_Men_CreateHelicopterPilot", [1,1,1,1]] call PZFP_fnc_addModule;
+  PZFP_civ_RandomCivilians_Men_UAVOperator = [_civ, PZFP_civ_RandomCivilians, PZFP_civ_RandomCivilians_Men, "UAV Operator", "PZFP_fnc_civ_NEHS_Men_CreateUAVOperator", [1,1,1,1]] call PZFP_fnc_addModule;
  }; 
 
  PZFP_fnc_mainLoop = {
