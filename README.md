@@ -92,10 +92,10 @@ BLUFOR:
     - Maintenance Crew
 * Horizon Islands Defence Forces Coast Guard (TBA)
     - Infantry
-* Gendarmerie de Tanoa (TBA)
+* Gendarmerie de Tanoa
     - Infantry
     - Special Operations
-* Combat Research & Technologies Command (TBA)
+* Combat Research & Technologies Command
     - Group 13
     - Group 14
     - Group 15
@@ -159,32 +159,32 @@ CIV
     - Paramedics
     - Search and Rescue (TBA)
     - Pilots
-* International Development Assistance Program (TBA)
+* International Development Assistance Program
     - Aid Workers
     - Pilots
-* Horizon Islands Port Authority (TBA)
+* Horizon Islands Port Authority
     - Officers
-* Daltgreen Mining International (TBA)
+* Daltgreen Mining International
     - Workers
     - Executives
     - Pilots
-* SwifD Delivery Service (TBA)
+* SwifD Delivery Service
     - Workers
-* Blue Pearl Industrial (TBA)
+* Blue Pearl Industrial
     - Workers
-* AAN World News (TBA)
+* AAN World News
     - Reporters
     - Pilots
-* Redstone Racing (TBA)
+* Redstone Racing
     - Racers
     - Pilots
-* BluKing Racing (TBA)
+* BluKing Racing
     - Racers
     - Pilots
-* FUEL Racing (TBA)
+* FUEL Racing
     - Racers
     - Pilots
-* Vrana Racing (TBA)
+* Vrana Racing
     - Racers
     - Pilots
 
