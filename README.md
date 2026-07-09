@@ -55,7 +55,7 @@ BLUFOR:
     - Naval Raiders
 * British Army
     - Infantry
-    - Special Operations
+    - Special Operations (TBA)
 * British Navy (WIP)
     - Submariners
 * Altis Armed Forces Air Force
@@ -155,9 +155,9 @@ INDEP
 CIV
 * Randomized Civilians
     - Civilians
-* National Emergency Health Service (TBA)
+* National Emergency Health Service
     - Paramedics
-    - Search and Rescue
+    - Search and Rescue (TBA)
     - Pilots
 * International Development Assistance Program (TBA)
     - Aid Workers
