@@ -16849,7 +16849,7 @@ PZFP_fnc_initialize = {
   _unit addHandgunItem "muzzle_snds_LP_pistol";
   _unit addHandgunItem "optic_MRD_black";
   _unit addWeapon "launch_NLAW_F";
-  _unit addMagazine "NLAW_F";
+  _unit addSecondaryWeaponItem "NLAW_F";
 
   _unit forceAddUniform "U_I_CombatUniform";
   [_unit, [0, "a3\characters_f_enoch\Uniforms\Data\I_L_Uniform_01_Deserter_2_co.paa"]] remoteExec ['setObjectTexture',0,true];
@@ -35443,7 +35443,241 @@ PZFP_fnc_initialize = {
   [_vehicle] call PZFP_fnc_addObjectToInterface;
  };
 
+ PZFP_fnc_opfor_Viper_Boats_CreateAssaultBoat = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["O_Boat_Transport_01_F", _position, [], 0, "NONE"];
+  [
+   _vehicle,
+   ["Hex",1], 
+   true
+  ] call BIS_fnc_initVehicle;
 
+  private _driver = [] call PZFP_fnc_opfor_Viper_Men_CreateRifleman;
+  _driver moveInDriver _vehicle;
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_opfor_Viper_Boats_CreateRHIB = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["I_C_Boat_Transport_02_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Black",1],
+   true
+  ] call BIS_fnc_initVehicle;
+
+  private _driver = [] call PZFP_fnc_opfor_Viper_Men_CreateRifleman;
+  _driver moveInDriver _vehicle;
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_opfor_Viper_Boats_CreateSpeedboat = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["O_Boat_Armed_01_hmg_F",_position,[],0,"NONE"];
+  [
+   _vehicle,
+   ["Opfor",1],
+   true
+  ] call BIS_fnc_initVehicle;
+
+  private _driver = [] call PZFP_fnc_opfor_Viper_Men_CreateRifleman;
+  _driver moveInDriver _vehicle;
+  private _gunner = [] call PZFP_fnc_opfor_Viper_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+  private _commander = [] call PZFP_fnc_opfor_Viper_Men_CreateRifleman;
+  _commander moveInCommander _vehicle;
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_opfor_Viper_Cars_CreateQuilinLight = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["O_LSV_02_unarmed_F", _position, [], 0, "NONE"];
+  [_vehicle, "Arid", ["Unarmed_Doors_Hide",1], 2] call PZFP_fnc_CSAT_vehicleInit;
+  
+
+  private _driver = [] call PZFP_fnc_opfor_Viper_Men_CreateRifleman;
+  _driver moveInDriver _vehicle;
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_opfor_Viper_Cars_CreateQuilin = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["O_LSV_02_unarmed_F", _position, [], 0, "NONE"];
+  [_vehicle, "Arid", ["Unarmed_Doors_Hide",0], 2] call PZFP_fnc_CSAT_vehicleInit;
+  
+
+  private _driver = [] call PZFP_fnc_opfor_Viper_Men_CreateRifleman;
+  _driver moveInDriver _vehicle;
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_opfor_Viper_Cars_CreateQuilinMinigun = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["O_LSV_02_armed_F", _position, [], 0, "NONE"];
+  [_vehicle, "Arid", ["Unarmed_Doors_Hide",0], 2] call PZFP_fnc_CSAT_vehicleInit;  
+
+  private _driver = [] call PZFP_fnc_opfor_Viper_Men_CreateRifleman;
+  _driver moveInDriver _vehicle;
+  private _gunner = [] call PZFP_fnc_opfor_Viper_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_opfor_Viper_Cars_CreateQuilinAT = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["O_LSV_02_AT_F", _position, [], 0, "NONE"];
+  [_vehicle, "Arid", ["Unarmed_Doors_Hide",0], 2] call PZFP_fnc_CSAT_vehicleInit;  
+
+  private _driver = [] call PZFP_fnc_opfor_Viper_Men_CreateRifleman;
+  _driver moveInDriver _vehicle;
+  private _gunner = [] call PZFP_fnc_opfor_Viper_Men_CreateRifleman;
+  _gunner moveInGunner _vehicle;
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_opfor_Viper_Helicopters_CreateOrca = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["O_Heli_Light_02_unarmed_F", _position, [], 0, "NONE"];
+  [
+   _vehicle,
+   ["Black",1], 
+   true
+  ] call BIS_fnc_initVehicle;
+
+  private _pilot = [] call PZFP_fnc_opfor_Viper_Men_CreateHelicopterPilot;
+  _pilot moveInDriver _vehicle;
+  private _copilot = [] call PZFP_fnc_opfor_Viper_Men_CreateHelicopterPilot;
+  _copilot moveInTurret [_vehicle, [0]];
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_opfor_Viper_Helicopters_CreateOrcaArmed = {
+  private _cursorPos = getMousePosition;
+  private _position = [_cursorPos] call PZFP_fnc_findCursorPosition;
+  private _vehicle = createVehicle ["O_Heli_Light_02_dynamicLoadout_F", _position, [], 0, "NONE"];
+  [
+   _vehicle,
+   ["Black",1], 
+   true
+  ] call BIS_fnc_initVehicle;
+
+  private _pilot = [] call PZFP_fnc_opfor_Viper_Men_CreateHelicopterPilot;
+  _pilot moveInDriver _vehicle;
+  private _copilot = [] call PZFP_fnc_opfor_Viper_Men_CreateHelicopterPilot;
+  _copilot moveInTurret [_vehicle, [0]];
+
+  [_vehicle] call PZFP_fnc_addObjectToInterface;
+ };
+
+ PZFP_fnc_opfor_Viper_Men_AddLoadoutRifleman = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_ARX_hex_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_hex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+  _unit addPrimaryWeaponItem "10Rnd_50BW_Mag_F";
+  _unit addWeapon "hgun_Rook40_F";
+  _unit addHandgunItem "muzzle_snds_L";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_V_Soldier_Viper_hex_F";
+  _unit addVest "V_HarnessO_brn";
+
+  _unit addItemToUniform "Chemlight_red";
+  _unit addItemToUniform "Chemlight_green";
+  for "_i" from 1 to 5 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  _unit addItemToVest "30Rnd_65x39_caseless_green_mag_Tracer";
+  for "_i" from 1 to 3 do {_unit addItemToVest "10Rnd_50BW_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "O_IR_Grenade";
+  _unit addHeadgear "H_HelmetO_ViperSP_hex_F";
+  _unit addGoggles "G_Balaclava_TI_blk_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+ };
+
+ PZFP_fnc_opfor_Viper_Men_AddLoadoutRiflemanLAT = {
+  params ["_unit"];
+  removeAllWeapons _unit;
+  removeAllItems _unit;
+  removeAllAssignedItems _unit;
+  removeUniform _unit;
+  removeVest _unit;
+  removeBackpack _unit;
+  removeHeadgear _unit;
+  removeGoggles _unit;
+
+  _unit addWeapon "arifle_ARX_hex_F";
+  _unit addPrimaryWeaponItem "muzzle_snds_65_TI_hex_F";
+  _unit addPrimaryWeaponItem "acc_pointer_IR";
+  _unit addPrimaryWeaponItem "optic_Arco_blk_F";
+  _unit addPrimaryWeaponItem "30Rnd_65x39_caseless_green";
+  _unit addPrimaryWeaponItem "10Rnd_50BW_Mag_F";
+  _unit addWeapon "launch_RPG7_F";
+  _unit addSecondaryWeaponItem "RPG7_F";
+  _unit addWeapon "hgun_Rook40_F";
+  _unit addHandgunItem "muzzle_snds_L";
+  _unit addHandgunItem "16Rnd_9x21_Mag";
+
+  _unit forceAddUniform "U_O_V_Soldier_Viper_hex_F";
+  _unit addVest "V_HarnessO_brn";
+  _unit addBackpack "B_ViperLightHarness_hex_F";
+
+  _unit addItemToUniform "Chemlight_red";
+  _unit addItemToUniform "Chemlight_green";
+  for "_i" from 1 to 5 do {_unit addItemToVest "30Rnd_65x39_caseless_green";};
+  _unit addItemToVest "30Rnd_65x39_caseless_green_mag_Tracer";
+  for "_i" from 1 to 3 do {_unit addItemToVest "10Rnd_50BW_Mag_F";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "16Rnd_9x21_Mag";};
+  for "_i" from 1 to 2 do {_unit addItemToVest "HandGrenade";};
+  _unit addItemToVest "SmokeShell";
+  _unit addItemToVest "SmokeShellRed";
+  _unit addItemToVest "SmokeShellBlue";
+  _unit addItemToVest "O_IR_Grenade";
+  for "_i" from 1 to 2 do {_unit addItemToBackpack "RPG7_F";};
+  _unit addHeadgear "H_HelmetO_ViperSP_hex_F";
+  _unit addGoggles "G_Balaclava_TI_blk_F";
+
+  _unit linkItem "ItemMap";
+  _unit linkItem "ItemGPS";
+  _unit linkItem "ItemCompass";
+  _unit linkItem "ItemWatch";
+  _unit linkItem "ItemRadio";
+ };
 
 
 
