@@ -78,9 +78,9 @@ BLUFOR:
     - Military Police (TBA)
     - 5th Regiment (TBA)
     - Special Operations
-* Livonian Territorial Militia (TBA)
+* Livonian Territorial Militia
     - Infantry
-    - International Legion
+    - International Legion (TBA)
 * Straz Lesna Livonia
     - Infantry
 * Horizon Islands Defence Forces Army
@@ -90,7 +90,7 @@ BLUFOR:
 * Horizon Islands Defence Forces Air Force
     - Pilots
     - Maintenance Crew
-* Horizon Islands Defence Forces Coast Guard (TBA)
+* Horizon Islands Defence Forces Coast Guard (TBD)
     - Infantry
 * Gendarmerie de Tanoa
     - Infantry
