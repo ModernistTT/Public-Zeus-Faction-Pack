@@ -146,8 +146,6 @@ INDEP
     - Infantry
 * Freedom and Independence Army
     - Infantry
-* Livonian Looters (TBA)
-    - Infantry
 * Other/Ambigious (TBA)
     - Bank robbers (gang, professionals)
     - Presidential guard

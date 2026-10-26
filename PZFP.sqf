@@ -38621,7 +38621,7 @@ PZFP_fnc_initialize = {
    [selectRandom["Guerilla_04","Guerilla_05","Guerilla_06"],1], 
    true
   ] call BIS_fnc_initVehicle;
-  [1, ["a3\soft_f_gamma\van_01\data\van_01_ext_black_co.paa","a3\soft_f_gamma\van_01\data\van_01_tank_co.paa"]] remoteExec ['setObjectTexture',0,true];
+  [_vehicle, [1, "a3\soft_f_gamma\van_01\data\van_01_ext_black_co.paa","a3\soft_f_gamma\van_01\data\van_01_tank_co.paa"]] remoteExec ['setObjectTexture',0,true];
 
   private _driver = [] call PZFP_fnc_indep_FIA_Men_CreateRifleman;
   _driver moveInDriver _vehicle;
